@@ -7,9 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class YumdropApplication {
 
 	public static void main(String[] args) {
-
-		System.out.println(" runnning the app and testing protection rights");
 		SpringApplication.run(YumdropApplication.class, args);
+
 	}
 
 }
