@@ -19,8 +19,7 @@
     "eject": "react-scripts eject",
     "move-build": "mkdir -p ../main/resources/static && mv build/* ../main/resources/static/",
     "clean-old-build": "rm -rf ../main/resources/static/* ",
-    "clean-new-build": "rm -rf build",
-    "postbuild": "npm run clean-old-build && npm run move-build && npm run clean-new-build"
+    "clean-new-build": "rm -rf build"
   },
   "proxy": "http://localhost:8080",
   "eslintConfig": {
