@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class YumdropApplication {
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(YumdropApplication.class, args);
 
 	}
