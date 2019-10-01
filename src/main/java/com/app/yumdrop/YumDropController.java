@@ -11,7 +11,7 @@ import java.util.Date;
 @RestController
 public class YumDropController {
 
-    @GetMapping(value = "/api/hello")
+    @GetMapping(value = "/public")
     public String hello() {
         return "Hello, the time at the server is now " + new Date() + "\n";
     }
