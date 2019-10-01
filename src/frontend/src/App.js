@@ -10,11 +10,8 @@ class App extends Component {
     setInterval(this.hello, 250);
   }
 
-
-
-
   hello = () => {
-    fetch('/public')
+    fetch('/api/hello')
         .then(response => response.text())
         .then(message => {
           this.setState({message: message});
