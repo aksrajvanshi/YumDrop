@@ -3,12 +3,16 @@ package com.app.yumdrop;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Collections;
+
 @SpringBootApplication
 public class YumdropApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(YumdropApplication.class, args);
-
+		SpringApplication app = new SpringApplication(YumdropApplication.class);
+		app.setDefaultProperties(Collections
+				.singletonMap("server.port", "8080"));
+		app.run(args);
 	}
 
 }
