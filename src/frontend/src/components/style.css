@@ -1,0 +1,23 @@
+
+
+.modal{
+    width: 200px;
+    margin-left: 45%;
+    text-align: center;
+}
+.header {
+    align-self: center;
+}
+.modal2 {
+    width: 300px;
+    margin-left: 40%;
+}
+.button {
+    background-color: red;
+    border: none;
+    width: 160px;
+    margin: 5px;
+}
+.button:hover{
+    background-color: black;
+}
