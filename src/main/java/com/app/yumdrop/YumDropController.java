@@ -1,19 +1,17 @@
 package com.app.yumdrop;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
 
 
-@RestController
+@ComponentScan
+@Controller
 public class YumDropController {
 
-    @GetMapping(value = "/api/hello")
+    @RequestMapping(value = "/publicpage")
     public String hello() {
-        return "Hello, the time at the server is now " + new Date() + "\n";
+        return "index";
     }
 
 }

@@ -10,16 +10,15 @@
 	</parent>
 	<groupId>com.app</groupId>
 	<artifactId>yumdrop</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>yumdrop</name>
 	<description>A web application portal for customers to order food and restaurants to host their service</description>
 
 	<properties>
 		<java.version>1.8</java.version>
-		<frontend-src-dir>${project.basedir}/src/frontend</frontend-src-dir>
-		<node.version>v12.10.0</node.version>
-		<yarn.version>v1.17.3</yarn.version>
-		<frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
+		<frontend-src-dir>${project.basedir}/src/main/frontend</frontend-src-dir>
+		<node.version>v12.3.1</node.version>
+		<yarn.version>v1.16.0</yarn.version>
+		<frontend-maven-plugin.version>1.7.6</frontend-maven-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -65,6 +64,7 @@
 					<nodeVersion>${node.version}</nodeVersion>
 					<yarnVersion>${yarn.version}</yarnVersion>
 					<workingDirectory>${frontend-src-dir}</workingDirectory>
+					<installDirectory>${project.build.directory}</installDirectory>
 				</configuration>
 
 				<executions>
@@ -109,12 +109,54 @@
 						<phase>prepare-package</phase>
 						<configuration>
 							<outputDirectory>${project.build.outputDirectory}/static</outputDirectory>
+							<outputDirectory>${project.basedir}/src/main/resources/static</outputDirectory>
 							<resources>
 								<resource>
 									<directory>${frontend-src-dir}/build</directory>
 									<filtering>false</filtering>
 								</resource>
 							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!--<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<archive>
+								<manifest>
+									<mainClass>
+										com.app.yumdrop.YumdropApplication
+									</mainClass>
+								</manifest>
+							</archive>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>-->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+						<configuration>
+							<!-- <classifier>spring-boot</classifier> -->
+							<mainClass>
+								com.app.yumdrop.YumdropApplication
+							</mainClass>
 						</configuration>
 					</execution>
 				</executions>
