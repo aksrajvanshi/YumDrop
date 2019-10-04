@@ -1,19 +1,37 @@
 package com.app.yumdrop;
 
+import com.app.yumdrop.Entity.Users;
+import com.app.yumdrop.Repository.UsersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
+import javax.xml.bind.DatatypeConverter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
-@RestController
+@ComponentScan
+@Controller
 public class YumDropController {
 
-    @GetMapping(value = "/api/hello")
-    public String hello() {
-        return "Hello, the time at the server is now " + new Date() + "\n";
+    @Autowired
+    private UsersRepository userRepository;
+
+
+    @RequestMapping(value = "/")
+    public String loadInitialPublicPage() throws NoSuchAlgorithmException {
+
+        String password = "Aksrajvanshi@1992";
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(password.getBytes());
+        byte[] digest = md.digest();
+        String myHash = DatatypeConverter
+                .printHexBinary(digest).toUpperCase();
+
+        System.out.println(myHash + " length of hashed password: " + myHash.length());
+        return "index";
     }
 
 }
