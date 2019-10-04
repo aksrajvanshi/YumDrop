@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class YumDropController {
 
-    @RequestMapping(value = "/publicpage")
+    @RequestMapping(value = "/")
     public String hello() {
         return "index";
     }

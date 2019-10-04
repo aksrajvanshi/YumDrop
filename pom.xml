@@ -74,7 +74,6 @@
 							<goal>install-node-and-yarn</goal>
 						</goals>
 					</execution>
-
 					<execution>
 						<id>yarn-install</id>
 						<goals>
