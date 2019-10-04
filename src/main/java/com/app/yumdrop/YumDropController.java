@@ -16,6 +16,10 @@ import java.security.NoSuchAlgorithmException;
 @Controller
 public class YumDropController {
 
+<<<<<<< HEAD
+    @RequestMapping(value = "/")
+    public String hello() {
+=======
     @Autowired
     private UsersRepository userRepository;
 
@@ -31,6 +35,7 @@ public class YumDropController {
                 .printHexBinary(digest).toUpperCase();
 
         System.out.println(myHash + " length of hashed password: " + myHash.length());
+>>>>>>> 6cdbe1550b6f9ed916be18cd197914214270e343
         return "index";
     }
 
