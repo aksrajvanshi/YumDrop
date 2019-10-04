@@ -95,7 +95,17 @@
 					<installDirectory>${project.build.directory}</installDirectory>
 				</configuration>
 
+
 				<executions>
+					<execution>
+						<id>install npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<configuration>
+							<npmVersion>6.10.3</npmVersion>
+						</configuration>
+					</execution>
 					<execution>
 						<id>install-frontend-tools</id>
 						<goals>
