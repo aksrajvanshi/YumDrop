@@ -1,7 +1,7 @@
 .NavigationBar {
   background-color: white;
-  box-shadow: 0px 12px 24px 0px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
+  box-shadow: 0px 2px 24px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
   width: 1500px;
   height: 90px;
   display: flex;
@@ -11,25 +11,12 @@
   padding-left: 100px;
   overflow: auto;
   padding-bottom: 20px;
-  padding-top: 10px;
-}
-
-#search-container{
-  float: left;
-  height: 10px;
-  width: 10px;
-  padding-right: 500px;
-}
-
-#navbutton{
-  height: 5px;
-  width: 5px;
 }
 
 .menulist-item {
   display: inline-block;
   height: 100%;
-  margin-right: 0px;
+  margin-right: 20px;
 }
 .menulist {
   list-style-type: none;
@@ -55,7 +42,7 @@
 }
 
 .NavBarA {
-  color: #3a3e47;
+  color: white;
   display: inline-block;
   height: 100%;
   font-size: 19px;
@@ -63,7 +50,9 @@
   text-transform: uppercase;
   display: flex;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 40px;
+  background: black;
+
 
 }
 
@@ -72,17 +61,22 @@
   display: inline-block;
   height: 100%;
   font-size: 19px;
-  background: black;
   text-decoration: none;
   text-transform: uppercase;
   display: flex;
   align-items: center;
-  padding: 0 20px;
-  border-radius: 3px;
+  padding: 0 30px;
+  background: black;
+
 
 }
 
-.NavBarA:hover, .NavBarB:hover {
+.NavBarA:hover {
+  color: white;
+  background-color: black;
+}
+
+.NavBarB:hover {
   color: white;
   background-color: black;
 }
@@ -148,6 +142,7 @@
 .container{
   border-radius: 10px;
   width: 100%;
+  padding-top: 30px;
   height: 100%;
 }
 
@@ -158,7 +153,7 @@
 
 .column {
   float: left;
-  width: 30.33%;
+  width: 23.33%;
   padding: 1px;
   padding-top: 80px;
   padding-left: 100px;
@@ -219,6 +214,25 @@ div#form-box {
   border-radius: 3px;
 }
 
+#custom-search-input button {
+  border: 0;
+  background: none;
+  /** belows styles are working good */
+  padding: 2px 5px;
+  margin-top: 2px;
+  position: relative;
+  left: -28px;
+  /* IE7-8 doesn't have border-radius, so don't indent the padding */
+  margin-bottom: 0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color:#D9230F;
+}
+
+.search-query:focus + button {
+  z-index: 3;
+}
 .justify-content-center{
   margin-top: -355px;
 }
@@ -233,12 +247,12 @@ div#form-box {
 }
 
 .container {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 /* Carousel Styles */
 .carousel-indicators .active {
-  background-color: #2980b9;
+  background-color: black;
 }
 
 .carousel-inner img {
@@ -304,21 +318,31 @@ div#form-box {
   left: 1.8%;
   right: auto;
   width: 96.66666666666666%;
-  color: #fff;
+  color: black;
 }
 
 .header-text h2 {
-  font-size: 40px;
+  font-size: 50px;
+
 }
 
 .header-text h2 span {
-  background-color: black;
+  padding:20px;
+  width:710px;
+  position:relative;
+  background: transparent;
   padding: 10px;
 }
 
+.widepic{
+  opacity: 0.6;
+}
+
 .header-text h3 span {
-  background-color: #000;
+  background: transparent;
   padding: 15px;
+  font-size: 20px;
+
 }
 
 .btn-min-block {
@@ -420,7 +444,7 @@ h1 span:nth-child(5):before
 h1 span:nth-child(6),
 h1 span:nth-child(6):before
 {
-  animation-delay: 10s;}
+  animation-delay: 1s;}
 
 
 @keyframes animate
@@ -503,22 +527,92 @@ h1 span:nth-child(6):before
   }
 }
 
+#CheckSelection{
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 12px;
+  outline: none;
+  position: relative;
+  padding-left: 80px;
+  width: 50px;
+  display: table-cell;
+  vertical-align: middle;
 
+}
 
+#SelectionButton{
+  padding: 10px;
+  line-height: 30px;
+  margin-top: 20px;
+  color: black;
+  border: 2px solid #06D85F;
+  border-radius: 20px/50px;
+  background: transparent;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+  align-content: center;
+  padding-left: 200px;
+  transition: all 1s ease-out;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 12px;
+  outline: none;
+  width: 30px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+#SelectionButton:hover {
+  background: #06D85F;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+#HeaderOfModal{
+  position: center;
+  color: darkslategrey;
+}
 
 #modeltitle{
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 30px;
   outline: none;
+  padding-left: 120px;
 }
 
 #UserID:hover, #RestaurantId:hover, #DeliveryId:hover{
-  border: 1px solid #b6bfc0;
+  border: 1px solid #06D85F;
+  background:  darkslategrey;
+  padding-right: 5px;
+
   box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .7), 0 0 0 5px #f5f7f8;
 }
 
 #UserID, #RestaurantId, #DeliveryId {
   color: black;
+  padding-left: 25px;
+  margin: 10px;
+  margin-top: 12px;
+  margin-left: 18px;
+  width: 290px;
+  height: 35px;
+  border: 0.5px solid #c7d0d2;
+  border-radius: 20px/50px;
+  background-color: transparent;
+  box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8
+}
+
+label {
+  color: #555;
+  margin-left: 20px;
+  font-size: 18px;
+}
+input {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 12px;
+  outline: none;
+}
+input[type=text]{
+  color: #777;
   padding-left: 10px;
   margin: 10px;
   margin-top: 12px;
@@ -527,6 +621,73 @@ h1 span:nth-child(6):before
   height: 35px;
   border: 0.5px solid #c7d0d2;
   border-radius: 2px;
-  background-color: grey;
   box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8
+}
+input[type=password] {
+  color: #777;
+  padding-left: 10px;
+  margin: 10px;
+  margin-top: 12px;
+  margin-left: 18px;
+  width: 290px;
+  height: 35px;
+  border: 0.5px solid #c7d0d2;
+  border-radius: 2px;
+  box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8
+}
+input[type=text]:hover,
+input[type=password]:hover {
+  border: 1px solid #b6bfc0;
+  box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .7), 0 0 0 5px #f5f7f8;
+}
+input[type=text]:focus,
+input[type=password]:focus {
+  border: 1px solid #a8c9e4;
+  box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #e6f2f9;
+}
+
+#NextButton{
+  font-size: 1em;
+  padding: 10px;
+  margin-top: 20px;
+  margin-right:100px;
+  margin-left: 100px;
+  float: right;
+  color: #fff;
+  border: 2px solid #06D85F;
+  border-radius: 20px/50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 1s ease-out;
+}
+#button{
+  font-size: 1em;
+  padding: 10px;
+  margin-top: 2px;
+  float: right;
+  color: darkslategrey;
+  border: 2px solid lightgray;
+  border-radius: 20px/50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 1s ease-out;
+}
+#button:hover {
+  background: darkslategrey;
+  color: white;
+
+}
+
+#Trying{
+  width: 2000px;
+  height: 2000px;
+}
+
+#UserHead{
+  background-color: lightgray;
+}
+
+#RestaurantModel{
+  width: 100%;
+  height: 100%;
 }
