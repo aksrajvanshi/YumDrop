@@ -29,7 +29,6 @@ public class YumDropController {
         String myHash = DatatypeConverter
                 .printHexBinary(digest).toUpperCase();
 
-        System.out.println(myHash + " length of hashed password: " + myHash.length());
         return "index";
     }
 
