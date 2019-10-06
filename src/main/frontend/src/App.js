@@ -339,7 +339,10 @@ class App extends Component {
                     </Modal.Body>
                     <Modal.Footer>
                         <a id="button" href="#">
-                            Sign UP
+                            Login
+                        </a>
+                        <a id="button" href="#">
+                            Facebook SignIn
                         </a>
                     </Modal.Footer>
                 </Modal>
