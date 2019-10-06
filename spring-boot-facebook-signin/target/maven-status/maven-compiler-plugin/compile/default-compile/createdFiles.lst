@@ -1,0 +1,3 @@
+com\yumdrop\security\springbootfacebooksignin\controller\UserController.class
+com\yumdrop\security\springbootfacebooksignin\config\OAuth2Configuration.class
+com\yumdrop\security\springbootfacebooksignin\SpringBootFacebookSigninApplication.class
