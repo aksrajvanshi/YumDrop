@@ -17,7 +17,7 @@ public class YumDropController {
     private UsersRepository userRepository;
 
 
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "/public")
     public String loadInitialPublicPage() throws NoSuchAlgorithmException {
 
         String user = "akshay";
