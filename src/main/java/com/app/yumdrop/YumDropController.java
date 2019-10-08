@@ -1,21 +1,14 @@
 package com.app.yumdrop;
 
-import com.app.yumdrop.Entity.Users;
-import com.fasterxml.jackson.databind.JsonSerializer;
+import com.app.yumdrop.FormEntity.UsersDetails;
 import com.app.yumdrop.Repository.UsersRepository;
 //import jdk.nashorn.internal.parser.JSONParser;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.security.NoSuchAlgorithmException;
-import java.util.Iterator;
 
 
 @ComponentScan
@@ -38,29 +31,10 @@ public class YumDropController {
 
 
     @PostMapping(value = "/userRegistration")
-    public String userRegistration(@RequestBody String userDataForm) throws JSONException {
-        //System.out.println(userDataForm);
-        //Gson();
-       // JSONParser js = new JSONParser();
-        //JSONObject json = (JSONObject) parser.parse(userDataForm);
-        //;
-        /***try{
-            JSONObject jobj = new JSONObject(userDataForm);
-            JSONObject dataResult = jobj.getJSONObject("userDataForm");
-            JSONArray jArr = (JSONArray) dataResult.getJSONArray("current_condition");
-            for(int i = 0; i < jArr.length();i++) {
-                JSONObject innerObj = jArr.getJSONObject(i);
-                for(Iterator it = innerObj.keys(); it.hasNext(); ) {
-                    String key = (String)it.next();
-                    System.out.println(key + ":" + innerObj.get(key));
-                }
-            }
-        }catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return userDataForm;***/
-        System.out.println(userDataForm);
-        return userDataForm;
+    public String userRegistration(@RequestBody UsersDetails userDataForm){
+
+        System.out.println(userDataForm.getUser_email());
+        return "index";
     }
 
     @PostMapping(value = "/restaurantRegistration")

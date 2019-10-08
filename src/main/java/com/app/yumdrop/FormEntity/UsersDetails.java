@@ -1,8 +1,12 @@
-package com.app.yumdrop.classes;
+package com.app.yumdrop.FormEntity;
+
+import javax.persistence.Id;
 
 public class UsersDetails {
     public String user_name;
     public String userPassword;
+
+    @Id
     public String user_email;
     public String user_phonenum;
 

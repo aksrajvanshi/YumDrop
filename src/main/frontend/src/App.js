@@ -116,17 +116,17 @@ class App extends Component {
         obj.user_name=this.state.username;
         obj.userPassword = this.state.userpassword;
         obj.user_phonenum = this.state.userphonenumber;
-        fetch('/userRegistration',
-            {
-                header:{
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-                method:'POST',
-                type:"cors",
-                body:JSON.stringify({user_email: this.state.useremail, user_name:this.state.username, userPassword : this.state.userpassword,user_phonenum : this.state.userphonenumber})
-
-
+        fetch('/userRegistration',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                user_email: this.state.useremail,
+                user_name:this.state.username,
+                userPassword : this.state.userpassword,
+                user_phonenum : this.state.userphonenumber
+            })
             }
         ).then(function(res){ debugger; return res.json(); })
             .then(function(data){ console.log( JSON.stringify( data ) ) })
