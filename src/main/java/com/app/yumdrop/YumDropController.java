@@ -2,7 +2,6 @@ package com.app.yumdrop;
 
 import com.app.yumdrop.FormEntity.UsersDetails;
 import com.app.yumdrop.Repository.UsersRepository;
-//import jdk.nashorn.internal.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
