@@ -47,21 +47,6 @@ public class YumDropController {
 
         ObjectMapper mapper = new ObjectMapper();
         ArrayList<String> a = new ArrayList<String>();
-        try {
-            Map<String, String> map = mapper.readValue(userDataForm, Map.class);
-
-
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                System.out.println(entry.getKey() + ":" + entry.getValue().toString());
-                a.add(entry.getValue().toString());
-            }
-            UsersDetails d = new UsersDetails(a.get(0),a.get(1),a.get(2),a.get(3));
-            System.out.println(a.get(0));
-            System.out.println(a.get(1));
-
-                    } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
 
