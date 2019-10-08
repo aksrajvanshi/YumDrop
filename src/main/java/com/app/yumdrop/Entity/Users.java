@@ -9,7 +9,7 @@ public class Users extends CreateAndUpdateTimeModel{
 
     @Id
     @Column(name = "user_email", nullable = false)
-    private String userEmail;
+    public String userEmail;
 
     @NotNull
     @Column(name = "user_name", nullable = false)
