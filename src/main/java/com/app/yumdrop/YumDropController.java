@@ -1,9 +1,11 @@
 package com.app.yumdrop;
 
 import com.app.yumdrop.Entity.Users;
+import com.app.yumdrop.classes.UsersDetails;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.app.yumdrop.Repository.UsersRepository;
 //import jdk.nashorn.internal.parser.JSONParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,8 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 
 @ComponentScan
@@ -39,6 +44,27 @@ public class YumDropController {
 
     @PostMapping(value = "/userRegistration")
     public String userRegistration(@RequestBody String userDataForm) throws JSONException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList<String> a = new ArrayList<String>();
+        try {
+            Map<String, String> map = mapper.readValue(userDataForm, Map.class);
+
+
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                System.out.println(entry.getKey() + ":" + entry.getValue().toString());
+                a.add(entry.getValue().toString());
+            }
+            UsersDetails d = new UsersDetails(a.get(0),a.get(1),a.get(2),a.get(3));
+            System.out.println(a.get(0));
+            System.out.println(a.get(1));
+
+                    } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
         //System.out.println(userDataForm);
         //Gson();
        // JSONParser js = new JSONParser();
