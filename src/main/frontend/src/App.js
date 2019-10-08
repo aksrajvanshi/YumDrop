@@ -110,6 +110,7 @@ class App extends Component {
 
     }
 
+
     register = () => { debugger;
         let obj={}
         obj.user_email=this.state.useremail;
@@ -117,21 +118,22 @@ class App extends Component {
         obj.userPassword = this.state.userpassword;
         obj.user_phonenum = this.state.userphonenumber;
         fetch('/userRegistration',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body:JSON.stringify({
-                user_email: this.state.useremail,
-                user_name:this.state.username,
-                userPassword : this.state.userpassword,
-                user_phonenum : this.state.userphonenumber
-            })
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body:JSON.stringify({
+                    user_email: this.state.useremail,
+                    user_name:this.state.username,
+                    userPassword : this.state.userpassword,
+                    user_phonenum : this.state.userphonenumber
+                })
             }
         ).then(function(res){ debugger; return res.json(); })
             .then(function(data){ console.log( JSON.stringify( data ) ) })
 
     }
+
 
 
 
