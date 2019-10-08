@@ -45,7 +45,11 @@ class App extends Component {
         signUpPhoneNum: "",
         signUpPhoneNum2: "",
         signUpName: "",
-        signUpRestaurantName: ""
+        signUpRestaurantName: "",
+        useremail: "",
+        userpassword: "",
+        userphonenumber: "",
+        username:""
     };
     SelectLogin = () => {
         this.setState({ SelectLogin: true });
@@ -85,6 +89,76 @@ class App extends Component {
             DeliveryRegister: false
         });
     };
+
+    login = () => { debugger;
+        let obj={}
+        obj.email=this.state.email;
+
+        fetch('/login',
+            {
+                header:{
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                method:'POST',
+                type:"cors",
+                body:JSON.stringify({obj})
+
+            }
+        ).then(function(res){ debugger; return res.json(); })
+            .then(function(data){ console.log( JSON.stringify( data ) ) })
+
+    }
+
+    register = () => { debugger;
+        let obj={}
+        obj.user_email=this.state.useremail;
+        obj.user_name=this.state.username;
+        obj.userPassword = this.state.userpassword;
+        obj.user_phonenum = this.state.userphonenumber;
+        fetch('/userRegistration',
+            {
+                header:{
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                method:'POST',
+                type:"cors",
+                body:JSON.stringify({user_email: this.state.useremail, user_name:this.state.username, userPassword : this.state.userpassword,user_phonenum : this.state.userphonenumber})
+
+
+            }
+        ).then(function(res){ debugger; return res.json(); })
+            .then(function(data){ console.log( JSON.stringify( data ) ) })
+
+    }
+
+
+
+    handleUserNameChange =  (event) => {
+        this.setState({
+            username: event.target.value,
+        });
+    };
+
+    handleUserPhoneNumberChange =  (event) => {
+        this.setState({
+            userphonenumber: event.target.value,
+        });
+    };
+
+    handleUserPasswordChange =  (event) => {
+        this.setState({
+            userpassword: event.target.value,
+        });
+    };
+
+    handleUserEmailIdChange =  (event) => {
+        this.setState({
+            useremail: event.target.value,
+        });
+    };
+
 
     UserRegister = () => {
         this.setState({
@@ -189,6 +263,12 @@ class App extends Component {
         }
     };
 
+    handleUserChange =  (event) => {
+        this.setState({
+            username: event.target.value,
+        });
+    };
+
     validatePhoneNum2 = () => {
         if (this.state.signUpPhoneNum2) {
             if (
@@ -291,6 +371,13 @@ class App extends Component {
                     </nav>
                 </header>
 
+
+                <form onSubmit={this.login}>
+                    <input type="text" value={this.state.email} onChange={this.handleUserChange} />
+                    <button onClick={this.login}>ClickME!</button>
+                </form>
+
+
                 <Modal
                     show={this.state.SelectLogin}
                     onHide={this.CloseAll}
@@ -375,44 +462,52 @@ class App extends Component {
                     animation={false}
                     id="Trying"
                 >
+
+
                     <Modal.Header id="UserHead">
                         <Modal.Title id="modeltitle">User Register</Modal.Title>
                     </Modal.Header>
                     <Modal.Body id="modelBody">
-                        <form>
+
+                        <form onSubmit={this.login}>
+                            <input type="text" value={this.state.email} onChange={this.handleUserChange} />
+                            <button onClick={this.login}>ClickME!</button>
+                        </form>
+
+                        <form onSubmit={this.register}>
                             <label htmlFor="username">Name: </label>
                             <input
+                                value={this.state.username} onChange={this.handleUserNameChange}
                                 type="text"
                                 id="username"
-                                onChange={evt => this.updateName(evt)}
+
                             />
                             <br />
                             <label htmlFor="username">Email:</label>
                             <input
                                 type="text"
                                 id="username"
-                                onChange={evt => this.updateEmail(evt)}
+                                value={this.state.useremail} onChange={this.handleUserEmailIdChange}
+
                             />
                             <br />
                             <label htmlFor="password">Password:</label>
                             <input
                                 type="text"
                                 id="password"
-                                onChange={evt => this.updatePassword(evt)}
+                                value={this.state.userpassword} onChange={this.handleUserPasswordChange}
                             ></input>
                             <label htmlFor="password">Phone:</label>
                             <input
                                 type="text"
                                 id="password"
-                                onChange={evt => this.updatePhoneNum(evt)}
+                                value={this.state.userphonenumber} onChange={this.handleUserPhoneNumberChange}
                             ></input>
                             <br />
                         </form>
                     </Modal.Body>
                     <Modal.Footer id="modelBody">
-                        <a id="button" href="#">
-                            Submit
-                        </a>
+                        <button onClick={this.register}>Register NOW!</button>
                     </Modal.Footer>
                 </Modal>
                 <Modal
