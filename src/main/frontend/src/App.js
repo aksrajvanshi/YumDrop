@@ -49,7 +49,19 @@ class App extends Component {
         useremail: "",
         userpassword: "",
         userphonenumber: "",
-        username:""
+        username:"",
+        RestaurantName: "",
+        RestaurantEmail: "",
+        RestaurantPassword: "",
+        RestaurantPhoneNumber: "",
+        DeliveryAgentName: "",
+        DeliveryAgentEmailID:"",
+        DeliveryAgentPassword: "",
+        DeliveryAgentConfirmPassword: "",
+        DeliveryAgentPhoneNumber: "",
+        RestaurantManager:"",
+        RestaurantPhoneNumber2: ""
+
     };
     SelectLogin = () => {
         this.setState({ SelectLogin: true });
@@ -133,10 +145,105 @@ class App extends Component {
             .then(function(data){ console.log( JSON.stringify( data ) ) })
 
     }
+    DeliveryAgentregister = () => { debugger;
 
+        fetch('/AgentRegistration',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body:JSON.stringify({
+                    deliveryAgent_Name: this.state.DeliveryAgentName,
+                    deliveryAgent_EmailID:this.state.DeliveryAgentEmailID,
+                    deliveryAgent_Password : this.state.DeliveryAgentPassword,
+                    deliveryAgent_ConfirmPassword : this.state.DeliveryAgentConfirmPassword,
+                    deliveryAgent_PhoneNumber: this.state.DeliveryAgentPhoneNumber
+                })
+            }
+        ).then(function(res){ debugger; return res.json(); })
+            .then(function(data){ console.log( JSON.stringify( data ) ) })
 
+    }
 
+    handleDeliveryAgentPhoneNumberChange =  (event) => {
+        this.setState({
+            DeliveryAgentConfirmPassword: event.target.value,
+        });
+    };
 
+    handleDeliveryAgentConfirmPasswordChange =  (event) => {
+        this.setState({
+            DeliveryAgentConfirmPassword: event.target.value,
+        });
+    };
+    handleDeliveryAgentPasswordChange =  (event) => {
+        this.setState({
+            DeliveryAgentPassword: event.target.value,
+        });
+    };
+
+    handleDeliveryAgentEmailIDChange =  (event) => {
+        this.setState({
+            DeliveryAgentEmailID: event.target.value,
+        });
+    };
+    handleDeliveryAgentNameChange =  (event) => {
+        this.setState({
+            DeliveryAgentName: event.target.value,
+        });
+    };
+
+    Restaurantregister  = () => { debugger;
+        fetch('/restaurantRegistration',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body:JSON.stringify({
+                    restaurant_email: this.state.RestaurantEmail,
+                    restaurant_password  :this.state.RestaurantPassword,
+                    restaurant_phonenumber  : this.state.RestaurantPhoneNumber,
+                    restaurant_name    : this.state.RestaurantName
+                })
+            }
+        ).then(function(res){ debugger; return res.json(); })
+            .then(function(data){ console.log( JSON.stringify( data ) ) })
+
+    }
+
+    handleRestaurantNameChange =  (event) => {
+        this.setState({
+            RestaurantName: event.target.value,
+        });
+    };
+    RestaurantPhoneNumber2 =  (event) => {
+        this.setState({
+            RestaurantPhoneNumber2: event.target.value,
+        });
+    };
+    restaurantManager = (event) => {
+        this.setState({
+            RestaurantManager: event.target.value,
+        });
+    };
+
+    handleRestaurantEmailChange =  (event) => {
+        this.setState({
+            RestaurantEmail: event.target.value,
+        });
+    };
+
+    handleRestaurantPasswordChange  =  (event) => {
+        this.setState({
+            RestaurantPassword: event.target.value,
+        });
+    };
+
+    handleRestaurantPhoneNumberChange=  (event) => {
+        this.setState({
+            RestaurantPhoneNumber: event.target.value,
+        });
+    };
     handleUserNameChange =  (event) => {
         this.setState({
             username: event.target.value,
@@ -372,14 +479,6 @@ class App extends Component {
                         </div>
                     </nav>
                 </header>
-
-
-                <form onSubmit={this.login}>
-                    <input type="text" value={this.state.email} onChange={this.handleUserChange} />
-                    <button onClick={this.login}>ClickME!</button>
-                </form>
-
-
                 <Modal
                     show={this.state.SelectLogin}
                     onHide={this.CloseAll}
@@ -415,20 +514,18 @@ class App extends Component {
                     onHide={this.CloseAll}
                     animation={false}
                 >
-                    <Modal.Header>
+                    <Modal.Header id="UserHead">
                         <Modal.Title id="modeltitle">{this.getTitle()}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <form>
-                            <label htmlFor="username">Username:</label>
-                            <input type="text" id="username"></input> <br />
-                            <label htmlFor="password">Password:</label>
-                            <input type="text" id="password"></input>
+                        <form id="formID">
+                            <input type="text" id="username" placeholder="Username / Email ID"></input> <br />
+                            <input type="password" id="password" placeholder="Password"></input>
                         </form>
                     </Modal.Body>
                     <Modal.Footer>
                         <a id="button" href="#">
-                            Sign UP
+                            Login
                         </a>
                     </Modal.Footer>
                 </Modal>
@@ -471,45 +568,40 @@ class App extends Component {
                     </Modal.Header>
                     <Modal.Body id="modelBody">
 
-                        <form onSubmit={this.login}>
-                            <input type="text" value={this.state.email} onChange={this.handleUserChange} />
-                            <button onClick={this.login}>ClickME!</button>
-                        </form>
-
-                        <form onSubmit={this.register}>
-                            <label htmlFor="username">Name: </label>
+                        <form onSubmit={this.register} id="formID">
                             <input
                                 value={this.state.username} onChange={this.handleUserNameChange}
                                 type="text"
                                 id="username"
+                                placeholder="Full Name"
 
                             />
                             <br />
-                            <label htmlFor="username">Email:</label>
                             <input
                                 type="text"
                                 id="username"
+                                placeholder="Email ID"
                                 value={this.state.useremail} onChange={this.handleUserEmailIdChange}
 
                             />
                             <br />
-                            <label htmlFor="password">Password:</label>
                             <input
-                                type="text"
+                                type="password"
                                 id="password"
+                                placeholder="Password"
                                 value={this.state.userpassword} onChange={this.handleUserPasswordChange}
-                            ></input>
-                            <label htmlFor="password">Phone:</label>
+                            ></input><br/>
                             <input
                                 type="text"
                                 id="password"
+                                placeholder="Phone Number"
                                 value={this.state.userphonenumber} onChange={this.handleUserPhoneNumberChange}
                             ></input>
                             <br />
                         </form>
                     </Modal.Body>
                     <Modal.Footer id="modelBody">
-                        <button onClick={this.register}>Register NOW!</button>
+                        <button id="button" onClick={this.register}>Register</button>
                     </Modal.Footer>
                 </Modal>
                 <Modal
@@ -517,51 +609,50 @@ class App extends Component {
                     onHide={this.CloseAll}
                     animation={false}
                 >
-                    <Modal.Header>
+                    <Modal.Header id="UserHead">
                         <Modal.Title id="modeltitle">
                             Delivery Agent Registration
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <form>
-                            <label htmlFor="username">Name</label>
+                        <form  id="formID">
                             <input
                                 type="text"
                                 id="username"
-                                onChange={evt => this.updateName(evt)}
+                                placeholder="Name"
+                                value={this.state.DeliveryAgentName} onChange={this.handleDeliveryAgentNameChange}
                             />
                             <br />
-                            <label htmlFor="username">Email ID</label>
                             <input
                                 type="text"
                                 id="username"
-                                onChange={evt => this.updateEmail(evt)}
+                                placeholder="Email ID"
+                                value={this.state.DeliveryAgentEmailID} onChange={this.handleDeliveryAgentEmailIDChange}
                             />
                             <br />
-                            <label htmlFor="password">Password:</label>
+
                             <input
                                 type="text"
                                 id="password"
-                                onChange={evt => this.updatePassword(evt)}
+                                placeholder="Password"
+                                value={this.state.DeliveryAgentPassword} onChange={this.DeliveryAgentPassword}
                             ></input>
-                            <label htmlFor="password">Confirm Password:</label>
                             <input
-                                type="text"
+                                type="password"
                                 id="password"
-                                onChange={evt => this.updateConfirmPassword(evt)}
+                                placeholder="Confirm Password"
+                                value={this.state.DeliveryAgentConfirmPassword} onChange={this.handleDeliveryAgentConfirmPasswordChange}
                             ></input>
-                            <label htmlFor="password">Phone Number:</label>
                             <input
                                 type="text"
                                 id="password"
-                                onChange={evt => this.updatePhoneNum(evt)}
+                                placeholder="Phone Number"
+                                value={this.state.DeliveryAgentPhoneNumber} onChange={this.handleDeliveryAgentPhoneNumberChange}
                             ></input>
                         </form>
                     </Modal.Body>
-                    <Modal.Footer>
-                        <a id="button" href="#">
-                            Submit
-                        </a>
+                    <Modal.Footer id="modelBody">
+                        <button id="button" onClick={this.DeliveryAgentregister}>Register</button>
                     </Modal.Footer>
                 </Modal>
 
@@ -572,69 +663,65 @@ class App extends Component {
                     centered
                     id="RestaurantModel"
                 >
-                    <Modal.Header>
+                    <Modal.Header id="UserHead">
                         <Modal.Title id="modeltitle">Restaurant Registration</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <form>
-                            <label>
-                                {this.validateRestuarantName()}
-                                {this.validateUserName()} {this.validateEmail()}
-                                {this.validatePassword()} {this.validateConfirmPassword()}
-                                {this.validatePhoneNum()} {this.validatePhoneNum2()}
-                            </label>
-                            <label htmlFor="username"> Restaurant Name</label>
-                            <input
-                                type="text"
-                                id="username"
-                                onChange={evt => this.updateRestaurantName(evt)}
-                            />
-                            <br />
-                            <label htmlFor="username"> Manager's/Contact Person's Name</label>
-                            <input
-                                type="text"
-                                id="username"
-                                onChange={evt => this.updateName(evt)}
-                            />
-                            <br />
-                            <label htmlFor="username">Email ID</label>
-                            <input
-                                type="text"
-                                id="username"
-                                onChange={evt => this.updateEmail(evt)}
-                            />
-                            <br />
-                            <label htmlFor="password">Password:</label>
-                            <input
-                                type="text"
-                                id="password"
-                                onChange={evt => this.updatePassword(evt)}
-                            ></input>
-                            <label htmlFor="password">Confirm Password:</label>
-                            <input
-                                type="text"
-                                id="password"
-                                onChange={evt => this.updateConfirmPassword(evt)}
-                            ></input>
-                            <label htmlFor="password">Phone Number 1:</label>
-                            <input
-                                type="text"
-                                id="password"
-                                onChange={evt => this.updatePhoneNum(evt)}
-                            ></input>
-                            <label htmlFor="password">Phone Number 2:</label>
-                            <input
-                                type="text"
-                                id="password"
-                                onChange={evt => this.updatePhoneNum2(evt)}
-                            ></input>
-                        </form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <a id="button" href="#" >
-                            Submit
-                        </a>
-                    </Modal.Footer>
+                        <form  id="formID">
+
+
+                        <input
+                            value={this.state.RestaurantName} onChange={this.handleRestaurantNameChange}
+                            type="text"
+                            id="username"
+                            placeholder="Restaurant Name"
+
+                        />
+                        <br />
+
+                        <input
+                            placeholder="Restaurant Manager's Name"
+                            type="text"
+                            id="username"
+                            onChange={this.restaurantManager}
+                        />
+                        <br/>
+
+                        <input
+                            type="text"
+                            id="username"
+                            placeholder="Restaurant Email ID"
+                            value={this.state.RestaurantEmail} onChange={this.handleRestaurantEmailChange}
+
+                        />
+                        <br />
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Password"
+                            value={this.state.RestaurantPassword} onChange={this.handleRestaurantPasswordChange}
+                        ></input>
+
+                        <input
+                            type="text"
+                            id="password"
+                            placeholder="Phone Number"
+                            value={this.state.RestaurantPhoneNumber} onChange={this.handleRestaurantPhoneNumberChange}
+                        ></input>
+                        <br />
+
+                        <input
+                            type="text"
+                            id="password"
+                            placeholder="Secondary Phone number "
+                            onChange={this.RestaurantPhoneNumber2}
+                        ></input>
+                    </form>
+                </Modal.Body>
+                <Modal.Footer id="modelBody">
+                    <button onClick={this.Restaurantregister}>Register</button>
+                </Modal.Footer>
                 </Modal>
 
                 <div className="container">

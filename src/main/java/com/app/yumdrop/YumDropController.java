@@ -45,5 +45,12 @@ public class YumDropController {
         return userDataForm;
     }
 
+    @PostMapping(value = "/AgentRegistration")
+    public String agentRegistration(@RequestBody String userDataForm) {
+        System.out.println(userDataForm);
+
+        return userDataForm;
+    }
+
 
 }
