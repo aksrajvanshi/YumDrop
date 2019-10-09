@@ -22,6 +22,7 @@ import display12 from "./images/chocolate-lasagna-4.jpg";
 import display13 from "./images/Burgers.jpg";
 import * as EmailValidator from "email-validator";
 import { isMobilePhone } from "validator";
+import ReactTelephoneInput from "react-telephone-input/es/ReactTelephoneInput";
 
 const properties = {
     duration: 10000,
@@ -29,6 +30,7 @@ const properties = {
     infinite: true,
     arrows: true
 };
+
 class App extends Component {
     state = {
         SelectLogin: false,
@@ -434,6 +436,9 @@ class App extends Component {
         return (
             <div className="App">
                 <header>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
                     <link
                         href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
                         rel="stylesheet"
@@ -460,26 +465,56 @@ class App extends Component {
                         rel="stylesheet"
                         href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"
                     />
-                    <nav className="NavigationBar">
-                        <h2 className="menu_logo">YumDrops</h2>
-                        <div className="menuright">
-                            <ul className="menulist">
-                                <li className="menulist-item">
-                                    {" "}
-                                    <a className="NavBarA" href="#" onClick={this.SelectLogin}>
-                                        Login
-                                    </a>{" "}
-                                </li>
-                                <li className="menulist-item">
-                                    <a className="NavBarB" href="#" onClick={this.RegisterSelect}>
-                                        Sign Up{" "}
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
+
+
+
+
                 </header>
-                <Modal
+
+
+                <link href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css" rel="stylesheet"/>
+
+                    <div id="myCarousel" className="carousel slide carousel-fade" data-ride="carousel">
+                        <div className="carousel-inner">
+                            <div className="carousel-item active">
+                                <div className="mask flex-center">
+                                    <div className="container">
+                                        <div className="row align-items-center">
+                                            <div className="col-md-7 col-12 order-md-1 order-2">
+                                                <h3>Are you hungry? <br/>
+                                                    </h3>
+                                                <p>Order food from anytime and any place <br/>
+
+                                                </p>
+                                                <a href="#">Order Now</a></div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <Modal
                     show={this.state.SelectLogin}
                     onHide={this.CloseAll}
                     className="modal"
@@ -591,6 +626,10 @@ class App extends Component {
                                 placeholder="Password"
                                 value={this.state.userpassword} onChange={this.handleUserPasswordChange}
                             ></input><br/>
+                            <select name="CountryCode" name="Country Code" id="SelectCountryCode">
+                                <option value="India">+91</option>
+                                <option value="USA">+1</option>
+                            </select><br/>
                             <input
                                 type="text"
                                 id="password"
@@ -724,69 +763,7 @@ class App extends Component {
                 </Modal.Footer>
                 </Modal>
 
-                <div className="container">
-                    <div className="row">
-                        <div
-                            id="carousel-example-generic"
-                            className="carousel slide"
-                            data-ride="carousel"
-                        >
-                            <ol className="carousel-indicators">
-                                <li
-                                    data-target="#carousel-example-generic"
-                                    data-slide-to="0"
-                                    className="active"
-                                ></li>
-                                <li
-                                    data-target="#carousel-example-generic"
-                                    data-slide-to="1"
-                                ></li>
-                                <li
-                                    data-target="#carousel-example-generic"
-                                    data-slide-to="2"
-                                ></li>
-                            </ol>
-                            <div className="carousel-inner">
-                                <div className="item active">
-                                    <img src={pic1} className="widepic" alt="First slide" />
-                                    <div className="header-text hidden-xs">
-                                        <div className="col-md-12 text-center">
-                                            <h2>
-                        <span>
-                          {" "}
-                            <strong>Welcome to YumDrop</strong>
-                        </span>
-                                            </h2>
-                                            <br />
-                                            <h3>
-                        <span>
-                          <strong>
-                            Delivering deliciouness at your doorstep
-                          </strong>
-                        </span>
-                                            </h3>
-                                            <br />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a
-                                className="left carousel-control"
-                                href="#carousel-example-generic"
-                                data-slide="prev"
-                            >
-                                <span className="glyphicon glyphicon-chevron-left"></span>
-                            </a>
-                            <a
-                                className="right carousel-control"
-                                href="#carousel-example-generic"
-                                data-slide="next"
-                            >
-                                <span className="glyphicon glyphicon-chevron-right"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+
                 <div className="row">
                     <div className="column">
                         <div className="polaroid">
