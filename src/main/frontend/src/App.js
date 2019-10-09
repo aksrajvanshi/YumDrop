@@ -23,7 +23,7 @@ import display13 from "./images/Burgers.jpg";
 import * as EmailValidator from "email-validator";
 import { isMobilePhone } from "validator";
 import ReactTelephoneInput from "react-telephone-input/es/ReactTelephoneInput";
-
+import {browserHistory} from 'react-router'
 const properties = {
     duration: 10000,
     transitionDuration: 100,
@@ -474,7 +474,7 @@ class App extends Component {
 
                 </header>
 
-
+                <button >Click Me</button>
                 <section id="search-sec">
                     <div className="container">
                         <form action="#" method="post" noValidate="novalidate">
