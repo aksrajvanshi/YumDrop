@@ -436,6 +436,9 @@ class App extends Component {
         return (
             <div className="App">
                 <header>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
                     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -470,6 +473,38 @@ class App extends Component {
 
 
                 </header>
+
+
+                <section id="search-sec">
+                    <div className="container">
+                        <form action="#" method="post" noValidate="novalidate">
+                            <div className="row">
+                                <div className="col-lg-12">
+                                    <div className="row">
+                                        <div className="col-lg-3 col-md-4 col-sm-14 p-3">
+                                            <select className="form-control search-slt" >
+                                                <option>Select Your Location</option>
+                                                <option>Bloomington, Indiana</option>
+                                                <option>Indianapolis, Indiana</option>
+                                                <option>Chicago, Illinois</option>
+                                                <option>Buffalo, New York</option>
+                                            </select>
+                                        </div>
+
+                                        <div className="col-lg-4 col-md-4 col-sm-14 p-0">
+                                            <input type="text" placeholder="Search for your Favourite food, cuisine, restaurants..." className="form-control search-slt" id="exampleFormControlSelect1">
+
+                                            </input>
+                                        </div>
+                                        <div id="buttonSearch">
+                                            <button  type="button" >Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </section>
 
 
                 <link href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css" rel="stylesheet"/>
