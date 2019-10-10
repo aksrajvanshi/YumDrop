@@ -23,6 +23,8 @@ import display13 from "./images/Burgers.jpg";
 import * as EmailValidator from "email-validator";
 import { isMobilePhone } from "validator";
 import FacebookLogin from 'react-facebook-login';
+import ReactDOM from 'react-dom';
+
 
 const axios = require('axios');
 
@@ -254,7 +256,7 @@ class App extends Component {
         console.log(user.userName);
         axios({
             method:'post',
-            url:'http://localhost:8080/fbUserLogin',
+            url:'/fbUserLogin',
             data: user
         })
             .then( (response) => {
@@ -366,6 +368,7 @@ class App extends Component {
                             appId="527192644707128"
                             autoLoad={false}
                             fields="name,email,picture"
+                            //onClick={componentClicked}
                             callback={(response)=>this.responseFacebook(response)} />
                     </Modal.Footer>
                 </Modal>
