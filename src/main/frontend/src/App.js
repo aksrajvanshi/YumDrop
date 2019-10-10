@@ -31,98 +31,106 @@ const properties = {
 };
 class App extends Component {
     state = {
-        SelectLogin: false,
-        UserLogin: false,
-        RestaurantLogin: false,
-        DeliveryLogin: false,
-        RegisterSelect: false,
-        UserRegister: false,
-        RestaurantRegister: false,
-        DeliveryRegister: false,
+        selectLogin: false,
+        userLogin: false,
+        restaurantLogin: false,
+        deliveryLogin: false,
+        registerSelect: false,
+        userRegister: false,
+        restaurantRegister: false,
+        deliveryRegister: false,
         signUpPassword: "",
         signUpConfirmPassword: "",
         signUpEmail: "",
         signUpPhoneNum: "",
         signUpPhoneNum2: "",
         signUpName: "",
-        signUpRestaurantName: ""
+        signUpRestaurantName: "",
+        formIsValid: false
     };
     SelectLogin = () => {
-        this.setState({ SelectLogin: true });
+        this.setState({ selectLogin: true });
     };
     UserLogin = () => {
         this.setState({
-            UserLogin: true,
-            SelectLogin: false,
-            RestaurantLogin: false,
-            DeliveryLogin: false
+            userLogin: true,
+            selectLogin: false,
+            restaurantLogin: false,
+            deliveryLogin: false
         });
     };
 
     RestaurantLogin = () => {
         this.setState({
-            UserLogin: false,
-            SelectLogin: false,
-            RestaurantLogin: true,
-            DeliveryLogin: false
+            userLogin: false,
+            selectLogin: false,
+            restaurantLogin: true,
+            deliveryLogin: false
         });
     };
 
     DeliveryLogin = () => {
         this.setState({
-            UserLogin: false,
-            SelectLogin: false,
-            RestaurantLogin: false,
-            DeliveryLogin: true
+            userLogin: false,
+            selectLogin: false,
+            restaurantLogin: false,
+            deliveryLogin: true
         });
     };
 
     RegisterSelect = () => {
         this.setState({
-            UserRegister: false,
-            RegisterSelect: true,
-            RestaurantRegister: false,
-            DeliveryRegister: false
+            userRegister: false,
+            registerSelect: true,
+            restaurantRegister: false,
+            deliveryRegister: false
         });
     };
 
     UserRegister = () => {
         this.setState({
-            UserRegister: true,
-            RegisterSelect: false,
-            RestaurantRegister: false,
-            DeliveryRegister: false
+            userRegister: true,
+            registerSelect: false,
+            restaurantRegister: false,
+            deliveryRegister: false
         });
     };
 
     RestaurantRegister = () => {
         this.setState({
-            UserRegister: false,
-            RegisterSelect: false,
-            RestaurantRegister: true,
-            DeliveryRegister: false
+            userRegister: false,
+            registerSelect: false,
+            restaurantRegister: true,
+            deliveryRegister: false
         });
     };
 
     DeliveryRegister = () => {
         this.setState({
-            UserRegister: false,
-            RegisterSelect: false,
-            RestaurantRegister: false,
-            DeliveryRegister: true
+            userRegister: false,
+            registerSelect: false,
+            restaurantRegister: false,
+            deliveryRegister: true
         });
     };
 
     CloseAll = () => {
         this.setState({
-            UserLogin: false,
-            SelectLogin: false,
-            RestaurantLogin: false,
-            DeliveryLogin: false,
-            RegisterSelect: false,
-            UserRegister: false,
-            RestaurantRegister: false,
-            DeliveryRegister: false
+            userLogin: false,
+            selectLogin: false,
+            restaurantLogin: false,
+            deliveryLogin: false,
+            registerSelect: false,
+            userRegister: false,
+            restaurantRegister: false,
+            deliveryRegister: false,
+            signUpConfirmPassword: "",
+            signUpEmail: "",
+            signUpName: "",
+            signUpPassword: "",
+            signUpPhoneNum: "",
+            signUpPhoneNum2: "",
+            signUpRestaurantName: ""
         });
     };
 
@@ -131,47 +139,42 @@ class App extends Component {
             return "Name cannot be empty. ";
         } else if (!/^[A-Za-z]+$/.test(this.state.signUpName)) {
             return "Please only use letters. ";
-        } else {
-            return true;
         }
     };
 
     validateRestuarantName = () => {
         if (!this.state.signUpRestaurantName) {
             return "Restaurant name cannot be empty. ";
-        } else if (!/^[A-Za-z]+$/.test(this.state.signUpName)) {
+        } else if (!/^[A-Za-z]+$/.test(this.state.signUpRestaurantName)) {
             return "Please only use letters. ";
-        } else {
-            return true;
         }
     };
 
     validateEmail = () => {
         if (!EmailValidator.validate(this.state.signUpEmail)) {
             return "Please enter a valid email. ";
-        } else {
-            return true;
         }
     };
 
     validatePassword = () => {
         if (!/[a-z]/.test(this.state.signUpPassword)) {
-            return "Password must have atleast one lower case letter. ";
+            return "Password must contain a lower case letter. ";
         } else if (!/[A-Z]/.test(this.state.signUpPassword)) {
-            return "Password must have atleast one upper case letter. ";
+            return "Password must contain an upper case letter. ";
         } else if (/^[A-Za-z]+$/.test(this.state.signUpPassword)) {
-            return "Password must contain atleast one unique non-letter character. ";
-        } else {
-            return true;
+            return "Password must contain a unique non-letter character. ";
+        }
+        else if (this.state.signUpPassword.length < 8) {
+            return "Password must be be longer than 7 characters."
         }
     };
 
     validateConfirmPassword = () => {
-        if (this.state.signUpConfirmPassword != this.state.signUpPassword) {
-            return "Passwords do not match. ";
+        if (!this.state.signUpConfirmPassword) {
+            return "Password confirmation cannot be empty."
         }
-        else {
-            return true;
+        else if (this.state.signUpConfirmPassword != this.state.signUpPassword) {
+            return "Passwords do not match. ";
         }
     };
 
@@ -185,7 +188,7 @@ class App extends Component {
                 return "Please enter a valid phone number. ";
             }
         } else {
-            return true;
+            return "Phone number cannot be empty.";
         }
     };
 
@@ -199,16 +202,47 @@ class App extends Component {
                 return "Please enter a second valid phone number. ";
             }
         } else {
-            return true;
+            return "Phone number cannot be empty.";
         }
     };
 
+    validateForm = () => {
+        if (
+            (this.state.userRegister || this.state.deliveryRegister) &&
+            (this.validateUserName() ||
+                this.validateEmail() ||
+                this.validatePassword() ||
+                this.validatePhoneNum() ||
+                this.validateConfirmPassword())
+        ) {
+            this.setState({ formIsValid: false });
+            console.log("false");
+        } else if (
+            this.state.restaurantRegister &&
+            (this.validateUserName() ||
+                this.validateEmail() ||
+                this.validatePassword() ||
+                this.validatePhoneNum() ||
+                this.validateConfirmPassword() ||
+                this.validatePhoneNum2() ||
+                this.validateRestuarantName())
+        ) {
+            this.setState( {formIsValid: false});
+            console.log("false");
+        }
+        else {
+            this.setState({ formIsValid: true });
+            console.log("true");
+        }
+    };
+
+
     getTitle() {
-        if (this.state.UserLogin) {
+        if (this.state.userLogin) {
             return "User Login";
-        } else if (this.state.RestaurantLogin) {
+        } else if (this.state.restaurantLogin) {
             return "Restaurant Login";
-        } else if (this.state.DeliveryLogin) {
+        } else if (this.state.deliveryLogin) {
             return "Delivery Login";
         }
     }
@@ -292,13 +326,13 @@ class App extends Component {
                 </header>
 
                 <Modal
-                    show={this.state.SelectLogin}
+                    show={this.state.selectLogin}
                     onHide={this.CloseAll}
                     className="modal"
                     animation={false}
                     centered
                 >
-                    <Modal.Header className="modelheader" id="containerModal">
+                    <Modal.Header className="modelheader" id="containerModal" closeButton>
                         <Modal.Title className="modeltitle" id="modeltitle">
                             <strong>Select Login</strong>
                         </Modal.Title>
@@ -319,14 +353,14 @@ class App extends Component {
                 </Modal>
                 <Modal
                     show={
-                        this.state.DeliveryLogin ||
-                        this.state.UserLogin ||
-                        this.state.RestaurantLogin
+                        this.state.deliveryLogin ||
+                        this.state.userLogin ||
+                        this.state.restaurantLogin
                     }
                     onHide={this.CloseAll}
                     animation={false}
                 >
-                    <Modal.Header>
+                    <Modal.Header closeButton>
                         <Modal.Title id="modeltitle">{this.getTitle()}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -339,18 +373,18 @@ class App extends Component {
                     </Modal.Body>
                     <Modal.Footer>
                         <a id="button" href="#">
-                            Sign UP
+                            Login
                         </a>
                     </Modal.Footer>
                 </Modal>
 
                 <Modal
-                    show={this.state.RegisterSelect}
+                    show={this.state.registerSelect}
                     onHide={this.CloseAll}
                     animation={false}
                     centered
                 >
-                    <Modal.Header className="modelheader" id="containerModal">
+                    <Modal.Header className="modelheader" id="containerModal" closeButton>
                         <Modal.Title className="modeltitle" id="modeltitle">
                             <strong>Select Account Type</strong>
                         </Modal.Title>
@@ -370,12 +404,12 @@ class App extends Component {
                     </Modal.Body>
                 </Modal>
                 <Modal
-                    show={this.state.UserRegister}
+                    show={this.state.userRegister}
                     onHide={this.CloseAll}
                     animation={false}
                     id="Trying"
                 >
-                    <Modal.Header id="UserHead">
+                    <Modal.Header id="UserHead" closeButton>
                         <Modal.Title id="modeltitle">User Register</Modal.Title>
                     </Modal.Header>
                     <Modal.Body id="modelBody">
@@ -387,6 +421,10 @@ class App extends Component {
                                 onChange={evt => this.updateName(evt)}
                             />
                             <br />
+                            <label className="validationMessage">
+                                {this.validateUserName()}
+                            </label>
+                            <br />
                             <label htmlFor="username">Email:</label>
                             <input
                                 type="text"
@@ -394,12 +432,32 @@ class App extends Component {
                                 onChange={evt => this.updateEmail(evt)}
                             />
                             <br />
+                            <label className="validationMessage">
+                                {this.validateEmail()}
+                            </label>
+                            <br />
                             <label htmlFor="password">Password:</label>
                             <input
                                 type="text"
                                 id="password"
                                 onChange={evt => this.updatePassword(evt)}
                             ></input>
+                            <br />
+                            <label className="validationMessage">
+                                {this.validatePassword()}
+                            </label>
+                            <br />
+                            <label htmlFor="password">Confirm Password:</label>
+                            <input
+                                type="text"
+                                id="password"
+                                onChange={evt => this.updateConfirmPassword(evt)}
+                            ></input>
+                            <br />
+                            <label className="validationMessage">
+                                {this.validateConfirmPassword()}
+                            </label>
+                            <br />
                             <label htmlFor="password">Phone:</label>
                             <input
                                 type="text"
@@ -407,20 +465,23 @@ class App extends Component {
                                 onChange={evt => this.updatePhoneNum(evt)}
                             ></input>
                             <br />
+                            <label className="validationMessage">
+                                {this.validatePhoneNum()}
+                            </label>
                         </form>
                     </Modal.Body>
                     <Modal.Footer id="modelBody">
-                        <a id="button" href="#">
+                        <a id="button" href="#" onClick={this.validateForm}>
                             Submit
                         </a>
                     </Modal.Footer>
                 </Modal>
                 <Modal
-                    show={this.state.DeliveryRegister}
+                    show={this.state.deliveryRegister}
                     onHide={this.CloseAll}
                     animation={false}
                 >
-                    <Modal.Header>
+                    <Modal.Header closeButton>
                         <Modal.Title id="modeltitle">
                             Delivery Agent Registration
                         </Modal.Title>
@@ -434,6 +495,10 @@ class App extends Component {
                                 onChange={evt => this.updateName(evt)}
                             />
                             <br />
+                            <label className="validationMessage">
+                                {this.validateUserName()}
+                            </label>
+                            <br />
                             <label htmlFor="username">Email ID</label>
                             <input
                                 type="text"
@@ -441,57 +506,73 @@ class App extends Component {
                                 onChange={evt => this.updateEmail(evt)}
                             />
                             <br />
+                            <label className="validationMessage">
+                                {this.validateEmail()}
+                            </label>
+                            <br />
                             <label htmlFor="password">Password:</label>
                             <input
                                 type="text"
                                 id="password"
                                 onChange={evt => this.updatePassword(evt)}
                             ></input>
+                            <br />
+                            <label className="validationMessage">
+                                {this.validatePassword()}
+                            </label>
+                            <br />
                             <label htmlFor="password">Confirm Password:</label>
                             <input
                                 type="text"
                                 id="password"
                                 onChange={evt => this.updateConfirmPassword(evt)}
                             ></input>
+                            <br />
+                            <label className="validationMessage">
+                                {this.validateConfirmPassword()}
+                            </label>
+                            <br />
                             <label htmlFor="password">Phone Number:</label>
                             <input
                                 type="text"
                                 id="password"
                                 onChange={evt => this.updatePhoneNum(evt)}
                             ></input>
+                            <br />
+                            <label className="validationMessage">
+                                {this.validatePhoneNum()}
+                            </label>
                         </form>
                     </Modal.Body>
                     <Modal.Footer>
-                        <a id="button" href="#">
+                        <a id="button" href="#" onClick={this.validateForm}>
                             Submit
                         </a>
                     </Modal.Footer>
                 </Modal>
 
                 <Modal
-                    show={this.state.RestaurantRegister}
+                    show={this.state.restaurantRegister}
                     onHide={this.CloseAll}
                     animation={false}
                     centered
                     id="RestaurantModel"
                 >
-                    <Modal.Header>
+                    <Modal.Header closeButton>
                         <Modal.Title id="modeltitle">Restaurant Registration</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <form>
-                            <label>
-                                {this.validateRestuarantName()}
-                                {this.validateUserName()} {this.validateEmail()}
-                                {this.validatePassword()} {this.validateConfirmPassword()}
-                                {this.validatePhoneNum()} {this.validatePhoneNum2()}
-                            </label>
                             <label htmlFor="username"> Restaurant Name</label>
                             <input
                                 type="text"
                                 id="username"
                                 onChange={evt => this.updateRestaurantName(evt)}
                             />
+                            <br />
+                            <label className="validationMessage">
+                                {this.validateRestuarantName()}
+                            </label>
                             <br />
                             <label htmlFor="username"> Manager's/Contact Person's Name</label>
                             <input
@@ -500,6 +581,10 @@ class App extends Component {
                                 onChange={evt => this.updateName(evt)}
                             />
                             <br />
+                            <label className="validationMessage">
+                                {this.validateUserName()}
+                            </label>
+                            <br />
                             <label htmlFor="username">Email ID</label>
                             <input
                                 type="text"
@@ -507,34 +592,57 @@ class App extends Component {
                                 onChange={evt => this.updateEmail(evt)}
                             />
                             <br />
+                            <label className="validationMessage">
+                                {this.validateEmail()}
+                            </label>
+                            <br />
                             <label htmlFor="password">Password:</label>
                             <input
                                 type="text"
                                 id="password"
                                 onChange={evt => this.updatePassword(evt)}
                             ></input>
+                            <br />
+                            <label className="validationMessage">
+                                {this.validatePassword()}
+                            </label>
+                            <br />
                             <label htmlFor="password">Confirm Password:</label>
                             <input
                                 type="text"
                                 id="password"
                                 onChange={evt => this.updateConfirmPassword(evt)}
                             ></input>
+                            <br />
+                            <label className="validationMessage">
+                                {this.validateConfirmPassword()}
+                            </label>
+                            <br />
                             <label htmlFor="password">Phone Number 1:</label>
                             <input
                                 type="text"
                                 id="password"
                                 onChange={evt => this.updatePhoneNum(evt)}
                             ></input>
+                            <br />
+                            <label className="validationMessage">
+                                {this.validatePhoneNum()}
+                            </label>
+                            <br />
                             <label htmlFor="password">Phone Number 2:</label>
                             <input
                                 type="text"
                                 id="password"
                                 onChange={evt => this.updatePhoneNum2(evt)}
                             ></input>
+                            <br />
+                            <label className="validationMessage">
+                                {this.validatePhoneNum2()}
+                            </label>
                         </form>
                     </Modal.Body>
                     <Modal.Footer>
-                        <a id="button" href="#" >
+                        <a id="button" href="#" onClick={this.validateForm}>
                             Submit
                         </a>
                     </Modal.Footer>

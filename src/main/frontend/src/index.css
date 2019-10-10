@@ -117,7 +117,11 @@
   position: relative;
 }
 
-
+.validationMessage {
+  color: red;
+  font-weight: bold;
+  font-size: .75em;
+}
 
 .button-holder
 {
