@@ -22,6 +22,9 @@ import display12 from "./images/chocolate-lasagna-4.jpg";
 import display13 from "./images/Burgers.jpg";
 import * as EmailValidator from "email-validator";
 import { isMobilePhone } from "validator";
+import FacebookLogin from 'react-facebook-login';
+
+const axios = require('axios');
 
 const properties = {
     duration: 10000,
@@ -241,6 +244,24 @@ class App extends Component {
         this.setState({ signUpPhoneNum2: evt.target.value });
     }
 
+    responseFacebook(response) {
+        console.log(response.name);
+        console.log(response.email);
+        const user = {
+            "userEmail": response.email,
+            "userName" : response.name
+        };
+        console.log(user.userName);
+        axios({
+            method:'post',
+            url:'http://localhost:8080/fbUserLogin',
+            data: user
+        })
+            .then( (response) => {
+                console.log(response);
+            });
+    }
+
     render() {
         return (
             <div className="App">
@@ -339,8 +360,13 @@ class App extends Component {
                     </Modal.Body>
                     <Modal.Footer>
                         <a id="button" href="#">
-                            Sign UP
+                            Login
                         </a>
+                        <FacebookLogin
+                            appId="527192644707128"
+                            autoLoad={false}
+                            fields="name,email,picture"
+                            callback={(response)=>this.responseFacebook(response)} />
                     </Modal.Footer>
                 </Modal>
 
