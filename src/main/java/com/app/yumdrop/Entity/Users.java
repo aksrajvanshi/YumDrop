@@ -1,6 +1,7 @@
 package com.app.yumdrop.Entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -9,6 +10,7 @@ public class Users extends CreateAndUpdateTimeModel{
 
     @Id
     @Column(name = "user_email", nullable = false)
+    @Email(message = "user email should be a valid email")
     public String userEmail;
 
     @NotNull
@@ -36,6 +38,14 @@ public class Users extends CreateAndUpdateTimeModel{
     private String lastCreatedUser;
 
     public Users(){
+    }
+
+    public Users(String userEmail, @NotNull String userName, @NotNull String userPhoneNumber, @NotNull String userCountryCode, @NotNull String userPassword) {
+        this.userEmail = userEmail;
+        this.userName = userName;
+        this.userPhoneNumber = userPhoneNumber;
+        this.userCountryCode = userCountryCode;
+        this.userPassword = userPassword;
     }
 
     public Users(String userEmail, @NotNull String userName, @NotNull String userPhoneNumber, @NotNull String userCountryCode, @NotNull String userPassword, @NotNull String lastUpdatedUser, @NotNull String lastCreatedUser) {
