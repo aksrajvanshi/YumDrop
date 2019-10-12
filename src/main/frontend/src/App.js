@@ -1,108 +1,19 @@
 import React, { Component } from "react";
 import "./App.css";
-import { Slide } from "react-slideshow-image";
-import pic1 from "./images/pic1.jpg";
-import pic2 from "./images/pic2.jpg";
+import LoginPage from "./LoginPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
-import trying2 from "./images/trying2.jfif";
-import display1 from "./images/IndianFood.jpg";
-import display2 from "./images/ItalianFood.jpg";
-import display3 from "./images/JapaneseFood.jpg";
-import display4 from "./images/KoreanFood.jpg";
-import display5 from "./images/MexicanFood.jpg";
-import display6 from "./images/ThaiFood.jpg";
-import display7 from "./images/WestAfricanFood.jpg";
-import display8 from "./images/AddImage1.jpg";
-import display9 from "./images/AddImage2.jpg";
-import display10 from "./images/addHongKong.jpg";
-import trying4 from "./images/1502296790.92.jpg";
-import display11 from "./images/BengaliFood.jpg";
-import display12 from "./images/chocolate-lasagna-4.jpg";
-import display13 from "./images/Burgers.jpg";
-import * as EmailValidator from "email-validator";
-import { isMobilePhone } from "validator";
-import ReactTelephoneInput from "react-telephone-input/es/ReactTelephoneInput";
-import {browserHistory} from 'react-router'
-const properties = {
-    duration: 10000,
-    transitionDuration: 100,
-    infinite: true,
-    arrows: true
-};
 
+import ReactTelephoneInput from "react-telephone-input/es/ReactTelephoneInput";
 class App extends Component {
     state = {
-        SelectLogin: false,
-        UserLogin: false,
-        RestaurantLogin: false,
-        DeliveryLogin: false,
-        RegisterSelect: false,
-        UserRegister: false,
-        RestaurantRegister: false,
-        DeliveryRegister: false,
-        signUpPassword: "",
-        signUpConfirmPassword: "",
-        signUpEmail: "",
-        signUpPhoneNum: "",
-        signUpPhoneNum2: "",
-        signUpName: "",
-        signUpRestaurantName: "",
-        useremail: "",
-        userpassword: "",
-        userphonenumber: "",
-        username:"",
-        RestaurantName: "",
-        RestaurantEmail: "",
-        RestaurantPassword: "",
-        RestaurantPhoneNumber: "",
-        DeliveryAgentName: "",
-        DeliveryAgentEmailID:"",
-        DeliveryAgentPassword: "",
-        DeliveryAgentConfirmPassword: "",
-        DeliveryAgentPhoneNumber: "",
-        RestaurantManager:"",
-        RestaurantPhoneNumber2: ""
-
-    };
-    SelectLogin = () => {
-        this.setState({ SelectLogin: true });
-    };
-    UserLogin = () => {
-        this.setState({
-            UserLogin: true,
-            SelectLogin: false,
-            RestaurantLogin: false,
-            DeliveryLogin: false
-        });
+        selectLoginOption: false,
+        userLoginOption: false,
+        restaurantLoginOption: false,
+        deliveryAgentLoginOption: false,
+        closeAllOptionsOfSelectionForm: false
     };
 
-    RestaurantLogin = () => {
-        this.setState({
-            UserLogin: false,
-            SelectLogin: false,
-            RestaurantLogin: true,
-            DeliveryLogin: false
-        });
-    };
-
-    DeliveryLogin = () => {
-        this.setState({
-            UserLogin: false,
-            SelectLogin: false,
-            RestaurantLogin: false,
-            DeliveryLogin: true
-        });
-    };
-
-    RegisterSelect = () => {
-        this.setState({
-            UserRegister: false,
-            RegisterSelect: true,
-            RestaurantRegister: false,
-            DeliveryRegister: false
-        });
-    };
 
     login = () => { debugger;
         let obj={}
@@ -167,898 +78,212 @@ class App extends Component {
 
     }
 
-    handleDeliveryAgentPhoneNumberChange =  (event) => {
-        this.setState({
-            DeliveryAgentConfirmPassword: event.target.value,
-        });
-    };
-
-    handleDeliveryAgentConfirmPasswordChange =  (event) => {
-        this.setState({
-            DeliveryAgentConfirmPassword: event.target.value,
-        });
-    };
-    handleDeliveryAgentPasswordChange =  (event) => {
-        this.setState({
-            DeliveryAgentPassword: event.target.value,
-        });
-    };
-
-    handleDeliveryAgentEmailIDChange =  (event) => {
-        this.setState({
-            DeliveryAgentEmailID: event.target.value,
-        });
-    };
-    handleDeliveryAgentNameChange =  (event) => {
-        this.setState({
-            DeliveryAgentName: event.target.value,
-        });
-    };
-
-    Restaurantregister  = () => { debugger;
-        fetch('/restaurantRegistration',{
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body:JSON.stringify({
-                    restaurant_email: this.state.RestaurantEmail,
-                    restaurant_password  :this.state.RestaurantPassword,
-                    restaurant_phonenumber  : this.state.RestaurantPhoneNumber,
-                    restaurant_name    : this.state.RestaurantName
-                })
-            }
-        ).then(function(res){ debugger; return res.json(); })
-            .then(function(data){ console.log( JSON.stringify( data ) ) })
-
+    selectLoginOption = () =>{
+        this.setState({selectLoginOption: true})
     }
-
-    handleRestaurantNameChange =  (event) => {
-        this.setState({
-            RestaurantName: event.target.value,
-        });
-    };
-    RestaurantPhoneNumber2 =  (event) => {
-        this.setState({
-            RestaurantPhoneNumber2: event.target.value,
-        });
-    };
-    restaurantManager = (event) => {
-        this.setState({
-            RestaurantManager: event.target.value,
-        });
-    };
-
-    handleRestaurantEmailChange =  (event) => {
-        this.setState({
-            RestaurantEmail: event.target.value,
-        });
-    };
-
-    handleRestaurantPasswordChange  =  (event) => {
-        this.setState({
-            RestaurantPassword: event.target.value,
-        });
-    };
-
-    handleRestaurantPhoneNumberChange=  (event) => {
-        this.setState({
-            RestaurantPhoneNumber: event.target.value,
-        });
-    };
-    handleUserNameChange =  (event) => {
-        this.setState({
-            username: event.target.value,
-        });
-    };
-
-    handleUserPhoneNumberChange =  (event) => {
-        this.setState({
-            userphonenumber: event.target.value,
-        });
-    };
-
-    handleUserPasswordChange =  (event) => {
-        this.setState({
-            userpassword: event.target.value,
-        });
-    };
-
-    handleUserEmailIdChange =  (event) => {
-        this.setState({
-            useremail: event.target.value,
-        });
-    };
-
-
-    UserRegister = () => {
-        this.setState({
-            UserRegister: true,
-            RegisterSelect: false,
-            RestaurantRegister: false,
-            DeliveryRegister: false
-        });
-    };
-
-    RestaurantRegister = () => {
-        this.setState({
-            UserRegister: false,
-            RegisterSelect: false,
-            RestaurantRegister: true,
-            DeliveryRegister: false
-        });
-    };
-
-    DeliveryRegister = () => {
-        this.setState({
-            UserRegister: false,
-            RegisterSelect: false,
-            RestaurantRegister: false,
-            DeliveryRegister: true
-        });
-    };
-
-    CloseAll = () => {
-        this.setState({
-            UserLogin: false,
-            SelectLogin: false,
-            RestaurantLogin: false,
-            DeliveryLogin: false,
-            RegisterSelect: false,
-            UserRegister: false,
-            RestaurantRegister: false,
-            DeliveryRegister: false
-        });
-    };
-
-    validateUserName = () => {
-        if (!this.state.signUpName) {
-            return "Name cannot be empty. ";
-        } else if (!/^[A-Za-z]+$/.test(this.state.signUpName)) {
-            return "Please only use letters. ";
-        } else {
-            return true;
-        }
-    };
-
-    validateRestuarantName = () => {
-        if (!this.state.signUpRestaurantName) {
-            return "Restaurant name cannot be empty. ";
-        } else if (!/^[A-Za-z]+$/.test(this.state.signUpName)) {
-            return "Please only use letters. ";
-        } else {
-            return true;
-        }
-    };
-
-    validateEmail = () => {
-        if (!EmailValidator.validate(this.state.signUpEmail)) {
-            return "Please enter a valid email. ";
-        } else {
-            return true;
-        }
-    };
-
-    validatePassword = () => {
-        if (!/[a-z]/.test(this.state.signUpPassword)) {
-            return "Password must have atleast one lower case letter. ";
-        } else if (!/[A-Z]/.test(this.state.signUpPassword)) {
-            return "Password must have atleast one upper case letter. ";
-        } else if (/^[A-Za-z]+$/.test(this.state.signUpPassword)) {
-            return "Password must contain atleast one unique non-letter character. ";
-        } else {
-            return true;
-        }
-    };
-
-    validateConfirmPassword = () => {
-        if (this.state.signUpConfirmPassword != this.state.signUpPassword) {
-            return "Passwords do not match. ";
-        }
-        else {
-            return true;
-        }
-    };
-
-    validatePhoneNum = () => {
-        if (this.state.signUpPhoneNum) {
-            if (
-                !isMobilePhone("+" + this.state.signUpPhoneNum, "any", {
-                    strictMode: true
-                })
-            ) {
-                return "Please enter a valid phone number. ";
-            }
-        } else {
-            return true;
-        }
-    };
-
-    handleUserChange =  (event) => {
-        this.setState({
-            username: event.target.value,
-        });
-    };
-
-    validatePhoneNum2 = () => {
-        if (this.state.signUpPhoneNum2) {
-            if (
-                !isMobilePhone("+" + this.state.signUpPhoneNum2, "any", {
-                    strictMode: true
-                })
-            ) {
-                return "Please enter a second valid phone number. ";
-            }
-        } else {
-            return true;
-        }
-    };
-
+    userLoginOption = () => {
+        this.setState({ userLoginOption: true, selectLoginOption:false, restaurantLoginOption: false, deliveryAgentLoginOption: false  });
+    }
+    restaurantLoginOption = () => {
+        this.setState({ userLoginOption: false, selectLoginOption:false, restaurantLoginOption: true, deliveryAgentLoginOption: false  });
+    }
+    deliveryAgentLoginOption  = () => {
+        this.setState({ userLoginOption: false, selectLoginOption:false, restaurantLoginOption: false, deliveryAgentLoginOption: true  });
+    }
+    closeAllOptionsOfSelectionForm= () => {
+        this.setState({ userLoginOption: false, selectLoginOption:false, restaurantLoginOption: false, deliveryAgentLoginOption: false  });
+    }
     getTitle() {
-        if (this.state.UserLogin) {
+        if (this.state.userLoginOption) {
             return "User Login";
-        } else if (this.state.RestaurantLogin) {
+        } else if (this.state.restaurantLoginOption) {
             return "Restaurant Login";
-        } else if (this.state.DeliveryLogin) {
-            return "Delivery Login";
+        } else if (this.state.deliveryAgentLoginOption) {
+            return "Delivery Agent Login";
         }
-    }
-
-    updateEmail(evt) {
-        this.setState({ signUpEmail: evt.target.value });
-    }
-
-    updateName(evt) {
-        this.setState({ signUpName: evt.target.value });
-    }
-
-    updateRestaurantName(evt) {
-        this.setState({ signUpRestaurantName: evt.target.value });
-    }
-
-    updatePassword(evt) {
-        this.setState({ signUpPassword: evt.target.value });
-    }
-
-    updateConfirmPassword(evt) {
-        this.setState({ signUpConfirmPassword: evt.target.value });
-    }
-
-    updatePhoneNum(evt) {
-        this.setState({ signUpPhoneNum: evt.target.value });
-    }
-
-    updatePhoneNum2(evt) {
-        this.setState({ signUpPhoneNum2: evt.target.value });
     }
 
     render() {
+        const { country, region } = this.state;
         return (
             <div className="App">
                 <header>
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
                     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-                    <link
-                        href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-                        rel="stylesheet"
-                        id="bootstrap-css"
-                    />
-                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-                    <link
-                        href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
-                        rel="stylesheet"
-                        id="bootstrap-css"
-                    />
-                    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-                    <link
-                        href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
-                        rel="stylesheet"
-                        id="bootstrap-css"
-                    />
-                    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-                    <link
-                        rel="stylesheet"
-                        href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"
-                    />
-
-
-
-
-                </header>
-
-                <button >Click Me</button>
-                <section id="search-sec">
-                    <div className="container">
-                        <form action="#" method="post" noValidate="novalidate">
-                            <div className="row">
-                                <div className="col-lg-12">
-                                    <div className="row">
-                                        <div className="col-lg-3 col-md-4 col-sm-14 p-3">
-                                            <select className="form-control search-slt" >
-                                                <option>Select Your Location</option>
-                                                <option>Bloomington, Indiana</option>
-                                                <option>Indianapolis, Indiana</option>
-                                                <option>Chicago, Illinois</option>
-                                                <option>Buffalo, New York</option>
-                                            </select>
-                                        </div>
-
-                                        <div className="col-lg-4 col-md-4 col-sm-14 p-0">
-                                            <input type="text" placeholder="Search for your Favourite food, cuisine, restaurants..." className="form-control search-slt" id="exampleFormControlSelect1">
-
-                                            </input>
-                                        </div>
-                                        <div id="buttonSearch">
-                                            <button  type="button" >Search</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </section>
-
-
-                <link href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css" rel="stylesheet"/>
-
-                    <div id="myCarousel" className="carousel slide carousel-fade" data-ride="carousel">
-                        <div className="carousel-inner">
-                            <div className="carousel-item active">
-                                <div className="mask flex-center">
-                                    <div className="container">
-                                        <div className="row align-items-center">
-                                            <div className="col-md-7 col-12 order-md-1 order-2">
-                                                <h3>Are you hungry? <br/>
-                                                    </h3>
-                                                <p>Order food from anytime and any place <br/>
-
-                                                </p>
-                                                <a href="#">Order Now</a></div>
-
-                                        </div>
-                                    </div>
-                                </div>
+                    <nav class=" navbar navbar-expand-lg navbar-dark ">
+                        <div class="container">
+                            <a class="navbar-brand " href="#">YumDrop</a>
+                            <div class="collapse navbar-collapse" id="navBarLinks">
+                                <ul class="navbar-nav mr-auto">
+                                    <li class="nav-item" >
+                                        <a class="nav-link" onClick={this.selectLoginOption}>Login</a>
+                                    </li>
+                                    <li class="nav-item" id="SignUpID">
+                                        <a class="nav-link" href="#">Sign Up</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
+                    </nav>
+                </header>
+                <div class="view rgba-black-light">
+                    <div class="">
+                        <br/><br/><br/><br/><br/><br/><br/>
+                        <li>
+                            <p id="para" >Are you hungry?</p>
+                        </li>
+                        <ul class="list-unstyled">
+                            <br/><br/><br/><br/>
+                            <li>
+                                <div class="form-row" data-wow-delay="0.4s">
+                                    <div class="col-md-5"  id="firstbar">
+                                        <div class="md-form">
+                                            <select className="form-control" id="exampleFormControlSelect1">
+                                                <option>Bloomington, Indiana</option>
+                                                <option>Indianapolis, Indiana</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <div className="md-form">
+                                            <input type="text"
+                                                   placeholder="Search for food, cuisines, restaurants here.."
+                                                   id="form5" className="form-control validate"/>
 
-
-
+                                        </div>
+                                    </div>
+                                    <div className="col-md-12" id="buttonOrder">
+                                        <div className="md-form">
+                                            <button className="btn btn-lg btn-danger">Order</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <Modal
-                    show={this.state.SelectLogin}
-                    onHide={this.CloseAll}
-                    className="modal"
-                    animation={false}
-                    centered
-                >
-                    <Modal.Header className="modelheader" id="containerModal">
-                        <Modal.Title className="modeltitle" id="modeltitle">
+                </div>
+                <Modal  show={this.state.selectLoginOption} onHide={this.closeAllOptionsOfSelectionForm} animation={false} centered>
+                    <Modal.Header className="modelheader">
+                        <Modal.Title className="modeltitle">
                             <strong>Select Login</strong>
                         </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body id="CheckSelection">
-                        <Button id="UserID" onClick={this.UserLogin}>
-                            <strong>USER</strong>
-                        </Button>{" "}
-                        <br />
-                        <Button id="RestaurantId" onClick={this.RestaurantLogin}>
-                            <strong>RESTAURANT</strong>
-                        </Button>{" "}
-                        <br />
-                        <Button id="DeliveryId" onClick={this.DeliveryLogin}>
-                            <strong>DELIVERY</strong>
-                        </Button>
+                    <Modal.Body>
+                        <div className="container">
+                            <div className="row">
+                                <div className="main">
+                                    <form role="form">
+                                       <button  onClick={this.userLoginOption} className="btn btn btn-primary">User </button><br/>
+                                        <button onClick={this.restaurantLoginOption} className="btn btn btn-primary">Restaurant </button><br/>
+                                        <button onClick={this.deliveryAgentLoginOption} className="btn btn btn-primary">Delivery Agent </button>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
                     </Modal.Body>
-                </Modal>
+                </Modal >
                 <Modal
                     show={
-                        this.state.DeliveryLogin ||
-                        this.state.UserLogin ||
-                        this.state.RestaurantLogin
+                        this.state.deliveryAgentLoginOption ||  this.state.userLoginOption ||  this.state.restaurantLoginOption
                     }
-                    onHide={this.CloseAll}
-                    animation={false}
-                >
-                    <Modal.Header id="UserHead">
-                        <Modal.Title id="modeltitle">{this.getTitle()}</Modal.Title>
+                    onHide={this.closeAllOptionsOfSelectionForm} animation={false} centered >
+                    <Modal.Header>
+                        <Modal.Title>{this.getTitle()}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <form id="formID">
-                            <input type="text" id="username" placeholder="Username / Email ID"></input> <br />
-                            <input type="password" id="password" placeholder="Password"></input>
-                        </form>
+                        <div class="container">
+                            <div className="row">
+                                <div className="main">
+                                    <h3>Please Log In, or <a href="#">Sign Up</a></h3>
+                                    <div className="row">
+                                        <div className="col-xs-6 col-sm-6 col-md-6">
+                                            <a href="#" className="btn btn-lg btn-primary btn-block">Facebook</a>
+                                        </div>
+                                        <div className="col-xs-6 col-sm-6 col-md-6">
+                                            <a href="#" className="btn btn-lg btn-info btn-block">Google</a>
+                                        </div>
+                                    </div>
+                                    <div className="login-or">
+                                        <hr className="hr-or"/>
+                                        <span className="span-or">or</span>
+                                    </div>
+                                    <form role="form">
+                                        <div className="form-group">
+                                            <label htmlFor="inputUsernameEmail">Username or email</label>
+                                            <input type="text" className="form-control" id="inputUsernameEmail"/>
+                                        </div>
+                                        <div className="form-group">
+                                            <a className="pull-right" href="#">Forgot password?</a>
+                                            <label htmlFor="inputPassword">Password</label>
+                                            <input type="password" className="form-control" id="inputPassword"/>
+                                        </div>
+                                        <div className="checkbox pull-right">
+                                            <label>
+                                                <input type="checkbox"/>
+                                                Remember me </label>
+                                        </div>
+                                        <button type="submit" className="btn btn btn-primary">
+                                            Log In
+                                        </button>
+                                    </form>
+
+                                </div>
+
+                            </div></div>
+
                     </Modal.Body>
-                    <Modal.Footer>
-                        <a id="button" href="#">
-                            Login
-                        </a>
-                    </Modal.Footer>
                 </Modal>
 
-                <Modal
-                    show={this.state.RegisterSelect}
-                    onHide={this.CloseAll}
-                    animation={false}
-                    centered
-                >
-                    <Modal.Header className="modelheader" id="containerModal">
-                        <Modal.Title className="modeltitle" id="modeltitle">
-                            <strong>Select Account Type</strong>
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body id="CheckSelection">
-                        <Button id="UserID" onClick={this.UserRegister}>
-                            <strong>USER</strong>
-                        </Button>{" "}
-                        <br />
-                        <Button id="RestaurantId" onClick={this.RestaurantRegister}>
-                            <strong>RESTAURANT</strong>
-                        </Button>{" "}
-                        <br />
-                        <Button id="DeliveryId" onClick={this.DeliveryRegister}>
-                            <strong>DELIVERY</strong>
-                        </Button>
-                    </Modal.Body>
-                </Modal>
-                <Modal
-                    show={this.state.UserRegister}
-                    onHide={this.CloseAll}
-                    animation={false}
-                    id="Trying"
-                >
-
-
-                    <Modal.Header id="UserHead">
-                        <Modal.Title id="modeltitle">User Register</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body id="modelBody">
-
-                        <form onSubmit={this.register} id="formID">
-                            <input
-                                value={this.state.username} onChange={this.handleUserNameChange}
-                                type="text"
-                                id="username"
-                                placeholder="Full Name"
-
-                            />
-                            <br />
-                            <input
-                                type="text"
-                                id="username"
-                                placeholder="Email ID"
-                                value={this.state.useremail} onChange={this.handleUserEmailIdChange}
-
-                            />
-                            <br />
-                            <input
-                                type="password"
-                                id="password"
-                                placeholder="Password"
-                                value={this.state.userpassword} onChange={this.handleUserPasswordChange}
-                            ></input><br/>
-                            <select name="CountryCode" name="Country Code" id="SelectCountryCode">
-                                <option value="India">+91</option>
-                                <option value="USA">+1</option>
-                            </select><br/>
-                            <input
-                                type="text"
-                                id="password"
-                                placeholder="Phone Number"
-                                value={this.state.userphonenumber} onChange={this.handleUserPhoneNumberChange}
-                            ></input>
-                            <br />
-                        </form>
-                    </Modal.Body>
-                    <Modal.Footer id="modelBody">
-                        <button id="button" onClick={this.register}>Register</button>
-                    </Modal.Footer>
-                </Modal>
-                <Modal
-                    show={this.state.DeliveryRegister}
-                    onHide={this.CloseAll}
-                    animation={false}
-                >
-                    <Modal.Header id="UserHead">
-                        <Modal.Title id="modeltitle">
-                            Delivery Agent Registration
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <form  id="formID">
-                            <input
-                                type="text"
-                                id="username"
-                                placeholder="Name"
-                                value={this.state.DeliveryAgentName} onChange={this.handleDeliveryAgentNameChange}
-                            />
-                            <br />
-                            <input
-                                type="text"
-                                id="username"
-                                placeholder="Email ID"
-                                value={this.state.DeliveryAgentEmailID} onChange={this.handleDeliveryAgentEmailIDChange}
-                            />
-                            <br />
-
-                            <input
-                                type="text"
-                                id="password"
-                                placeholder="Password"
-                                value={this.state.DeliveryAgentPassword} onChange={this.DeliveryAgentPassword}
-                            ></input>
-                            <input
-                                type="password"
-                                id="password"
-                                placeholder="Confirm Password"
-                                value={this.state.DeliveryAgentConfirmPassword} onChange={this.handleDeliveryAgentConfirmPasswordChange}
-                            ></input>
-                            <input
-                                type="text"
-                                id="password"
-                                placeholder="Phone Number"
-                                value={this.state.DeliveryAgentPhoneNumber} onChange={this.handleDeliveryAgentPhoneNumberChange}
-                            ></input>
-                        </form>
-                    </Modal.Body>
-                    <Modal.Footer id="modelBody">
-                        <button id="button" onClick={this.DeliveryAgentregister}>Register</button>
-                    </Modal.Footer>
-                </Modal>
-
-                <Modal
-                    show={this.state.RestaurantRegister}
-                    onHide={this.CloseAll}
-                    animation={false}
-                    centered
-                    id="RestaurantModel"
-                >
-                    <Modal.Header id="UserHead">
-                        <Modal.Title id="modeltitle">Restaurant Registration</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <form  id="formID">
-
-
-                        <input
-                            value={this.state.RestaurantName} onChange={this.handleRestaurantNameChange}
-                            type="text"
-                            id="username"
-                            placeholder="Restaurant Name"
-
-                        />
-                        <br />
-
-                        <input
-                            placeholder="Restaurant Manager's Name"
-                            type="text"
-                            id="username"
-                            onChange={this.restaurantManager}
-                        />
-                        <br/>
-
-                        <input
-                            type="text"
-                            id="username"
-                            placeholder="Restaurant Email ID"
-                            value={this.state.RestaurantEmail} onChange={this.handleRestaurantEmailChange}
-
-                        />
-                        <br />
-
-                        <input
-                            type="password"
-                            id="password"
-                            placeholder="Password"
-                            value={this.state.RestaurantPassword} onChange={this.handleRestaurantPasswordChange}
-                        ></input>
-
-                        <input
-                            type="text"
-                            id="password"
-                            placeholder="Phone Number"
-                            value={this.state.RestaurantPhoneNumber} onChange={this.handleRestaurantPhoneNumberChange}
-                        ></input>
-                        <br />
-
-                        <input
-                            type="text"
-                            id="password"
-                            placeholder="Secondary Phone number "
-                            onChange={this.RestaurantPhoneNumber2}
-                        ></input>
-                    </form>
-                </Modal.Body>
-                <Modal.Footer id="modelBody">
-                    <button onClick={this.Restaurantregister}>Register</button>
-                </Modal.Footer>
-                </Modal>
-
-
-                <div className="row">
-                    <div className="column">
-                        <div className="polaroid">
-                            <img
-                                src={display1}
-                                alt="IndianFood"
-                                width="200px"
-                                height="200px"
-                                className="ImageDisplay"
-                            />
-                            <div className="ParagraphForPolaroid">
-                                <p>
-                                    <strong>Indian Food</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="column">
-                        <div className="polaroid">
-                            <img
-                                src={display2}
-                                alt="ItalianFood"
-                                width="200px"
-                                height="200px"
-                                className="ImageDisplay"
-                            />
-                            <div className="ParagraphForPolaroid">
-                                <p>
-                                    <strong>Italian Food</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="column">
-                        <div className="polaroid">
-                            <img
-                                src={display3}
-                                alt="JapaneseFood"
-                                width="200px"
-                                height="200px"
-                                className="ImageDisplay"
-                            />
-                            <div className="ParagraphForPolaroid">
-                                <p>
-                                    <strong>Japanese Food</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="column">
-                        <div className="polaroid">
-                            <img
-                                src={display4}
-                                alt="KoreanFood"
-                                width="200px"
-                                height="200px"
-                                className="ImageDisplay"
-                            />
-                            <div className="ParagraphForPolaroid">
-                                <p>
-                                    <strong>Korean Food</strong>
-                                </p>
+                <div className="auto-container">
+                    <div className="row">
+                        <div className="column col-lg-6 col-md-12 col-sm-12">
+                            <div className="sec-title">
+                                <h2>Choose from multi cuisines available</h2>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="column">
-                        <div className="polaroid">
-                            <img
-                                src={display4}
-                                alt="KoreanFood"
-                                width="200px"
-                                height="200px"
-                                className="ImageDisplay"
-                            />
-                            <div className="ParagraphForPolaroid">
-                                <p>
-                                    <strong>Korean Food</strong>
-                                </p>
+                <div className="container" id="ContainerID">
+                    <div className="row">
+                        <div className="col-12  col-md-4 image-grid-item">
+                            <div id="img3"
+                                 className="entry-cover image-grid-cover has-image">
+                                <a href="#" className="image-grid-clickbox"></a>
+                                <a href="#" className="cover-wrapper">Indian Food</a>
                             </div>
                         </div>
-                    </div>
-                    <div className="column">
-                        <div className="polaroid">
-                            <img
-                                src={display5}
-                                alt="Mexican"
-                                width="200px"
-                                height="200px"
-                                className="ImageDisplay"
-                            />
-                            <div className="ParagraphForPolaroid">
-                                <p>
-                                    <strong>Mexican Food</strong>
-                                </p>
+                        <div className="col-12  col-md-4 image-grid-item">
+                            <div id="img2"
+                                 className="entry-cover image-grid-cover has-image">
+                                <a href="#" className="image-grid-clickbox"></a>
+                                <a href="#" className="cover-wrapper">Indian Food</a>
                             </div>
                         </div>
-                    </div>
-                    <div className="column">
-                        <div className="polaroid">
-                            <img
-                                src={display6}
-                                alt="Thai"
-                                width="200px"
-                                height="200px"
-                                className="ImageDisplay"
-                            />
-                            <div className="ParagraphForPolaroid">
-                                <p>
-                                    <strong>Thai Food</strong>
-                                </p>
+                        <div className="col-12 col-sm-6 col-md-4 image-grid-item">
+                            <div id="img1" className="entry-cover image-grid-cover has-image">
+                                <a href="#" className="image-grid-clickbox"></a>
+                                <a href="#" className="cover-wrapper">Burgers </a>
                             </div>
                         </div>
-                    </div>
-                    <div className="column">
-                        <div className="polaroid">
-                            <img
-                                src={display7}
-                                alt="AfricanFood"
-                                width="200px"
-                                height="200px"
-                                className="ImageDisplay"
-                            />
-                            <div className="ParagraphForPolaroid">
-                                <p>
-                                    <strong>African Food</strong>
-                                </p>
+                        <div className="col-17  col-md-4 image-grid-item">
+                            <div id="img4" className="entry-cover image-grid has-image">
+                                <a href="#" className="image-grid-clickbox"></a>
+                                <a href="#" className="cover-wrapper">Mexican Food</a>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="column">
-                        <div className="polaroid">
-                            <img
-                                src={display7}
-                                alt="AfricanFood"
-                                width="200px"
-                                height="200px"
-                                className="ImageDisplay"
-                            />
-                            <div className="ParagraphForPolaroid">
-                                <p>
-                                    <strong>African Food</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="column">
-                        <div className="polaroid">
-                            <img
-                                src={trying2}
-                                alt="Forest"
-                                width="200px"
-                                height="200px"
-                                className="ImageDisplay"
-                            />
-                            <div className="ParagraphForPolaroid">
-                                <p>
-                                    <strong>Indian Food</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="column">
-                        <div className="polaroid">
-                            <img
-                                src={display12}
-                                alt="Mountains"
-                                width="200px"
-                                height="200px"
-                                className="ImageDisplay"
-                            />
-                            <div className="ParagraphForPolaroid">
-                                <p>
-                                    <strong>Desserts</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="column">
-                        <div className="polaroid">
-                            <img
-                                src={display13}
-                                alt="Mountains"
-                                width="200px"
-                                height="200px"
-                                className="ImageDisplay"
-                            />
-                            <div className="ParagraphForPolaroid">
-                                <p>
-                                    <strong>Burgers</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="column">
-                        <div className="polaroid">
-                            <img
-                                src={display11}
-                                alt="Snow"
-                                width="200px"
-                                height="200px"
-                                className="ImageDisplay"
-                            />
-                            <div className="ParagraphForPolaroid">
-                                <p>
-                                    <strong>Bengali Food</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="column">
-                        <div className="polaroid">
-                            <img
-                                src={display8}
-                                alt="Forest"
-                                width="200px"
-                                height="200px"
-                                className="ImageDisplay"
-                            />
-                            <div className="ParagraphForPolaroid">
-                                <p>
-                                    <strong>South Indian</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="column">
-                        <div className="polaroid">
-                            <img
-                                src={display9}
-                                alt="Mountains"
-                                width="200px"
-                                height="200px"
-                                className="ImageDisplay"
-                            />
-                            <div className="ParagraphForPolaroid">
-                                <p>
-                                    <strong>Food</strong>{" "}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="column">
-                        <div className="polaroid">
-                            <img
-                                src={display10}
-                                width="200px"
-                                height="200px"
-                                className="ImageDisplay"
-                            />
-                            <div className="ParagraphForPolaroid">
-                                <p>
-                                    <strong>Hong Kong Cuisine</strong>
-                                </p>
+                        <div className="col-12 col-sm-6 col-md-4 image-grid-item">
+                            <div id="img5" className="entry-cover imagegrid has-image">
+                                <a href="#" className="image-grid-clickbox"></a>
+                                <a href="#" className="cover-wrapper">Chinese Food </a>
                             </div>
                         </div>
                     </div>
