@@ -23,6 +23,7 @@ import display13 from "./images/Burgers.jpg";
 import * as EmailValidator from "email-validator";
 import { isMobilePhone } from "validator";
 import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 import ReactDOM from 'react-dom';
 
 
@@ -34,6 +35,7 @@ const properties = {
     infinite: true,
     arrows: true
 };
+
 class App extends Component {
     state = {
         SelectLogin: false,
@@ -50,7 +52,9 @@ class App extends Component {
         signUpPhoneNum: "",
         signUpPhoneNum2: "",
         signUpName: "",
-        signUpRestaurantName: ""
+        signUpRestaurantName: "",
+        fbAccessToken: '',
+        googleAccessToken: ''
     };
     SelectLogin = () => {
         this.setState({ SelectLogin: true });
@@ -246,17 +250,37 @@ class App extends Component {
         this.setState({ signUpPhoneNum2: evt.target.value });
     }
 
-    responseFacebook(response) {
+    responseFacebook(response)  {
         console.log(response.name);
         console.log(response.email);
         const user = {
             "userEmail": response.email,
-            "userName" : response.name
+            "userName" : response.name,
+            fbAccessToken: response.accessToken
         };
         console.log(user.userName);
         axios({
             method:'post',
             url:'/fbUserLogin',
+            data: user
+        })
+            .then( (response) => {
+                console.log(response);
+            });
+    }
+
+    responseGoogle(response)  {
+        console.log(response.name);
+        console.log(response.email);
+        const user = {
+            "userEmail": response.email,
+            "userName" : response.name,
+            googleAccessToken: response.accessToken
+        };
+        console.log(user.userName);
+        axios({
+            method:'post',
+            url:'/googleUserLogin',
             data: user
         })
             .then( (response) => {
@@ -364,12 +388,23 @@ class App extends Component {
                         <a id="button" href="#">
                             Login
                         </a>
+
                         <FacebookLogin
                             appId="527192644707128"
                             autoLoad={false}
                             fields="name,email,picture"
-                            //onClick={componentClicked}
+                            cookiePolicy={'single_host_origin'}
                             callback={(response)=>this.responseFacebook(response)} />
+
+                        <GoogleLogin
+                            clientId="1048514306032-l4kt6l8blqnqkr2ro5fvsqb2vutd7v75.apps.googleusercontent.com"
+                            buttonText="Login with Google"
+                            autoLoad={false}
+                            fields="name,email"
+                            cookiePolicy={'single_host_origin'}
+                            callback={(response)=>this.responseGoogle(response)} />
+
+
                     </Modal.Footer>
                 </Modal>
 
