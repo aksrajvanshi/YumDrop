@@ -3,6 +3,7 @@ package com.app.yumdrop.Entity;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 @Table(name = "users")
@@ -36,6 +37,12 @@ public class Users extends CreateAndUpdateTimeModel{
     @NotNull
     @Column(name = "last_created_user", nullable = false)
     private String lastCreatedUser;
+
+    @Column(name = "twofactor_code")
+    private String twoFactorCode;
+
+    @Column(name = "twofactor_expiretime")
+    private Date twoFactorExpiryTime;
 
     public Users(){
     }
@@ -125,5 +132,21 @@ public class Users extends CreateAndUpdateTimeModel{
 
     public void setLastCreatedUser(String lastCreatedUser) {
         this.lastCreatedUser = lastCreatedUser;
+    }
+
+    public String getTwoFactorCode() {
+        return twoFactorCode;
+    }
+
+    public void setTwoFactorCode(String twoFactorCode) {
+        this.twoFactorCode = twoFactorCode;
+    }
+
+    public Date getTwoFactorExpiryTime() {
+        return twoFactorExpiryTime;
+    }
+
+    public void setTwoFactorExpiryTime(Date twoFactorExpiryTime) {
+        this.twoFactorExpiryTime = twoFactorExpiryTime;
     }
 }
