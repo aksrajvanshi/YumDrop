@@ -4,18 +4,21 @@ import com.app.yumdrop.Entity.Users;
 import com.app.yumdrop.Repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+/*
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.stereotype.Controller;
 import org.springframework.http.ResponseEntity;
+*/
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.*;
 
+/*
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-
+*/
 @ComponentScan
 @Controller
 public class YumDropController {
