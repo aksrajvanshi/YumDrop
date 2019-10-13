@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import LoginPage from "./LoginPage";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Modal, Button } from "react-bootstrap";
+import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 
 import ReactTelephoneInput from "react-telephone-input/es/ReactTelephoneInput";
 class App extends Component {
@@ -13,7 +13,6 @@ class App extends Component {
         deliveryAgentLoginOption: false,
         closeAllOptionsOfSelectionForm: false
     };
-
 
     login = () => { debugger;
         let obj={}
@@ -78,20 +77,23 @@ class App extends Component {
 
     }
 
-    selectLoginOption = () =>{
+    handleSelectLoginOption = () =>{
         this.setState({selectLoginOption: true})
     }
-    userLoginOption = () => {
-        this.setState({ userLoginOption: true, selectLoginOption:false, restaurantLoginOption: false, deliveryAgentLoginOption: false  });
+    handelUserLoginOption = () => {
+        this.setState({ selectLoginOption:false, restaurantLoginOption: false, deliveryAgentLoginOption: false, userLoginOption: true  });
     }
-    restaurantLoginOption = () => {
-        this.setState({ userLoginOption: false, selectLoginOption:false, restaurantLoginOption: true, deliveryAgentLoginOption: false  });
+    handleRestaurantLoginOption = () => {
+        this.setState({ userLoginOption: false, selectLoginOption:false, deliveryAgentLoginOption: false, restaurantLoginOption: true  });
     }
-    deliveryAgentLoginOption  = () => {
+    handleDeliveryAgentLoginOption  = () => {
         this.setState({ userLoginOption: false, selectLoginOption:false, restaurantLoginOption: false, deliveryAgentLoginOption: true  });
     }
     closeAllOptionsOfSelectionForm= () => {
         this.setState({ userLoginOption: false, selectLoginOption:false, restaurantLoginOption: false, deliveryAgentLoginOption: false  });
+    }
+    forwardToLogin = () => {
+        this.props.history.push('/Login');
     }
     getTitle() {
         if (this.state.userLoginOption) {
@@ -116,34 +118,33 @@ class App extends Component {
                     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
                     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-                    <nav class=" navbar navbar-expand-lg navbar-dark ">
-                        <div class="container">
-                            <a class="navbar-brand " href="#">YumDrop</a>
-                            <div class="collapse navbar-collapse" id="navBarLinks">
-                                <ul class="navbar-nav mr-auto">
-                                    <li class="nav-item" >
-                                        <a class="nav-link" onClick={this.selectLoginOption}>Login</a>
+                    <nav className=" navbar navbar-expand-lg navbar-dark ">
+                        <div className="container">
+                            <a className="navbar-brand " href="#">YumDrop</a>
+                            <div className="collapse navbar-collapse" id="navBarLinks">
+                                <ul className="navbar-nav mr-auto">
+                                    <li className="nav-item" >
+                                        <a className="nav-link" onClick={this.handleSelectLoginOption}>Login</a>
                                     </li>
-                                    <li class="nav-item" id="SignUpID">
-                                        <a class="nav-link" href="#">Sign Up</a>
+                                    <li className="nav-item" id="SignUpID">
+                                        <a className="nav-link" href="#">Sign Up</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </nav>
                 </header>
-                <div class="view rgba-black-light">
-                    <div class="">
-                        <br/><br/><br/><br/><br/><br/><br/>
+                <div className="view rgba-black-light">
+                    <div className="">
                         <li>
                             <p id="para" >Are you hungry?</p>
                         </li>
-                        <ul class="list-unstyled">
+                        <ul className="list-unstyled">
                             <br/><br/><br/><br/>
                             <li>
-                                <div class="form-row" data-wow-delay="0.4s">
-                                    <div class="col-md-5"  id="firstbar">
-                                        <div class="md-form">
+                                <div className="form-row" data-wow-delay="0.4s">
+                                    <div className="col-md-5"  id="firstbar">
+                                        <div className="md-form">
                                             <select className="form-control" id="exampleFormControlSelect1">
                                                 <option>Bloomington, Indiana</option>
                                                 <option>Indianapolis, Indiana</option>
@@ -158,6 +159,11 @@ class App extends Component {
 
                                         </div>
                                     </div>
+                                    <DropdownButton title="Filter by">
+                                        <Dropdown.Item>Price</Dropdown.Item>
+                                        <Dropdown.Item>Delivery Time</Dropdown.Item>
+                                        <Dropdown.Item>Location</Dropdown.Item>
+                                    </DropdownButton>
                                     <div className="col-md-12" id="buttonOrder">
                                         <div className="md-form">
                                             <button className="btn btn-lg btn-danger">Order</button>
@@ -168,7 +174,7 @@ class App extends Component {
                         </ul>
                     </div>
                 </div>
-                <Modal  show={this.state.selectLoginOption} onHide={this.closeAllOptionsOfSelectionForm} animation={false} centered>
+                <Modal  show={this.state.selectLoginOption} onHide={this.closeAllOptionsOfSelectionForm} animation={false} id="modal" centered>
                     <Modal.Header className="modelheader">
                         <Modal.Title className="modeltitle">
                             <strong>Select Login</strong>
@@ -178,11 +184,11 @@ class App extends Component {
                         <div className="container">
                             <div className="row">
                                 <div className="main">
-                                    <form role="form">
-                                       <button  onClick={this.userLoginOption} className="btn btn btn-primary">User </button><br/>
-                                        <button onClick={this.restaurantLoginOption} className="btn btn btn-primary">Restaurant </button><br/>
-                                        <button onClick={this.deliveryAgentLoginOption} className="btn btn btn-primary">Delivery Agent </button>
-                                    </form>
+                                    <ul>
+                                       <button  onClick={this.handelUserLoginOption} className="btn btn btn-primary">User </button><br/>
+                                        <button onClick={this.handleRestaurantLoginOption} className="btn btn btn-primary">Restaurant </button><br/>
+                                        <button onClick={this.handleDeliveryAgentLoginOption} className="btn btn btn-primary">Delivery Agent </button>
+                                    </ul>
 
                                 </div>
 
@@ -194,12 +200,12 @@ class App extends Component {
                     show={
                         this.state.deliveryAgentLoginOption ||  this.state.userLoginOption ||  this.state.restaurantLoginOption
                     }
-                    onHide={this.closeAllOptionsOfSelectionForm} animation={false} centered >
+                    onHide={this.closeAllOptionsOfSelectionForm} animation={false} centered id="modal">
                     <Modal.Header>
                         <Modal.Title>{this.getTitle()}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <div class="container">
+                        <div className="container">
                             <div className="row">
                                 <div className="main">
                                     <h3>Please Log In, or <a href="#">Sign Up</a></h3>
@@ -230,7 +236,7 @@ class App extends Component {
                                                 <input type="checkbox"/>
                                                 Remember me </label>
                                         </div>
-                                        <button type="submit" className="btn btn btn-primary">
+                                        <button type="submit" className="btn btn btn-primary" onClick={this.forwardToLogin}>
                                             Log In
                                         </button>
                                     </form>

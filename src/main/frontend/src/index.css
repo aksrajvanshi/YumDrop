@@ -144,6 +144,17 @@ h3 {
   text-align: center;
   line-height: 300%;
 }
+
+#modal {
+    position: fixed;
+    left: 35%;
+}
+
+#modal2 {
+    position: fixed;
+    left: 35%;
+}
+
 #modalForm{
   position: center;
   padding-right: 2800px;
