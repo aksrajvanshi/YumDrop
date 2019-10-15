@@ -11,7 +11,11 @@ class App extends Component {
         userLoginOption: false,
         restaurantLoginOption: false,
         deliveryAgentLoginOption: false,
-        closeAllOptionsOfSelectionForm: false
+        closeAllOptionsOfSelectionForm: false,
+        selectRegistrationOption: false,
+        userRegistrationOption: false,
+        restaurantRegistrationOption: false,
+        deliveryAgentRegistrationOption: false
     };
 
     login = () => { debugger;
@@ -89,8 +93,29 @@ class App extends Component {
     handleDeliveryAgentLoginOption  = () => {
         this.setState({ userLoginOption: false, selectLoginOption:false, restaurantLoginOption: false, deliveryAgentLoginOption: true  });
     }
+    handleSelectRegistrationOption = () => {
+        this.setState({selectRegistrationOption: true});
+    }
+    handleUserRegistrationOption = () => {
+        this.setState({userRegistrationOption: true, selectRegistrationOption: false, restaurantRegistrationOption: false, deliveryAgentRegistrationOption: false});
+    }
+    handleRestaurantRegistrationOption = () => {
+        this.setState({userRegistrationOption: false, selectRegistrationOption: false, restaurantRegistrationOption: true, deliveryAgentRegistrationOption: false});
+    }
+    handleDeliveryAgentRegistrationOption = () => {
+        this.setState({userRegistrationOption: false, selectRegistrationOption: false, restaurantRegistrationOption: false, deliveryAgentRegistrationOption: true});
+    }
     closeAllOptionsOfSelectionForm= () => {
-        this.setState({ userLoginOption: false, selectLoginOption:false, restaurantLoginOption: false, deliveryAgentLoginOption: false  });
+        this.setState({
+            userLoginOption: false,
+            selectLoginOption: false,
+            restaurantLoginOption: false,
+            deliveryAgentLoginOption: false,
+            selectRegistrationOption: false,
+            userRegistrationOption: false,
+            restaurantRegistrationOption: false,
+            deliveryAgentRegistrationOption: false
+        });
     }
     forwardToLogin = () => {
         this.props.history.push('/Login');
@@ -127,7 +152,7 @@ class App extends Component {
                                         <a className="nav-link" onClick={this.handleSelectLoginOption}>Login</a>
                                     </li>
                                     <li className="nav-item" id="SignUpID">
-                                        <a className="nav-link" href="#">Sign Up</a>
+                                        <a className="nav-link" href="#" onClick={this.handleSelectRegistrationOption}>Sign Up</a>
                                     </li>
                                 </ul>
                             </div>
@@ -240,14 +265,359 @@ class App extends Component {
                                             Log In
                                         </button>
                                     </form>
-
                                 </div>
-
-                            </div></div>
-
+                            </div>
+                        </div>
                     </Modal.Body>
                 </Modal>
+                <Modal
+                    show={this.state.selectRegistrationOption}
+                    onHide={this.closeAllOptionsOfSelectionForm}
+                    animation={false}
+                    centered
+                    id="modal"
+                >
+                    <Modal.Header className="modelheader" id="containerModal" closeButton>
+                        <Modal.Title className="modeltitle" id="modeltitle">
+                            <strong>Select Account Type</strong>
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body id="CheckSelection">
+                        <Button id="UserID" onClick={this.handleUserRegistrationOption}>
+                            <strong>USER</strong>
+                        </Button>{" "}
+                        <br />
+                        <Button id="RestaurantId" onClick={this.handleRestaurantRegistrationOption}>
+                            <strong>RESTAURANT</strong>
+                        </Button>{" "}
+                        <br />
+                        <Button id="DeliveryId" onClick={this.handleDeliveryAgentRegistrationOption}>
+                            <strong>DELIVERY</strong>
+                        </Button>
+                    </Modal.Body>
+                </Modal>
+                <Modal
+                    show={this.state.userRegistrationOption}
+                    onHide={this.closeAllOptionsOfSelectionForm}
+                    animation={false}
+                    id="modal"
+                >
+                    <Modal.Header id="UserHead" closeButton>
+                        <Modal.Title id="modeltitle">User Register</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body id="modelBody">
+                        <form>
+                            <label htmlFor="username">Name: </label>
+                            <input
+                                type="text"
+                                id="username"
+                            />
+                            <br />
+                            <br />
+                            <label htmlFor="username">Email:</label>
+                            <input
+                                type="text"
+                                id="username"
+                            />
+                            <br />
+                            <br />
+                            <label htmlFor="password">Password:</label>
+                            <input
 
+                                type="text"
+
+                                id="password"
+
+                            ></input>
+
+                            <br />
+
+
+                            <br />
+
+                            <label htmlFor="password">Confirm Password:</label>
+
+                            <input
+
+                                type="text"
+
+                                id="password"
+
+                            ></input>
+
+                            <br />
+
+                            <br />
+
+                            <label htmlFor="password">Phone:</label>
+
+                            <input
+
+                                type="text"
+
+                                id="password"
+
+                            ></input>
+
+                            <br />
+
+
+                        </form>
+
+                    </Modal.Body>
+
+                    <Modal.Footer id="modelBody">
+
+                        <a id="button" href="#">
+
+                            Submit
+
+                        </a>
+
+                    </Modal.Footer>
+
+                </Modal>
+
+                <Modal
+
+                    show={this.state.deliveryAgentRegistrationOption}
+
+                    onHide={this.closeAllOptionsOfSelectionForm}
+
+                    animation={false}
+
+                >
+
+                    <Modal.Header closeButton>
+
+                        <Modal.Title id="modeltitle">
+
+                            Delivery Agent Registration
+
+                        </Modal.Title>
+
+                    </Modal.Header>
+
+                    <Modal.Body>
+
+                        <form>
+
+                            <label htmlFor="username">Name</label>
+
+                            <input
+
+                                type="text"
+
+                                id="username"
+                            />
+
+                            <br />
+
+                            <br />
+
+                            <label htmlFor="username">Email ID</label>
+
+                            <input
+
+                                type="text"
+
+                                id="username"
+                            />
+
+                            <br />
+
+                            <br />
+
+                            <label htmlFor="password">Password:</label>
+
+                            <input
+
+                                type="text"
+
+                                id="password"
+                            ></input>
+
+                            <br />
+
+                            <br />
+
+                            <label htmlFor="password">Confirm Password:</label>
+
+                            <input
+
+                                type="text"
+
+                                id="password"
+
+                            ></input>
+
+                            <br />
+
+                            <br />
+
+                            <label htmlFor="password">Phone Number:</label>
+
+                            <input
+
+                                type="text"
+
+                                id="password"
+                            ></input>
+
+                            <br />
+
+
+                        </form>
+
+                    </Modal.Body>
+
+                    <Modal.Footer>
+
+                        <a id="button" href="#">
+
+                            Submit
+
+                        </a>
+
+                    </Modal.Footer>
+
+                </Modal>
+
+
+
+                <Modal
+
+                    show={this.state.restaurantRegistrationOption}
+
+                    onHide={this.closeAllOptionsOfSelectionForm}
+
+                    animation={false}
+
+                    centered
+
+                    id="modal"
+
+                >
+
+                    <Modal.Header closeButton>
+
+                        <Modal.Title id="modeltitle">Restaurant Registration</Modal.Title>
+
+                    </Modal.Header>
+
+                    <Modal.Body>
+
+                        <form>
+
+                            <label htmlFor="username"> Restaurant Name</label>
+
+                            <input
+
+                                type="text"
+
+                                id="username"
+
+                            />
+
+                            <br />
+
+                            <br />
+
+                            <label htmlFor="username"> Manager's/Contact Person's Name</label>
+
+                            <input
+
+                                type="text"
+
+                                id="username"
+
+                            />
+
+                            <br />
+
+                            <br />
+
+                            <label htmlFor="username">Email ID</label>
+
+                            <input
+
+                                type="text"
+
+                                id="username"
+
+                            />
+
+                            <br />
+
+                            <br />
+
+                            <label htmlFor="password">Password:</label>
+
+                            <input
+
+                                type="text"
+
+                                id="password"
+                            ></input>
+
+                            <br />
+
+                            <br />
+
+                            <label htmlFor="password">Confirm Password:</label>
+
+                            <input
+
+                                type="text"
+
+                                id="password"
+
+                            ></input>
+
+                            <br />
+
+                            <br />
+
+                            <label htmlFor="password">Phone Number 1:</label>
+
+                            <input
+
+                                type="text"
+
+                                id="password"
+
+                            ></input>
+
+                            <br />
+
+                            <br />
+
+                            <label htmlFor="password">Phone Number 2:</label>
+
+                            <input
+
+                                type="text"
+
+                                id="password"
+                            ></input>
+
+                            <br />
+
+                        </form>
+
+                    </Modal.Body>
+
+                    <Modal.Footer>
+
+                        <a id="button" href="#">
+
+                            Submit
+
+                        </a>
+
+                    </Modal.Footer>
+
+                </Modal>
                 <div className="auto-container">
                     <div className="row">
                         <div className="column col-lg-6 col-md-12 col-sm-12">
