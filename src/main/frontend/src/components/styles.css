@@ -1,0 +1,8 @@
+.searchResultBox {
+    border: 5px solid black;
+    background-color: gray;
+}
+.restaurantImage {
+    width: 150px;
+    height: 150px;
+}
