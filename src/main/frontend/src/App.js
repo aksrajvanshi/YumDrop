@@ -14,6 +14,9 @@ class App extends Component {
     deliveryAgentLoginOption: false,
     closeAllOptionsOfSelectionForm: false,
     searched: false,
+    searchQuery: "",
+    filterBy: "",
+    responseStatus: "",
     searchResults: [
       {
         imageSource:
@@ -113,6 +116,32 @@ class App extends Component {
       });
   };
 
+  searchForQuery = () => {
+    debugger;
+    this.setState({searched: true});
+    let obj = {};
+    obj.search_query = this.state.searchQuery;
+    obj.filter = this.state.filterBy;
+    fetch("/SearchQuery", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify( {
+        search_Query: this.state.searchQuery,
+        filter: this.state.filterBy
+      })
+    }).then(function(res) {
+      debugger;
+      return res.json();
+    }).then(function(response) {
+      debugger;
+      if (response.status == "200") {
+        this.setState({responseStatus: "Hi"});
+      }
+    })
+    };
+
   handleSelectLoginOption = () => {
     this.setState({ selectLoginOption: true });
   };
@@ -148,8 +177,23 @@ class App extends Component {
       deliveryAgentLoginOption: false
     });
   };
-  updateSearched = () => {
-    this.setState({ searched: true });
+  handleLog = () => {
+    console.log(this.state.filterBy);
+  }
+  handleFilterByLowToHigh = () => {
+    this.setState({filterBy: "Low To High"});
+  };
+  handleFilterByHighToLow = () => {
+    this.setState({filterBy: "High To Low"});
+  };
+  handleFilterByDeliveryTime = () => {
+  this.setState({filterBy: "Delivery Time"});
+  };
+  handleFilterByLocation = () => {
+  this.setState({filterBy: "Location"});
+  };
+  updateSearchQuery = (event) => {
+    this.setState({ searchQuery: event.target.value});
   };
   forwardToLogin = () => {
     this.props.history.push("/Login");
@@ -240,7 +284,7 @@ class App extends Component {
                   </div>
                   <div className="col-md-4">
                     <div className="md-form">
-                      <input
+                      <input onChange={evt => this.updateSearchQuery(evt)}
                         type="text"
                         placeholder="Search for food, cuisines, restaurants here.."
                         id="form5"
@@ -249,16 +293,17 @@ class App extends Component {
                     </div>
                   </div>
                   <DropdownButton title="Filter by">
-                    <Dropdown.Item>Menu price: low to high</Dropdown.Item>
-                    <Dropdown.Item>Menu price: high to low</Dropdown.Item>
-                    <Dropdown.Item>Delivery Time</Dropdown.Item>
-                    <Dropdown.Item>Location</Dropdown.Item>
+                    <Dropdown.Item onClick={this.handleFilterByLowToHigh}>Menu price: low to high</Dropdown.Item>
+                    <Dropdown.Item onClick={this.handleFilterByHighToLow}>Menu price: high to low</Dropdown.Item>
+                    <Dropdown.Item onClick={this.handleFilterByDeliveryTime}>Delivery Time</Dropdown.Item>
+                    <Dropdown.Item onClick={this.handleFilterByLocation}>Location</Dropdown.Item>
                   </DropdownButton>
+                  <p>{this.state.responseStatus}</p>
                   <div className="col-md-12" id="buttonOrder">
                     <div className="md-form">
                       <button
                         className="btn btn-lg btn-danger"
-                        onClick={this.updateSearched}
+                        onClick={this.searchForQuery}
                       >
                         search
                       </button>

@@ -52,5 +52,11 @@ public class YumDropController {
         return userDataForm;
     }
 
+    @PostMapping(value = "/SearchQuery")
+    public String searchQuery(@RequestBody String userDataForm){
+        System.out.println(userDataForm);
+
+        return userDataForm;
+    }
 
 }
