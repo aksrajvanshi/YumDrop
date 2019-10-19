@@ -166,7 +166,7 @@
                     <br/><br/><br/>
                     <div className="">
                         <li>
-                            <p id="para">{this.state.userName } Are you ?</p>
+                            <p id="para"> Are you hungry?</p>
                         </li>
                         <ul className="list-unstyled">
                             <br/><br/><br/><br/>
@@ -190,7 +190,7 @@
                                     </div>
                                     <div className="col-md-12" id="buttonOrder">
                                         <div className="md-form">
-                                            <button className="btn btn-lg btn-danger">Order</button>
+                                            <button className="btn btn-lg btn-danger">Search</button>
                                         </div>
                                     </div>
                                 </div>
@@ -202,7 +202,7 @@
 
                 <Modal
                     show={this.state.loginSelect}
-                    onHide={this.CloseAll}
+                    onHide={this.closeAllOptionsOfSelectionForm}
                     animation={false}
                     centered id="modal"
                 >
@@ -228,7 +228,7 @@
 
                 <Modal
                     show={this.state.userLoginOption}
-                    onHide={this.CloseAll}
+                    onHide={this.closeAllOptionsOfSelectionForm}
                     animation={false}
                     id="modal"
                 >

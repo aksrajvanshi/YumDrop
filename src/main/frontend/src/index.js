@@ -7,7 +7,6 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import * as serviceWorker from './serviceWorker';
 import { Route, BrowserRouter as Router} from 'react-router-dom';
-
 const routing = (
     <Router>
         <div>

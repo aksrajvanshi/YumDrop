@@ -68,15 +68,15 @@ class App extends Component {
     registerSelect = () => {
         this.setState({
             userRegister: false,
-            loginSelect: true,
-            restaurantLoginOption: false,
+            registerSelect: true,
+            restaurantRegister: false,
             deliveryAgentRegister: false
         });
     };
 
 
     closeAllOptionsOfSelectionForm= () => {
-        this.setState({ userLoginOption: false, selectLoginOption:false, restaurantLoginOption: false, deliveryAgentLoginOption: false  });
+        this.setState({userRegister : false, restaurantRegister:false, registerSelect: false, deliveryAgentRegister: false  });
     }
     forwardToLogin = () => {
         this.props.history.push('/Login');
