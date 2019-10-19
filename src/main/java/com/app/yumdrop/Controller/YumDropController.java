@@ -1,4 +1,5 @@
 package com.app.yumdrop.Controller;
+import com.app.yumdrop.Entity.Users;
 import com.app.yumdrop.FormEntity.UsersDetails;
 import com.app.yumdrop.Service.SmsTwoFactorService;
 import com.app.yumdrop.Service.UserRegistrationService;
@@ -70,4 +71,31 @@ public class YumDropController {
         return restaurantDataForm;
     }
 
+    @RequestMapping(path= "/fbUserLogin", method = RequestMethod.POST)
+    @CrossOrigin
+    public String addFbUser(@RequestBody Users user) {
+        System.out.println(user);
+        user.setUserPhoneNumber("0000000000");
+        user.setUserCountryCode("1");
+        user.setLastCreatedUser("admin");
+        user.setLastUpdatedUser("admin");
+        user.setUserPassword("admin");
+        //Users u = usersRepository.findUsersByUserEmail(user.getUserEmail());
+        //System.out.println(u);
+        return "success";
+    }
+
+    @RequestMapping(path= "/googleUserLogin", method = RequestMethod.POST)
+    @CrossOrigin
+    public String addGoogleUser(@RequestBody Users user) {
+        System.out.println(user);
+        user.setUserPhoneNumber("0000000000");
+        user.setUserCountryCode("1");
+        user.setLastCreatedUser("admin");
+        user.setLastUpdatedUser("admin");
+        user.setUserPassword("admin");
+        //Users u = userRepository.findUsersByUserEmail(user.getUserEmail());
+        //System.out.println(u);
+        return "success";
+    }
 }
