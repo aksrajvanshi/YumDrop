@@ -1,7 +1,9 @@
 package com.app.yumdrop.Entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 @Table(name = "users")
@@ -9,7 +11,8 @@ public class Users extends CreateAndUpdateTimeModel{
 
     @Id
     @Column(name = "user_email", nullable = false)
-    private String userEmail;
+    @Email(message = "user email should be a valid email")
+    public String userEmail;
 
     @NotNull
     @Column(name = "user_name", nullable = false)
@@ -35,7 +38,21 @@ public class Users extends CreateAndUpdateTimeModel{
     @Column(name = "last_created_user", nullable = false)
     private String lastCreatedUser;
 
+    @Column(name = "twofactor_code")
+    private String twoFactorCode;
+
+    @Column(name = "twofactor_expiretime")
+    private Date twoFactorExpiryTime;
+
     public Users(){
+    }
+
+    public Users(String userEmail, @NotNull String userName, @NotNull String userPhoneNumber, @NotNull String userCountryCode, @NotNull String userPassword) {
+        this.userEmail = userEmail;
+        this.userName = userName;
+        this.userPhoneNumber = userPhoneNumber;
+        this.userCountryCode = userCountryCode;
+        this.userPassword = userPassword;
     }
 
     public Users(String userEmail, @NotNull String userName, @NotNull String userPhoneNumber, @NotNull String userCountryCode, @NotNull String userPassword, @NotNull String lastUpdatedUser, @NotNull String lastCreatedUser) {
@@ -115,5 +132,21 @@ public class Users extends CreateAndUpdateTimeModel{
 
     public void setLastCreatedUser(String lastCreatedUser) {
         this.lastCreatedUser = lastCreatedUser;
+    }
+
+    public String getTwoFactorCode() {
+        return twoFactorCode;
+    }
+
+    public void setTwoFactorCode(String twoFactorCode) {
+        this.twoFactorCode = twoFactorCode;
+    }
+
+    public Date getTwoFactorExpiryTime() {
+        return twoFactorExpiryTime;
+    }
+
+    public void setTwoFactorExpiryTime(Date twoFactorExpiryTime) {
+        this.twoFactorExpiryTime = twoFactorExpiryTime;
     }
 }
