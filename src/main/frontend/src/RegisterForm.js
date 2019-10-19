@@ -128,6 +128,9 @@ class App extends Component {
         return (
             <div className="App">
                 <header>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"/>
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -217,48 +220,90 @@ class App extends Component {
                         </Button>
                     </Modal.Body>
                 </Modal>
-
-
-
                 <Modal
-                    show={this.state.registerSelect}
+                    show={this.state.userRegister}
                     onHide={this.closeAllOptionsOfSelectionForm}
                     animation={false}
                     id="modal"
                 >
-                    <Modal.Header id="UserHead">
-                        <Modal.Title id="modeltitle">User Register</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body id="modelBody">
-
                         <div className="container">
                             <div className="row">
                                 <div className="main">
-                                    <form  role="form" onSubmit={this.register}>
-                                        <div className="form-group">
-                                            <input value={this.state.userFullName}  placeholder="Full Name" onChange={this.handleUserNameChange} type="text" className="form-control" id="inputUsernameEmail"/>
-                                        </div>
-                                        <div className="form-group">
-                                            <input value={this.state.userEmailID}  placeholder="Email ID" onChange={this.handleUserEmailIdChange} type="text" className="form-control" id="inputUsernameEmail"/>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="password" value={this.state.userPassword}  placeholder="Password" onChange={this.handleUserPasswordChange} className="form-control" id="inputUsernameEmail"/>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="password" value={this.state.userConfirmPassword} placeholder="Confirm password" onChange={this.handleUserConfirmPasswordChange} className="form-control" id="inputPassword"/>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="text" value={this.state.userPhoneNumber} placeholder="Phone Number" onChange={this.handleUserPhoneNumberChange} className="form-control" id="inputPassword"/>
-                                        </div>
+                                    <div className="login-form">
+                                        <form onSubmit={this.register}>
+                                            <h2 className="text-center">Sign Up</h2>
+                                            <div className="social-btn text-center">
+                                                <a href="#" className="btn btn-primary btn-block btn-lg"><i
+                                                    className="fa fa-facebook"></i> Sign up with <b>Facebook</b></a>
+                                                <a href="#" className="btn btn-danger btn-block btn-lg"><i
+                                                    className="fa fa-google"></i> Sign up with <b>Google</b></a>
+                                            </div>
+                                            <div className="or-seperator"><i>or</i></div>
+                                            <div className="form-group">
+                                                <input value={this.state.userFullName} onChange={this.handleUserNameChange} type="text" className="form-control" placeholder="Full Name" required="required"/>
+                                            </div>
+                                            <div className="form-group">
+                                                <input value={this.state.userEmailID} onChange={this.handleUserEmailIdChange} type="text" className="form-control" placeholder="Email ID" required="required"/>
+                                            </div>
+                                            <div className="form-group">
+                                                <input type="password" value={this.state.userPassword} onChange={this.handleUserPasswordChange} className="form-control" placeholder="Password" required="required"/>
+                                            </div>
+                                            <div className="form-group">
+                                                <input type="password" value={this.state.userConfirmPassword} onChange={this.handleUserConfirmPasswordChange} className="form-control" placeholder="Confirm password" required="required"/>
+                                            </div>
+                                            <div className="form-group">
+                                                <input type="text" className="form-control"  value={this.state.userPhoneNumber} onChange={this.handleUserPhoneNumberChange} placeholder="Phone  Number" required="required"/>
+                                            </div>
+                                            <div className="form-group">
+                                                <button onClick={this.register} type="submit" className="btn btn-primary btn-lg btn-block login-btn">Sign Up
+                                                </button>
+                                            </div>
+                                        </form>
 
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </Modal.Body>
-                    <Modal.Footer id="modelBody">
-                        <button className="btn btn btn-primary" onClick={this.register}>Sign Up</button>
-                    </Modal.Footer>
+
+                </Modal>
+                <Modal
+                    show={this.state.restaurantRegister}
+                    onHide={this.closeAllOptionsOfSelectionForm}
+                    animation={false}
+                    id="modal"
+                >
+                    <div className="container">
+                        <div className="row">
+                            <div className="main">
+                                <div className="login-form">
+                                    <form onSubmit={this.register}>
+                                        <h2 className="text-center">Sign Up</h2>
+                                        <div className="form-group">
+                                            <input value={this.state.userFullName} onChange={this.handleUserNameChange} type="text" className="form-control" placeholder="Full Name" required="required"/>
+                                        </div>
+                                        <div className="form-group">
+                                            <input value={this.state.userEmailID} onChange={this.handleUserEmailIdChange} type="text" className="form-control" placeholder="Email ID" required="required"/>
+                                        </div>
+                                        <div className="form-group">
+                                            <input type="password" value={this.state.userPassword} onChange={this.handleUserPasswordChange} className="form-control" placeholder="Password" required="required"/>
+                                        </div>
+                                        <div className="form-group">
+                                            <input type="password" value={this.state.userConfirmPassword} onChange={this.handleUserConfirmPasswordChange} className="form-control" placeholder="Confirm password" required="required"/>
+                                        </div>
+                                        <div className="form-group">
+                                            <input type="text" className="form-control"  value={this.state.userPhoneNumber} onChange={this.handleUserPhoneNumberChange} placeholder="Phone  Number" required="required"/>
+                                        </div>
+                                        <div className="form-group">
+                                            <button onClick={this.register} type="submit" className="btn btn-primary btn-lg btn-block login-btn">Sign Up
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </Modal>
 
 

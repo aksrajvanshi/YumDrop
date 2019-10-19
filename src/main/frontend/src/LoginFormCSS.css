@@ -190,8 +190,107 @@ h3 {
 }
 
 #modalForm{
-    position: center;
     padding-right: 2800px;
     width: 250px;
-    height: 400px;
+    height: 1200px;
+}
+
+
+
+
+.form-control:focus {
+    border-color: #99c432;
+}
+.login-form {
+    width: 350px;
+
+}
+.login-form form {
+    color: #999;
+
+    background: #fff;
+    padding-bottom: 30px;
+    padding-right: 10px;
+}
+.login-form h2 {
+    font-size: 24px;
+    color: #454959;
+    margin: 45px 0 25px;
+    font-family: 'Francois One', sans-serif;
+}
+
+.login-form .btn {
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.4s;
+    line-height: normal;
+    border: none;
+}
+.login-btn {
+    font-size: 16px;
+    font-weight: bold;
+    background: #df4930;
+    margin-bottom: 20px;
+}
+.login-btn:hover, .login-btn:active {
+    background: #86ac2d !important;
+}
+.social-btn {
+    padding-bottom: 15px;
+}
+.social-btn .btn {
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-align: left;
+}
+.social-btn .btn:hover {
+    opacity: 0.8;
+    text-decoration: none;
+}
+.social-btn .btn-primary {
+    background: #507cc0;
+}
+.social-btn .btn-info {
+    background: #64ccf1;
+}
+.social-btn .btn-danger {
+    background: #df4930;
+}
+.social-btn .btn i {
+    float: left;
+    margin: 1px 10px 0 5px;
+    min-width: 20px;
+    font-size: 18px;
+}
+.or-seperator {
+    height: 0;
+    margin: 0 auto 20px;
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+    width: 30%;
+}
+.or-seperator i {
+    padding: 0 10px;
+    font-size: 15px;
+    text-align: center;
+    background: #fff;
+    display: inline-block;
+    position: relative;
+    top: -13px;
+    z-index: 1;
+}
+.login-form a {
+    color: #fff;
+    text-decoration: underline;
+}
+.login-form form a {
+    color: #999;
+    text-decoration: none;
+}
+.login-form a:hover, .login-form form a:hover {
+    text-decoration: none;
+}
+.login-form form a:hover {
+    text-decoration: underline;
 }
