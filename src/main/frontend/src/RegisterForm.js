@@ -12,9 +12,10 @@ class App extends Component {
         restaurantRegister: false,
         deliveryAgentRegister: false,
         userPhoneNumber: "",
-        userEmail: "",
-        registerSelect: true
-
+        userEmailID: "",
+        registerSelect: true,
+        userFullName: "",
+        userConfirmPassword: ""
     };
 
     forwardToLoginForm = () => {
@@ -42,13 +43,13 @@ class App extends Component {
 
     handleUserNameChange =  (event) => {
         this.setState({
-            userName: event.target.value,
+            userFullName: event.target.value,
         });
     };
 
     handleUserEmailIdChange  =  (event) => {
         this.setState({
-            userEmail: event.target.value,
+            userEmailID: event.target.value,
         });
     };
 
@@ -61,6 +62,12 @@ class App extends Component {
     handleUserPasswordChange =  (event) => {
         this.setState({
             userPassword: event.target.value,
+        });
+    };
+
+    handleUserConfirmPasswordChange =  (event) => {
+        this.setState({
+            userConfirmPassword: event.target.value,
         });
     };
 
@@ -185,7 +192,6 @@ class App extends Component {
                     </div>
                 </div>
 
-
                 <Modal
                     show={this.state.registerSelect}
                     onHide={this.closeAllOptionsOfSelectionForm}
@@ -212,8 +218,10 @@ class App extends Component {
                     </Modal.Body>
                 </Modal>
 
+
+
                 <Modal
-                    show={this.state.userRegister}
+                    show={this.state.registerSelect}
                     onHide={this.closeAllOptionsOfSelectionForm}
                     animation={false}
                     id="modal"
@@ -223,43 +231,38 @@ class App extends Component {
                     </Modal.Header>
                     <Modal.Body id="modelBody">
 
+                        <div className="container">
+                            <div className="row">
+                                <div className="main">
+                                    <form  role="form" onSubmit={this.register}>
+                                        <div className="form-group">
+                                            <input value={this.state.userFullName}  placeholder="Full Name" onChange={this.handleUserNameChange} type="text" className="form-control" id="inputUsernameEmail"/>
+                                        </div>
+                                        <div className="form-group">
+                                            <input value={this.state.userEmailID}  placeholder="Email ID" onChange={this.handleUserEmailIdChange} type="text" className="form-control" id="inputUsernameEmail"/>
+                                        </div>
+                                        <div className="form-group">
+                                            <input type="password" value={this.state.userPassword}  placeholder="Password" onChange={this.handleUserPasswordChange} className="form-control" id="inputUsernameEmail"/>
+                                        </div>
+                                        <div className="form-group">
+                                            <input type="password" value={this.state.userConfirmPassword} placeholder="Confirm password" onChange={this.handleUserConfirmPasswordChange} className="form-control" id="inputPassword"/>
+                                        </div>
+                                        <div className="form-group">
+                                            <input type="text" value={this.state.userPhoneNumber} placeholder="Phone Number" onChange={this.handleUserPhoneNumberChange} className="form-control" id="inputPassword"/>
+                                        </div>
 
-                        <form onSubmit={this.register}>
-                            <label htmlFor="username">Name: </label>
-                            <input
-                                value={this.state.userName} onChange={this.handleUserNameChange}
-                                type="text"
-                                id="username"
-
-                            />
-                            <br />
-                            <label htmlFor="username">Email:</label>
-                            <input
-                                type="text"
-                                id="username"
-                                value={this.state.userEmail} onChange={this.handleUserEmailIdChange}
-
-                            />
-                            <br />
-                            <label htmlFor="password">Password:</label>
-                            <input
-                                type="text"
-                                id="password"
-                                value={this.state.userPassword} onChange={this.handleUserPasswordChange}
-                            />
-                            <label htmlFor="password">Phone:</label>
-                            <input
-                                type="text"
-                                id="password"
-                                value={this.state.userPhoneNumber} onChange={this.handleUserPhoneNumberChange}
-                            />
-                            <br />
-                        </form>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </Modal.Body>
                     <Modal.Footer id="modelBody">
-                        <button onClick={this.register}>Register</button>
+                        <button className="btn btn btn-primary" onClick={this.register}>Sign Up</button>
                     </Modal.Footer>
                 </Modal>
+
+
+
 
 
 

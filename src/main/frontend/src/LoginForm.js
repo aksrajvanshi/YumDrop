@@ -233,7 +233,7 @@
                     id="modal"
                 >
                     <Modal.Header id="UserHead">
-                        <Modal.Title id="modeltitle">User Register</Modal.Title>
+                        <Modal.Title id="modeltitle">User Login</Modal.Title>
                     </Modal.Header>
                     <Modal.Body id="modelBody">
 
