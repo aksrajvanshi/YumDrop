@@ -151,57 +151,73 @@ class App extends Component {
   validateUserName = () => {
     if (!this.state.signUpName) {
       this.setState({signUpNameError: "Name cannot be empty. "});
+      return false;
     } else if (!/^[A-Za-z]+$/.test(this.state.signUpName)) {
       this.setState({signUpNameError: "Please only use letters. "});
+      return false;
     }
     else {
         this.setState({signUpNameError: ""});
+        return true;
     }
   };
 
-  validateRestuarantName = () => {
+  validateRestaurantName = () => {
     if (!this.state.signUpRestaurantName) {
       this.setState({signUpRestaurantNameError: "Restaurant name cannot be empty. "});
+      return false;
     } else if (!/^[A-Za-z]+$/.test(this.state.signUpRestaurantName)) {
       this.setState({signUpRestaurantNameError: "Please only use letters. "});
+      return false;
     }
     else {
         this.setState({signUpRestaurantNameError: ""});
+        return true;
     }
   };
 
   validateEmail = () => {
     if (!EmailValidator.validate(this.state.signUpEmail)) {
       this.setState({signUpEmailError: "Please enter a valid email. "});
+      return false;
     }
     else {
         this.setState({signUpEmailError: ""});
+        return true;
     }
   };
 
   validatePassword = () => {
     if (!/[a-z]/.test(this.state.signUpPassword)) {
       this.setState({signUpPasswordError: "Password must contain a lower case letter. "});
+      return false;
     } else if (!/[A-Z]/.test(this.state.signUpPassword)) {
       this.setState({signUpPasswordError: "Password must contain an upper case letter. "});
+      return false;
     } else if (/^[A-Za-z]+$/.test(this.state.signUpPassword)) {
       this.setState({signUpPasswordError: "Password must contain a unique non-letter character. "});
+      return false;
     } else if (this.state.signUpPassword.length < 8) {
       this.setState({signUpPasswordError: "Password must be be longer than 7 characters."});
+      return false;
     }
     else {
         this.setState({signUpPasswordError: ""});
+        return true;
     }
   };
 
   validateConfirmPassword = () => {
     if (!this.state.signUpConfirmPassword) {
       this.setState({signUpConfirmPasswordError: "Password confirmation cannot be empty."});
-    } else if (this.state.signUpConfirmPassword != this.state.signUpPassword) {
+      return false;
+    } else if (this.state.signUpConfirmPassword !== this.state.signUpPassword) {
       this.setState({signUpConfirmPasswordError: "Passwords do not match. "});
+      return false;
     }
     else {
         this.setState({signUpConfirmPasswordError: ""});
+        return true;
     }
   };
 
@@ -213,12 +229,15 @@ class App extends Component {
         })
       ) {
         this.setState({signUpPhoneNumError :"Please enter a valid phone number. "});
+        return false;
       }
       else {
         this.setState({signUpPhoneNumError: ""});
+        return true;
         }
     } else {
       this.setState({signUpPhoneNumError: "Phone number cannot be empty."});
+      return false;
     }
   };
 
@@ -230,48 +249,50 @@ class App extends Component {
         })
       ) {
         this.setState({signUpPhoneNum2Error: "Please enter a second valid phone number. "});
+        return false;
       }
       else {
         this.setState({signUpPhoneNum2Error: ""});
+        return true;
     }
     } else {
       this.setState({signUpPhoneNum2Error: "Phone number cannot be empty."});
+      return false;
     }
   };
-
+  checkAllFields = () => {
+      this.validatePhoneNum();
+      this.validateConfirmPassword();
+      this.validatePassword();
+      this.validateEmail();
+      this.validateUserName();
+      this.validatePhoneNum2();
+      this.validateRestaurantName();
+  }
   validateForm = () => {
-    this.validateConfirmPassword();
-    this.validateEmail();
-    this.validatePassword();
-    this.validatePhoneNum();
-    this.validatePhoneNum2();
-    this.validateRestuarantName();
-    this.validateUserName();
+      this.checkAllFields();
     if (
       (this.state.userRegister || this.state.deliveryRegister) &&
-      (this.state.signUpNameError != "" ||
-        this.state.signUpEmailError != "" ||
-        this.state.signUpPasswordError != "" ||
-        this.state.signUpConfirmPasswordError != "" ||
-        this.state.signUpPhoneNumError != "")
+      (!this.validateUserName() ||
+        !this.validateEmail() ||
+        !this.validatePassword() ||
+        !this.validateConfirmPassword() ||
+        !this.validatePhoneNum())
     ) {
       this.setState({ formIsValid: false });
-      console.log(this.state.formIsValid);
     } else if (
       this.state.restaurantRegister &&
-      (this.state.signUpNameError != "" ||
-        this.state.signUpEmailError != "" ||
-        this.state.signUpPasswordError != "" ||
-        this.state.signUpPhoneNumError != "" ||
-        this.state.signUpConfirmPasswordError != "" ||
-        this.state.signUpPhoneNum2Error != "" ||
-        this.state.signUpRestaurantNameError != "")
+      (this.validateUserName() ||
+        this.validateEmail() ||
+        this.validatePassword() ||
+        this.validatePhoneNum() ||
+        this.validateConfirmPassword() ||
+        this.validatePhoneNum2() ||
+        this.validateRestaurantName())
     ) {
       this.setState({ formIsValid: false });
-      console.log(this.state.formIsValid);
     } else {
       this.setState({ formIsValid: true });
-      console.log(this.state.formIsValid);
     }
   };
 
@@ -722,7 +743,7 @@ class App extends Component {
                       <h3>
                         <span>
                           <strong>
-                            Delivering deliciouness at your doorstep
+                            Delivering deliciousness at your doorstep
                           </strong>
                         </span>
                       </h3>
