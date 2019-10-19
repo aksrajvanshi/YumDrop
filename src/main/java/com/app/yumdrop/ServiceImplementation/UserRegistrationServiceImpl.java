@@ -28,7 +28,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         }
 
         Users userToRegister = new Users(userDataForm.getUser_email(), userDataForm.getUser_name(),
-                userDataForm.getUser_phonenum(), "+1", PasswordUtils.convertToHash(userDataForm.getUserPassword()), "SYSTEM", "SYSTEM");
+                userDataForm.getUser_phonenum(), "+1", PasswordUtils.convertToHash(userDataForm.getUserPassword()), null, "SYSTEM", "SYSTEM");
 
         userRepository.save(userToRegister);
         return new ResponseEntity<>(HttpStatus.OK);

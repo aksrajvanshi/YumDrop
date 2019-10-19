@@ -1,5 +1,5 @@
 package com.app.yumdrop.Controller;
-import com.app.yumdrop.FormEntity.UsersDetails;
+
 import com.app.yumdrop.Service.SmsTwoFactorService;
 import com.app.yumdrop.Service.UserRegistrationService;
 import org.json.JSONException;
@@ -9,12 +9,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @ComponentScan
 @Controller
-public class YumDropController {
+public class InitialPageLoadController {
 
     @Autowired
     UserRegistrationService userRegistrationService;
@@ -32,8 +35,8 @@ public class YumDropController {
 
         return "index";
     }
-  
-    @RequestMapping(value = "/LoginDataForm",method = RequestMethod.POST)
+
+    @RequestMapping(value = "/LoginDataForm", method = RequestMethod.POST)
     public ResponseEntity<?> userLogin(@RequestBody String userDataForm) {
         System.out.println("inside");
 
@@ -49,25 +52,6 @@ public class YumDropController {
         System.out.println(jsonString);
 
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/userRegistration", method = RequestMethod.POST)
-    public ResponseEntity<?> userRegistration(@RequestBody UsersDetails usersDetails){
-        System.out.println(" fxvdf " + usersDetails.getUser_name() + "  sdfsd " + usersDetails.getUser_email());
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    /**
-     * registers a restaurant in the system.
-     *
-     * @param restaurantDataForm
-     * @return
-     */
-    @PostMapping(value = "/restaurantRegistration")
-    public String restaurantRegistration(@RequestBody String restaurantDataForm) {
-        System.out.println(restaurantDataForm);
-
-        return restaurantDataForm;
     }
 
 }

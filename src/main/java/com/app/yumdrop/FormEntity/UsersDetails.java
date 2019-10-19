@@ -4,7 +4,7 @@ import javax.persistence.Id;
 
 public class UsersDetails {
     public String user_name;
-    public String userPassword;
+    public String user_password;
 
     @Id
     public String user_email;
@@ -17,7 +17,7 @@ public class UsersDetails {
 
     public UsersDetails(String user_name, String userPassword, String user_email, String user_phonenum) {
         this.user_name = user_name;
-        this.userPassword = userPassword;
+        this.user_password = userPassword;
         this.user_email = user_email;
         this.user_phonenum = user_phonenum;
     }
@@ -31,11 +31,11 @@ public class UsersDetails {
     }
 
     public String getUserPassword() {
-        return userPassword;
+        return user_password;
     }
 
     public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+        this.user_password = userPassword;
     }
 
     public String getUser_email() {
