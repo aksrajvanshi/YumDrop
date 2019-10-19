@@ -4,6 +4,11 @@
     import './LoginFormCSS.css'
     import "bootstrap/dist/css/bootstrap.min.css";
     import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
+    import FacebookLogin from 'react-facebook-login';
+    import GoogleLogin from 'react-google-login';
+
+    const axios = require('axios');
+
     class App extends Component {
         state = {
             loginSelect: true,
@@ -15,7 +20,9 @@
             userPassword: "",
             userPhoneNumber: "",
             userEmail: "",
-            redirect: false
+            redirect: false,
+            fbAccessToken: '',
+            googleAccessToken: ''
 
         };
 
@@ -125,6 +132,42 @@
             });
         };
 
+        responseFacebook(response)  {
+            console.log(response);
+            const user = {
+                "userEmail": response.email,
+                "userName" : response.name,
+                fbAccessToken: response.accessToken
+            };
+            console.log(user.userName);
+            axios({
+                method:'post',
+                url:'/fbUserLogin',
+                data: user
+            })
+                .then( (response) => {
+                    console.log(response);
+                });
+        }
+
+        responseGoogle(response)  {
+            console.log(response.name);
+            console.log(response.email);
+            const user = {
+                "userEmail": response.email,
+                "userName" : response.name,
+                googleAccessToken: response.accessToken
+            };
+            console.log(user.userName);
+            axios({
+                method:'post',
+                url:'/googleUserLogin',
+                data: user
+            })
+                .then( (response) => {
+                    console.log(response);
+                });
+        }
 
         render() {
             const { country, region } = this.state;
@@ -249,6 +292,25 @@
                                         </div>
                                         <div className="form-group">
                                             <a className="pull-right" href="#">Forgot password?</a>
+                                        </div>
+                                        <div className="oauth-login">
+                                            <div className="facebook-login">
+                                                <FacebookLogin
+                                                    appId="527192644707128"
+                                                    autoLoad={false}
+                                                    fields="name,email,picture"
+                                                    cookiePolicy={'single_host_origin'}
+                                                    callback={(response)=>this.responseFacebook(response)} />
+                                            </div>
+                                            <div className="google-login">
+                                                <GoogleLogin
+                                                    clientId="1048514306032-l4kt6l8blqnqkr2ro5fvsqb2vutd7v75.apps.googleusercontent.com"
+                                                    buttonText="Login with Google"
+                                                    autoLoad={false}
+                                                    fields="name,email"
+                                                    cookiePolicy={'single_host_origin'}
+                                                    callback={(response)=>this.responseGoogle(response)} />
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
