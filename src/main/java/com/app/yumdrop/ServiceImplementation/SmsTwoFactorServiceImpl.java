@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SmsTwoFactorServiceImpl implements SmsTwoFactorService {
 
-    private static final String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
-    private static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
+    private final static String ACCOUNT_SID = "ACb1dccceafdf2b145395f15aff91fda12";
+    private final static String AUTH_TOKEN = "9337c4a5d281f63782b649d78d5eb7a7";
 
     static {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);

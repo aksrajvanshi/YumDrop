@@ -1,5 +1,7 @@
+package com.app.yumdrop.Controller;
 import com.app.yumdrop.FormEntity.UsersDetails;
-import com.app.yumdrop.Repository.UsersRepository;
+import com.app.yumdrop.Service.SmsTwoFactorService;
+import com.app.yumdrop.Service.UserRegistrationService;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Random;
 
 
 @ComponentScan
@@ -34,12 +34,12 @@ public class YumDropController {
     }
   
     @RequestMapping(value = "/LoginDataForm",method = RequestMethod.POST)
-    public String userLogin(@RequestBody  String userDataForm) {
+    public ResponseEntity<?> userLogin(@RequestBody String userDataForm) {
         System.out.println("inside");
 
         System.out.println(userDataForm);
         System.out.println(HttpStatus.OK);
-        return "Hello";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = "/tryGetData")
@@ -48,17 +48,13 @@ public class YumDropController {
                 .put("userName", "Hello World!").toString();
         System.out.println(jsonString);
 
-        return ResponseEntity.ok(404);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
-
-
     @RequestMapping(value = "/userRegistration", method = RequestMethod.POST)
-    public void userRegistration(@RequestBody String s){
-        System.out.println("Inside user registration");
-        System.out.println(s);
-        //return ResponseEntity.ok().build();
+    public ResponseEntity<?> userRegistration(@RequestBody UsersDetails usersDetails){
+        System.out.println(" fxvdf " + usersDetails.getUser_name() + "  sdfsd " + usersDetails.getUser_email());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -73,39 +69,5 @@ public class YumDropController {
 
         return restaurantDataForm;
     }
-
-
-    @RequestMapping(value = "/LoginDataForm",method = RequestMethod.POST)
-    public String userLogin(@RequestBody  String userDataForm) {
-        System.out.println("inside");
-
-        System.out.println(userDataForm);
-        System.out.println(HttpStatus.OK);
-        return "Hello";
-    }
-
-    @GetMapping(value = "/tryGetData")
-    public ResponseEntity<?> trying() throws JSONException {
-        String jsonString = new JSONObject()
-                .put("userName", "Hello World!").toString();
-        System.out.println(jsonString);
-
-     return ResponseEntity.ok(404);
-    }
-
-    @PostMapping(value = "/AgentRegistration")
-    public String agentRegistration(@RequestBody String userDataForm) {
-        System.out.println(userDataForm);
-
-        return userDataForm;
-    }
-
-    @PostMapping(value = "/AgentRegistration")
-    public String agentRegistration(@RequestBody String userDataForm) {
-        System.out.println(userDataForm);
-
-        return userDataForm;
-    }
-
 
 }

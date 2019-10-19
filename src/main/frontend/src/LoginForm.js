@@ -23,14 +23,12 @@
             fetch('/tryGetData')
                 .then(res => res.json())
                 .then(response => {
-                    alert(response.toString());
                         if(response.toString() === "200"){
                             this.state.redirect = true
                         }
                     console.log(response);
                 })
                 .then((data) => {
-                    alert(data.toString());
                     console.log(data.toString());
 
                 })
@@ -42,11 +40,10 @@
 
             fetch('/LoginDataForm',
                 {
+                    method: 'POST',
                     header:{
-                        accept: "application/json",
                         "Content-Type": "application/json"
                     },
-                    method:'POST',
                     body:JSON.stringify({
                             user_name: this.state.userName,
                             userPassword: this.state.userPassword
