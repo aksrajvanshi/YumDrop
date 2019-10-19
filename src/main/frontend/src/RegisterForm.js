@@ -138,7 +138,7 @@ class App extends Component {
                                 <ul className="navbar-nav mr-auto">
                                     <li className="nav-item" >
                                         <a className="nav-link" onClick={this.forwardToLoginForm}><i
-    className="fa fa-fw fa-user"/>Login</a>
+                                            className="fa fa-fw fa-user"/>Login</a>
                                     </li>
                                     <li className="nav-item" id="SignUpID">
                                         <a className="nav-link" onClick={this.registerSelect}>Sign Up</a>
@@ -243,16 +243,16 @@ class App extends Component {
                             <br />
                             <label htmlFor="password">Password:</label>
                             <input
-    type="text"
-    id="password"
-    value={this.state.userPassword} onChange={this.handleUserPasswordChange}
-    />
+                                type="text"
+                                id="password"
+                                value={this.state.userPassword} onChange={this.handleUserPasswordChange}
+                            />
                             <label htmlFor="password">Phone:</label>
                             <input
-    type="text"
-    id="password"
-    value={this.state.userPhoneNumber} onChange={this.handleUserPhoneNumberChange}
-    />
+                                type="text"
+                                id="password"
+                                value={this.state.userPhoneNumber} onChange={this.handleUserPhoneNumberChange}
+                            />
                             <br />
                         </form>
                     </Modal.Body>

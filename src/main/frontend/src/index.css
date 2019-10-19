@@ -1,50 +1,50 @@
 #img1{
-   background-image: url(https://wallpapercave.com/wp/wp1929358.jpg);
- }
+    background-image: url(https://wallpapercave.com/wp/wp1929358.jpg);
+}
 #img2{
-  background-image: url(https://www.sheknows.com/wp-content/uploads/2018/08/ti8wzfbbvdspxo8dg1ci.jpeg);
+    background-image: url(https://www.sheknows.com/wp-content/uploads/2018/08/ti8wzfbbvdspxo8dg1ci.jpeg);
 }
 #img3{
-  background-image: url(https://wallpaperaccess.com/full/462778.jpg);
+    background-image: url(https://wallpaperaccess.com/full/462778.jpg);
 }
 #img4{
-  background-image: url(https://cdn.wallpapersafari.com/63/43/03kVP4.jpg);
+    background-image: url(https://cdn.wallpapersafari.com/63/43/03kVP4.jpg);
 }
 #img5{
-  background-image: url(https://freedesignfile.com/upload/2016/12/Tasty-Chinese-Food-HD-picture-04.jpg);
+    background-image: url(https://freedesignfile.com/upload/2016/12/Tasty-Chinese-Food-HD-picture-04.jpg);
 }
 #navBarLinks{
-  padding-left: 850px;
+    padding-left: 850px;
 }
 
 #SignUpID{
-  padding-left: 20px;
+    padding-left: 20px;
 }
 
 #ContainerID{
-  padding-top: 150px;
+    padding-top: 150px;
 }
 
 .nopadding {
-  margin-top: 0 !important;
+    margin-top: 0 !important;
 }
 
 #firstbar{
-  padding-left: 300px;
+    padding-left: 300px;
 
 }
 
 #exampleFormControlSelect1{
-  height: 34px;
+    height: 34px;
 }
 
 #buttonOrder{
-  padding-top: 50px;
+    padding-top: 50px;
 }
 .navbar {
-  background-color: black;
-  align-items: center;
-  align-content: center;
+    background-color: black;
+    align-items: center;
+    align-content: center;
 }
 
 #para{
@@ -53,101 +53,101 @@
 }
 
 .pattern-4 {
-  background-attachment: fixed;
+    background-attachment: fixed;
 }
 
 .view {
-  background: url("https://i.pinimg.com/originals/25/a6/3b/25a63b20b95ddbb2003491895a0e36a8.jpg")no-repeat center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  height: 100vh;
+    background: url("https://i.pinimg.com/originals/25/a6/3b/25a63b20b95ddbb2003491895a0e36a8.jpg")no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100vh;
 }
 
 .image-grid-cover {
-  width: 100%;
-  background-size: cover;
-  min-height: 180px;
-  position: relative;
-  margin-bottom: 50px;
-  text-shadow: rgba(0,0,0,.8) 0 1px 0;
-  border-radius: 4px;
+    width: 100%;
+    background-size: cover;
+    min-height: 180px;
+    position: relative;
+    margin-bottom: 50px;
+    text-shadow: rgba(0,0,0,.8) 0 1px 0;
+    border-radius: 4px;
 }
 .image-grid-clickbox {
-  position: absolute;
-  display: block;
-  width: 100%;
-  height: 100%;
-  z-index: 20;
-  background: rgba(0,0,0,.45);
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    background: rgba(0,0,0,.45);
 }
 .cover-wrapper {
-  font-size: 18px;
-  text-align: center;
-  display: block;
-  color: #fff;
-  text-shadow: rgba(0,0,0,.8) 0 1px 0;
-  z-index: 21;
-  position: relative;
-  top: 80px;
+    font-size: 18px;
+    text-align: center;
+    display: block;
+    color: #fff;
+    text-shadow: rgba(0,0,0,.8) 0 1px 0;
+    z-index: 21;
+    position: relative;
+    top: 80px;
 }
 a, a:focus, a:hover {
-  text-decoration: none;
-  outline: 0;
+    text-decoration: none;
+    outline: 0;
 }
 .image-grid {
-  width: 100%;
-  background-size: cover;
-  min-height: 180px;
-  position: relative;
-  margin-bottom: 50px;
-  margin-left: 150px;
-  text-shadow: rgba(0,0,0,.8) 0 1px 0;
-  border-radius: 4px;
+    width: 100%;
+    background-size: cover;
+    min-height: 180px;
+    position: relative;
+    margin-bottom: 50px;
+    margin-left: 150px;
+    text-shadow: rgba(0,0,0,.8) 0 1px 0;
+    border-radius: 4px;
 }
 .imagegrid {
-  width: 100%;
-  background-size: cover;
-  min-height: 180px;
-  position: relative;
-  margin-bottom: 50px;
-  margin-left: 150px;
-  text-shadow: rgba(0,0,0,.8) 0 1px 0;
-  border-radius: 4px;
+    width: 100%;
+    background-size: cover;
+    min-height: 180px;
+    position: relative;
+    margin-bottom: 50px;
+    margin-left: 150px;
+    text-shadow: rgba(0,0,0,.8) 0 1px 0;
+    border-radius: 4px;
 }
 .main {
-  max-width: 320px;
-  margin: 0 auto;
+    max-width: 320px;
+    margin: 0 auto;
 }
 .login-or {
-  position: relative;
-  font-size: 18px;
-  color: #aaa;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+    position: relative;
+    font-size: 18px;
+    color: #aaa;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 .span-or {
-  display: block;
-  position: absolute;
-  left: 50%;
-  top: -2px;
-  margin-left: -25px;
-  background-color: #fff;
-  width: 50px;
-  text-align: center;
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: -2px;
+    margin-left: -25px;
+    background-color: #fff;
+    width: 50px;
+    text-align: center;
 }
 .hr-or {
-  background-color: #cdcdcd;
-  height: 1px;
-  margin-top: 0px !important;
-  margin-bottom: 0px !important;
+    background-color: #cdcdcd;
+    height: 1px;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
 }
 h3 {
-  text-align: center;
-  line-height: 300%;
+    text-align: center;
+    line-height: 300%;
 }
 
 #modal {
@@ -161,8 +161,8 @@ h3 {
 }
 
 #modalForm{
-  position: center;
-  padding-right: 2800px;
-  width: 250px;
-  height: 400px;
+    position: center;
+    padding-right: 2800px;
+    width: 250px;
+    height: 400px;
 }
