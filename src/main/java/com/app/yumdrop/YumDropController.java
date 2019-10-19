@@ -1,15 +1,15 @@
-package com.app.yumdrop;
-
 import com.app.yumdrop.FormEntity.UsersDetails;
-import com.app.yumdrop.Repository.UsersRepository;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.Random;
 
 
 @ComponentScan
@@ -17,18 +17,52 @@ import org.springframework.web.bind.annotation.*;
 public class YumDropController {
 
     @Autowired
-    private UsersRepository userRepository;
+    UserRegistrationService userRegistrationService;
 
+    @Autowired
+    SmsTwoFactorService smsTwoFactorService;
 
+    /**
+     * Loads the initial public page of the Yumdrop application
+     *
+     * @return
+     */
     @RequestMapping(value = "/")
     public String loadInitialPublicPage() {
 
-        String user = "akshay";
-        String email = "aksrajvanshi@gmail.com";
-        String password = "aksrajvanshi";
-
         return "index";
     }
+
+    /**
+     * Registers a user in the system.
+     *
+     * @param userDataForm
+     * @return
+     */
+    @RequestMapping(value = "/userRegistration", method = RequestMethod.POST)
+    public ResponseEntity<?> userRegistration(@RequestBody UsersDetails userDataForm) {
+
+        Random rnd = new Random();
+        int number = rnd.nextInt(999999);
+
+        smsTwoFactorService.send2FaCodeAsSms(userDataForm.getUser_phonenum(), String.format("%06d", number));
+        //    return userRegistrationService.registerUser(userDataForm);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     * registers a restaurant in the system.
+     *
+     * @param restaurantDataForm
+     * @return
+     */
+    @PostMapping(value = "/restaurantRegistration")
+    public String restaurantRegistration(@RequestBody String restaurantDataForm) {
+        System.out.println(restaurantDataForm);
+
+        return restaurantDataForm;
+    }
+
 
     @RequestMapping(value = "/LoginDataForm",method = RequestMethod.POST)
     public String userLogin(@RequestBody  String userDataForm) {
@@ -46,23 +80,6 @@ public class YumDropController {
         System.out.println(jsonString);
 
      return ResponseEntity.ok(404);
-    }
-
-
-
-
-    @RequestMapping(value = "/userRegistration", method = RequestMethod.POST)
-    public void userRegistration(@RequestBody String s){
-        System.out.println("Inside user registration");
-       System.out.println(s);
-        //return ResponseEntity.ok().build();
-    }
-
-    @PostMapping(value = "/restaurantRegistration")
-    public String testButton(@RequestBody String userDataForm) {
-        System.out.println(userDataForm);
-
-        return userDataForm;
     }
 
     @PostMapping(value = "/AgentRegistration")
