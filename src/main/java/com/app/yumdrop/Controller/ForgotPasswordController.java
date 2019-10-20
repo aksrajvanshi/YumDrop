@@ -29,13 +29,8 @@ public class ForgotPasswordController {
     @RequestMapping(value = "/setNewUserPassword", method = RequestMethod.POST)
     public ResponseEntity<?> verifyTemporaryPasswordAndSetNewUserPassword(@RequestBody ForgotPasswordForm forgotPasswordForm){
 
-        Users newPasswordUser = forgotPasswordService.verifyTemporaryPasswordAndSetNewPassword(forgotPasswordForm.getUserEmail(),
+        return forgotPasswordService.verifyTemporaryPasswordAndSetNewPassword(forgotPasswordForm.getUserEmail(),
                 forgotPasswordForm.getTemporaryPassword(), PasswordUtils.convertPasswordToHash(forgotPasswordForm.getNewPassword()));
-
-        if(newPasswordUser!=null)
-            return ResponseEntity.ok().body(newPasswordUser);
-        else
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

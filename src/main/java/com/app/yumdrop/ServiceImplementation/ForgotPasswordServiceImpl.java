@@ -48,15 +48,22 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
     }
 
     @Override
-    public Users verifyTemporaryPasswordAndSetNewPassword(String userEmail, String temporaryPassword, String newPassword) {
-        return null;
+    public ResponseEntity<?> verifyTemporaryPasswordAndSetNewPassword(String userEmail, String temporaryPassword, String newPassword) {
+        Users user = usersRepository.findByuserEmail(userEmail);
+        boolean isTempPasswordMatching = PasswordUtils.checkIfPasswordMatches(temporaryPassword, user.getUserPassword());
+        if(isTempPasswordMatching){
+            user.setUserPassword(PasswordUtils.convertPasswordToHash(newPassword));
+            Users newPasswordUser = usersRepository.save(user);
+            if(newPasswordUser!=null)
+                return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
     private String generateRandomPassword(){
         byte[] array = new byte[7]; // length is bounded by 7
         new Random().nextBytes(array);
         String generatedRandomPassword = new String(array, Charset.forName("UTF-8"));
-
         return generatedRandomPassword;
     }
 }
