@@ -19,21 +19,6 @@
 
         };
 
-        componentDidMount() {
-            fetch('/tryGetData')
-                .then(res => res.json())
-                .then(response => {
-                        if(response.toString() === "200"){
-                            this.state.redirect = true
-                        }
-                    console.log(response);
-                })
-                .then((data) => {
-                    console.log(data.toString());
-
-                })
-                .catch(console.log)
-        }
 
         login = () => { debugger;
             let obj={}
