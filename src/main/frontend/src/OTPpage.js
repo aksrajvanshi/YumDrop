@@ -11,8 +11,11 @@ class OTPpage extends Component{
     state = {
         otp: "",
         userRegister: true,
-        userName: ""
+        userName: "",
+        redirect: false,
     };
+
+
     optValidate() {
         debugger;
         let obj = {}
@@ -35,9 +38,11 @@ class OTPpage extends Component{
                if (res.status !== 200) {
                    return;
                }
-
+            this.setState({redirect: true});
                this.forwardToLoginDashboard();
                alert("done");
+               console.log(res);
+               alert("Done console logging");
 
 
         })
@@ -59,8 +64,8 @@ class OTPpage extends Component{
 
 
     forwardToLoginDashboard = () =>{
-        alert("Inside this");
         this.props.history.push('/LoginDashBoard');
+        alert("Inside this");
     }
 
     render(){
