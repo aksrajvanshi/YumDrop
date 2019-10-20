@@ -173,7 +173,7 @@
 
                                         </div>
                                     </div>
-                                    <div className="col-md-12" id="buttonOrder">
+                                    <div className="col-md-1" id="buttonOrder">
                                         <div className="md-form">
                                             <button className="btn btn-lg btn-danger">Search</button>
                                         </div>

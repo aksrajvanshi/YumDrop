@@ -4,6 +4,9 @@ import LoginPage from "./LoginPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 class App extends Component {
+    constructor(props){
+        super(props)
+    }
     state = {
         closeAllOptionsOfSelectionForm: false,
         userName: "",
@@ -32,7 +35,14 @@ class App extends Component {
     }
 
     forwardToOTPpage = () => {
-        this.props.history.push('/OTPpage');
+        this.props.history.push({
+                pathname : '/OTPpage',
+                state :{
+                    name : this.state.userName
+                }
+            }
+        );
+
     }
 
 
@@ -275,7 +285,7 @@ class App extends Component {
 
                                             </div>
                                         </div>
-                                        <div className="col-md-12" id="buttonOrder">
+                                        <div className="col-md-1" id="buttonOrder">
                                             <div className="md-form">
                                                 <button className="btn btn-lg btn-danger">Order</button>
                                             </div>

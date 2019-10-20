@@ -1,13 +1,18 @@
 import React, {Component} from "react";
 import './OTPpageCSS.css';
+import {Modal} from "react-bootstrap";
 
 class OTPpage extends Component{
     constructor(props){
         super(props)
-        this.state = {
-            otp: ""
-        }
+
     }
+
+    state = {
+        otp: "",
+        userRegister: true,
+        userName: ""
+    };
     optValidate() {
         debugger;
         let obj = {}
@@ -26,12 +31,15 @@ class OTPpage extends Component{
 
             }
         ).then(res => {
-            if (res.status !== 200) {
-                return;
-            }
-            this.forwardToLoginDashboard();
-            alert("Hey going to otp page");
-
+           try {
+               if (res.status !== 200) {
+                   return;
+               }
+               this.forwardToLoginDashboard();
+           }catch (error) {
+               console.log(error);
+               alert(error);
+           }
 
 
         })
@@ -53,29 +61,56 @@ class OTPpage extends Component{
 
 
     forwardToLoginDashboard = () =>{
+        alert("Inside this");
         this.props.history.push('/LoginDashBoard');
     }
 
     render(){
         return (
-        <div id="wrapper">
-            <div id="dialog">
-                <button className="close">×</button>
-                <h3>Please enter the 6-digit verification code we sent via SMS:</h3>
-                <div id="form" >
-                    <form >
-                    <input type="text"  value={this.state.userFullName}
-                           onChange={this.handleUserNameChange}  size="1" />
-                    <input type="text" maxLength="1" size="1"/>
-                    <input type="text" maxLength="1" size="1" />
-                    <input type="text" maxLength="1" size="1"/>
-                    <input type="text" maxLength="1" size="1" />
-                    <input type="text" maxLength="1" size="1"/>
-                    <button className="btn btn-primary btn-embossed" onSubmit={this.optValidate.bind(this)}>Verify</button>
-                    </form>
-                </div>
+
+            <div>
+
+                <Modal
+                    show={this.state.userRegister}
+                    animation={false}
+                    id="modal"
+                >
+                    <div className="container">
+                        <div className="row">
+                            <div className="main">
+                                <div className="login-form">
+                                    <form >
+                                        <h2 className="text-center">User  {this.state.userName} Sign Up</h2>
+                                        <div className="social-btn text-center">
+                                            <a href="#" className="btn btn-primary btn-block btn-lg"><i
+    className="fa fa-facebook"/> Sign up with <b>Facebook</b></a>
+                                            <a href="#" className="btn btn-danger btn-block btn-lg"><i
+    className="fa fa-google"/> Sign up with <b>Google</b></a>
+                                        </div>
+                                        <div className="or-seperator"><i>or</i></div>
+
+
+                                        <div className="form-group">
+                                            <input type="text" className="form-control"
+                                                   value={this.state.otp}
+                                                   onChange={this.handleUserNameChange}
+                                                   placeholder="Phone  Number" required="required"/>
+                                        </div>
+                                        <div className="form-group">
+                                            <button onClick={this.optValidate.bind(this)} type="submit"
+                                                    className="btn btn-primary btn-lg btn-block login-btn">Sign Up
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </Modal>
             </div>
-        </div>)
+        )
 
     }
 }
