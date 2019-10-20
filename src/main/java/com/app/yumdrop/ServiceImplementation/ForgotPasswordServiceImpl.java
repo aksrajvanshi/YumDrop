@@ -1,7 +1,9 @@
 package com.app.yumdrop.ServiceImplementation;
 
 import com.app.yumdrop.Entity.Users;
+import com.app.yumdrop.Entity.UsersTemporaryPassword;
 import com.app.yumdrop.Repository.UsersRepository;
+import com.app.yumdrop.Repository.UsersTemporaryPasswordRepository;
 import com.app.yumdrop.Service.ForgotPasswordService;
 import com.app.yumdrop.Utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
     public JavaMailSender javaMailSender;
     @Autowired
     private UsersRepository usersRepository;
+    @Autowired
+    private UsersTemporaryPasswordRepository usersTemporaryPasswordRepository;
 
     @Override
     public ResponseEntity<?> sendMailWithTemporaryPassword(String userEmail) {
@@ -27,7 +31,6 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
         Users userExistsInDb = usersRepository.findByuserEmail(userEmail);
         if (userExistsInDb != null) {
             String temporaryPassword = generateRandomPassword();
-            System.out.println("Temporary password generated is: " + temporaryPassword);
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
             simpleMailMessage.setTo(userEmail);
             simpleMailMessage.setSubject("Temporary Password from Yumdrop");
@@ -36,8 +39,8 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
             javaMailSender.send(simpleMailMessage);
 
-            userExistsInDb.setUserPassword(PasswordUtils.convertPasswordToHash(temporaryPassword));
-            Users newPasswordUser = usersRepository.save(userExistsInDb);
+            UsersTemporaryPassword usersTemporaryPassword = new UsersTemporaryPassword(userEmail, PasswordUtils.convertPasswordToHash(temporaryPassword));
+            UsersTemporaryPassword newPasswordUser = usersTemporaryPasswordRepository.save(usersTemporaryPassword);
             if (newPasswordUser != null)
                 return ResponseEntity.status(HttpStatus.OK).build();
 
@@ -49,13 +52,13 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
     @Override
     public ResponseEntity<?> verifyTemporaryPasswordAndSetNewPassword(String userEmail, String temporaryPassword, String newPassword) {
-        Users user = usersRepository.findByuserEmail(userEmail);
-        boolean isTempPasswordMatching = PasswordUtils.checkIfPasswordMatches(temporaryPassword, user.getUserPassword());
+        UsersTemporaryPassword user = usersTemporaryPasswordRepository.findByuserEmail(userEmail);
+        boolean isTempPasswordMatching = PasswordUtils.checkIfPasswordMatches(temporaryPassword, user.getTemporaryPassword());
         if (isTempPasswordMatching) {
-            user.setUserPassword(PasswordUtils.convertPasswordToHash(newPassword));
-            Users newPasswordUser = usersRepository.save(user);
-            if (newPasswordUser != null)
-                return ResponseEntity.status(HttpStatus.OK).build();
+            Users userInDb = usersRepository.findByuserEmail(userEmail);
+            userInDb.setUserPassword(PasswordUtils.convertPasswordToHash(newPassword));
+            usersRepository.save(userInDb);
+            return ResponseEntity.status(HttpStatus.OK).build();
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
