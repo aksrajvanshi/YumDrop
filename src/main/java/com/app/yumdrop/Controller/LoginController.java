@@ -25,14 +25,14 @@ public class LoginController {
 
         Users loggedInUser = userRepository.findByuserEmail(usersDetails.getUser_name());
         if (loggedInUser == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
         if (loggedInUser.getUserEmail().equals(usersDetails.getUser_name())
                 && PasswordUtils.checkIfPasswordMatches(usersDetails.getUserPassword(), loggedInUser.getUserPassword())) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
     }

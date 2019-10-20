@@ -49,10 +49,10 @@ public class RegistrationController {
         int number = rnd.nextInt(999999);
         boolean messageSent = smsTwoFactorService.send2FaCodeAsSms(usersDetails.getUser_email(), usersDetails.getUser_phonenum(), String.format("%06d", number));
         if (messageSent) {
-            return new ResponseEntity<>(HttpStatus.OK);
+            return ResponseEntity.status(HttpStatus.OK).build();
         }
 
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
     @RequestMapping(value = "/verifyOTPandRegisterUser", method = RequestMethod.POST)
@@ -66,7 +66,7 @@ public class RegistrationController {
             return userRegistrationService.registerUser(userRegisterForm);
         }
         else{
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
     }
