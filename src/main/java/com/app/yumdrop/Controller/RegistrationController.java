@@ -1,9 +1,11 @@
 package com.app.yumdrop.Controller;
 
+import com.app.yumdrop.FormEntity.UserRegisterForm;
 import com.app.yumdrop.FormEntity.UsersDetails;
 import com.app.yumdrop.Repository.UsersRepository;
 import com.app.yumdrop.Service.SmsTwoFactorService;
 import com.app.yumdrop.Service.UserRegistrationService;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.sql.SQLException;
 import java.util.Random;
 
 @ComponentScan
@@ -34,7 +37,7 @@ public class RegistrationController {
         boolean userExists = userRepository.existsById(usersDetails.getUser_email());
 
         if (userExists) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new ConstraintViolationException("User email already exists", new SQLException("Insert query"), "user_email");
         }
         Random rnd = new Random();
         int number = rnd.nextInt(999999);
@@ -45,5 +48,14 @@ public class RegistrationController {
 
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @RequestMapping(value = "/verifyOTPandRegisterUser", method = RequestMethod.POST)
+    public ResponseEntity<?> verifyOTPandRegisterUser(@RequestBody UserRegisterForm userRegisterForm) {
+
+
+        return ResponseEntity.ok().build();
+    }
+
+
 
 }

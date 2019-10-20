@@ -26,4 +26,9 @@ public class PasswordUtils {
         return hashedString;
     }
 
+    public static boolean checkIfPasswordMatches(String formPassword, String hashedUserPasswordFromDb){
+        String hashedFormPassword = convertToHash(formPassword);
+        return hashedFormPassword.equals(hashedUserPasswordFromDb);
+    }
+
 }
