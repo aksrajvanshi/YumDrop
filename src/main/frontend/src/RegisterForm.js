@@ -253,7 +253,7 @@ class App extends Component {
                         <br/><br/><br/>
                         <div className="">
                             <li>
-                                <p id="para">{this.state.userName} you hungry?</p>
+                                <p id="para">Are you hungry?</p>
                             </li>
                             <ul className="list-unstyled">
                                 <br/><br/><br/><br/>

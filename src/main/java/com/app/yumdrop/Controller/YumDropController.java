@@ -60,6 +60,14 @@ public class YumDropController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
+    @RequestMapping(value = "/otpAuthentication", method = RequestMethod.POST)
+    public ResponseEntity<?> otpAuthentication(@RequestBody String usersDetails){
+        System.out.println(ResponseEntity.ok());
+        System.out.println(usersDetails);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     /**
      * registers a restaurant in the system.
      *
