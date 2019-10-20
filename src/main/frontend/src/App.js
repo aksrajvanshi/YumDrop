@@ -3,6 +3,7 @@ import "./App.css";
 import LoginPage from "./LoginPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
+import './index.css'
 class App extends Component {
     state = {
 

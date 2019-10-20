@@ -3,7 +3,6 @@ import "./App.css";
 import LoginPage from "./LoginPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
-import * as that from "expect";
 class App extends Component {
     state = {
         closeAllOptionsOfSelectionForm: false,
@@ -32,6 +31,10 @@ class App extends Component {
         this.props.history.push('/LoginForm');
     }
 
+    forwardToOTPpage = () => {
+        this.props.history.push('/OTPpage');
+    }
+
 
     register() {
         debugger;
@@ -57,8 +60,10 @@ class App extends Component {
                 if (res.status !== 200) {
                     return;
                 }
-                this.setState({redirect: true, userRegister: false}
-                )
+                this.setState({redirect: true, userRegister: false});
+                this.forwardToOTPpage();
+                alert("Hey going to otp page");
+
 
 
             })
@@ -329,6 +334,7 @@ class App extends Component {
                                                 <input value={this.state.userFullName}
                                                        onChange={this.handleUserNameChange} type="text"
                                                        className="form-control" placeholder="Full Name"
+                                                       pattern="[a-z][A-Z]"
                                                        required="required"/>
                                             </div>
                                             <div className="form-group">
@@ -425,34 +431,6 @@ class App extends Component {
                                                         className="btn btn-primary btn-lg btn-block login-btn">Sign Up
                                                 </button>
                                             </div>
-                                        </form>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </Modal>
-
-                    <Modal
-                        show={this.state.redirect}
-                        onHide={this.closeAllOptionsOfSelectionForm}
-                        animation={false}
-                        id="modal"
-                    >
-                        <div className="container">
-                            <div className="row">
-                                <div className="main">
-                                    <div className="login-form">
-                                        <form onSubmit={this.forwardToLoginForm}>
-                                            <h2 className="text-center">Restaurant Sign Up</h2>
-                                            <div className="form-group">
-                                                <input value={this.state.restaurantFullName}
-                                                       onChange={this.handleRestaurantFullName} type="text"
-                                                       className="form-control" placeholder="otp" required="required"/>
-                                            </div>
-                                            <button onClick={this.forwardToLoginForm} >Click Me </button>
-
                                         </form>
 
                                     </div>
