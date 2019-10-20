@@ -26,8 +26,6 @@ class OTPpage extends Component{
 
             }
         ).then(res => {
-
-
             if (res.status !== 200) {
                 return;
             }
@@ -64,8 +62,8 @@ class OTPpage extends Component{
             <div id="dialog">
                 <button className="close">×</button>
                 <h3>Please enter the 6-digit verification code we sent via SMS:</h3>
-                <div id="form" onSubmit={this.optValidate}>
-                    <form onSubmit={this.optValidate}>
+                <div id="form" >
+                    <form >
                     <input type="text"  value={this.state.userFullName}
                            onChange={this.handleUserNameChange}  size="1" />
                     <input type="text" maxLength="1" size="1"/>
@@ -73,7 +71,7 @@ class OTPpage extends Component{
                     <input type="text" maxLength="1" size="1"/>
                     <input type="text" maxLength="1" size="1" />
                     <input type="text" maxLength="1" size="1"/>
-                    <button className="btn btn-primary btn-embossed" onSubmit={this.optValidate}>Verify</button>
+                    <button className="btn btn-primary btn-embossed" onSubmit={this.optValidate.bind(this)}>Verify</button>
                     </form>
                 </div>
             </div>
