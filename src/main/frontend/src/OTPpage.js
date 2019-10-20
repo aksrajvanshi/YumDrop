@@ -31,15 +31,13 @@ class OTPpage extends Component{
 
             }
         ).then(res => {
-           try {
+
                if (res.status !== 200) {
                    return;
                }
+
                this.forwardToLoginDashboard();
-           }catch (error) {
-               console.log(error);
-               alert(error);
-           }
+               alert("done");
 
 
         })
@@ -69,32 +67,19 @@ class OTPpage extends Component{
         return (
 
             <div>
-
-                <Modal
-                    show={this.state.userRegister}
-                    animation={false}
-                    id="modal"
-                >
                     <div className="container">
                         <div className="row">
                             <div className="main">
                                 <div className="login-form">
                                     <form >
-                                        <h2 className="text-center">User  {this.state.userName} Sign Up</h2>
-                                        <div className="social-btn text-center">
-                                            <a href="#" className="btn btn-primary btn-block btn-lg"><i
-    className="fa fa-facebook"/> Sign up with <b>Facebook</b></a>
-                                            <a href="#" className="btn btn-danger btn-block btn-lg"><i
-    className="fa fa-google"/> Sign up with <b>Google</b></a>
-                                        </div>
-                                        <div className="or-seperator"><i>or</i></div>
+
 
 
                                         <div className="form-group">
                                             <input type="text" className="form-control"
                                                    value={this.state.otp}
                                                    onChange={this.handleUserNameChange}
-                                                   placeholder="Phone  Number" required="required"/>
+                                                   placeholder="Please Provide OTP" required="required"/>
                                         </div>
                                         <div className="form-group">
                                             <button onClick={this.optValidate.bind(this)} type="submit"
@@ -108,7 +93,6 @@ class OTPpage extends Component{
                         </div>
                     </div>
 
-                </Modal>
             </div>
         )
 
