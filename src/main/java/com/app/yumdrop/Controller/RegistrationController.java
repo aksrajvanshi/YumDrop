@@ -1,10 +1,13 @@
 package com.app.yumdrop.Controller;
 
+import com.app.yumdrop.Entity.UsersOtp;
 import com.app.yumdrop.FormEntity.UserRegisterForm;
 import com.app.yumdrop.FormEntity.UsersDetails;
+import com.app.yumdrop.Repository.UsersOtpRepository;
 import com.app.yumdrop.Repository.UsersRepository;
 import com.app.yumdrop.Service.SmsTwoFactorService;
 import com.app.yumdrop.Service.UserRegistrationService;
+import com.app.yumdrop.Utils.OtpUtils;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -31,6 +34,9 @@ public class RegistrationController {
     @Autowired
     private UsersRepository userRepository;
 
+    @Autowired
+    private UsersOtpRepository usersOtpRepository;
+
     @RequestMapping(value = "/userRegistration", method = RequestMethod.POST)
     public ResponseEntity<?> userRegistration(@RequestBody UsersDetails usersDetails) {
 
@@ -52,10 +58,18 @@ public class RegistrationController {
     @RequestMapping(value = "/verifyOTPandRegisterUser", method = RequestMethod.POST)
     public ResponseEntity<?> verifyOTPandRegisterUser(@RequestBody UserRegisterForm userRegisterForm) {
 
+        UsersOtp userOtp = usersOtpRepository.findByuserEmail(userRegisterForm.getUser_email());
+        boolean checkOtpMatch = OtpUtils.checkIfOtpMatches(userRegisterForm.getUser_otp(), userOtp.getUserOtp());
 
-        return ResponseEntity.ok().build();
+        if(checkOtpMatch){
+            usersOtpRepository.deleteById(userRegisterForm.getUser_email());
+            return userRegistrationService.registerUser(userRegisterForm);
+        }
+        else{
+            return ResponseEntity.badRequest().build();
+        }
+
     }
-
 
 
 }

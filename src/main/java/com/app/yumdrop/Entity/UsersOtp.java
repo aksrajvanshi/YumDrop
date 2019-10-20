@@ -14,41 +14,41 @@ public class UsersOtp extends CreateAndUpdateTimeModel{
     @Id
     @Column(name = "user_email", nullable = false)
     @Email(message = "user email should be a valid email")
-    private String user_email;
+    private String userEmail;
 
     @NotNull
     @Column(name = "user_otp", nullable = false)
-    private String user_otp;
-
-    public UsersOtp(@Email(message = "user email should be a valid email") String user_email, @NotNull String user_otp) {
-        this.user_email = user_email;
-        this.user_otp = user_otp;
-    }
+    private String userOtp;
 
     public UsersOtp() {
+    }
+
+    public UsersOtp(@Email(message = "user email should be a valid email") String userEmail, @NotNull String userOtp) {
+        this.userEmail = userEmail;
+        this.userOtp = userOtp;
     }
 
     @Override
     public String toString() {
         return "UsersOtp{" +
-                "user_email='" + user_email + '\'' +
-                ", user_otp='" + user_otp + '\'' +
+                "userEmail='" + userEmail + '\'' +
+                ", userOtp='" + userOtp + '\'' +
                 '}';
     }
 
-    public String getUser_email() {
-        return user_email;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUser_email(String user_email) {
-        this.user_email = user_email;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
-    public String getUser_otp() {
-        return user_otp;
+    public String getUserOtp() {
+        return userOtp;
     }
 
-    public void setUser_otp(String user_otp) {
-        this.user_otp = user_otp;
+    public void setUserOtp(String userOtp) {
+        this.userOtp = userOtp;
     }
 }

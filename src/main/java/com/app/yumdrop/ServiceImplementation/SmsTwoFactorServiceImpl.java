@@ -32,7 +32,7 @@ public class SmsTwoFactorServiceImpl implements SmsTwoFactorService {
         } catch(Exception e){
             return false;
         }
-        usersOtpRepository.save(new UsersOtp(email, PasswordUtils.convertToHash(twoFactorCode)));
+        usersOtpRepository.save(new UsersOtp(email, PasswordUtils.convertPasswordToHash(twoFactorCode)));
         return true;
     }
 }
