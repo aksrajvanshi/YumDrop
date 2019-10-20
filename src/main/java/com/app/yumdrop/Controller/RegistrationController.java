@@ -61,11 +61,10 @@ public class RegistrationController {
         UsersOtp userOtp = usersOtpRepository.findByuserEmail(userRegisterForm.getUser_email());
         boolean checkOtpMatch = OtpUtils.checkIfOtpMatches(userRegisterForm.getUser_otp(), userOtp.getUserOtp());
 
-        if(checkOtpMatch){
+        if (checkOtpMatch) {
             usersOtpRepository.deleteById(userRegisterForm.getUser_email());
             return userRegistrationService.registerUser(userRegisterForm);
-        }
-        else{
+        } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 

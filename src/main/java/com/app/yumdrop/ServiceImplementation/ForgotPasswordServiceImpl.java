@@ -11,34 +11,34 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.Charset;
 import java.util.Random;
 
 @Service
 public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
     @Autowired
+    public JavaMailSender javaMailSender;
+    @Autowired
     private UsersRepository usersRepository;
-
-    private JavaMailSender javaMailSender;
 
     @Override
     public ResponseEntity<?> sendMailWithTemporaryPassword(String userEmail) {
 
         Users userExistsInDb = usersRepository.findByuserEmail(userEmail);
-        if(userExistsInDb!=null) {
-
+        if (userExistsInDb != null) {
+            String temporaryPassword = generateRandomPassword();
+            System.out.println("Temporary password generated is: " + temporaryPassword);
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
             simpleMailMessage.setTo(userEmail);
             simpleMailMessage.setSubject("Temporary Password from Yumdrop");
-            String temporaryPassword = generateRandomPassword();
-            simpleMailMessage.setText("Hello user! Your temporary password is: " + temporaryPassword);
-            simpleMailMessage.setText(" Please use this temporary password to set a new password and login into your account.");
+            simpleMailMessage.setText("Hello user! Your temporary password is: " + temporaryPassword +
+                    ". Please use this temporary password to set a new password and login into your account.");
+
             javaMailSender.send(simpleMailMessage);
 
             userExistsInDb.setUserPassword(PasswordUtils.convertPasswordToHash(temporaryPassword));
             Users newPasswordUser = usersRepository.save(userExistsInDb);
-            if(newPasswordUser!=null)
+            if (newPasswordUser != null)
                 return ResponseEntity.status(HttpStatus.OK).build();
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -51,19 +51,24 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
     public ResponseEntity<?> verifyTemporaryPasswordAndSetNewPassword(String userEmail, String temporaryPassword, String newPassword) {
         Users user = usersRepository.findByuserEmail(userEmail);
         boolean isTempPasswordMatching = PasswordUtils.checkIfPasswordMatches(temporaryPassword, user.getUserPassword());
-        if(isTempPasswordMatching){
+        if (isTempPasswordMatching) {
             user.setUserPassword(PasswordUtils.convertPasswordToHash(newPassword));
             Users newPasswordUser = usersRepository.save(user);
-            if(newPasswordUser!=null)
+            if (newPasswordUser != null)
                 return ResponseEntity.status(HttpStatus.OK).build();
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    private String generateRandomPassword(){
-        byte[] array = new byte[7]; // length is bounded by 7
-        new Random().nextBytes(array);
-        String generatedRandomPassword = new String(array, Charset.forName("UTF-8"));
-        return generatedRandomPassword;
+    private String generateRandomPassword() {
+        String SALTCHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 18) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        String saltStr = salt.toString();
+        return saltStr;
     }
 }
