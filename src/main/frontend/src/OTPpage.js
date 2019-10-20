@@ -2,6 +2,10 @@ import React, {Component} from "react";
 import './OTPpageCSS.css';
 
 class OTPpage extends Component{
+
+    forwardToLoginDashboard = () =>{
+        this.props.history.push('/LoginDashBoard');
+    }
     render(){
         return (
         <div id="wrapper">
@@ -15,7 +19,7 @@ class OTPpage extends Component{
                     <input type="text" maxLength="1" size="1"/>
                     <input type="text" maxLength="1" size="1" />
                     <input type="text" maxLength="1" size="1"/>
-                    <button className="btn btn-primary btn-embossed">Verify</button>
+                    <button className="btn btn-primary btn-embossed" onSubmit={this.forwardToLoginDashboard}>Verify</button>
                 </div>
             </div>
         </div>)
