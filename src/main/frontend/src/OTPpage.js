@@ -87,77 +87,7 @@ class App extends Component {
         });
     };
 
-    handleUserEmailIdChange = (event) => {
-        this.setState({
-            userEmailID: event.target.value,
-        });
-    };
 
-    handleUserPhoneNumberChange = (event) => {
-        this.setState({
-            userPhoneNumber: event.target.value,
-        });
-    };
-
-    handleUserPasswordChange = (event) => {
-        this.setState({
-            userPassword: event.target.value,
-        });
-    };
-
-    handleUserConfirmPasswordChange = (event) => {
-        this.setState({
-            userConfirmPassword: event.target.value,
-        });
-    };
-
-    handleRestaurantFullName = (event) => {
-        this.setState({
-            restaurantFullName: event.target.value,
-        });
-    };
-
-    handleRestaurantPrimaryEmailId = (event) => {
-        this.setState({
-            restaurantPrimaryEmailId: event.target.value,
-        })
-    }
-
-    handleRestaurantId = (event) => {
-        this.setState({
-            restaurantId: event.target.value,
-        })
-    }
-
-    handleRestaurantSecondaryEmailID = (event) => {
-        this.setState({
-            restaurantSecondaryEmailID: event.target.value,
-        })
-    }
-
-    handleRestaurantPrimaryPhoneNumber = (event) => {
-        this.setState({
-            restaurantPrimaryPhoneNumber: event.target.value,
-        })
-    }
-
-    handlerestaurantSecondaryPhoneNumber = (event) => {
-        this.setState({
-            restaurantSecondaryPhoneNumber: event.target.value,
-        })
-    }
-
-    handleRestaurantPassword = (event) => {
-        this.setState({
-            restaurantPassword: event.target.value,
-        })
-    }
-
-    handleRestaurantConfirmPassword = (event) => {
-        this.setState({
-            restaurantConfirmPassword: event.target.value,
-        })
-    }
 
     registerSelect = () => {
         this.setState({
@@ -177,19 +107,8 @@ class App extends Component {
             deliveryAgentRegister: false
         });
     }
-    forwardToLogin = () => {
-        this.props.history.push('/Login');
-    }
-    getTitle()
-    {
-        if (this.state.userLoginOption) {
-            return "User Login";
-        } else if (this.state.restaurantLoginOption) {
-            return "Restaurant Login";
-        } else if (this.state.deliveryAgentLoginOption) {
-            return "Delivery Agent Login";
-        }
-    }
+
+
     userRegister = () => {
         this.setState({
             userRegister: true,
@@ -198,23 +117,9 @@ class App extends Component {
             deliveryAgentRegister: false
         });
     };
-    restaurantRegister = () => {
-        this.setState({
-            userRegister: false,
-            registerSelect: false,
-            restaurantRegister: true,
-            deliveryAgentRegister: false
-        });
-    };
 
-    deliveryAgentRegister = () => {
-        this.setState({
-            userRegister: false,
-            registerSelect: false,
-            restaurantRegister: false,
-            deliveryAgentRegister: true
-        });
-    };
+
+
 
     render()
     {
@@ -276,13 +181,10 @@ class App extends Component {
                                         <div className="form-group">
                                             <input value={this.state.userFullName}
                                                    onChange={this.handleUserNameChange} type="text"
-                                                   className="form-control" placeholder="Full Name"
-                                                   pattern="[a-z][A-Z]"
+                                                   className="form-control" placeholder="Provide OTP"
+                                                   pattern="[0-9]"
                                                    required="required"/>
                                         </div>
-
-
-
 
                                         <div className="form-group">
                                             <button onClick={this.validateGivenOtp.bind(this)} type="submit"
