@@ -295,5 +295,4 @@
             </div>);
         }
     }
-
     export default App;

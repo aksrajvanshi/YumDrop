@@ -53,11 +53,10 @@ public class YumDropController {
 
     @RequestMapping(value = "/userRegistration", method = RequestMethod.POST)
     public ResponseEntity<?> userRegistration(@RequestBody String usersDetails){
-        //System.out.println(" fxvdf " + usersDetails.getUser_name() + "  sdfsd " + usersDetails.getUser_email());
         System.out.println(ResponseEntity.ok() + " " + ResponseEntity.status(200) + " " +ResponseEntity.ok(200));
         System.out.println(ResponseEntity.ok());
         System.out.println(usersDetails);
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
