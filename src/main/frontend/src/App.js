@@ -120,15 +120,14 @@ class App extends Component {
                         <div className="col-md-6">
                             <h4>Pickup or delivery from restaurants near you</h4>
 
-                            <p className="text-muted">Explore restaurants that deliver near you, or try yummy takeout fare. With a place for every taste, it’s easy to find food you crave, and order online or through the Grubhub app. Find great meals fast with lots of local menus. Enjoy eating the convenient way with places that deliver to your door..</p>
+                            <p className="text-muted">Explore restaurants that deliver near you, or try yummy takeout fare. With a place for every taste, it’s easy to find food you crave, and order online or through the YumDrop app. Find great meals fast with lots of local menus. Enjoy eating the convenient way with places that deliver to your door..</p>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-md-6">
                             <h4>Easy Pay</h4>
                             <p className="text-muted">Pay for food with one click of a button.
-                                Multiple payment options. Choose a payment method that works best for you, from direct
-                                deposit or PayPal to wire transfer and more.</p>
+                                Multiple payment options. </p>
                         </div>
                         <div className="col-md-6 how-img">
                             <img src="https://www.trzcacak.rs/myfile/full/377-3774169_payment-channel-payment-channel-payment-channel-payment-bank.png"
