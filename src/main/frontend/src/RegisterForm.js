@@ -45,6 +45,10 @@ class App extends Component {
 
     }
 
+    forwardToErrorPage = () => {
+        this.props.history.push('/errorPageForRegistration');
+    }
+
 
     register() {
         debugger;
@@ -68,12 +72,14 @@ class App extends Component {
 
 
                 if (res.status !== 200) {
-                    return;
+                    this.setState({redirect: true, userRegister: false});
+                    this.forwardToErrorPage();
+                    alert("Hey going to login page");
+                }else {
+                    this.setState({redirect: true, userRegister: false});
+                    this.forwardToOTPpage();
+                    alert("Hey going to otp page");
                 }
-                this.setState({redirect: true, userRegister: false});
-                this.forwardToOTPpage();
-                alert("Hey going to otp page");
-
 
 
             })

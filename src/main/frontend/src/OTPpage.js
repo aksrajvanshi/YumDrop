@@ -3,16 +3,14 @@ import './OTPpageCSS.css';
 import {Modal} from "react-bootstrap";
 
 class OTPpage extends Component{
-    constructor(props){
-        super(props)
 
-    }
 
     state = {
         otp: "",
         userRegister: true,
         userName: "",
         redirect: false,
+        userPassword: ""
     };
 
 
@@ -28,7 +26,7 @@ class OTPpage extends Component{
                     'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify({
-                        otp: "otpVal"
+                        otpfirst: "otpVal"
                     }
                 )
 
@@ -48,17 +46,15 @@ class OTPpage extends Component{
         })
 
     }
-    handleOtpChange1 = (event) => {
+
+
+    handleUserPasswordChange = (event) => {
+        alert("Hey")
         this.setState({
-            otp1: event.target.value,
+            userPassword: "hello"
         });
     };
 
-    handleUserNameChange = (event) => {
-        this.setState({
-            otp: event.target.value,
-        });
-    };
 
 
 
@@ -77,14 +73,10 @@ class OTPpage extends Component{
                             <div className="main">
                                 <div className="login-form">
                                     <form >
-
-
-
                                         <div className="form-group">
-                                            <input type="text" className="form-control"
-                                                   value={this.state.otp}
-                                                   onChange={this.handleUserNameChange}
-                                                   placeholder="Please Provide OTP" required="required"/>
+                                            <input type="password" value={this.state.userPassword}
+                                                   onChange={this.handleUserPasswordChange} className="form-control"
+                                                   placeholder="Password" required="required"/>
                                         </div>
                                         <div className="form-group">
                                             <button onClick={this.optValidate.bind(this)} type="submit"
