@@ -21,28 +21,21 @@
 
 
         login = () => { debugger;
-            let obj={}
-
-            fetch('/LoginDataForm',
-                {
+            fetch('/loginDataForm', {
                     method: 'POST',
-                    header:{
-                        "Content-Type": "application/json"
+                    headers: {
+                        'Content-Type': 'application/json',
                     },
                     body:JSON.stringify({
                             user_name: this.state.userName,
                             userPassword: this.state.userPassword
+                    }),
+                }).then(response => {
+                        if (response.ok) {
+                            console.log(response);
+                            this.state.redirect = true
                         }
-                    )
-
-                }
-            ).then(function(res){ debugger; return res.json(); })
-                .then(
-                    response => {
-                        console.log(response)
-                        }
-
-                )
+                    })
 
         }
 

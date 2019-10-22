@@ -15,6 +15,11 @@ public class UsersDetails {
 
     }
 
+    public UsersDetails(String user_name, String userPassword) {
+        this.user_name = user_name;
+        this.userPassword = userPassword;
+    }
+
     public UsersDetails(String user_name, String userPassword, String user_email, String user_phonenum) {
         this.user_name = user_name;
         this.userPassword = userPassword;

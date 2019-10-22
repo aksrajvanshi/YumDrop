@@ -38,24 +38,13 @@ public class Users extends CreateAndUpdateTimeModel{
     @Column(name = "last_created_user", nullable = false)
     private String lastCreatedUser;
 
-    @Column(name = "twofactor_code")
-    private String twoFactorCode;
-
-    @Column(name = "twofactor_expiretime")
-    private Date twoFactorExpiryTime;
+    @Column(name = "user_address", nullable = false)
+    private String userAddress;
 
     public Users(){
     }
 
-    public Users(String userEmail, @NotNull String userName, @NotNull String userPhoneNumber, @NotNull String userCountryCode, @NotNull String userPassword) {
-        this.userEmail = userEmail;
-        this.userName = userName;
-        this.userPhoneNumber = userPhoneNumber;
-        this.userCountryCode = userCountryCode;
-        this.userPassword = userPassword;
-    }
-
-    public Users(String userEmail, @NotNull String userName, @NotNull String userPhoneNumber, @NotNull String userCountryCode, @NotNull String userPassword, @NotNull String lastUpdatedUser, @NotNull String lastCreatedUser) {
+    public Users(@Email(message = "user email should be a valid email") String userEmail, @NotNull String userName, @NotNull String userPhoneNumber, @NotNull String userCountryCode, @NotNull String userPassword, String userAddress, @NotNull String lastUpdatedUser, @NotNull String lastCreatedUser) {
         this.userEmail = userEmail;
         this.userName = userName;
         this.userPhoneNumber = userPhoneNumber;
@@ -63,18 +52,20 @@ public class Users extends CreateAndUpdateTimeModel{
         this.userPassword = userPassword;
         this.lastUpdatedUser = lastUpdatedUser;
         this.lastCreatedUser = lastCreatedUser;
+        this.userAddress = userAddress;
     }
 
     @Override
     public String toString() {
         return "Users{" +
-                ", userEmail='" + userEmail + '\'' +
+                "userEmail='" + userEmail + '\'' +
                 ", userName='" + userName + '\'' +
                 ", userPhoneNumber='" + userPhoneNumber + '\'' +
                 ", userCountryCode='" + userCountryCode + '\'' +
                 ", userPassword='" + userPassword + '\'' +
                 ", lastUpdatedUser='" + lastUpdatedUser + '\'' +
                 ", lastCreatedUser='" + lastCreatedUser + '\'' +
+                ", userAddress='" + userAddress + '\'' +
                 '}';
     }
 
@@ -134,19 +125,11 @@ public class Users extends CreateAndUpdateTimeModel{
         this.lastCreatedUser = lastCreatedUser;
     }
 
-    public String getTwoFactorCode() {
-        return twoFactorCode;
+    public String getUserAddress() {
+        return userAddress;
     }
 
-    public void setTwoFactorCode(String twoFactorCode) {
-        this.twoFactorCode = twoFactorCode;
-    }
-
-    public Date getTwoFactorExpiryTime() {
-        return twoFactorExpiryTime;
-    }
-
-    public void setTwoFactorExpiryTime(Date twoFactorExpiryTime) {
-        this.twoFactorExpiryTime = twoFactorExpiryTime;
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
     }
 }

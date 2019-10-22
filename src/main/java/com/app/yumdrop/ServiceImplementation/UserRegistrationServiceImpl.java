@@ -1,7 +1,7 @@
 package com.app.yumdrop.ServiceImplementation;
 
 import com.app.yumdrop.Entity.Users;
-import com.app.yumdrop.FormEntity.UsersDetails;
+import com.app.yumdrop.FormEntity.UserRegisterForm;
 import com.app.yumdrop.Repository.UsersRepository;
 import com.app.yumdrop.Service.UserRegistrationService;
 import com.app.yumdrop.Utils.PasswordUtils;
@@ -20,7 +20,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     private UsersRepository userRepository;
 
     @Override
-    public ResponseEntity<?> registerUser(UsersDetails userDataForm) {
+    public ResponseEntity<?> registerUser(UserRegisterForm userDataForm) {
         boolean userExistsBool = userRepository.existsById(userDataForm.getUser_email());
 
         if (userExistsBool) {
@@ -28,9 +28,9 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         }
 
         Users userToRegister = new Users(userDataForm.getUser_email(), userDataForm.getUser_name(),
-                userDataForm.getUser_phonenum(), "+1", PasswordUtils.convertToHash(userDataForm.getUserPassword()), "SYSTEM", "SYSTEM");
+                userDataForm.getUser_phonenum(), "+1", PasswordUtils.convertPasswordToHash(userDataForm.getUser_password()), null, "SYSTEM", "SYSTEM");
 
-        userRepository.save(userToRegister);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Users registeredUser = userRepository.save(userToRegister);
+        return ResponseEntity.ok().body(registeredUser);
     }
 }
