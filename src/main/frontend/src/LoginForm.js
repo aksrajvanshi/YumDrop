@@ -19,21 +19,6 @@
 
         };
 
-        componentDidMount() {
-            fetch('/tryGetData')
-                .then(res => res.json())
-                .then(response => {
-                        if(response.toString() === "200"){
-                            this.state.redirect = true
-                        }
-                    console.log(response);
-                })
-                .then((data) => {
-                    console.log(data.toString());
-
-                })
-                .catch(console.log)
-        }
 
         login = () => { debugger;
             fetch('/loginDataForm', {
@@ -121,7 +106,7 @@
 
         render() {
             const { country, region } = this.state;
-            return <div className="App">
+            return( <div className="App">
                 <header>
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
                           id="bootstrap-css"/>
@@ -181,7 +166,7 @@
 
                                         </div>
                                     </div>
-                                    <div className="col-md-12" id="buttonOrder">
+                                    <div className="col-md-1" id="buttonOrder">
                                         <div className="md-form">
                                             <button className="btn btn-lg btn-danger">Search</button>
                                         </div>
@@ -226,7 +211,7 @@
                     id="modal"
                 >
                     <Modal.Header id="UserHead">
-                        <Modal.Title id="modeltitle">User Register</Modal.Title>
+                        <Modal.Title id="modeltitle">User Login</Modal.Title>
                     </Modal.Header>
                     <Modal.Body id="modelBody">
 
@@ -254,54 +239,53 @@
                 </Modal>
 
 
-                <div className="auto-container">
+                <div className="how-section1">
                     <div className="row">
-                        <div className="column col-lg-6 col-md-12 col-sm-12">
-                            <div className="sec-title">
-                                <h2>Choose from multi cuisines available</h2>
-                            </div>
+                        <div className="col-md-6 how-img">
+                            <img src="https://previews.123rf.com/images/juliasart/juliasart1708/juliasart170800074/83585916-colorful-cafe-isometric-restaurant-building-cartoon-vector-icon-flat-isometric-design-.jpg"
+                                 className="rounded-circle img-fluid" alt=""/>
                         </div>
-                    </div>
-                </div>
+                        <div className="col-md-6">
+                            <h4>Local favorites</h4>
+                            <h4 className="subheading">Satisfy any craving with delivery from popular neighborhood restaurants and chains. Reorder go-tos or find something new.</h4>
 
-                <div className="container" id="ContainerID">
+                        </div>
+                    </div>
                     <div className="row">
-                        <div className="col-12  col-md-4 image-grid-item">
-                            <div id="img3"
-                                 className="entry-cover image-grid-cover has-image">
-                                <a href="#" className="image-grid-clickbox"></a>
-                                <a href="#" className="cover-wrapper">Indian Food</a>
-                            </div>
+                        <div className="col-md-6">
+                            <h4>Delivery to your doorstep</h4>
+                            <h4 className="subheading">Get great food delivered or save time and money and preorder for pick up. Either way, order tracking and updates keep you in the know.</h4>
+
                         </div>
-                        <div className="col-12  col-md-4 image-grid-item">
-                            <div id="img2"
-                                 className="entry-cover image-grid-cover has-image">
-                                <a href="#" className="image-grid-clickbox"></a>
-                                <a href="#" className="cover-wrapper">Indian Food</a>
-                            </div>
+                        <div className="col-md-6 how-img">
+                            <img src="https://cdn4.vectorstock.com/i/1000x1000/05/13/man-holding-pizza-box-and-courier-bag-vector-17210513.jpg"
+                                 className="rounded-circle img-fluid" alt=""/>
                         </div>
-                        <div className="col-12 col-sm-6 col-md-4 image-grid-item">
-                            <div id="img1" className="entry-cover image-grid-cover has-image">
-                                <a href="#" className="image-grid-clickbox"></a>
-                                <a href="#" className="cover-wrapper">Burgers </a>
-                            </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6 how-img">
+                            <img src="https://cdn5.vectorstock.com/i/1000x1000/37/04/food-delivery-icon-image-vector-16143704.jpg"
+                                 className="rounded-circle img-fluid" alt=""/>
                         </div>
-                        <div className="col-17  col-md-4 image-grid-item">
-                            <div id="img4" className="entry-cover image-grid has-image">
-                                <a href="#" className="image-grid-clickbox"></a>
-                                <a href="#" className="cover-wrapper">Mexican Food</a>
-                            </div>
+                        <div className="col-md-6">
+                            <h4>Pickup or delivery from restaurants near you</h4>
+
+                            <p className="text-muted">Explore restaurants that deliver near you, or try yummy takeout fare. With a place for every taste, it’s easy to find food you crave, and order online or through the YumDrop app. Find great meals fast with lots of local menus. Enjoy eating the convenient way with places that deliver to your door..</p>
                         </div>
-                        <div className="col-12 col-sm-6 col-md-4 image-grid-item">
-                            <div id="img5" className="entry-cover imagegrid has-image">
-                                <a href="#" className="image-grid-clickbox"></a>
-                                <a href="#" className="cover-wrapper">Chinese Food </a>
-                            </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <h4>Easy Pay</h4>
+                            <p className="text-muted">Pay for food with one click of a button.
+                                Multiple payment options. Choose a payment method that works best for you</p>
+                        </div>
+                        <div className="col-md-6 how-img">
+                            <img src="https://www.trzcacak.rs/myfile/full/377-3774169_payment-channel-payment-channel-payment-channel-payment-bank.png"
+                                 className="rounded-circle img-fluid" alt=""/>
                         </div>
                     </div>
                 </div>
-            </div>;
+            </div>);
         }
     }
-
     export default App;

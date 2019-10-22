@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import "./App.css";
+
 import LoginPage from "./LoginPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
+import './index.css'
 class App extends Component {
     state = {
 
@@ -21,6 +22,9 @@ class App extends Component {
         return (
             <div className="App">
                 <header>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -74,9 +78,9 @@ class App extends Component {
 
                                         </div>
                                     </div>
-                                    <div className="col-md-12" id="buttonOrder">
+                                    <div className="col-md-1" id="buttonOrder">
                                         <div className="md-form">
-                                            <button className="btn btn-lg btn-danger">Order</button>
+                                            <button className="btn btn-lg btn-danger">Search</button>
                                         </div>
                                     </div>
                                 </div>
@@ -84,49 +88,50 @@ class App extends Component {
                         </ul>
                     </div>
                 </div>
-                <div className="auto-container">
+                <br/><br/><br/><br/>
+                <div className="how-section1">
                     <div className="row">
-                        <div className="column col-lg-6 col-md-12 col-sm-12">
-                            <div className="sec-title">
-                                <h2>Choose from multi cuisines available</h2>
-                            </div>
+                        <div className="col-md-6 how-img">
+                            <img src="https://previews.123rf.com/images/juliasart/juliasart1708/juliasart170800074/83585916-colorful-cafe-isometric-restaurant-building-cartoon-vector-icon-flat-isometric-design-.jpg"
+                                 className="rounded-circle img-fluid" alt=""/>
+                        </div>
+                        <div className="col-md-6">
+                            <h4>Local favorites</h4>
+                            <h4 className="subheading">Satisfy any craving with delivery from popular neighborhood restaurants and chains. Reorder go-tos or find something new.</h4>
+
                         </div>
                     </div>
-                </div>
-
-                <div className="container" id="ContainerID">
                     <div className="row">
-                        <div className="col-12  col-md-4 image-grid-item">
-                            <div id="img3"
-                                 className="entry-cover image-grid-cover has-image">
-                                <a href="#" className="image-grid-clickbox"></a>
-                                <a href="#" className="cover-wrapper">Indian Food</a>
-                            </div>
+                        <div className="col-md-6">
+                            <h4>Delivery to your doorstep</h4>
+                            <h4 className="subheading">Get great food delivered or save time and money and preorder for pick up. Either way, order tracking and updates keep you in the know.</h4>
+
                         </div>
-                        <div className="col-12  col-md-4 image-grid-item">
-                            <div id="img2"
-                                 className="entry-cover image-grid-cover has-image">
-                                <a href="#" className="image-grid-clickbox"></a>
-                                <a href="#" className="cover-wrapper">Indian Food</a>
-                            </div>
+                        <div className="col-md-6 how-img">
+                            <img src="https://cdn4.vectorstock.com/i/1000x1000/05/13/man-holding-pizza-box-and-courier-bag-vector-17210513.jpg"
+                                 className="rounded-circle img-fluid" alt=""/>
                         </div>
-                        <div className="col-12 col-sm-6 col-md-4 image-grid-item">
-                            <div id="img1" className="entry-cover image-grid-cover has-image">
-                                <a href="#" className="image-grid-clickbox"></a>
-                                <a href="#" className="cover-wrapper">Burgers </a>
-                            </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6 how-img">
+                            <img src="https://cdn5.vectorstock.com/i/1000x1000/37/04/food-delivery-icon-image-vector-16143704.jpg"
+                                 className="rounded-circle img-fluid" alt=""/>
                         </div>
-                        <div className="col-17  col-md-4 image-grid-item">
-                            <div id="img4" className="entry-cover image-grid has-image">
-                                <a href="#" className="image-grid-clickbox"></a>
-                                <a href="#" className="cover-wrapper">Mexican Food</a>
-                            </div>
+                        <div className="col-md-6">
+                            <h4>Pickup or delivery from restaurants near you</h4>
+
+                            <p className="text-muted">Explore restaurants that deliver near you, or try yummy takeout fare. With a place for every taste, it’s easy to find food you crave, and order online or through the YumDrop app. Find great meals fast with lots of local menus. Enjoy eating the convenient way with places that deliver to your door..</p>
                         </div>
-                        <div className="col-12 col-sm-6 col-md-4 image-grid-item">
-                            <div id="img5" className="entry-cover imagegrid has-image">
-                                <a href="#" className="image-grid-clickbox"></a>
-                                <a href="#" className="cover-wrapper">Chinese Food </a>
-                            </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <h4>Easy Pay</h4>
+                            <p className="text-muted">Pay for food with one click of a button.
+                                Multiple payment options. </p>
+                        </div>
+                        <div className="col-md-6 how-img">
+                            <img src="https://www.trzcacak.rs/myfile/full/377-3774169_payment-channel-payment-channel-payment-channel-payment-bank.png"
+                                 className="rounded-circle img-fluid" alt=""/>
                         </div>
                     </div>
                 </div>
