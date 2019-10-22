@@ -24,10 +24,10 @@ class LoginDashBoard extends Component{
                             <a className="navbar-brand " href="#">YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
-                                        <li className="upper-links dropdown"><a className="links" onClick={this.forwardToSettingsPage}
+                                        <li className="upper-links dropdown"><a className="links"
                                         >Settings</a>
                                             <ul className="dropdown-menu">
-                                                <li><a className="profile-links"
+                                                <li><a className="profile-links" onClick={this.forwardToSettingsPage}
                                                 >My Account</a></li>
                                                 <li className="profile-li"><a>My Orders</a></li>
                                             </ul>

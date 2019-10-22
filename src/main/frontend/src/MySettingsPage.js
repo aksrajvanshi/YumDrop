@@ -90,30 +90,30 @@ class MySettingsPage extends Component{
 
                         <div className="row">
                             <aside className="col-sm-6 col-md-3 card  my-4">
-                                <h3>Company Name</h3>
+                                <h3>Settings</h3>
                                 <hr/>
                                 <ul>
                                     <li>
                                         <a href="#" className="active">
-                                            <span className="fa fa-gear"></span>
+
                                             General settings
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <span className="fa fa-wrench"></span>
+
                                             account settings
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <span className="fa fa-paint-brush "></span>
+
                                             Previous Orders
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <span className="fa fa-clock-o"></span>
+
                                             Payments
                                         </a>
                                     </li>
