@@ -45,6 +45,14 @@ public class RegistrationController {
 
     }
 
+    @RequestMapping(value = "/restaurantRegistration", method = RequestMethod.POST)
+    public ResponseEntity<?> restaurantRegistration(@RequestBody UsersDetails usersDetails) {
+
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+    }
+
     @RequestMapping(value = "/verifyOTPandRegisterUser", method = RequestMethod.POST)
     public ResponseEntity<?> verifyOTPandRegisterUser(@RequestBody UserRegisterForm userRegisterForm) {
 
