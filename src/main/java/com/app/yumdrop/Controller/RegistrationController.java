@@ -40,19 +40,9 @@ public class RegistrationController {
     @RequestMapping(value = "/userRegistration", method = RequestMethod.POST)
     public ResponseEntity<?> userRegistration(@RequestBody UsersDetails usersDetails) {
 
-        boolean userExists = userRepository.existsById(usersDetails.getUser_email());
 
-        if (userExists) {
-            throw new ConstraintViolationException("User email already exists", new SQLException("Insert query"), "user_email");
-        }
-        Random rnd = new Random();
-        int number = rnd.nextInt(999999);
-        boolean messageSent = smsTwoFactorService.send2FaCodeAsSms(usersDetails.getUser_email(), usersDetails.getUser_phonenum(), String.format("%06d", number));
-        if (messageSent) {
             return ResponseEntity.status(HttpStatus.OK).build();
-        }
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
     @RequestMapping(value = "/verifyOTPandRegisterUser", method = RequestMethod.POST)

@@ -10,6 +10,7 @@ import { Route, BrowserRouter as Router} from 'react-router-dom';
 import LoginDashBoard from "./LoginDashboard";
 import OTPpage from "./OTPpage";
 import errorPageForRegistration from "./errorPageForRegistration";
+import MySettingsPage from "./MySettingsPage";
 const routing = (
     <Router>
         <div>
@@ -20,6 +21,7 @@ const routing = (
             <Route path="/LoginDashBoard" component={LoginDashBoard}/>
             <Route path="/OTPpage" component={OTPpage}/>
             <Route path="/errorPageForRegistration" component={errorPageForRegistration} />
+            <Route path="/MySettingsPage" component={MySettingsPage}/>
         </div>
     </Router>
 )
