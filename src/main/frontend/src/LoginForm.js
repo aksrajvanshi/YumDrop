@@ -30,15 +30,27 @@
                             user_name: this.state.userName,
                             userPassword: this.state.userPassword
                     }),
-                }).then(response => {
-                        if (response.ok) {
-                            console.log(response);
-                            this.state.redirect = true
-                        }
-                    })
+                }).then(res => {
+
+
+                if (res.status !== 200) {
+                    this.setState({redirect: true, userRegister: false});
+                    this.forwardToLoginErrorPage();
+                    alert("Hey going to Error page");
+                }else {
+                    this.setState({redirect: true, userRegister: false});
+                    this.forwardToLoginDashboard();
+                    alert("Hey going to Login Dashboard page");
+                }
+
+
+            })
 
         }
 
+        forwardToLoginErrorPage = () => {
+            this.props.history.push("/loginErrorPAge")
+        }
 
 
         userName = (event) => {
@@ -54,12 +66,13 @@
             });
         };
 
-        forwardToOTPResetPassword = () => {
-            this.props.history.push('/OTPResetPassword')
-        }
 
         forwardToRegister = () => {
             this.props.history.push('/RegisterForm')
+        }
+
+        forwardToLoginDashboard = () => {
+            this.props.history.push('/LoginDashBoard')
         }
 
         backToHomePage = () => {
@@ -83,18 +96,8 @@
             this.setState({ userLoginOption: false, loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOption: false  });
         }
 
-        forwardToLogin = () => {
-            this.props.history.push('/Login');
-        }
-        getTitle() {
-            if (this.state.userLoginOption) {
-                return "User Login";
-            } else if (this.state.restaurantLoginOption) {
-                return "Restaurant Login";
-            } else if (this.state.deliveryAgentLoginOption) {
-                return "Delivery Agent Login";
-            }
-        }
+
+
 
         handleUserNameChange =  (event) => {
             this.setState({
@@ -214,34 +217,45 @@
                     animation={false}
                     id="modal"
                 >
-                    <Modal.Header id="UserHead">
-                        <Modal.Title id="modeltitle">User Login</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body id="modelBody">
 
-                        <div className="container">
-                            <div className="row">
-                                <div className="main">
-                                    <form  role="form" onSubmit={this.login}>
+                    <div className="container">
+                        <div className="row">
+                            <div className="main">
+                                <div className="login-form">
+                                    <form onSubmit={this.login.bind(this)}>
+                                        <h2 className="text-center">User Sign Up</h2>
+                                        <div className="social-btn text-center">
+                                            <a href="#" className="btn btn-primary btn-block btn-lg"><i
+                                                className="fa fa-facebook"></i> Sign in with <b>Facebook</b></a>
+                                            <a href="#" className="btn btn-danger btn-block btn-lg"><i
+                                                className="fa fa-google"></i> Sign in with <b>Google</b></a>
+                                        </div>
+                                        <div className="or-seperator"><i>or</i></div>
                                         <div className="form-group">
-                                            <input value={this.state.userName}  placeholder="username / email ID" onChange={this.handleUserNameChange} type="text" className="form-control" id="inputUsernameEmail"/>
+                                            <input value={this.state.userName}
+                                                   onChange={this.handleUserNameChange} type="text"
+                                                   className="form-control" placeholder="username"
+                                                   pattern="[a-z][A-Z]"
+                                                   required="required"/>
                                         </div>
                                         <div className="form-group">
-                                            <input type="password" value={this.state.userPassword} placeholder="password" onChange={this.handleUserPasswordChange} className="form-control" id="inputPassword"/>
+                                            <input type="password" value={this.state.userPassword}
+                                                   onChange={this.handleUserPasswordChange} className="form-control"
+                                                   placeholder="Password" required="required"/>
                                         </div>
+
                                         <div className="form-group">
-                                            <a className="pull-right" onClick={this.forwardToOTPResetPassword}>Forgot password?</a>
+                                            <button onClick={this.login.bind(this)} type="submit"
+                                                    className="btn btn-primary btn-lg btn-block login-btn">Login
+                                            </button>
                                         </div>
                                     </form>
+
                                 </div>
                             </div>
                         </div>
-                    </Modal.Body>
-                    <Modal.Footer id="modelBody">
-                        <button className="btn btn btn-primary" onClick={this.login}>Login</button>
-                    </Modal.Footer>
+                    </div>
                 </Modal>
-
 
                 <div className="how-section1">
                     <div className="row">
