@@ -11,6 +11,8 @@ import LoginDashBoard from "./LoginDashboard";
 import OTPpage from "./OTPpage";
 import errorPageForRegistration from "./errorPageForRegistration";
 import MySettingsPage from "./MySettingsPage";
+import OTPResetPassword from "./OTPResetPassword";
+import ResetPassword from "./ResetPassword";
 const routing = (
     <Router>
         <div>
@@ -22,6 +24,8 @@ const routing = (
             <Route path="/OTPpage" component={OTPpage}/>
             <Route path="/errorPageForRegistration" component={errorPageForRegistration} />
             <Route path="/MySettingsPage" component={MySettingsPage}/>
+            <Route path="/OTPResetPassword" component={OTPResetPassword}/>
+            <Route path="/ResetPassword" component={ResetPassword}/>
         </div>
     </Router>
 )
