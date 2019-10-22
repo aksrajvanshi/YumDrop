@@ -54,6 +54,10 @@
             });
         };
 
+        forwardToOTPResetPassword = () => {
+            this.props.history.push('/OTPResetPassword')
+        }
+
         forwardToRegister = () => {
             this.props.history.push('/RegisterForm')
         }
@@ -226,7 +230,7 @@
                                             <input type="password" value={this.state.userPassword} placeholder="password" onChange={this.handleUserPasswordChange} className="form-control" id="inputPassword"/>
                                         </div>
                                         <div className="form-group">
-                                            <a className="pull-right" href="#">Forgot password?</a>
+                                            <a className="pull-right" onClick={this.forwardToOTPResetPassword}>Forgot password?</a>
                                         </div>
                                     </form>
                                 </div>

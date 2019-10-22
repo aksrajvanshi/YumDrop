@@ -53,7 +53,7 @@ class App extends Component {
     register() {
         debugger;
         let obj = {}
-            fetch('/userRegistration',
+            fetch('/restaurantRegistration',
                 {
                     method: 'POST',
                     redirect: 'follow',
@@ -62,8 +62,14 @@ class App extends Component {
                         'Access-Control-Allow-Origin': '*'
                     },
                     body: JSON.stringify({
-                            user_name: this.state.userName,
-                            userPassword: this.state.userPassword
+                        restaurantFullName: this.state.restaurantFullName,
+                        restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId,
+                        restaurantId: this.state.restaurantId,
+                        restaurantSecondaryEmailID: this.state.restaurantSecondaryEmailID,
+                        restaurantPrimaryPhoneNumber: this.state.restaurantPrimaryPhoneNumber,
+                        restaurantSecondaryPhoneNumber: this.state.restaurantSecondaryPhoneNumber,
+                        restaurantPassword: this.state.restaurantPassword,
+                        restaurantConfirmPassword: this.state.restaurantConfirmPassword,
                         }
                     )
 
@@ -86,7 +92,41 @@ class App extends Component {
 
         }
 
+    registerRestaurant() {
+        debugger;
+        let obj = {}
+        fetch('/restaurantRegistration',
+            {
+                method: 'POST',
+                redirect: 'follow',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: JSON.stringify({
+                        user_name: this.state.userName,
+                        userPassword: this.state.userPassword
+                    }
+                )
 
+            }
+        ).then(res => {
+
+
+            if (res.status !== 200) {
+                this.setState({redirect: true, userRegister: false});
+                this.forwardToErrorPage();
+                alert("Hey going to login page");
+            }else {
+                this.setState({redirect: true, userRegister: false});
+                this.forwardToOTPpage();
+                alert("Hey going to otp page");
+            }
+
+
+        })
+
+    }
 
     handleUserNameChange = (event) => {
             this.setState({
@@ -399,7 +439,7 @@ class App extends Component {
                             <div className="row">
                                 <div className="main">
                                     <div className="login-form">
-                                        <form onSubmit={this.register.bind(this)}>
+                                        <form onSubmit={this.registerRestaurant.bind(this)}>
                                             <h2 className="text-center">Restaurant Sign Up</h2>
                                             <div className="form-group">
                                                 <input value={this.state.restaurantFullName}
@@ -443,7 +483,7 @@ class App extends Component {
                                                        placeholder="Secondary Phone Number" required="required"/>
                                             </div>
                                             <div className="form-group">
-                                                <button onClick={this.register.bind(this)} type="submit"
+                                                <button onClick={this.registerRestaurant.bind(this)} type="submit"
                                                         className="btn btn-primary btn-lg btn-block login-btn">Sign Up
                                                 </button>
                                             </div>
