@@ -1,9 +1,13 @@
 package com.app.yumdrop.ServiceImplementation;
 
+import com.app.yumdrop.Entity.UsersOtp;
+import com.app.yumdrop.Repository.UsersOtpRepository;
 import com.app.yumdrop.Service.SmsTwoFactorService;
+import com.app.yumdrop.Utils.PasswordUtils;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,9 +20,19 @@ public class SmsTwoFactorServiceImpl implements SmsTwoFactorService {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
     }
 
+    @Autowired
+    UsersOtpRepository usersOtpRepository;
+
     @Override
-    public boolean send2FaCodeAsSms(String mobilePhoneNumber, String twoFactorCode) {
-        Message.creator(new PhoneNumber(mobilePhoneNumber), new PhoneNumber("+16197802581"), "Hello! Your Two Factor Authentication Code is: " + twoFactorCode).create();
+    public boolean send2FaCodeAsSms(String email, String mobilePhoneNumber, String twoFactorCode) {
+
+        try {
+            Message.creator(new PhoneNumber(mobilePhoneNumber), new PhoneNumber("+16197802581"),
+                    "Hello from Yumdrop! Your Two Factor Authentication Code is: " + twoFactorCode).create();
+        } catch(Exception e){
+            return false;
+        }
+        usersOtpRepository.save(new UsersOtp(email, PasswordUtils.convertPasswordToHash(twoFactorCode)));
         return true;
     }
 }
