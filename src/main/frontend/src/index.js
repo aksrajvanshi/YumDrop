@@ -5,7 +5,6 @@ import App from './App';
 import LoginPage from "./LoginPage";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
-import * as serviceWorker from './serviceWorker';
 import { Route, BrowserRouter as Router} from 'react-router-dom';
 import LoginDashBoard from "./LoginDashboard";
 import OTPpage from "./OTPpage";
@@ -13,6 +12,7 @@ import errorPageForRegistration from "./errorPageForRegistration";
 import MySettingsPage from "./MySettingsPage";
 import OTPResetPassword from "./OTPResetPassword";
 import ResetPassword from "./ResetPassword";
+import loginErrorPAge from "./loginErrorPAge";
 const routing = (
     <Router>
         <div>
@@ -26,6 +26,7 @@ const routing = (
             <Route path="/MySettingsPage" component={MySettingsPage}/>
             <Route path="/OTPResetPassword" component={OTPResetPassword}/>
             <Route path="/ResetPassword" component={ResetPassword}/>
+            <Route path="/loginErrorPAge" component={loginErrorPAge} />
         </div>
     </Router>
 )
