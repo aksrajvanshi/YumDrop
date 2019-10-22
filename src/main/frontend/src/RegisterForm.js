@@ -497,6 +497,8 @@ class App extends Component {
                     </Modal>
 
 
+
+
                     <div className="how-section1">
                         <div className="row">
                             <div className="col-md-6 how-img">

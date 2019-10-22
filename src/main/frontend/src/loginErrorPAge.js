@@ -7,6 +7,7 @@ class loginErrorPAge extends Component{
         errorSelect: true
     }
 
+
     goBackToRegisterForm = () => {
         this.props.history.push('/RegisterForm');
     }
@@ -76,6 +77,44 @@ class loginErrorPAge extends Component{
                     </div>
 
                 </Modal>
+
+                <div className="view rgba-black-light">
+                    <br/><br/><br/>
+                    <div className="">
+                        <li>
+                            <p id="para">Are you hungry?</p>
+                        </li>
+                        <ul className="list-unstyled">
+                            <br/><br/><br/><br/>
+                            <li>
+                                <div className="form-row" data-wow-delay="0.4s">
+                                    <div className="col-md-5" id="firstbar">
+                                        <div className="md-form">
+                                            <select className="form-control" id="exampleFormControlSelect1">
+                                                <option>Bloomington, Indiana</option>
+                                                <option>Indianapolis, Indiana</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <div className="md-form">
+                                            <input type="text"
+                                                   placeholder="Search for food, cuisines, restaurants here.."
+                                                   id="form5" className="form-control validate"/>
+
+                                        </div>
+                                    </div>
+                                    <div className="col-md-1" id="buttonOrder">
+                                        <div className="md-form">
+                                            <button className="btn btn-lg btn-danger">Order</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         );
     }
