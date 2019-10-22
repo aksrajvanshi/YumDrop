@@ -182,10 +182,6 @@
 }
 
 
-/*
-Forked from: http://bootsnipp.com/snippets/featured/simple-responsive-carousel
-Makes images fully responsive
-*/
 
 .img-responsive,
 .thumbnail > img,
@@ -196,8 +192,6 @@ Makes images fully responsive
     width: 100%;
     height: auto;
 }
-
-/* ------------------- Carousel Styling ------------------- */
 
 .carousel-inner {
     border-radius: 15px;
@@ -232,8 +226,6 @@ Makes images fully responsive
     background-image: none;
 }
 
-
-/* ------------------- Section Styling - Not needed for carousel styling ------------------- */
 
 .section-white {
     padding: 10px 0;
