@@ -14,9 +14,15 @@ import OTPResetPassword from "./OTPResetPassword";
 import ResetPassword from "./ResetPassword";
 import loginErrorPAge from "./loginErrorPAge";
 import SuccessfulRegistration from './SuccessfulRegistration';
-
+import './Map';
+import './FileLocation';
+import userRegistration from './userRegistration';
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
+import restaurantRegistration from './restaurantRegistration';
+import errorForRestaurantRegistration from './errorForRestaurantRegistration';
+import Map from "./Map";
+import FileLocation from "./FileLocation";
 
 const initialState = {
     test: "",
@@ -55,6 +61,9 @@ const routing = (
             <Route path="/ResetPassword" component={ResetPassword}/>
             <Route path="/loginErrorPAge" component={loginErrorPAge} />
             <Route path="/SuccessfulRegistration" component={SuccessfulRegistration} />
+            <Route path="/userRegistration" component={userRegistration} />
+            <Route path="/restaurantRegistration" component={restaurantRegistration}/>
+            <Route path="/errorForRestaurantRegistration" component={errorForRestaurantRegistration}/>
         </div>
     </Router>
     </Provider>

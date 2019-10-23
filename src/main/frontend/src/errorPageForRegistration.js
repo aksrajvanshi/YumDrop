@@ -63,7 +63,7 @@ class errorPageForRegistration extends Component{
                                 <div className="login-form">
                                     <form>
                                         <h2 className="text-center">We are Sorry</h2>
-                                        <p>There was an error in registration of user</p>
+                                        <p>There was an error in registration of Restaurant</p>
                                         <div className="form-group">
                                             <button onClick={this.goBackToRegisterForm} type="submit"
                                                     className="btn btn-primary btn-lg btn-block login-btn">Go to Home

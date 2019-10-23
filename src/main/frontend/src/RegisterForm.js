@@ -55,6 +55,16 @@ class App extends Component {
         this.props.history.push('/LoginForm');
     }
 
+    forwardToUserRegistration = () => {
+        this.props.history.push('/userRegistration');
+    }
+
+
+    forwardToRestaurantRegistration = () => {
+        this.props.history.push('/restaurantRegistration');
+    }
+
+
     forwardToOTPpage = () => {
         this.props.history.push({
                 pathname : '/OTPpage',
@@ -422,11 +432,11 @@ class App extends Component {
                             </Modal.Title>
                         </Modal.Header>
                         <Modal.Body id="CheckSelection">
-                            <Button id="UserID" onClick={this.userRegister}>
+                            <Button id="UserID" onClick={this.forwardToUserRegistration}>
                                 <strong>USER</strong>
                             </Button>{" "}
                             <br/>
-                            <Button id="RestaurantId" onClick={this.restaurantRegister}>
+                            <Button id="RestaurantId" onClick={this.forwardToRestaurantRegistration}>
                                 <strong>RESTAURANT</strong>
                             </Button>{" "}
                             <br/>
