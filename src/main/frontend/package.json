@@ -16,6 +16,7 @@
     "react-strap": "0.0.1",
     "react-telephone-input": "^4.73.4",
     "reactstrap": "^8.0.1",
+    "redux": "^4.0.4",
     "url": "^0.11.0",
     "validator": "^11.1.0"
   },
@@ -39,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-redux": "^7.1.1"
   }
 }
