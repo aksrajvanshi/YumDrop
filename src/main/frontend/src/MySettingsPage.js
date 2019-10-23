@@ -102,7 +102,13 @@ class MySettingsPage extends Component{
                                     <li>
                                         <a href="#">
 
-                                            account settings
+                                            Account settings
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="UpdatePassword.js">
+
+                                            Update Password
                                         </a>
                                     </li>
                                     <li>

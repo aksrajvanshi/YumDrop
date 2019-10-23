@@ -34,6 +34,7 @@ class UpdatePassword extends Component{
             }
         )
     }
+
     render() {
         return (
             <div>

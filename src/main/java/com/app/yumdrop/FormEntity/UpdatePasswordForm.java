@@ -44,7 +44,7 @@ public class UpdatePasswordForm {
     public void setPassword(String password) {
         this.password = password;
     }
-/*
+
     public String getConfirmPassword() {
         return confirmPassword;
     }
@@ -52,5 +52,5 @@ public class UpdatePasswordForm {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
-*/
+
 }
