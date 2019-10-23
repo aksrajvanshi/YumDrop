@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 
 class MySettingsPage extends Component{
-     returnToLoginDahboard = () => {
+
+    returnToLoginDahboard = () => {
     this.props.history.push('/errorPageForRegistration');
     }
+
+    forwardToUpdatePassword = () => {
+        this.props.history.push("/UpdatePassword");
+    }
+
     render() {
         return (
             <div>
@@ -106,7 +112,7 @@ class MySettingsPage extends Component{
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="UpdatePassword.js">
+                                        <a href="#" className="nav-link" onClick={this.forwardToUpdatePassword}>
 
                                             Update Password
                                         </a>
