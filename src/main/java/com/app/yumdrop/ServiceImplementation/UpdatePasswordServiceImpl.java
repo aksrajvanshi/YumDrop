@@ -20,15 +20,13 @@ public class UpdatePasswordServiceImpl implements UpdatePasswordService {
 
     @Override
     public ResponseEntity<?> matchAndSetNewPassword(String userEmail, String password, String confirmPassword) {
-        //UsersNewPassword user = usersRepository.findByuserEmail(userEmail);
-        boolean doesPasswordsMatch = PasswordUtils.checkIfPasswordMatches(password, confirmPassword);
-        if (doesPasswordsMatch) {
+
             Users userInDb = usersRepository.findByuserEmail(userEmail);
             userInDb.setUserPassword(PasswordUtils.convertPasswordToHash(password));
             usersRepository.save(userInDb);
             return ResponseEntity.status(HttpStatus.OK).build();
-        }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
+        //return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
     private String generateRandomPassword() {

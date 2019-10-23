@@ -54,11 +54,25 @@ class UpdatePassword extends Component{
                                 <div className="main">
                                     <form>
                                         <div className="form-group">
-                                            <input value={this.state.password}  placeholder="Enter new password" onChange={this.handlePasswordChange} type="password" className="form-control" id="inputUsernameEmail"/>
+                                            <input type="password" value={this.state.password}
+                                                   onChange={this.handlePasswordChange}
+                                                   className="form-control"
+                                                   placeholder="Enter password"
+                                                   title="Password must be 8 characters or longer and contain a lower case letter, capital letter, and a special character"
+                                                   pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                                   required="required"/>
                                         </div>
                                         <div className="form-group">
-                                            <input value={this.state.confirmPassword}  placeholder="Confirm password" onChange={this.handleConfirmPasswordChange} type="password" className="form-control" id="inputUsernameEmail"/>
+                                            <input type="password" value={this.state.confirmPassword}
+                                                   onChange={this.handleConfirmPasswordChange}
+                                                   className="form-control"
+                                                   placeholder="Confirm password"
+                                                   checked={this.state.password === this.state.confirmPassword}
+                                                   title="Re-enter password"
+                                                   pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                                   required="required"/>
                                         </div>
+
                                     </form>
                                 </div>
                             </div>
