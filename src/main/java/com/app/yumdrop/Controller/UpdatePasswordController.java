@@ -20,7 +20,7 @@ public class UpdatePasswordController {
     @Autowired
     private UpdatePasswordService updatePasswordService;
 
-    @RequestMapping(value = "/setNewUserPassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateNewUserPassword", method = RequestMethod.POST)
     public ResponseEntity<?> matchAndSetNewPassword(@RequestBody UpdatePasswordForm updatePasswordForm) {
         return updatePasswordService.matchAndSetNewPassword(
                 updatePasswordForm.getUserEmail(),
