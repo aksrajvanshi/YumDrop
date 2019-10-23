@@ -1,9 +1,25 @@
 import React, { Component } from "react";
 import "./App.css";
 import LoginPage from "./LoginPage";
+import {connect} from 'react-redux';
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import { isMobilePhone, isEmail } from "validator";
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setTest(evt){
+            dispatch({type: "SET_TEST", newTest: evt.target.value});
+        }
+    }
+}
+const mapStateToProps = (state)=>{
+    return {
+        test: state.testRed.test,
+        test2: state.testRed.test2
+    }
+}
+
 class App extends Component {
     constructor(props){
         super(props)
@@ -17,6 +33,7 @@ class App extends Component {
         deliveryAgentRegister: false,
         userPhoneNumber: "",
         userEmailID: "",
+        otpVal: false,
         registerSelect: true,
         userFullName: "",
         userConfirmPassword: "",
@@ -28,7 +45,8 @@ class App extends Component {
         restaurantSecondaryPhoneNumber: "",
         restaurantPassword: "",
         restaurantConfirmPassword: "",
-        redirect: false
+        redirect: false,
+        userOtp: ""
     };
 
     forwardToLoginForm = () => {
@@ -51,7 +69,7 @@ class App extends Component {
     }
 
 
-    register() {
+    registerRestaurant() {
         debugger;
         let obj = {}
             fetch('/restaurantRegistration',
@@ -83,8 +101,7 @@ class App extends Component {
                     this.forwardToErrorPage();
                     alert("Hey going to login page");
                 }else {
-                    this.setState({redirect: true, userRegister: false});
-                    this.forwardToOTPpage();
+                    this.setState({redirect: true, userRegister: false, otpVal:true});
                     alert("Hey going to otp page");
                 }
 
@@ -93,10 +110,10 @@ class App extends Component {
 
         }
 
-    registerRestaurant() {
+    register() {
         debugger;
         let obj = {}
-        fetch('/restaurantRegistration',
+        fetch('/userRegistration',
             {
                 method: 'POST',
                 redirect: 'follow',
@@ -105,8 +122,45 @@ class App extends Component {
                     'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify({
-                        user_name: this.state.userName,
-                        userPassword: this.state.userPassword
+                    user_email: this.state.userEmailID,
+                    user_phonenum: this.state.userPhoneNumber
+                    }
+                )
+
+            }
+        ).then(res => {
+
+
+            if (res.status !== 200) {
+                this.setState({redirect: true, userRegister: false});
+                alert("Hey going to login page");
+            }else {
+                this.setState({redirect: true, userRegister: false, otpVal:true});
+                alert("Hey going to otp page");
+            }
+
+
+        })
+    }
+
+    registerOtp() {
+        debugger;
+        let obj = {}
+        fetch('/verifyOTPandRegisterUser',
+            {
+                method: 'POST',
+                redirect: 'follow',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: JSON.stringify({
+                        user_email: this.state.userEmailID,
+                        user_phonenum: this.state.userPhoneNumber,
+                        user_password: this.state.userPassword,
+                        user_otp: this.state.userOtp,
+                    user_name: this.state.userFullName
+
                     }
                 )
 
@@ -120,14 +174,20 @@ class App extends Component {
                 alert("Hey going to login page");
             }else {
                 this.setState({redirect: true, userRegister: false});
-                this.forwardToOTPpage();
-                alert("Hey going to otp page");
+                this.forwardToSuccessPage();
+                alert("Hey going to Success page");
             }
 
 
         })
-
     }
+
+    forwardToSuccessPage = () => {
+        this.props.history.push('/SuccessfulRegistration');
+    }
+
+
+
 
     handleUserNameChange = (event) => {
             this.setState({
@@ -189,6 +249,11 @@ class App extends Component {
             })
         }
 
+    handleUserOtpChange = (event) => {
+        this.setState({
+            userOtp: event.target.value,
+        })
+    }
         handlerestaurantSecondaryPhoneNumber = (event) => {
             this.setState({
                 restaurantSecondaryPhoneNumber: event.target.value,
@@ -397,6 +462,39 @@ class App extends Component {
                                 <strong>DELIVERY</strong>
                             </Button>
                         </Modal.Body>
+                    </Modal>
+                    <Modal
+                        show={this.state.otpVal}
+                        onHide={this.closeAllOptionsOfSelectionForm}
+                        animation={false}
+                        centered id="modal"
+                    >
+                        <div className="container">
+                            <div className="row">
+                                <div className="main">
+                                    <div className="login-form">
+                                        <form onSubmit={this.registerOtp.bind(this)}>
+                                            <h2 className="text-center">Please provide 6 digit OTP</h2>
+                                            <div className="form-group">
+                                                <input value={this.state.userOtp}
+                                                       onChange={this.handleUserOtpChange} type="text"
+                                                       className="form-control" placeholder="OTP"
+                                                       pattern="[a-z][A-Z]"
+                                                       required="required"/>
+                                            </div>
+
+                                            <div className="form-group">
+                                                <button onClick={this.registerOtp.bind(this)} type="submit"
+                                                        className="btn btn-primary btn-lg btn-block login-btn">Sign Up
+                                                </button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </Modal>
                     <Modal
                         show={this.state.userRegister}
@@ -615,4 +713,4 @@ class App extends Component {
         }
     }
 
-export default App;
+export default connect(mapStateToProps,mapDispatchToProps)(App);
