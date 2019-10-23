@@ -13,6 +13,8 @@ import MySettingsPage from "./MySettingsPage";
 import OTPResetPassword from "./OTPResetPassword";
 import ResetPassword from "./ResetPassword";
 import loginErrorPAge from "./loginErrorPAge";
+import UpdatePassword from "./UpdatePassword";
+
 const routing = (
     <Router>
         <div>
@@ -27,6 +29,7 @@ const routing = (
             <Route path="/OTPResetPassword" component={OTPResetPassword}/>
             <Route path="/ResetPassword" component={ResetPassword}/>
             <Route path="/loginErrorPAge" component={loginErrorPAge} />
+            <Route path="/UpdatePassword" component={UpdatePassword} />
         </div>
     </Router>
 )
