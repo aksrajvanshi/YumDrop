@@ -3,6 +3,7 @@ import "./App.css";
 import LoginPage from "./LoginPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
+import { isMobilePhone, isEmail } from "validator";
 class App extends Component {
     constructor(props){
         super(props)
@@ -263,6 +264,36 @@ class App extends Component {
             });
         };
 
+        userPasswordConfirmation = () => {
+            var password = document.getElementById("userPassword");
+            var confirmPassword = document.getElementById("userConfirmPassword");
+            if (password.value !== confirmPassword.value) {
+                confirmPassword.setCustomValidity("Passwords must match");
+            }
+            else {
+                confirmPassword.setCustomValidity("");
+            }
+        }
+
+        restaurantPhoneNumberAndPasswordConfirmation = () => {
+            var password = document.getElementById("restaurantPassword");
+            var confirmPassword = document.getElementById("restaurantConfirmPassword");
+            var primePhone = document.getElementById("primaryPhoneNumber");
+            var secondPhone = document.getElementById("secondaryPhoneNumber");
+            if (primePhone.value === secondPhone.value){
+                secondPhone.setCustomValidity("Phone numbers cannot match");
+            }
+            else {
+                secondPhone.setCustomValidity("");
+            }
+            if (password.value !== confirmPassword.value) {
+                confirmPassword.setCustomValidity("Passwords must match");
+            }
+            else {
+                confirmPassword.setCustomValidity("");
+            }
+        }
+
         render()
         {
             const {country, region} = this.state;
@@ -390,34 +421,48 @@ class App extends Component {
                                                 <input value={this.state.userFullName}
                                                        onChange={this.handleUserNameChange} type="text"
                                                        className="form-control" placeholder="Full Name"
-                                                       pattern="[a-z][A-Z]"
+                                                       title="Please enter your full name"
+                                                       pattern="(?=.*[a-zA-Z]).{1,}"
                                                        required="required"/>
                                             </div>
                                             <div className="form-group">
                                                 <input value={this.state.userEmailID}
                                                        onChange={this.handleUserEmailIdChange} type="text"
                                                        className="form-control" placeholder="Email ID"
+                                                       title="Please enter a valid email address"
+                                                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                                        required="required"/>
                                             </div>
                                             <div className="form-group">
                                                 <input type="password" value={this.state.userPassword}
                                                        onChange={this.handleUserPasswordChange} className="form-control"
-                                                       placeholder="Password" required="required"/>
+                                                       id="userPassword"
+                                                       placeholder="Password" 
+                                                       title="Password must be 8 characters or longer and contain a lower case letter, capital letter, and a special character"
+                                                       pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                                       required="required"/>
                                             </div>
                                             <div className="form-group">
                                                 <input type="password" value={this.state.userConfirmPassword}
                                                        onChange={this.handleUserConfirmPasswordChange}
+                                                       id="userConfirmPassword"
                                                        className="form-control" placeholder="Confirm password"
+                                                       checked={this.state.userPassword === this.state.userConfirmPassword}
+                                                       title="Please enter your password again"
+                                                       pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                                        required="required"/>
                                             </div>
                                             <div className="form-group">
                                                 <input type="text" className="form-control"
                                                        value={this.state.userPhoneNumber}
                                                        onChange={this.handleUserPhoneNumberChange}
-                                                       placeholder="Phone  Number" required="required"/>
+                                                       placeholder="Phone  Number" 
+                                                       title="Please enter a valid phone number Ex: +X XXX-XXX-XXXX"
+                                                       pattern="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$"
+                                                       required="required"/>
                                             </div>
                                             <div className="form-group">
-                                                <button onClick={this.register.bind(this)} type="submit"
+                                                <button onClick={this.userPasswordConfirmation} type="submit"
                                                         className="btn btn-primary btn-lg btn-block login-btn">Sign Up
                                                 </button>
                                             </div>
@@ -445,45 +490,67 @@ class App extends Component {
                                                 <input value={this.state.restaurantFullName}
                                                        onChange={this.handleRestaurantFullName} type="text"
                                                        className="form-control" placeholder="Restaurant Name"
+                                                       title="Please enter the restaurant name"
+                                                       pattern="(?=.*[a-zA-Z]).{1,}"
                                                        required="required"/>
                                             </div>
                                             <div className="form-group">
                                                 <input value={this.state.restaurantId}
                                                        onChange={this.handleRestaurantId} type="text"
                                                        className="form-control" placeholder="Restaurant User name / ID"
+                                                       title="Please enter a user name or ID"
+                                                       pattern="(?=.*[a-zA-Z]).{1,}"
                                                        required="required"/>
                                             </div>
                                             <div className="form-group">
                                                 <input value={this.state.restaurantPrimaryEmailId}
                                                        onChange={this.handleRestaurantPrimaryEmailId} type="text"
                                                        className="form-control" placeholder="Primary Email ID"
+                                                       title="Please enter a valid email address"
+                                                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                                        required="required"/>
                                             </div>
                                             <div className="form-group">
                                                 <input type="password" value={this.state.restaurantPassword}
                                                        onChange={this.handleRestaurantPassword} className="form-control"
-                                                       placeholder="Password" required="required"/>
+                                                       id="restaurantPassword"
+                                                       placeholder="Password" 
+                                                       title="Password must be 8 characters or longer and contain a lower case letter, capital letter, and a special character"
+                                                       pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                                       required="required"/>
                                             </div>
                                             <div className="form-group">
                                                 <input type="password" value={this.state.restaurantConfirmPassword}
                                                        onChange={this.handleRestaurantConfirmPassword}
+                                                       id="restaurantConfirmPassword"
                                                        className="form-control" placeholder="Confirm password"
+                                                       checked={this.state.restaurantPassword === this.state.restaurantConfirmPassword}
+                                                       title="Please enter your password again"
+                                                       pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                                        required="required"/>
                                             </div>
                                             <div className="form-group">
                                                 <input type="text" className="form-control"
+                                                       id="primaryPhoneNumber"
                                                        value={this.state.restaurantPrimaryPhoneNumber}
                                                        onChange={this.handleRestaurantPrimaryPhoneNumber}
-                                                       placeholder="Primary Phone Number" required="required"/>
+                                                       placeholder="Primary Phone Number" 
+                                                       title="Please enter a valid phone number Ex: +X XXX-XXX-XXXX"
+                                                       pattern="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$"
+                                                       required="required"/>
                                             </div>
                                             <div className="form-group">
                                                 <input type="text" className="form-control"
+                                                       id="secondaryPhoneNumber"
                                                        value={this.state.restaurantSecondaryPhoneNumber}
                                                        onChange={this.handlerestaurantSecondaryPhoneNumber}
-                                                       placeholder="Secondary Phone Number" required="required"/>
+                                                       placeholder="Secondary Phone Number" 
+                                                       title="Please enter another valid phone number Ex: +X XXX-XXX-XXXX"
+                                                       pattern="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$"
+                                                       required="required"/>
                                             </div>
                                             <div className="form-group">
-                                                <button onClick={this.registerRestaurant.bind(this)} type="submit"
+                                                <button onClick={this.restaurantPhoneNumberAndPasswordConfirmation} type="submit"
                                                         className="btn btn-primary btn-lg btn-block login-btn">Sign Up
                                                 </button>
                                             </div>

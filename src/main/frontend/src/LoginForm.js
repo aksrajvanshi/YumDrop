@@ -235,7 +235,6 @@
                                             <input value={this.state.userName}
                                                    onChange={this.handleUserNameChange} type="text"
                                                    className="form-control" placeholder="username"
-                                                   pattern="[a-z][A-Z]"
                                                    required="required"/>
                                         </div>
                                         <div className="form-group">
@@ -245,7 +244,7 @@
                                         </div>
 
                                         <div className="form-group">
-                                            <button onClick={this.login.bind(this)} type="submit"
+                                            <button type="submit"
                                                     className="btn btn-primary btn-lg btn-block login-btn">Login
                                             </button>
                                         </div>
