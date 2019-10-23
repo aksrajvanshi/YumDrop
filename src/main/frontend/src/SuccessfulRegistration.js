@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import {Modal} from "react-bootstrap";
 
-class errorPageForRegistration extends Component{
-
+class SuccessfulRegistration extends Component{
 
     state = {
         errorSelect: true
@@ -62,8 +61,8 @@ class errorPageForRegistration extends Component{
                             <div className="main">
                                 <div className="login-form">
                                     <form>
-                                        <h2 className="text-center">We are Sorry</h2>
-                                        <p>There was an error in registration of Restaurant</p>
+                                        <h2 className="text-center">Congratulations</h2>
+                                        <p>You have successfully Registered</p>
                                         <div className="form-group">
                                             <button onClick={this.goBackToRegisterForm} type="submit"
                                                     className="btn btn-primary btn-lg btn-block login-btn">Go to Home
@@ -83,4 +82,4 @@ class errorPageForRegistration extends Component{
 
 }
 
-export default errorPageForRegistration;
+export default SuccessfulRegistration;
