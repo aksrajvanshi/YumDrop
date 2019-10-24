@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-
-import LoginPage from "./LoginPage";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import './index.css'
+import {connect} from 'react-redux';
 class App extends Component {
     state = {
 
@@ -135,9 +133,23 @@ class App extends Component {
                         </div>
                     </div>
                 </div>
+                <div>
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-xs-12 col-sm-4 col-md-2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+                        return {
+                            searchResults: state.globalData.searchResults
+                        }
+                    }
+
+export default connect(mapStateToProps) (App);

@@ -21,7 +21,8 @@ import {Provider} from 'react-redux';
 const initialState = {
     test: "",
     test1: "",
-    test2: ""
+    test2: "",
+    searchResults: []
 }
 
 const reducer = (state=initialState, action) => {
@@ -30,11 +31,15 @@ const reducer = (state=initialState, action) => {
         return {test: action.newTest, test1: action.newTest}
     }
 
+    if(action.type==="SET_SEARCHRESULTS") {
+        return  {searchResults: action.newSearchResults }
+    }
+
     return state;
 }
 
 const reducers = combineReducers({
-    testRed: reducer
+    globalData: reducer
 })
 
 const store = createStore(reducers)
