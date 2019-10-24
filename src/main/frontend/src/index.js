@@ -14,13 +14,13 @@ import OTPResetPassword from "./OTPResetPassword";
 import ResetPassword from "./ResetPassword";
 import loginErrorPAge from "./loginErrorPAge";
 import SuccessfulRegistration from './SuccessfulRegistration';
+import MapView from "./MapView";
 
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 
 const initialState = {
     test: "",
-    test1: "",
     test2: ""
 }
 

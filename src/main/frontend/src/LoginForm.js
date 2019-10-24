@@ -4,6 +4,25 @@
     import './LoginFormCSS.css'
     import "bootstrap/dist/css/bootstrap.min.css";
     import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
+    import {connect} from 'react-redux';
+
+
+
+    const mapStateToProps = (state)=>{
+        return {
+            test: state.testRed.test,
+            test2: state.testRed.test2
+        }
+    }
+
+    const mapDispatchToProps = (dispatch)=> {
+        return {
+            setTest(evt){
+                dispatch({type: "SET_TEST", newTest: evt.target.value});
+            }
+        }
+    }
+
     class App extends Component {
         state = {
             loginSelect: true,
@@ -305,4 +324,4 @@
             </div>);
         }
     }
-    export default App;
+    export default connect(mapStateToProps,mapDispatchToProps)(App);
