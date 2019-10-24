@@ -2,18 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import LoginPage from "./LoginPage";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {connect} from 'react-redux';
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
-
-
-const mapStateToProps = (state)=>{
-    return {
-        test: state.testRed.test,
-        test1: state.testRed.test1,
-        test2: state.testRed.test2
-    }
-}
-
 class App extends Component {
     constructor(props){
         super(props)
@@ -175,9 +164,8 @@ class App extends Component {
                     </nav>
                 </header>
 
-                <p>Hello fifth</p>
-                <p>{this.props.test}</p>
-                <p>{this.props.test1}</p>
+
+
             <Modal
         show={this.state.registerSelect}
         onHide={this.closeAllOptionsOfSelectionForm}
@@ -217,4 +205,4 @@ class App extends Component {
     }
 }
 
-export default connect(mapStateToProps)(App);
+export default App;
