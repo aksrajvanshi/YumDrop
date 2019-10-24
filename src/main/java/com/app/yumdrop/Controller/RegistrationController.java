@@ -8,7 +8,6 @@ import com.app.yumdrop.Repository.UsersRepository;
 import com.app.yumdrop.Service.SmsTwoFactorService;
 import com.app.yumdrop.Service.UserRegistrationService;
 import com.app.yumdrop.Utils.OtpUtils;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
@@ -17,9 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.sql.SQLException;
-import java.util.Random;
 
 @ComponentScan
 @Controller
@@ -40,9 +36,9 @@ public class RegistrationController {
     @RequestMapping(value = "/userRegistration", method = RequestMethod.POST)
     public ResponseEntity<?> userRegistration(@RequestBody UsersDetails usersDetails) {
 
-
-            return ResponseEntity.status(HttpStatus.OK).build();
-
+        // Call function to send two factor Auth code like this, uncomment when you need to use.
+        smsTwoFactorService.send2FaCodeAsSms(usersDetails.getUser_email(), usersDetails.getUser_phonenum(), "555555");
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @RequestMapping(value = "/restaurantRegistration", method = RequestMethod.POST)

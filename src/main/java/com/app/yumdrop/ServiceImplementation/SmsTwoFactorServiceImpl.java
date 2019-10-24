@@ -13,8 +13,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class SmsTwoFactorServiceImpl implements SmsTwoFactorService {
 
-    private final static String ACCOUNT_SID = "ACb1dccceafdf2b145395f15aff91fda12";
-    private final static String AUTH_TOKEN = "9337c4a5d281f63782b649d78d5eb7a7";
+    private final static String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
+    private final static String AUTH_TOKEN = "TWILIO_AUTH_TOKEN";
+
+    /*
+    when committing to github use this code:
+
+    private final static String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
+    private final static String AUTH_TOKEN = "TWILIO_AUTH_TOKEN";
+
+    when using it in local, use the ACCOUNT_SID and AUTH_TOKEN as shared in the slack account.
+     */
+
 
     static {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
