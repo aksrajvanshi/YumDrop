@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 
 const mapStateToProps = (state)=>{
     return {
-        latitude: state.latitude,
-        longitude: state.longitude
+        latitude: state.latitude ? state.latitude : 39.166592,
+        longitude: state.longitude ? state.longitude : -86.534889
     }
 }
 
