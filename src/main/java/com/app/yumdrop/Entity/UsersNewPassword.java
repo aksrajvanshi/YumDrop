@@ -1,3 +1,4 @@
+// Only for Test purposes
 package com.app.yumdrop.Entity;
 
 import javax.persistence.Column;

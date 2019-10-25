@@ -234,7 +234,7 @@
                                         <div className="form-group">
                                             <input value={this.state.userName}
                                                    onChange={this.handleUserNameChange} type="text"
-                                                   className="form-control" placeholder="username"
+                                                   className="form-control" placeholder="Username"
                                                    pattern="[a-z][A-Z]"
                                                    required="required"/>
                                         </div>

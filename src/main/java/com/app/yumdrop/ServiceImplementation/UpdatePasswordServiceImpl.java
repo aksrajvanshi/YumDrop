@@ -1,7 +1,7 @@
 package com.app.yumdrop.ServiceImplementation;
 
 import com.app.yumdrop.Entity.Users;
-import com.app.yumdrop.Entity.UsersNewPassword;
+//import com.app.yumdrop.Entity.UsersNewPassword;
 import com.app.yumdrop.Repository.UsersRepository;
 import com.app.yumdrop.Service.UpdatePasswordService;
 import com.app.yumdrop.Utils.PasswordUtils;
