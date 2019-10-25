@@ -16,27 +16,46 @@ import loginErrorPAge from "./loginErrorPAge";
 import SuccessfulRegistration from './SuccessfulRegistration';
 import Home from './Home';
 import MyCurrentLocation from "./MyCurrentLocation";
+import {createStore, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
 
+const initialState = {
+    latitude: null,
+    longitude: null
+}
+
+const reducer = (state=initialState, action) => {
+
+    if(action.type==="setLocation"){
+        return {latitude: action.newLatitude, longitude: action.newLongitude}
+    }
+
+    return state;
+}
+
+const store = createStore(reducer)
 
 const routing = (
 
-    <Router>
-        <div>
-            <Route exact path="/" component={Home} />
-            <Route path="/LoginPage" component={LoginPage} />
-            <Route path="/LoginForm" component={LoginForm} />
-            <Route path="/RegisterForm" component={RegisterForm}/>
-            <Route path="/LoginDashBoard" component={LoginDashBoard}/>
-            <Route path="/OTPpage" component={OTPpage}/>
-            <Route path="/errorPageForRegistration" component={errorPageForRegistration} />
-            <Route path="/MySettingsPage" component={MySettingsPage}/>
-            <Route path="/OTPResetPassword" component={OTPResetPassword}/>
-            <Route path="/ResetPassword" component={ResetPassword}/>
-            <Route path="/loginErrorPAge" component={loginErrorPAge} />
-            <Route path="/SuccessfulRegistration" component={SuccessfulRegistration} />
-            <Route path="/MyCurrentLocation" component={MyCurrentLocation}/>
-        </div>
-    </Router>
+    <Provider store={store}>
+        <Router>
+            <div>
+                <Route exact path="/" component={Home} />
+                <Route path="/LoginPage" component={LoginPage} />
+                <Route path="/LoginForm" component={LoginForm} />
+                <Route path="/RegisterForm" component={RegisterForm}/>
+                <Route path="/LoginDashBoard" component={LoginDashBoard}/>
+                <Route path="/OTPpage" component={OTPpage}/>
+                <Route path="/errorPageForRegistration" component={errorPageForRegistration} />
+                <Route path="/MySettingsPage" component={MySettingsPage}/>
+                <Route path="/OTPResetPassword" component={OTPResetPassword}/>
+                <Route path="/ResetPassword" component={ResetPassword}/>
+                <Route path="/loginErrorPAge" component={loginErrorPAge} />
+                <Route path="/SuccessfulRegistration" component={SuccessfulRegistration} />
+                <Route path="/MyCurrentLocation" component={MyCurrentLocation}/>
+            </div>
+        </Router>
+    </Provider>
 
 )
 

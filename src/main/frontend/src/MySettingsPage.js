@@ -4,6 +4,9 @@ class MySettingsPage extends Component{
      returnToLoginDahboard = () => {
     this.props.history.push('/errorPageForRegistration');
     }
+    forwardToMyCurrentLocation = () => {
+        this.props.history.push('/MyCurrentLocation');
+    }
     render() {
         return (
             <div>
@@ -115,6 +118,12 @@ class MySettingsPage extends Component{
                                         <a href="#">
 
                                             Payments
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" onClick={this.forwardToMyCurrentLocation}>
+
+                                            Add Address
                                         </a>
                                     </li>
 

@@ -1,4 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import {connect} from 'react-redux';
+
+const mapStateToProps = (state)=>{
+    return {
+        latitude: state.latitude,
+        longitude: state.longitude
+    }
+}
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setLocation(evt){
+            dispatch({type: "setLocation", newLatitude: evt.latitude, newLongitude: evt.longitude});
+        }
+    }
+}
 
 class MyCurrentLocation extends Component {
     constructor(props) {
@@ -31,6 +47,8 @@ class MyCurrentLocation extends Component {
         );
         console.log(this.state.latitude)
         console.log(this.state.longitude)
+        this.props.setLocation({latitude: this.state.latitude, longitude: this.state.longitude})
+        this.props.history.push("/");
     }
 
 
@@ -45,4 +63,4 @@ class MyCurrentLocation extends Component {
     }
 }
 
-export default MyCurrentLocation;
+export default connect(mapStateToProps,mapDispatchToProps) (MyCurrentLocation);
