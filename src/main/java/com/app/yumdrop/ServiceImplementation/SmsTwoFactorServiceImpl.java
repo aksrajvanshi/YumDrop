@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class SmsTwoFactorServiceImpl implements SmsTwoFactorService {
 
     private final static String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
-    private final static String AUTH_TOKEN = "TWILIO_AUTH_TOKEN";
+    private final static String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
 
     /*
     when committing to github use this code:
