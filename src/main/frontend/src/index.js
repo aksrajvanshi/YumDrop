@@ -22,7 +22,7 @@ const initialState = {
     test: "",
     test1: "",
     test2: "",
-    searchResults: []
+    searchResults: [{restaurantImage: "https://thekatynews.com/wp-content/uploads/2017/06/mcdonalds-logo.jpg", restaurantName: "McDonalds", restaurantTags: ["Fast Food", "Burgers"]}]
 }
 
 const reducer = (state=initialState, action) => {
@@ -38,11 +38,7 @@ const reducer = (state=initialState, action) => {
     return state;
 }
 
-const reducers = combineReducers({
-    globalData: reducer
-})
-
-const store = createStore(reducers)
+const store = createStore(reducer)
 
 const routing = (
     <Provider store={store}>

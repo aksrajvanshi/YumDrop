@@ -85,7 +85,7 @@ class LoginDashBoard extends Component{
                         <div class="col-xs-12 col-sm-4 col-md-2">
                             <div class="productbox">
                                 <img src="https://thekatynews.com/wp-content/uploads/2017/06/mcdonalds-logo.jpg" class="img-responsive"/>
-                                <div class="producttitle">McDonals</div>
+                                <div class="producttitle">McDonalds</div>
                                 <p class="text-justify">Burgers, Ice Cream</p>
 
                                 <br/>

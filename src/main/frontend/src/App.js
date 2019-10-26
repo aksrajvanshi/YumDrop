@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import './index.css'
 import {connect} from 'react-redux';
+import SearchItem from './SearchItem';
 class App extends Component {
     state = {
 
@@ -135,10 +136,12 @@ class App extends Component {
                 </div>
                 <div>
                     <div className="container-fluid">
+                        {this.props.searchResults.map( restaurant => (
                         <div className="row">
-                            <div className="col-xs-12 col-sm-4 col-md-2">
+                            <div className="col-xs-12 col-sm-4 col-md-2"> 
+                                <SearchItem restaurantImage={restaurant.restaurantImage} restaurantName={restaurant.restaurantName} restaurantTags={restaurant.restaurantTags} />
                             </div>
-                        </div>
+                        </div>))}
                     </div>
                 </div>
             </div>
@@ -148,7 +151,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
                         return {
-                            searchResults: state.globalData.searchResults
+                            searchResults: state.searchResults
                         }
                     }
 
