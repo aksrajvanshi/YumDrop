@@ -40,7 +40,7 @@ const routing = (
     <Provider store={store}>
         <Router>
             <div>
-                <Route exact path="/" component={Home} />
+                <Route exact path="/Home" component={Home} />
                 <Route path="/LoginPage" component={LoginPage} />
                 <Route path="/LoginForm" component={LoginForm} />
                 <Route path="/RegisterForm" component={RegisterForm}/>
@@ -52,7 +52,7 @@ const routing = (
                 <Route path="/ResetPassword" component={ResetPassword}/>
                 <Route path="/loginErrorPAge" component={loginErrorPAge} />
                 <Route path="/SuccessfulRegistration" component={SuccessfulRegistration} />
-                <Route path="/MyCurrentLocation" component={MyCurrentLocation}/>
+                <Route path="/" component={MyCurrentLocation}/>
             </div>
         </Router>
     </Provider>

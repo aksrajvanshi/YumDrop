@@ -8,6 +8,8 @@ const mapStateToProps = (state)=>{
     }
 }
 
+
+
 const mapDispatchToProps = (dispatch)=> {
     return {
         setLocation(evt){
@@ -24,7 +26,9 @@ class MyCurrentLocation extends Component {
             longitude: null,
         }
     }
-
+    forwardToMapsPage = () => {
+        this.props.history.push("/Home")
+    }
     componentWillMount() {
         navigator.geolocation.getCurrentPosition(
             position => this.setState({
@@ -58,6 +62,7 @@ class MyCurrentLocation extends Component {
         return (
             <div>
                 <button onClick={this.position} className='Filter'>Filter</button>
+                <button onClick={this.forwardToMapsPage} >Click me</button>
             </div>
         );
     }

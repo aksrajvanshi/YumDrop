@@ -27,6 +27,34 @@ class Map extends React.Component{
         }
     }
 
+    submitAddress = () => { debugger;
+        fetch('/userLocation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userAddress: this.state.address,
+                userCity: this.state.city,
+                userArea: this.state.area,
+                userState: this.state.area
+            }),
+        }).then(res => {
+
+            alert("Entered");
+            alert(res.status);
+            if (res.status !== 200) {
+
+                alert("Hey going to Error page");
+            }else {
+                alert("Hey going to Login Dashboard page");
+            }
+
+
+        })
+
+    }
+
     componentDidMount() {
         Geocode.fromLatLng( this.state.mapPosition.lat , this.state.mapPosition.lng ).then(
             response => {
@@ -207,6 +235,7 @@ class Map extends React.Component{
                         <label htmlFor="">Address</label>
                         <input type="text" name="address" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.address }/>
                     </div>
+                    <button onClick={this.submitAddress.bind(this)}>Submit</button><br/><br/>
                 </div>
 
                 <AsyncMap
