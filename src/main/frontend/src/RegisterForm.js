@@ -6,19 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import { isMobilePhone, isEmail } from "validator";
 
-const mapDispatchToProps = (dispatch)=> {
-    return {
-        setTest(evt){
-            dispatch({type: "SET_TEST", newTest: evt.target.value});
-        }
-    }
-}
-const mapStateToProps = (state)=>{
-    return {
-        test: state.testRed.test,
-        test2: state.testRed.test2
-    }
-}
+
 
 class App extends Component {
     constructor(props){
@@ -560,7 +548,7 @@ class App extends Component {
                                                        required="required"/>
                                             </div>
                                             <div className="form-group">
-                                                <button onClick={this.userPasswordConfirmation} type="submit"
+                                                <button onClick={this.register.bind(this)} type="submit"
                                                         className="btn btn-primary btn-lg btn-block login-btn">Sign Up
                                                 </button>
                                             </div>
@@ -578,88 +566,32 @@ class App extends Component {
                         animation={false}
                         id="modal"
                     >
-                        <div className="container">
-                            <div className="row">
-                                <div className="main">
-                                    <div className="login-form">
-                                        <form onSubmit={this.registerRestaurant.bind(this)}>
-                                            <h2 className="text-center">Restaurant Sign Up</h2>
-                                            <div className="form-group">
-                                                <input value={this.state.restaurantFullName}
-                                                       onChange={this.handleRestaurantFullName} type="text"
-                                                       className="form-control" placeholder="Restaurant Name"
-                                                       title="Please enter the restaurant name"
-                                                       pattern="(?=.*[a-zA-Z]).{1,}"
-                                                       required="required"/>
-                                            </div>
-                                            <div className="form-group">
-                                                <input value={this.state.restaurantId}
-                                                       onChange={this.handleRestaurantId} type="text"
-                                                       className="form-control" placeholder="Restaurant User name / ID"
-                                                       title="Please enter a user name or ID"
-                                                       pattern="(?=.*[a-zA-Z]).{1,}"
-                                                       required="required"/>
-                                            </div>
-                                            <div className="form-group">
-                                                <input value={this.state.restaurantPrimaryEmailId}
-                                                       onChange={this.handleRestaurantPrimaryEmailId} type="text"
-                                                       className="form-control" placeholder="Primary Email ID"
-                                                       title="Please enter a valid email address"
-                                                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                                                       required="required"/>
-                                            </div>
-                                            <div className="form-group">
-                                                <input type="password" value={this.state.restaurantPassword}
-                                                       onChange={this.handleRestaurantPassword} className="form-control"
-                                                       id="restaurantPassword"
-                                                       placeholder="Password" 
-                                                       title="Password must be 8 characters or longer and contain a lower case letter, capital letter, and a special character"
-                                                       pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                                       required="required"/>
-                                            </div>
-                                            <div className="form-group">
-                                                <input type="password" value={this.state.restaurantConfirmPassword}
-                                                       onChange={this.handleRestaurantConfirmPassword}
-                                                       id="restaurantConfirmPassword"
-                                                       className="form-control" placeholder="Confirm password"
-                                                       checked={this.state.restaurantPassword === this.state.restaurantConfirmPassword}
-                                                       title="Please enter your password again"
-                                                       pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                                       required="required"/>
-                                            </div>
-                                            <div className="form-group">
-                                                <input type="text" className="form-control"
-                                                       id="primaryPhoneNumber"
-                                                       value={this.state.restaurantPrimaryPhoneNumber}
-                                                       onChange={this.handleRestaurantPrimaryPhoneNumber}
-                                                       placeholder="Primary Phone Number" 
-                                                       title="Please enter a valid phone number Ex: +X XXX-XXX-XXXX"
-                                                       pattern="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$"
-                                                       required="required"/>
-                                            </div>
-                                            <div className="form-group">
-                                                <input type="text" className="form-control"
-                                                       id="secondaryPhoneNumber"
-                                                       value={this.state.restaurantSecondaryPhoneNumber}
-                                                       onChange={this.handlerestaurantSecondaryPhoneNumber}
-                                                       placeholder="Secondary Phone Number" 
-                                                       title="Please enter another valid phone number Ex: +X XXX-XXX-XXXX"
-                                                       pattern="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$"
-                                                       required="required"/>
-                                            </div>
-                                            <div className="form-group">
-                                                <button onClick={this.restaurantPhoneNumberAndPasswordConfirmation} type="submit"
-                                                        className="btn btn-primary btn-lg btn-block login-btn">Sign Up
-                                                </button>
-                                            </div>
-                                        </form>
 
+                            <div className="container">
+                                <div className="row">
+                                    <div className="main">
+                                        <div className="login-form">
+                                            <form onSubmit={this.registerRestaurant.bind(this)}>
+                                                <h2 className="text-center">User Login</h2>
+                                                <div className="form-group">
+                                                    <input value={this.state.restaurantFullName}
+                                                           onChange={this.handleRestaurantFullName} type="text"
+                                                           className="form-control" placeholder="Username"
+                                                           pattern="[a-z][A-Z]"
+                                                           required="required"/>
+                                                </div>
+
+
+
+                                            </form>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                    </Modal>
+                        </Modal>
+
 
 
                     <div className="how-section1">
@@ -713,4 +645,4 @@ class App extends Component {
         }
     }
 
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default App;

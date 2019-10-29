@@ -6,13 +6,6 @@ import {connect} from 'react-redux';
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 
 
-const mapStateToProps = (state)=>{
-    return {
-        test: state.testRed.test,
-        test1: state.testRed.test1,
-        test2: state.testRed.test2
-    }
-}
 
 class App extends Component {
     constructor(props){
@@ -217,4 +210,4 @@ class App extends Component {
     }
 }
 
-export default connect(mapStateToProps)(App);
+export default (App);
