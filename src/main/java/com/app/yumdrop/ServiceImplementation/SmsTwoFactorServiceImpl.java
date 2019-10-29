@@ -37,7 +37,7 @@ public class SmsTwoFactorServiceImpl implements SmsTwoFactorService {
     public boolean send2FaCodeAsSms(String email, String mobilePhoneNumber, String twoFactorCode) {
 
         try {
-            Message.creator(new PhoneNumber(mobilePhoneNumber), new PhoneNumber("+16197802581"),
+            Message.creator(new PhoneNumber(mobilePhoneNumber), new PhoneNumber("+17043502833"),
                     "Hello from Yumdrop! Your Two Factor Authentication Code is: " + twoFactorCode).create();
         } catch(Exception e){
             return false;
