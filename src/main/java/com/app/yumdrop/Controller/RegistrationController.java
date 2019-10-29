@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.Random;
+
 @ComponentScan
 @Controller
 public class RegistrationController {
@@ -37,7 +39,9 @@ public class RegistrationController {
     public ResponseEntity<?> userRegistration(@RequestBody UsersDetails usersDetails) {
 
         // Call function to send two factor Auth code like this, uncomment when you need to use.
-        smsTwoFactorService.send2FaCodeAsSms(usersDetails.getUser_email(), usersDetails.getUser_phonenum(), "555555");
+        Random rnd = new Random();
+        int otpNumber = rnd.nextInt(999999);
+        smsTwoFactorService.send2FaCodeAsSms(usersDetails.getUser_email(), usersDetails.getUser_phonenum(), String.format("%06d", otpNumber));
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

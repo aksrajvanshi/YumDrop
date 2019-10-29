@@ -20,7 +20,7 @@ public class SmsTwoFactorServiceImpl implements SmsTwoFactorService {
     when committing to github use this code:
 
     private final static String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
-    private final static String AUTH_TOKEN = "TWILIO_AUTH_TOKEN";
+    private final static String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
 
     when using it in local, use the ACCOUNT_SID and AUTH_TOKEN as shared in the slack account.
      */
