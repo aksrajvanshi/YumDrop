@@ -1,12 +1,43 @@
 import React, { Component } from "react";
+import './MySettingsPage.css';
 
 class MySettingsPage extends Component{
+    state = {
+        data: []
+    }
      returnToLoginDahboard = () => {
     this.props.history.push('/errorPageForRegistration');
     }
     forwardToMyCurrentLocation = () => {
         this.props.history.push('/MyCurrentLocation');
     }
+
+    componentDidMount () {
+        fetch('/getUserDetails')
+            .then(response => {
+                alert("Inside first response checking");
+                if (!response.ok) {
+                    throw Error('Network request failed.')
+                }
+                return response;
+            })
+            .then(data => data.json())
+            .then(data => {
+                alert("Inside second response checking");
+                console.log("Inside this ", data);
+                this.setState({
+                    data: data
+                });
+                console.log('parsed json', data);
+
+            }, (ex) => {
+                this.setState({
+                    requestError : true
+                });
+                console.log('parsing failed', ex)
+            })
+    }
+
     render() {
         return (
             <div>
@@ -55,92 +86,101 @@ class MySettingsPage extends Component{
                     </nav>
                 </header>
 
-                <div className="container">
+                <div className="container mt-5">
                     <div className="row">
-                        <div className="col-xs-8 col-xs-offset-2">
-                            <div className="input-group">
-                                <div className="input-group-btn search-panel">
-                                    <button type="button" className="btn btn-default dropdown-toggle"
-                                            data-toggle="dropdown">
-                                        <span id="search_concept">Filter by</span> <span className="caret"></span>
-                                    </button>
-                                    <ul className="dropdown-menu" role="menu">
-                                        <li><a href="#contains">Cost</a></li>
-                                        <li><a href="#its_equal">Delivery time</a></li>
-                                        <li><a href="#greather_than">Price : high to low</a></li>
-                                        <li><a href="#less_than">Price : Low to high </a></li>
-                                        <li><a href="#less_than">Distance</a></li>
-                                        <li className="divider"></li>
-                                    </ul>
+                        <div className="col-lg-4 pb-5">
+
+                            <div className="author-card pb-3">
+                                <div className="author-card-cover"
+                                     >
+                                    </div>
+                                <div className="author-card-profile">
+                                    <div className="author-card-avatar"><img
+                                        src="https://www.caretechfoundation.org.uk/wp-content/uploads/anonymous-person-221117.jpg" />
+                                    </div>
+
                                 </div>
-                                <input type="hidden" name="search_param" value="all" id="search_param"/>
-                                    <input type="text" className="form-control" name="x" placeholder="Search term..."/>
-                <span className="input-group-btn">
-                    <button className="btn btn-default" type="button"><span
-                        className="glyphicon glyphicon-search"></span></button>
-                </span>
                             </div>
+                            <div className="wizard">
+                                <nav className="list-group list-group-flush">
+                                    <a className="list-group-item" href="#">
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div><i className="fe-icon-shopping-bag mr-1 text-muted"></i>
+                                                <div className="d-inline-block font-weight-medium text-uppercase">Orders
+                                                    List
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </a><a className="list-group-item active" href="#"><i
+                                    className="fe-icon-user text-muted"></i>Profile Settings</a><a
+                                    className="list-group-item" href="#"><i className="fe-icon-map-pin text-muted"></i>Addresses</a>
+                                    <a className="list-group-item" href="#">
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div><i className="fe-icon-heart mr-1 text-muted"></i>
+                                                <div className="d-inline-block font-weight-medium text-uppercase">My
+                                                    Cart
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </a>
+                                </nav>
+                            </div>
+                        </div>
+
+                        <div className="col-lg-8 pb-5">
+                            <form className="row">
+                                <div className="col-md-6">
+                                    <div className="form-group">
+                                        <label htmlFor="account-fn">First Name</label>
+                                        <input className="form-control" type="text" id="account-fn"
+                                               required=""/>
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="form-group">
+                                        <label htmlFor="account-ln">Last Name</label>
+                                        <input className="form-control" type="text" id="account-ln"
+                                               required=""/>
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="form-group">
+                                        <label htmlFor="account-email">E-mail Address</label>
+                                        <input className="form-control" type="email" id="account-email"
+                                                disabled=""/>
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="form-group">
+                                        <label htmlFor="account-phone">Phone Number</label>
+                                        <input className="form-control" type="text" id="account-phone"
+                                                required=""/>
+                                    </div>
+                                </div>
+
+                                <div className="col-12">
+                                    <hr className="mt-2 mb-3"/>
+                                        <div className="d-flex flex-wrap justify-content-between align-items-center">
+                                            <div className="custom-control custom-checkbox d-block">
+                                                <input className="custom-control-input" type="checkbox"
+                                                       id="subscribe_me" checked=""/>
+
+                                            </div>
+                                            <button className="btn btn-style-1 btn-primary" type="button" data-toast=""
+                                                    data-toast-position="topRight" data-toast-type="success"
+                                                    data-toast-icon="fe-icon-check-circle" data-toast-title="Success!"
+                                                    data-toast-message="Your profile updated successfuly.">Update
+                                                Profile
+                                            </button>
+                                        </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-
-                <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-
-                    <div className="container">
-                        <div className="row bg-dark mb-4 my-4 text-white">
-                            <h2>Change System Settings</h2>
-                        </div>
-
-                        <div className="row">
-                            <aside className="col-sm-6 col-md-3 card  my-4">
-                                <h3>Settings</h3>
-                                <hr/>
-                                <ul>
-                                    <li>
-                                        <a href="#" className="active">
-
-                                            General settings
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-
-                                            account settings
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-
-                                            Previous Orders
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-
-                                            Payments
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" onClick={this.forwardToMyCurrentLocation}>
-
-                                            Add Address
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </aside>
-
-
-                                <button type="button" className="btn btn-success btn-lg btn-block my-4 mb-4 ">Save
-                                    changes
-                                </button>
-
-
-</div>
-
-                        </div>
-
-                    </div>
+            </div>
                 );
     }
 

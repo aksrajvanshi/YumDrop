@@ -54,20 +54,7 @@ class LoginDashBoard extends Component{
                     <div className="row">
                         <div className="col-xs-8 col-xs-offset-2">
                             <div className="input-group">
-                                <div className="input-group-btn search-panel">
-                                    <button type="button" className="btn btn-default dropdown-toggle"
-                                            data-toggle="dropdown">
-                                        <span id="search_concept">Filter by</span> <span className="caret"></span>
-                                    </button>
-                                    <ul className="dropdown-menu" role="menu">
-                                        <li><a href="#contains">Cost</a></li>
-                                        <li><a href="#its_equal">Delivery time</a></li>
-                                        <li><a href="#greather_than">Price : high to low</a></li>
-                                        <li><a href="#less_than">Price : Low to high </a></li>
-                                        <li><a href="#less_than">Distance</a></li>
-                                        <li className="divider"></li>
-                                    </ul>
-                                </div>
+
                                 <input type="hidden" name="search_param" value="all" id="search_param"/>
                                 <input type="text" className="form-control" name="x" placeholder="Search term..."/>
                                 <span className="input-group-btn">
@@ -79,99 +66,12 @@ class LoginDashBoard extends Component{
                     </div>
                 </div><br/><br/><br/>
 
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-4 col-md-2">
-                            <div class="productbox">
-                                <img src="https://thekatynews.com/wp-content/uploads/2017/06/mcdonalds-logo.jpg" class="img-responsive"/>
-                                <div class="producttitle">McDonals</div>
-                                <p class="text-justify">Burgers, Ice Cream</p>
-
-                                <br/>
-                                <div class="productprice">
-                                    <div class="pull-right">
-                                        <a href="#" class="btn btn-success btm-sm" role="button">Menu <span class="glyphicon glyphicon-cutlery"></span></a>
-                                    </div>
 
 
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-xs-12 col-sm-4 col-md-2">
-                            <div className="productbox">
-                                <img src="https://thekatynews.com/wp-content/uploads/2017/06/mcdonalds-logo.jpg"
-                                     className="img-responsive"/>
-                                <div className="producttitle">McDonalds</div>
-                                <p className="text-justify">Burgers, Ice Cream</p>
-
-                                <br/>
-                                <div className="productprice">
-                                    <div className="pull-right">
-                                        <a href="#" className="btn btn-success btm-sm" role="button">Menu <span
-                                            className="glyphicon glyphicon-cutlery"></span></a>
-                                    </div>
 
 
-                                </div>
-                            </div>
-                        </div>
-                        <br/>
-                        <div className="col-xs-12 col-sm-4 col-md-2">
-                            <div className="productbox">
-                                <img src="https://thekatynews.com/wp-content/uploads/2017/06/mcdonalds-logo.jpg"
-                                     className="img-responsive"/>
-                                <div className="producttitle">McDonals</div>
-                                <p className="text-justify">Burgers, Ice Cream</p>
 
-                                <br/>
-                                <div className="productprice">
-                                    <div className="pull-right">
-                                        <a href="#" className="btn btn-success btm-sm" role="button">Menu <span
-                                            className="glyphicon glyphicon-cutlery"></span></a>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-xs-12 col-sm-4 col-md-2">
-                            <div className="productbox">
-                                <img src="https://thekatynews.com/wp-content/uploads/2017/06/mcdonalds-logo.jpg"
-                                     className="img-responsive"/>
-                                <div className="producttitle">McDonals</div>
-                                <p className="text-justify">Burgers, Ice Cream</p>
-
-                                <br/>
-                                <div className="productprice">
-                                    <div className="pull-right">
-                                        <a href="#" className="btn btn-success btm-sm" role="button">Menu <span
-                                            className="glyphicon glyphicon-cutlery"></span></a>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                        </div><br/>
-                        <div class="col-md-2">
-                            <div class="productbox">
-                                <img src="https://cdn.doordash.com/media/restaurant/cover/IndiaPalace_Minneapolis_COPY.png" class="img-responsive"/>
-                                <div class="producttitle">Indian Palace</div>
-                                <p class="text-justify">Indian Food, spicy, vegetarian, non vegetarian</p>
-
-                                <div class="productprice">
-                                    <div class="pull-right">
-                                        <a href="#" class="btn btn-success btm-sm" role="button">Menu <span class="glyphicon glyphicon-cutlery"></span></a>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
-            </div>
 
         );
     }

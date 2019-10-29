@@ -2,9 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import Trying from "./Trying";
 import LoginPage from "./LoginPage";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import AddItemToMenu from "./AddItemToMenu";
 import { Route, BrowserRouter as Router} from 'react-router-dom';
 import LoginDashBoard from "./LoginDashboard";
 import OTPpage from "./OTPpage";
@@ -18,6 +20,8 @@ import Home from './Home';
 import MyCurrentLocation from "./MyCurrentLocation";
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
+import RestaurantDashboard from "./RestaurantDashboard";
+
 
 const initialState = {
     latitude: null,
@@ -40,7 +44,8 @@ const routing = (
     <Provider store={store}>
         <Router>
             <div>
-                <Route exact path="/Home" component={Home} />
+                <Route exact path="/" component={App} />
+                <Route path="/Home" component={Home}/>
                 <Route path="/LoginPage" component={LoginPage} />
                 <Route path="/LoginForm" component={LoginForm} />
                 <Route path="/RegisterForm" component={RegisterForm}/>
@@ -52,7 +57,10 @@ const routing = (
                 <Route path="/ResetPassword" component={ResetPassword}/>
                 <Route path="/loginErrorPAge" component={loginErrorPAge} />
                 <Route path="/SuccessfulRegistration" component={SuccessfulRegistration} />
-                <Route path="/" component={MyCurrentLocation}/>
+                <Route path="/MyCurrentLocation" component={MyCurrentLocation}/>
+                <Route path="/RestaurantDashboard" component={RestaurantDashboard}/>
+                <Route path="/Trying" component={Trying}/>
+                <Route path="/AddItemToMenu" component={AddItemToMenu}/>
             </div>
         </Router>
     </Provider>
