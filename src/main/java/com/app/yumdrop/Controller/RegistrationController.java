@@ -38,9 +38,11 @@ public class RegistrationController {
     @RequestMapping(value = "/userRegistration", method = RequestMethod.POST)
     public ResponseEntity<?> userRegistration(@RequestBody UsersDetails usersDetails) {
 
+        System.out.println("Received request from server!");
         // Call function to send two factor Auth code like this, uncomment when you need to use.
         Random rnd = new Random();
         int otpNumber = rnd.nextInt(999999);
+        System.out.println("Sending OTP to user " + otpNumber);
         boolean isSmsSent = smsTwoFactorService.send2FaCodeAsSms(usersDetails.getUser_email(), usersDetails.getUser_phonenum(), String.format("%06d", otpNumber));
         if(isSmsSent)
             return ResponseEntity.status(HttpStatus.OK).build();
