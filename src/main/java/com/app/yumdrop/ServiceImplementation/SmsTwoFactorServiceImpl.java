@@ -8,41 +8,30 @@ import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SmsTwoFactorServiceImpl implements SmsTwoFactorService {
 
-    private final static String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
-    private final static String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
-
-    /*
-    when committing to github use this code:
-
-    private final static String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
-    private final static String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
-
-    when using it in local, use the ACCOUNT_SID and AUTH_TOKEN as shared in the slack account.
-     */
-
-
-    static {
-        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-    }
-
     @Autowired
     UsersOtpRepository usersOtpRepository;
 
-    @Override
-    public boolean send2FaCodeAsSms(String email, String mobilePhoneNumber, String twoFactorCode) {
+    @Autowired
+    public JavaMailSender javaMailSender;
 
-        try {
-            Message.creator(new PhoneNumber(mobilePhoneNumber), new PhoneNumber("+17043502833"),
-                    "Hello from Yumdrop! Your Two Factor Authentication Code is: " + twoFactorCode).create();
-        } catch(Exception e){
-            return false;
-        }
-        usersOtpRepository.save(new UsersOtp(email, PasswordUtils.convertPasswordToHash(twoFactorCode)));
+    @Override
+    public boolean send2FaCodeAsEmail(String userEmail, String twoFactorCode) {
+
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setTo(userEmail);
+        simpleMailMessage.setSubject("One Time Password from Yumdrop");
+        simpleMailMessage.setText("Hello user! Your One Time Password is: " + twoFactorCode +
+                ". Please use this temporary password to set a new password and login into your account.");
+
+        javaMailSender.send(simpleMailMessage);
+        usersOtpRepository.save(new UsersOtp(userEmail, PasswordUtils.convertPasswordToHash(twoFactorCode)));
         return true;
     }
 }
