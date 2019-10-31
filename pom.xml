@@ -62,6 +62,12 @@
 			<scope>compile</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.sendgrid</groupId>
+			<artifactId>sendgrid-java</artifactId>
+			<version>4.2.1</version>
+		</dependency>
+
 		<!-- send email -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
