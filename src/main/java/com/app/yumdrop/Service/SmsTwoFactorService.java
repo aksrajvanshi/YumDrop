@@ -1,6 +1,6 @@
 package com.app.yumdrop.Service;
 
-public interface SmsTwoFactorService {
+public interface SmsTwoFactorService{
 
-    boolean send2FaCodeAsEmail(String email, String twoFactorCode);
+    public boolean send2FaCodeAsEmail(String userEmail, String twoFactorCode);
 }
