@@ -15,7 +15,10 @@ class App extends Component {
         userPassword: "",
         userPhoneNumber: "",
         userEmail: "",
-        redirect: false
+        userTemporaryPassword: "",
+        redirect: false,
+        forgotPasswordSelect: false,
+        emailSelectForgotPassword: false
 
     };
 
@@ -49,8 +52,69 @@ class App extends Component {
 
     }
 
+    passwordChange  = () => { debugger;
+        fetch('/setNewUserPassword', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userEmail: this.state.userEmail,
+                temporaryPassword: this.state.userTemporaryPassword,
+                newPassword: this.state.userPassword
+            }),
+        }).then(res => {
+
+            alert("Entered");
+            alert(res.status);
+            if (res.status !== 200) {
+                this.setState({redirect: true, userRegister: false});
+                this.forwardToLoginErrorPage();
+                alert("Hey going to Error page");
+            }else {
+                this.setState({redirect: true, userRegister: false, emailSelectForgotPassword: false, forgotPasswordSelect: true});
+                this.forwardToSuccessfullyChangedPasswordPage();
+                alert("Hey going to Login Dashboard page");
+            }
+
+
+        })
+
+    }
+
+    forgotPasswordAPI = () => { debugger;
+        fetch('/forgotUserPassword', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userEmail: this.state.userEmail
+            }),
+        }).then(res => {
+
+            alert("Entered");
+            alert(res.status);
+            if (res.status !== 200) {
+                this.setState({redirect: true, userRegister: false});
+                this.forwardToLoginErrorPage();
+                alert("Hey going to Error page");
+            }else {
+                this.setState({redirect: true, userRegister: false, emailSelectForgotPassword: false, forgotPasswordSelect: true});
+                alert("Hey going to Login Dashboard page");
+            }
+
+
+        })
+
+    }
+
     forwardToLoginErrorPage = () => {
         this.props.history.push("/loginErrorPAge")
+    }
+
+    forwardToSuccessfullyChangedPasswordPage = () => {
+        this.props.history.push("/successfullyChangedPasswordPage");
     }
 
 
@@ -87,11 +151,19 @@ class App extends Component {
     handleRestaurantLoginOption = () => {
         this.setState({ loginSelect: false, selectLoginOption:false, deliveryAgentLoginOption: false, restaurantLoginOption: true  });
     }
+
+    handleUserTemporaryPassword = (event) => {
+        this.setState({userTemporaryPassword : event.target.value})
+    }
     handleDeliveryAgentLoginOption  = () => {
         this.setState({ loginSelect: false, selectLoginOption:false, restaurantLoginOption: false, deliveryAgentLoginOption: true  });
     }
     closeAllOptionsOfSelectionForm= () => {
-        this.setState({ userLoginOption: false, loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOption: false  });
+        this.setState({ userLoginOption: false, loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOption: false, forgotPasswordSelect: false, emailSelectForgotPassword: false  });
+    }
+
+    handleForgotPasswordChange = () => {
+        this.setState({userLoginOption: false, loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOption: false, emailSelectForgotPassword: true  });
     }
 
 
@@ -105,6 +177,12 @@ class App extends Component {
     handleUserPasswordChange =  (event) => {
         this.setState({
             userPassword: event.target.value,
+        });
+    };
+
+    handleUserEmailIDChange =  (event) => {
+        this.setState({
+            userEmail: event.target.value,
         });
     };
 
@@ -194,6 +272,13 @@ class App extends Component {
                             <div className="login-form">
                                 <form onSubmit={this.login.bind(this)}>
                                     <h2 className="text-center">User Login</h2>
+                                    <div className="social-btn text-center">
+                                        <a href="#" className="btn btn-primary btn-block btn-lg"><i
+                                            className="fa fa-facebook"></i> Login with <b>Facebook</b></a>
+                                        <a href="#" className="btn btn-danger btn-block btn-lg"><i
+                                            className="fa fa-google"></i> Login with <b>Google</b></a>
+                                    </div>
+                                    <div className="or-seperator"><i>or</i></div>
                                     <div className="form-group">
                                         <input value={this.state.userName}
                                                onChange={this.handleUserNameChange} type="text"
@@ -208,12 +293,16 @@ class App extends Component {
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
                                     </div>
+                                    <div className="col-md-12 offset-7 form-group">
+                                        <a href="#" onClick={this.handleForgotPasswordChange}>Forgot Password?</a>
+                                    </div>
 
                                     <div className="form-group">
                                         <button onClick={this.login.bind(this)} type="submit"
                                                 className="btn btn-primary btn-lg btn-block login-btn">Login
                                         </button>
                                     </div>
+
                                 </form>
 
                             </div>
@@ -247,6 +336,87 @@ class App extends Component {
                     </Button>
                 </Modal.Body>
             </Modal>
+
+
+            <Modal
+                show={this.state.emailSelectForgotPassword}
+                onHide={this.closeAllOptionsOfSelectionForm}
+                animation={false}
+                centered id="modal"
+            >
+                <div className="container">
+                    <div className="row">
+                        <div className="main">
+                            <div className="login-form">
+                                <form onSubmit={this.forgotPasswordAPI.bind(this)}>
+                                    <h2 className="text-center">Enter your Email ID</h2>
+                                    <div className="form-group">
+                                        <input value={this.state.userEmail}
+                                               onChange={this.handleUserEmailIDChange} type="text"
+                                               className="form-control" placeholder="username / email ID"
+                                               pattern="[a-z][A-Z]"
+                                               required="required"/>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <button onClick={this.forgotPasswordAPI.bind(this)} type="submit"
+                                                className="btn btn-primary btn-lg btn-block login-btn">Submit
+                                        </button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </Modal>
+
+
+            <Modal
+                show={this.state.forgotPasswordSelect}
+                onHide={this.closeAllOptionsOfSelectionForm}
+                animation={false}
+                centered id="modal"
+            >
+                <div className="container">
+                    <div className="row">
+                        <div className="main">
+                            <div className="login-form">
+                                <form onSubmit={this.passwordChange.bind(this)}>
+                                    <h2 className="text-center">Change Password</h2>
+
+                                    <div className="form-group">
+                                        <input value={this.state.userTemporaryPassword}
+                                               onChange={this.handleUserTemporaryPassword} type="text"
+                                               className="form-control" placeholder="Username"
+                                               pattern="[a-z][A-Z]"
+                                               required="required"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <input value={this.state.userPassword}
+                                               onChange={this.handleUserPasswordChange} type="password"
+                                               className="form-control" placeholder="Password"
+                                               pattern="[a-z][A-Z]"
+                                               required="required"/>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <button onClick={this.passwordChange.bind(this)} type="submit"
+                                                className="btn btn-primary btn-lg btn-block login-btn">Login
+                                        </button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </Modal>
+
+
 
 
             <div className="how-section1">
