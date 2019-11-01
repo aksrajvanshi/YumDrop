@@ -11,6 +11,10 @@ class errorPageForRegistration extends Component{
     goBackToRegisterForm = () => {
         this.props.history.push('/RegisterForm');
     }
+
+    goBackToHomePage = () => {
+        this.props.history.push('/');
+    }
     render() {
         return (
             <div>
@@ -44,7 +48,7 @@ class errorPageForRegistration extends Component{
                                             className="fa fa-fw fa-user"/>Login</a>
                                     </li>
                                     <li className="nav-item" id="SignUpID">
-                                        <a className="nav-link" onClick={this.registerSelect}>Sign Up</a>
+                                        <a className="nav-link" onClick={this.goBackToRegisterForm}>Sign Up</a>
                                     </li>
                                 </ul>
                             </div>
@@ -63,9 +67,9 @@ class errorPageForRegistration extends Component{
                                 <div className="login-form">
                                     <form>
                                         <h2 className="text-center">We are Sorry</h2>
-                                        <p>There was an error in registration of user</p>
+                                        <p className="text-center">There was an error in registration of user</p>
                                         <div className="form-group">
-                                            <button onClick={this.goBackToRegisterForm} type="submit"
+                                            <button onClick={this.goBackToHomePage} type="submit"
                                                     className="btn btn-primary btn-lg btn-block login-btn">Go to Home
                                             </button>
                                         </div>
