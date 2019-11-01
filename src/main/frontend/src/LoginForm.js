@@ -189,7 +189,7 @@ class App extends Component {
 
     render() {
         const { country, region } = this.state;
-        return( <div className="App">
+        return<div className="App">
             <header>
                 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
                       id="bootstrap-css"/>
@@ -206,6 +206,8 @@ class App extends Component {
                       id="bootstrap-css"/>
                 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"/>
                 <script src="//code.jquery.com/jquery-1.11.1.min.js"/>
+                <script type="text/javascript" src="/webjars/bootstrap/3.3.4/js/bootstrap.min.js"/>
+
                 <nav className=" navbar navbar-expand-lg navbar-dark ">
                     <div className="container">
                         <a className="navbar-brand " href="#">YumDrop</a>
@@ -272,12 +274,16 @@ class App extends Component {
                             <div className="login-form">
                                 <form onSubmit={this.login.bind(this)}>
                                     <h2 className="text-center">User Login</h2>
-                                    <div className="social-btn text-center">
-                                        <a href="#" className="btn btn-primary btn-block btn-lg"><i
-                                            className="fa fa-facebook"></i> Login with <b>Facebook</b></a>
-                                        <a href="#" className="btn btn-danger btn-block btn-lg"><i
-                                            className="fa fa-google"></i> Login with <b>Google</b></a>
+                                    <div className={"social-btn text-center container unauthenticated"}>
+                                        <a href={"/loginWithFacebook"} className={"btn btn-primary btn-block btn-lg"}>
+                                            <i className={"fa fa-facebook"}></i> Login with <b>Facebook</b>
+                                        </a>
                                     </div>
+
+                                    <div className={"social-btn text-center container authenticated"} style={{display:'none'}}>
+                                        Logged into Facebook as: <span id={"user"}></span>
+                                    </div>
+
                                     <div className="or-seperator"><i>or</i></div>
                                     <div className="form-group">
                                         <input value={this.state.userName}
@@ -417,40 +423,46 @@ class App extends Component {
             </Modal>
 
 
-
-
             <div className="how-section1">
                 <div className="row">
                     <div className="col-md-6 how-img">
-                        <img src="https://previews.123rf.com/images/juliasart/juliasart1708/juliasart170800074/83585916-colorful-cafe-isometric-restaurant-building-cartoon-vector-icon-flat-isometric-design-.jpg"
-                             className="rounded-circle img-fluid" alt=""/>
+                        <img
+                            src="https://previews.123rf.com/images/juliasart/juliasart1708/juliasart170800074/83585916-colorful-cafe-isometric-restaurant-building-cartoon-vector-icon-flat-isometric-design-.jpg"
+                            className="rounded-circle img-fluid" alt=""/>
                     </div>
                     <div className="col-md-6">
                         <h4>Local favorites</h4>
-                        <h4 className="subheading">Satisfy any craving with delivery from popular neighborhood restaurants and chains. Reorder go-tos or find something new.</h4>
+                        <h4 className="subheading">Satisfy any craving with delivery from popular neighborhood
+                            restaurants and chains. Reorder go-tos or find something new.</h4>
 
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-6">
                         <h4>Delivery to your doorstep</h4>
-                        <h4 className="subheading">Get great food delivered or save time and money and preorder for pick up. Either way, order tracking and updates keep you in the know.</h4>
+                        <h4 className="subheading">Get great food delivered or save time and money and preorder for pick
+                            up. Either way, order tracking and updates keep you in the know.</h4>
 
                     </div>
                     <div className="col-md-6 how-img">
-                        <img src="https://cdn4.vectorstock.com/i/1000x1000/05/13/man-holding-pizza-box-and-courier-bag-vector-17210513.jpg"
-                             className="rounded-circle img-fluid" alt=""/>
+                        <img
+                            src="https://cdn4.vectorstock.com/i/1000x1000/05/13/man-holding-pizza-box-and-courier-bag-vector-17210513.jpg"
+                            className="rounded-circle img-fluid" alt=""/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-6 how-img">
-                        <img src="https://cdn5.vectorstock.com/i/1000x1000/37/04/food-delivery-icon-image-vector-16143704.jpg"
-                             className="rounded-circle img-fluid" alt=""/>
+                        <img
+                            src="https://cdn5.vectorstock.com/i/1000x1000/37/04/food-delivery-icon-image-vector-16143704.jpg"
+                            className="rounded-circle img-fluid" alt=""/>
                     </div>
                     <div className="col-md-6">
                         <h4>Pickup or delivery from restaurants near you</h4>
 
-                        <p className="text-muted">Explore restaurants that deliver near you, or try yummy takeout fare. With a place for every taste, it’s easy to find food you crave, and order online or through the YumDrop app. Find great meals fast with lots of local menus. Enjoy eating the convenient way with places that deliver to your door..</p>
+                        <p className="text-muted">Explore restaurants that deliver near you, or try yummy takeout fare.
+                            With a place for every taste, it’s easy to find food you crave, and order online or through
+                            the YumDrop app. Find great meals fast with lots of local menus. Enjoy eating the convenient
+                            way with places that deliver to your door..</p>
                     </div>
                 </div>
                 <div className="row">
@@ -460,12 +472,13 @@ class App extends Component {
                             Multiple payment options. Choose a payment method that works best for you</p>
                     </div>
                     <div className="col-md-6 how-img">
-                        <img src="https://www.trzcacak.rs/myfile/full/377-3774169_payment-channel-payment-channel-payment-channel-payment-bank.png"
-                             className="rounded-circle img-fluid" alt=""/>
+                        <img
+                            src="https://www.trzcacak.rs/myfile/full/377-3774169_payment-channel-payment-channel-payment-channel-payment-bank.png"
+                            className="rounded-circle img-fluid" alt=""/>
                     </div>
                 </div>
             </div>
-        </div>);
+        </div>;
     }
 }
 export default App;

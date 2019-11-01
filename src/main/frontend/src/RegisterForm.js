@@ -497,7 +497,7 @@ class App extends Component {
                                         <form onSubmit={this.register.bind(this)}>
                                             <h2 className="text-center">User Sign Up</h2>
                                             <div className="social-btn text-center">
-                                                <a href="#" className="btn btn-primary btn-block btn-lg"><i
+                                                <a href="/registerWithFacebook" className="btn btn-primary btn-block btn-lg"><i
                                                     className="fa fa-facebook"></i> Sign up with <b>Facebook</b></a>
                                                 <a href="#" className="btn btn-danger btn-block btn-lg"><i
                                                     className="fa fa-google"></i> Sign up with <b>Google</b></a>
