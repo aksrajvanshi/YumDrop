@@ -21,6 +21,7 @@ import MyCurrentLocation from "./MyCurrentLocation";
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import RestaurantDashboard from "./RestaurantDashboard";
+import forwardToRestaurantRegistrationForm from "./forwardToRestaurantRegistrationForm";
 
 
 const initialState = {
@@ -61,6 +62,7 @@ const routing = (
                 <Route path="/RestaurantDashboard" component={RestaurantDashboard}/>
                 <Route path="/Trying" component={Trying}/>
                 <Route path="/AddItemToMenu" component={AddItemToMenu}/>
+                <Route path="/forwardToRestaurantRegistrationForm" component={forwardToRestaurantRegistrationForm}/>
             </div>
         </Router>
     </Provider>

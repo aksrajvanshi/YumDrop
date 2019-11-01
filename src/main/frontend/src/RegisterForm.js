@@ -57,46 +57,7 @@ class App extends Component {
     }
 
 
-    registerRestaurant() {
-        debugger;
-        let obj = {}
-            fetch('/restaurantRegistration',
-                {
-                    method: 'POST',
-                    redirect: 'follow',
-                    headers: {
-                        "Content-Type": "application/json",
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                    body: JSON.stringify({
-                        restaurantFullName: this.state.restaurantFullName,
-                        restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId,
-                        restaurantId: this.state.restaurantId,
-                        restaurantSecondaryEmailID: this.state.restaurantSecondaryEmailID,
-                        restaurantPrimaryPhoneNumber: this.state.restaurantPrimaryPhoneNumber,
-                        restaurantSecondaryPhoneNumber: this.state.restaurantSecondaryPhoneNumber,
-                        restaurantPassword: this.state.restaurantPassword,
-                        restaurantConfirmPassword: this.state.restaurantConfirmPassword,
-                        }
-                    )
 
-                }
-            ).then(res => {
-
-
-                if (res.status !== 200) {
-                    this.setState({redirect: true, userRegister: false});
-                    this.forwardToErrorPage();
-                    alert("Hey going to login page");
-                }else {
-                    this.setState({redirect: true, userRegister: false, otpVal:true});
-                    alert("Hey going to otp page");
-                }
-
-
-            })
-
-        }
 
     register() {
         debugger;
@@ -172,6 +133,10 @@ class App extends Component {
 
     forwardToSuccessPage = () => {
         this.props.history.push('/SuccessfulRegistration');
+    }
+
+    forwardToRestaurantRegistrationForm = () => {
+        this.props.history.push('/forwardToRestaurantRegistrationForm')
     }
 
 
@@ -442,7 +407,7 @@ class App extends Component {
                                 <strong>USER</strong>
                             </Button>{" "}
                             <br/>
-                            <Button id="RestaurantId" onClick={this.restaurantRegister}>
+                            <Button id="RestaurantId" onClick={this.forwardToRestaurantRegistrationForm}>
                                 <strong>RESTAURANT</strong>
                             </Button>{" "}
                             <br/>
@@ -560,37 +525,6 @@ class App extends Component {
                         </div>
 
                     </Modal>
-                    <Modal
-                        show={this.state.restaurantRegister}
-                        onHide={this.closeAllOptionsOfSelectionForm}
-                        animation={false}
-                        id="modal"
-                    >
-
-                            <div className="container">
-                                <div className="row">
-                                    <div className="main">
-                                        <div className="login-form">
-                                            <form onSubmit={this.registerRestaurant.bind(this)}>
-                                                <h2 className="text-center">User Login</h2>
-                                                <div className="form-group">
-                                                    <input value={this.state.restaurantFullName}
-                                                           onChange={this.handleRestaurantFullName} type="text"
-                                                           className="form-control" placeholder="Username"
-                                                           pattern="[a-z][A-Z]"
-                                                           required="required"/>
-                                                </div>
-
-
-
-                                            </form>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </Modal>
 
 
 
