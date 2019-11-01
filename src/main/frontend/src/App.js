@@ -4,6 +4,7 @@ import LoginPage from "./LoginPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import './index.css'
+
 class App extends Component {
     state = {
 
@@ -13,12 +14,15 @@ class App extends Component {
         this.props.history.push('/LoginForm');
     }
 
+    forwardToPublicViewPAge = () => {
+        this.props.history.push('/')
+    }
+
     forwardToRegisterForm = () => {
         this.props.history.push('/RegisterForm')
     }
 
     render() {
-        const { country, region } = this.state;
         return (
             <div className="App">
                 <header>
@@ -37,7 +41,7 @@ class App extends Component {
                     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
-                            <a className="navbar-brand " href="#">YumDrop</a>
+                            <a className="navbar-brand " href="#" onClick={this.forwardToPublicViewPAge}>YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
                                     <li className="nav-item" >
@@ -74,11 +78,11 @@ class App extends Component {
                                         <div className="md-form">
                                             <input type="text"
                                                    placeholder="Search for food, cuisines, restaurants here.."
-                                                   id="form5" className="form-control validate"/>
+                                                    className="form-control validate"/>
 
                                         </div>
                                     </div>
-                                    <div className="col-md-1" id="buttonOrder">
+                                    <div className="col-md-1" >
                                         <div className="md-form">
                                             <button className="btn btn-lg btn-danger">Search</button>
                                         </div>
