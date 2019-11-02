@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import { isMobilePhone, isEmail } from "validator";
+import { GoogleLogin } from 'react-google-login';
 
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
@@ -369,6 +370,10 @@ class App extends Component {
         console.log(response)
     }
 
+    responseGoogle = (response) => {
+        console.log(response);
+    }
+
     componentClicked = () => console.log("Clicked")
 
     render()
@@ -413,13 +418,9 @@ class App extends Component {
 
 
                 if (res.status !== 200) {
-                    this.setState({redirect: true, userRegister: false});
                     this.forwardToErrorPage();
-                    alert("Hey going to login page");
                 }else {
-                    this.setState({redirect: true, userRegister: false});
                     this.forwardToSuccessPage();
-                    alert("Hey going to Success page");
                 }
 
 
@@ -576,15 +577,13 @@ class App extends Component {
 
                                             <FacebookLogin
                                                 appId="1250006828526117"
-                                                autoLoad
                                                 callback={responseFacebook}
                                                 render={renderProps => (
-                                                    <button onClick={renderProps.onClick}>This is my custom FB button</button>
+                                                    <button className="btn btn-primary btn-block btn-lg" onClick={renderProps.onClick}><i
+                                                        className="fa fa-facebook"></i> Sign up with <b>Facebook</b> </button>
                                                 )}
                                             />
 
-                                            <a href="#" className="btn btn-danger btn-block btn-lg"><i
-                                                className="fa fa-google"></i> Sign up with <b>Google</b></a>
                                         </div>
                                         <div className="or-seperator"><i>or</i></div>
                                         <div className="form-group">
