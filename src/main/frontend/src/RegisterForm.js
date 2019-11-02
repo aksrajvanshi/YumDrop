@@ -387,15 +387,15 @@ class App extends Component {
             let api = 'https://graph.facebook.com/v2.8/' + this.state.facebookUserId +
                 '?fields=name,email&access_token=' + this.state.facebookUserAccessToken;
             fetch(api)
-                .then((response) => response.json())
+                .then((responses) => responses.json())
                 .then( (responseData) => {
                     console.log(responseData)
-                    this.state.facebookUserEmail = responseData.email;
-                    this.state.facebookUserName  = responseData.name;
+                        this.state.facebookUserEmail= responseData.email;
+                        this.state.facebookUserName= responseData.name;
                     console.log("Inside fetch api");
                     console.log(responseData.email);
-                });
-
+                    console.log(this.state.facebookUserEmail);
+                }).then( (res) => {
             fetch('/facebookUserRegistration',
                 {
                     method: 'POST',
@@ -424,7 +424,7 @@ class App extends Component {
                 }
 
 
-            })
+            })});
         }
 
         return (
