@@ -22,7 +22,7 @@ import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import RestaurantDashboard from "./RestaurantDashboard";
 import successfullyChangedPasswordPage from "./successfullyChangedPasswordPage";
-
+import DeliveryAgentDashboard from "./DeliveryAgentDashboard";
 
 const initialState = {
     latitude: null,
@@ -63,6 +63,7 @@ const routing = (
                 <Route path="/RestaurantDashboard" component={RestaurantDashboard}/>
                 <Route path="/Trying" component={Trying}/>
                 <Route path="/AddItemToMenu" component={AddItemToMenu}/>
+                <Route path="/DeliveryAgentDashboard" component={DeliveryAgentDashboard}/>
             </div>
         </Router>
     </Provider>

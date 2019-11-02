@@ -52,6 +52,32 @@ class App extends Component {
 
     }
 
+    dALogin = () => { debugger;
+        fetch('/loginDataForm', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                user_name: this.state.userName,
+                userPassword: this.state.userPassword
+            }),
+        }).then(res => {
+
+            //alert("Entered");
+            //alert(res.status);
+            if (res.status !== 200) {
+                this.setState({redirect: true, userRegister: false});
+                this.forwardToLoginErrorPage();
+                //alert("Hey going to Error page");
+            }else {
+                this.setState({redirect: true, userRegister: false});
+                this.forwardToDeliveryAgentDashboard();
+                //alert("Hey going to Login Dashboard page");
+            }
+        })
+    }
+
     passwordChange  = () => { debugger;
         fetch('/setNewUserPassword', {
             method: 'POST',
@@ -140,6 +166,9 @@ class App extends Component {
         this.props.history.push('/LoginDashBoard')
     }
 
+    forwardToDeliveryAgentDashboard = () => {
+        this.props.history.push('/DeliveryAgentDashboard')
+    }
 
     userPassword = (event) => {
         this.setState({userPassword: event.target.value})
@@ -151,13 +180,14 @@ class App extends Component {
     handleRestaurantLoginOption = () => {
         this.setState({ loginSelect: false, selectLoginOption:false, deliveryAgentLoginOption: false, restaurantLoginOption: true  });
     }
-
-    handleUserTemporaryPassword = (event) => {
-        this.setState({userTemporaryPassword : event.target.value})
-    }
     handleDeliveryAgentLoginOption  = () => {
         this.setState({ loginSelect: false, selectLoginOption:false, restaurantLoginOption: false, deliveryAgentLoginOption: true  });
     }
+    handleUserTemporaryPassword = (event) => {
+        this.setState({userTemporaryPassword : event.target.value})
+    }
+
+
     closeAllOptionsOfSelectionForm= () => {
         this.setState({ userLoginOption: false, loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOption: false, forgotPasswordSelect: false, emailSelectForgotPassword: false  });
     }
@@ -416,7 +446,46 @@ class App extends Component {
 
             </Modal>
 
+            <Modal
+                show={this.state.deliveryAgentLoginOption}
+                onHide={this.closeAllOptionsOfSelectionForm}
+                animation={false}
+                centered id="modal"
+            >
+                <div className="container">
+                    <div className="row">
+                        <div className="main">
+                            <div className="login-form">
+                                <form onSubmit={this.dALogin.bind(this)}>
+                                    <h2 className="text-center">Delivery Agent Login</h2>
+                                    <div className="form-group">
+                                        <input value={this.state.userName}
+                                               onChange={this.handleUserNameChange} type="text"
+                                               className="form-control" placeholder="Username"
+                                               pattern="[a-z][A-Z]"
+                                               required="required"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <input value={this.state.userPassword}
+                                               onChange={this.handleUserPasswordChange} type="password"
+                                               className="form-control" placeholder="Password"
+                                               pattern="[a-z][A-Z]"
+                                               required="required"/>
+                                    </div>
 
+                                    <div className="form-group">
+                                        <button onClick={this.dALogin.bind(this)} type="submit"
+                                                className="btn btn-primary btn-lg btn-block login-btn">Login
+                                        </button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </Modal>
 
 
             <div className="how-section1">

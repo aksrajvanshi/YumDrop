@@ -7,7 +7,6 @@ import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import { isMobilePhone, isEmail } from "validator";
 
 
-
 class App extends Component {
     constructor(props){
         super(props)
@@ -18,7 +17,6 @@ class App extends Component {
         userPassword: "",
         userRegister: false,
         restaurantRegister: false,
-        deliveryAgentRegister: false,
         userPhoneNumber: "",
         userEmailID: "",
         otpVal: false,
@@ -34,7 +32,17 @@ class App extends Component {
         restaurantPassword: "",
         restaurantConfirmPassword: "",
         redirect: false,
-        userOtp: ""
+        userOtp: "",
+
+        daRegister: false,
+        daEmail:"",
+        daName:"",
+        daPhonenum:"",
+        daPassword:"",
+        daConfirmPassword:"",
+        daOtp: "",
+        daOtpVal: false
+
     };
 
     forwardToLoginForm = () => {
@@ -112,12 +120,12 @@ class App extends Component {
                 body: JSON.stringify({
                     user_email: this.state.userEmailID,
                     user_phonenum: this.state.userPhoneNumber
+
                     }
                 )
 
             }
         ).then(res => {
-
 
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
@@ -129,6 +137,41 @@ class App extends Component {
 
 
         })
+    }
+
+    registerDeliveryAgent() {
+        debugger;
+        let obj = {}
+        fetch('/deliveryAgentRegistration',
+            {
+                method: 'POST',
+                redirect: 'follow',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: JSON.stringify({
+
+                    da_email: this.state.daEmail,
+                    da_phonenum: this.state.daPhonenum
+
+                    }
+                )
+
+            }
+        ).then(res => {
+
+            if (res.status !== 200) {
+                this.setState({redirect: false, daRegister: false});
+                this.forwardToErrorPage();
+                alert("Hey going to login page");
+            }else {
+                this.setState({redirect: false, daRegister: false, daOtpVal:true});
+                alert("Hey going to otp page");
+            }
+
+        })
+
     }
 
     registerOtp() {
@@ -147,7 +190,7 @@ class App extends Component {
                         user_phonenum: this.state.userPhoneNumber,
                         user_password: this.state.userPassword,
                         user_otp: this.state.userOtp,
-                    user_name: this.state.userFullName
+                        user_name: this.state.userFullName
 
                     }
                 )
@@ -170,12 +213,44 @@ class App extends Component {
         })
     }
 
+    daRegisterOtp() {
+        debugger;
+        let obj = {}
+        fetch('/verifyOTPandRegisterDA',
+            {
+                method: 'POST',
+                redirect: 'follow',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: JSON.stringify({
+                        da_email: this.state.daEmail,
+                        da_phonenum: this.state.daPhonenum,
+                        da_password: this.state.daPassword,
+                        da_otp: this.state.daOtp,
+                        da_name: this.state.daName
+
+                    }
+                )
+
+            }
+        ).then(res => {
+            if (res.status !== 200) {
+                this.setState({redirect: true, daRegister: false});
+                this.forwardToErrorPage();
+                alert("Hey going to login page");
+            }else {
+                this.setState({redirect: true, daRegister: false});
+                this.forwardToSuccessPage();
+                alert("Hey going to Success page");
+            }
+        })
+    }
+
     forwardToSuccessPage = () => {
         this.props.history.push('/SuccessfulRegistration');
     }
-
-
-
 
     handleUserNameChange = (event) => {
             this.setState({
@@ -260,12 +335,37 @@ class App extends Component {
             })
         }
 
+        handleDeliveryAgentEmail = (event) => {
+            this.setState({
+                daEmail: event.target.value,
+            })
+        }
+        handleDeliveryAgentName = (event) => {
+            this.setState({
+                daName: event.target.value,
+            })
+        }
+        handleDeliveryAgentPhonenum = (event) => {
+            this.setState({
+                daPhonenum: event.target.value,
+            })
+        }
+        handleDeliveryAgentPassword = (event) => {
+            this.setState({
+                daPassword: event.target.value,
+            })
+        }
+        handleDeliveryAgentConfirmPassword = (event) => {
+            this.setState({
+                daConfirmPassword: event.target.value,
+            })
+        }
         registerSelect = () => {
             this.setState({
                 userRegister: false,
                 registerSelect: true,
                 restaurantRegister: false,
-                deliveryAgentRegister: false
+                daRegister: false
             });
         };
 
@@ -275,7 +375,7 @@ class App extends Component {
                 userRegister: false,
                 restaurantRegister: false,
                 registerSelect: false,
-                deliveryAgentRegister: false
+                daRegister: false
             });
         }
         forwardToLogin = () => {
@@ -296,7 +396,7 @@ class App extends Component {
                 userRegister: true,
                 registerSelect: false,
                 restaurantRegister: false,
-                deliveryAgentRegister: false
+                daRegister: false
             });
         };
         restaurantRegister = () => {
@@ -304,16 +404,16 @@ class App extends Component {
                 userRegister: false,
                 registerSelect: false,
                 restaurantRegister: true,
-                deliveryAgentRegister: false
+                daRegister: false
             });
         };
 
-        deliveryAgentRegister = () => {
+        daRegister = () => {
             this.setState({
                 userRegister: false,
                 registerSelect: false,
                 restaurantRegister: false,
-                deliveryAgentRegister: true
+                daRegister: true
             });
         };
 
@@ -446,7 +546,7 @@ class App extends Component {
                                 <strong>RESTAURANT</strong>
                             </Button>{" "}
                             <br/>
-                            <Button id="DeliveryId" onClick={this.deliveryAgentRegister}>
+                            <Button id="DeliveryId" onClick={this.daRegister}>
                                 <strong>DELIVERY</strong>
                             </Button>
                         </Modal.Body>
@@ -473,6 +573,39 @@ class App extends Component {
 
                                             <div className="form-group">
                                                 <button onClick={this.registerOtp.bind(this)} type="submit"
+                                                        className="btn btn-primary btn-lg btn-block login-btn">Sign Up
+                                                </button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </Modal>
+                    <Modal
+                        show={this.state.daOtpVal}
+                        onHide={this.closeAllOptionsOfSelectionForm}
+                        animation={false}
+                        centered id="modal"
+                    >
+                        <div className="container">
+                            <div className="row">
+                                <div className="main">
+                                    <div className="login-form">
+                                        <form onSubmit={this.daRegisterOtp.bind(this)}>
+                                            <h2 className="text-center">Please provide 6 digit OTP</h2>
+                                            <div className="form-group">
+                                                <input value={this.state.userOtp}
+                                                       onChange={this.handleUserOtpChange} type="text"
+                                                       className="form-control" placeholder="OTP"
+                                                       pattern="[a-z][A-Z]"
+                                                       required="required"/>
+                                            </div>
+
+                                            <div className="form-group">
+                                                <button onClick={this.daRegisterOtp.bind(this)} type="submit"
                                                         className="btn btn-primary btn-lg btn-block login-btn">Sign Up
                                                 </button>
                                             </div>
@@ -592,6 +725,86 @@ class App extends Component {
 
                         </Modal>
 
+                    <Modal
+                        show={this.state.daRegister}
+                        onHide={this.closeAllOptionsOfSelectionForm}
+                        animation={false}
+                        id="modal"
+                    >
+
+
+
+                        <div className="container">
+                            <div className="row">
+                                <div className="main">
+                                    <div className="login-form">
+                                        <form onSubmit={this.registerDeliveryAgent.bind(this)}>
+                                            <h2 className="text-center">Delivery Agent Sign Up</h2>
+                                            <div className="social-btn text-center">
+                                                <a href="#" className="btn btn-primary btn-block btn-lg"><i
+                                                    className="fa fa-facebook"></i> Sign up with <b>Facebook</b></a>
+                                                <a href="#" className="btn btn-danger btn-block btn-lg"><i
+                                                    className="fa fa-google"></i> Sign up with <b>Google</b></a>
+                                            </div>
+                                            <div className="or-seperator"><i>or</i></div>
+                                            <div className="form-group">
+                                                <input value={this.state.daName}
+                                                       onChange={this.handleDeliveryAgentName} type="text"
+                                                       className="form-control" placeholder="Full Name"
+                                                       title="Please enter your full name"
+                                                       pattern="(?=.*[a-zA-Z]).{1,}"
+                                                       required="required"/>
+                                            </div>
+                                            <div className="form-group">
+                                                <input value={this.state.daEmail}
+                                                       onChange={this.handleDeliveryAgentEmail} type="text"
+                                                       className="form-control" placeholder="Email ID"
+                                                       title="Please enter a valid email address"
+                                                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                                       required="required"/>
+                                            </div>
+
+                                            <div className="form-group">
+                                                <input type="password" value={this.state.daPassword}
+                                                       onChange={this.handleDeliveryAgentPassword} className="form-control"
+                                                       id="daPassword"
+                                                       placeholder="Password"
+                                                       title="Password must be 8 characters or longer and contain a lower case letter, capital letter, and a special character"
+                                                       pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,16}"
+                                                       required="required"/>
+                                            </div>
+                                            <div className="form-group">
+                                                <input type="password" value={this.state.daConfirmPassword}
+                                                       onChange={this.handleDeliveryAgentConfirmPassword}
+                                                       id="daConfirmPassword"
+                                                       className="form-control" placeholder="Confirm password"
+                                                       checked={this.state.daPassword === this.state.daConfirmPassword}
+                                                       title="Please enter your password again"
+                                                       pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,16}"
+                                                       required="required"/>
+                                            </div>
+                                            <div className="form-group">
+                                                <input type="text" className="form-control"
+                                                       value={this.state.daPhonenum}
+                                                       onChange={this.handleDeliveryAgentPhonenum}
+                                                       placeholder="Phone  Number"
+                                                       title="Please enter a valid phone number Ex: XXX-XXX-XXXX"
+                                                       pattern="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$"
+                                                       required="required"/>
+                                            </div>
+                                            <div className="form-group">
+                                                <button onClick={this.registerDeliveryAgent.bind(this)} type="submit"
+                                                        className="btn btn-primary btn-lg btn-block login-btn">Sign Up
+                                                </button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </Modal>
 
 
                     <div className="how-section1">
