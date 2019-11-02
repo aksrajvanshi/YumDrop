@@ -19,6 +19,10 @@ class RestaurantDashboard extends Component{
     forwardToRestaurantSettingsPage = () => {
         this.props.history.push("/RestaurantSettingsPage");
     }
+
+    forwardToLogiDashboard = () => {
+        this.props.history.push("/RestaurantDashboard");
+    }
     render() {
 
         return(
@@ -40,7 +44,7 @@ class RestaurantDashboard extends Component{
 
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
-                            <a className="navbar-brand " href="#">YumDrop</a>
+                            <a className="navbar-brand " href="#" onClick={this.forwardToLogiDashboard}>YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
                                     <li className="upper-links  text-white"><button className="btn-group-lg btn-dark" onClick={this.forwardToRestaurantSettingsPage}
