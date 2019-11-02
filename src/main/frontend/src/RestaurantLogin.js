@@ -205,38 +205,38 @@ class App extends Component {
                     this.state.facebookUserName  = responseData.name;
                     console.log("Inside fetch api");
                     console.log(responseData.email);
-                }).then(res => {
-                    fetch('/facebookUserLogin',
-                    {
-                        method: 'POST',
-                        redirect: 'follow',
-                        headers: {
-                            "Content-Type": "application/json",
-                            'Access-Control-Allow-Origin': '*'
-                        },
-                        body: JSON.stringify({
-                                fbUserEmail: this.state.facebookUserEmail,
-                                fbUserID: this.state.facebookUserId,
-                                fbUserAccessToken: this.state.facebookUserAccessToken,
-                                fbUserName: this.state.facebookUserName
+                });
 
-                            }
-                        )
+            fetch('/facebookUserLogin',
+                {
+                    method: 'POST',
+                    redirect: 'follow',
+                    headers: {
+                        "Content-Type": "application/json",
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    body: JSON.stringify({
+                            fbUserEmail: this.state.facebookUserEmail,
+                            fbUserID: this.state.facebookUserId,
+                            fbUserAccessToken: this.state.facebookUserAccessToken,
+                            fbUserName: this.state.facebookUserName
 
-                    }
-                ).then(res => {
+                        }
+                    )
 
-
-                    if (res.status !== 200) {
-                        this.forwardToErrorPage();
-                    }else {
-                        this.forwardToLoginDashboard();
-                    }
+                }
+            ).then(res => {
 
 
-                })
-            })};
+                if (res.status !== 200) {
+                    this.forwardToErrorPage();
+                }else {
+                    this.forwardToLoginDashboard();
+                }
 
+
+            })
+        }
         return( <div className="App">
             <header>
                 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
