@@ -8,7 +8,7 @@ import { isMobilePhone, isEmail } from "validator";
 
 
 
-class forwardToRestaurantRegistrationForm extends Component {
+class App extends Component {
     constructor(props){
         super(props)
     }
@@ -17,6 +17,8 @@ class forwardToRestaurantRegistrationForm extends Component {
         userRegister: false,
         restaurantRegister: true,
         deliveryAgentRegister: false,
+        userPhoneNumber: "",
+        userEmailID: "",
         otpVal: false,
         registerSelect: false,
         restaurantFullName: "",
@@ -31,55 +33,15 @@ class forwardToRestaurantRegistrationForm extends Component {
         restaurantOtp: ""
     };
 
-    forwardToLoginForm = () => {
-        this.props.history.push('/LoginForm');
-    }
 
     forwardToErrorPage = () => {
-        this.props.history.push('/errorPageForRegistration');
+        this.props.history.push('/ErrorPageForRestaurantRegistration');
     }
 
-
-    registerRestaurant() {
-        debugger;
-        let obj = {}
-        fetch('/restaurantRegistration',
-            {
-                method: 'POST',
-                redirect: 'follow',
-                headers: {
-                    "Content-Type": "application/json",
-                    'Access-Control-Allow-Origin': '*'
-                },
-                body: JSON.stringify({
-                        restaurantFullName: this.state.restaurantFullName,
-                        restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId,
-                        restaurantId: this.state.restaurantId,
-                        restaurantSecondaryEmailID: this.state.restaurantSecondaryEmailID,
-                        restaurantPrimaryPhoneNumber: this.state.restaurantPrimaryPhoneNumber,
-                        restaurantSecondaryPhoneNumber: this.state.restaurantSecondaryPhoneNumber,
-                        restaurantPassword: this.state.restaurantPassword,
-                        restaurantConfirmPassword: this.state.restaurantConfirmPassword,
-                    }
-                )
-
-            }
-        ).then(res => {
-
-
-            if (res.status !== 200) {
-                this.setState({redirect: true, userRegister: false});
-                this.forwardToErrorPage();
-                alert("Hey going to login page");
-            }else {
-                this.setState({redirect: true, userRegister: false, otpVal:true});
-                alert("Hey going to otp page");
-            }
-
-
-        })
-
+    forwardToRegisterForm = () => {
+        this.props.history.push("/RegisterForm");
     }
+
 
     register() {
         debugger;
@@ -93,9 +55,8 @@ class forwardToRestaurantRegistrationForm extends Component {
                     'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify({
-                    restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId,
                     restaurantId: this.state.restaurantId,
-                    restaurantSecondaryEmailID: this.state.restaurantSecondaryEmailID,
+                    restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId
                     }
                 )
 
@@ -105,16 +66,53 @@ class forwardToRestaurantRegistrationForm extends Component {
 
             if (res.status !== 200) {
                 this.setState({redirect: true, restaurantRegister: false});
-                alert("Hey going to Error page");
+                this.forwardToErrorPage();
             }else {
                 this.setState({redirect: true, restaurantRegister: false, otpVal:true});
-                alert("Hey going to otp page");
             }
 
 
         })
     }
 
+    registerOtp() {
+        debugger;
+        let obj = {}
+        fetch('/verifyOTPandRegisterUser',
+            {
+                method: 'POST',
+                redirect: 'follow',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: JSON.stringify({
+                    restaurantName: this.state.restaurantFullName,
+                    restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId,
+                    restaurantId: this.state.restaurantId,
+                    secondaryEmailID: this.state.restaurantSecondaryEmailID,
+                    primaryPhoneNumber: this.state.restaurantPrimaryPhoneNumber,
+                    secondaryPhoneNumber: this.state.restaurantSecondaryPhoneNumber,
+                    restaurantOtp: this.state.restaurantOtp
+
+                    }
+                )
+
+            }
+        ).then(res => {
+
+
+            if (res.status !== 200) {
+                this.setState({redirect: true, userRegister: false});
+                this.forwardToErrorPage();
+            }else {
+                this.setState({redirect: true, userRegister: false});
+                this.forwardToSuccessPage();
+            }
+
+
+        })
+    }
 
     forwardToSuccessPage = () => {
         this.props.history.push('/SuccessfulRegistration');
@@ -125,76 +123,63 @@ class forwardToRestaurantRegistrationForm extends Component {
     }
 
 
-    handleRestaurantId = (event) => {
-        this.setState({
-            restaurantId: event.target.value
-        })
-    }
 
-    handleRestaurantNameChange = (event) => {
+
+
+    handleRestaurantFullName = (event) => {
         this.setState({
             restaurantFullName: event.target.value,
         });
     };
 
-    handleRestaurantPrimaryEmailIdChange = (event) => {
+    handleRestaurantPrimaryEmailId = (event) => {
         this.setState({
             restaurantPrimaryEmailId: event.target.value,
-        });
-    };
+        })
+    }
 
-    handleRestaurantSecondaryEmailIdChange = (event) => {
+    handleRestaurantId = (event) => {
+        this.setState({
+            restaurantId: event.target.value,
+        })
+    }
+
+    handleRestaurantSecondaryEmailID = (event) => {
         this.setState({
             restaurantSecondaryEmailID: event.target.value,
-        });
-    };
+        })
+    }
 
-    handleRestaurantPrimaryPhoneNumberChange = (event) => {
+    handleRestaurantPrimaryPhoneNumber = (event) => {
         this.setState({
             restaurantPrimaryPhoneNumber: event.target.value,
-        });
-    };
-
-    handleRestaurantSecondaryPhoneNumberChange = (event) => {
-        this.setState({
-            restaurantSecondaryPhoneNumber: event.target.value,
-        });
-    };
-
-    handleRestaurantPasswordChange = (event) => {
-        this.setState({
-            restaurantPassword: event.target.value,
-        });
-    };
-
-    handleRestaurantConfirmPasswordChange = (event) => {
-        this.setState({
-            restaurantConfirmPassword: event.target.value,
-        });
-    };
-
-
-
-
-
+        })
+    }
 
     handleRestaurantOtpChange = (event) => {
         this.setState({
-            restaurantOtp: event.target.value,
+            userOtp: event.target.value,
+        })
+    }
+    handlerestaurantSecondaryPhoneNumber = (event) => {
+        this.setState({
+            restaurantSecondaryPhoneNumber: event.target.value,
+        })
+    }
+
+    handleRestaurantPassword = (event) => {
+        this.setState({
+            restaurantPassword: event.target.value,
+        })
+    }
+
+    handleRestaurantConfirmPassword = (event) => {
+        this.setState({
+            restaurantConfirmPassword: event.target.value,
         })
     }
 
 
-
-
-    registerSelect = () => {
-        this.setState({
-            userRegister: false,
-            registerSelect: true,
-            restaurantRegister: false,
-            deliveryAgentRegister: false
-        });
-    };
 
 
     closeAllOptionsOfSelectionForm = () => {
@@ -206,16 +191,18 @@ class forwardToRestaurantRegistrationForm extends Component {
         });
     }
 
-    restaurantRegister = () => {
-        this.setState({
-            userRegister: false,
-            registerSelect: false,
-            restaurantRegister: true,
-            deliveryAgentRegister: false
-        });
-    };
 
 
+    userPasswordConfirmation = () => {
+        var password = document.getElementById("userPassword");
+        var confirmPassword = document.getElementById("userConfirmPassword");
+        if (password.value !== confirmPassword.value) {
+            confirmPassword.setCustomValidity("Passwords must match");
+        }
+        else {
+            confirmPassword.setCustomValidity("");
+        }
+    }
 
     restaurantPhoneNumberAndPasswordConfirmation = () => {
         var password = document.getElementById("restaurantPassword");
@@ -271,7 +258,7 @@ class forwardToRestaurantRegistrationForm extends Component {
                                             className="fa fa-fw fa-user"/>Login</a>
                                     </li>
                                     <li className="nav-item" id="SignUpID">
-                                        <a className="nav-link" onClick={this.registerSelect}>Sign Up</a>
+                                        <a className="nav-link" onClick={this.forwardToRegisterForm}>Sign Up</a>
                                     </li>
                                 </ul>
                             </div>
@@ -329,15 +316,15 @@ class forwardToRestaurantRegistrationForm extends Component {
                                     <form onSubmit={this.registerOtp.bind(this)}>
                                         <h2 className="text-center">Please provide 6 digit OTP</h2>
                                         <div className="form-group">
-                                            <input value={this.state.restaurantOtp}
-                                                   onChange={this.handleRestaurantOtpChange} type="text"
+                                            <input value={this.state.userOtp}
+                                                   onChange={this.handleUserOtpChange} type="text"
                                                    className="form-control" placeholder="OTP"
                                                    pattern="[a-z][A-Z]"
                                                    required="required"/>
                                         </div>
 
                                         <div className="form-group">
-                                            <button onClick={this.registerRestaurant.bind(this)} type="submit"
+                                            <button onClick={this.registerOtp.bind(this)} type="submit"
                                                     className="btn btn-primary btn-lg btn-block login-btn">Sign Up
                                             </button>
                                         </div>
@@ -361,47 +348,55 @@ class forwardToRestaurantRegistrationForm extends Component {
                                 <div className="login-form">
                                     <form onSubmit={this.register.bind(this)}>
                                         <h2 className="text-center">Restaurant Sign Up</h2>
+
+                                        <div className="or-seperator"><i>or</i></div>
                                         <div className="form-group">
                                             <input value={this.state.restaurantFullName}
-                                                   onChange={this.handleUserNameChange} type="text"
-                                                   className="form-control" placeholder="Restaurant Full Name"
-                                                   title="Please enter your full name"
+                                                   onChange={this.handleRestaurantFullName} type="text"
+                                                   className="form-control" placeholder="Full Name"
+                                                   title="Please enter restaurant full name"
                                                    pattern="(?=.*[a-zA-Z]).{1,}"
                                                    required="required"/>
                                         </div>
                                         <div className="form-group">
                                             <input value={this.state.restaurantId}
                                                    onChange={this.handleRestaurantId} type="text"
-                                                   className="form-control" placeholder="Restaurant ID"
-                                                   title="Please enter a valid restaurant ID"
+                                                   className="form-control" placeholder="ID"
+                                                   title="Please enter a valid Restaurant ID"
                                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                                    required="required"/>
                                         </div>
                                         <div className="form-group">
-                                            <input type="password" value={this.state.restaurantPrimaryEmailId}
-                                                   onChange={this.handleRestaurantPrimaryEmailIdChange} className="form-control"
-                                                   id="userPassword"
-                                                   placeholder="Primary Email ID"
-                                                   title="Password must be 8 characters or longer and contain a lower case letter, capital letter, and a special character"
-                                                   pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                            <input value={this.state.restaurantPrimaryEmailId}
+                                                   onChange={this.handleRestaurantPrimaryEmailId} type="text"
+                                                   className="form-control" placeholder="Primary Email ID"
+                                                   title="Please enter a valid email address"
+                                                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                                    required="required"/>
                                         </div>
                                         <div className="form-group">
                                             <input type="password" value={this.state.restaurantSecondaryEmailID}
-                                                   onChange={this.handleRestaurantSecondaryEmailIdChange}
-                                                   id="userConfirmPassword"
-                                                   className="form-control" placeholder="Confirm password"
-                                                   title="Secondary Email ID"
+                                                   onChange={this.handleRestaurantSecondaryEmailID} className="form-control"
+                                                   id="userPassword"
+                                                   placeholder="Secondary Email ID"
                                                    pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                                    required="required"/>
                                         </div>
                                         <div className="form-group">
-                                            <input type="text" className="form-control"
-                                                   value={this.state.restaurantPrimaryPhoneNumber}
-                                                   onChange={this.handleRestaurantPrimaryPhoneNumberChange}
-                                                   placeholder="Primary Phone  Number"
-                                                   title="Please enter a valid phone number Ex: +X XXX-XXX-XXXX"
-                                                   pattern="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$"
+                                            <input type="text" value={this.state.restaurantPrimaryPhoneNumber}
+                                                   onChange={this.handleRestaurantPrimaryPhoneNumber}
+                                                   id="userConfirmPassword"
+                                                   className="form-control" placeholder="Restaurant Primary Phone Number"
+                                                   title="Primary Phone Number"
+                                                   pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                                   required="required"/>
+                                        </div>
+                                        <div className="form-group">
+                                            <input type="text" value={this.state.restaurantSecondaryPhoneNumber}
+                                                   onChange={this.handlerestaurantSecondaryPhoneNumber}
+                                                   id="userConfirmPassword"
+                                                   className="form-control" placeholder="Secondary Phone Number"
+                                                   pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                                    required="required"/>
                                         </div>
                                         <div className="form-group">
@@ -409,37 +404,6 @@ class forwardToRestaurantRegistrationForm extends Component {
                                                     className="btn btn-primary btn-lg btn-block login-btn">Sign Up
                                             </button>
                                         </div>
-                                    </form>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </Modal>
-                <Modal
-                    show={this.state.restaurantRegister}
-                    onHide={this.closeAllOptionsOfSelectionForm}
-                    animation={false}
-                    id="modal"
-                >
-
-                    <div className="container">
-                        <div className="row">
-                            <div className="main">
-                                <div className="login-form">
-                                    <form onSubmit={this.registerRestaurant.bind(this)}>
-                                        <h2 className="text-center">User Login</h2>
-                                        <div className="form-group">
-                                            <input value={this.state.restaurantFullName}
-                                                   onChange={this.handleRestaurantFullName} type="text"
-                                                   className="form-control" placeholder="Username"
-                                                   pattern="[a-z][A-Z]"
-                                                   required="required"/>
-                                        </div>
-
-
-
                                     </form>
 
                                 </div>
@@ -502,4 +466,4 @@ class forwardToRestaurantRegistrationForm extends Component {
     }
 }
 
-export default forwardToRestaurantRegistrationForm;
+export default App;

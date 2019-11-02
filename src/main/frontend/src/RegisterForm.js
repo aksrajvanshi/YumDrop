@@ -136,7 +136,7 @@ class App extends Component {
     }
 
     forwardToRestaurantRegistrationForm = () => {
-        this.props.history.push('/forwardToRestaurantRegistrationForm')
+        this.props.history.push('/RestaurantRegister')
     }
 
 

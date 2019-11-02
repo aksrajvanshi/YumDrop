@@ -1,14 +1,18 @@
 import React, {Component} from "react";
 import {Modal} from "react-bootstrap";
 
-class SuccessfulRegistration extends Component{
+class loginErrorPAge extends Component{
 
     state = {
         errorSelect: true
     }
 
-    goBackToHomePage = () => {
-        this.props.history.push('/');
+    goBackToRegisterForm = () => {
+        this.props.history.push('/RegisterForm');
+    }
+
+    goToHomePAge = () => {
+        this.props.history.push('/')
     }
     render() {
         return (
@@ -35,7 +39,7 @@ class SuccessfulRegistration extends Component{
                     <script src="//code.jquery.com/jquery-1.11.1.min.js"/>
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
-                            <a className="navbar-brand " href="#" onClick={this.goBackToHomePage}>YumDrop</a>
+                            <a className="navbar-brand " href="#" onClick={this.goToHomePAge}>YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
                                     <li className="nav-item">
@@ -43,7 +47,7 @@ class SuccessfulRegistration extends Component{
                                             className="fa fa-fw fa-user"/>Login</a>
                                     </li>
                                     <li className="nav-item" id="SignUpID">
-                                        <a className="nav-link" onClick={this.goBackToHomePage}>Sign Up</a>
+                                        <a className="nav-link" onClick={this.goBackToRegisterForm}>Sign Up</a>
                                     </li>
                                 </ul>
                             </div>
@@ -61,8 +65,8 @@ class SuccessfulRegistration extends Component{
                             <div className="main">
                                 <div className="login-form">
                                     <form>
-                                        <h2 className="text-center">Congratulations</h2>
-                                        <p>You have successfully Registered</p>
+                                        <h2 className="text-center">We are Sorry</h2>
+                                        <p>There was an error in registration</p>
                                         <div className="form-group">
                                             <button onClick={this.goBackToRegisterForm} type="submit"
                                                     className="btn btn-primary btn-lg btn-block login-btn">Go to Home
@@ -82,4 +86,4 @@ class SuccessfulRegistration extends Component{
 
 }
 
-export default SuccessfulRegistration;
+export default loginErrorPAge;
