@@ -60,6 +60,16 @@ class App extends Component {
 
     }
 
+    forwardToDeliveryAgentOTPpage = () => {
+        this.props.history.push({
+                pathname : '/DeliveryAgentOTPpage',
+                state :{
+                    name : this.state.userName
+                }
+            }
+        );
+
+    }
     forwardToErrorPage = () => {
         this.props.history.push('/errorPageForRegistration');
     }
@@ -547,7 +557,7 @@ class App extends Component {
                             </Button>{" "}
                             <br/>
                             <Button id="DeliveryId" onClick={this.daRegister}>
-                                <strong>DELIVERY</strong>
+                                <strong>DELIVERY AGENT</strong>
                             </Button>
                         </Modal.Body>
                     </Modal>
@@ -731,8 +741,6 @@ class App extends Component {
                         animation={false}
                         id="modal"
                     >
-
-
 
                         <div className="container">
                             <div className="row">

@@ -23,6 +23,7 @@ import {Provider} from 'react-redux';
 import RestaurantDashboard from "./RestaurantDashboard";
 import successfullyChangedPasswordPage from "./successfullyChangedPasswordPage";
 import DeliveryAgentDashboard from "./DeliveryAgentDashboard";
+import DeliveryAgentOTPpage from "./DeliveryAgentOTPpage";
 
 const initialState = {
     latitude: null,
@@ -53,6 +54,7 @@ const routing = (
                 <Route path="/RegisterForm" component={RegisterForm}/>
                 <Route path="/LoginDashBoard" component={LoginDashBoard}/>
                 <Route path="/OTPpage" component={OTPpage}/>
+                <Route path="/DeliveryAgentOTPpage" component={DeliveryAgentOTPpage}/>
                 <Route path="/errorPageForRegistration" component={errorPageForRegistration} />
                 <Route path="/MySettingsPage" component={MySettingsPage}/>
                 <Route path="/OTPResetPassword" component={OTPResetPassword}/>
