@@ -15,6 +15,10 @@ class RestaurantDashboard extends Component{
     forwardToAddingAnItem = () => {
         this.props.history.push("/RestaurantAddMenuForm");
     }
+
+    forwardToRestaurantSettingsPage = () => {
+        this.props.history.push("/RestaurantSettingsPage");
+    }
     render() {
 
         return(
@@ -39,7 +43,7 @@ class RestaurantDashboard extends Component{
                             <a className="navbar-brand " href="#">YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
-                                    <li className="upper-links  text-white"><button className="btn-group-lg btn-dark" onClick={this.returnToLoginDahboard}
+                                    <li className="upper-links  text-white"><button className="btn-group-lg btn-dark" onClick={this.forwardToRestaurantSettingsPage}
                                     >My Account Settings</button>
 
                                     </li>

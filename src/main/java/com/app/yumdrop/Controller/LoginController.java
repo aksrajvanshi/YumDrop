@@ -39,7 +39,8 @@ public class LoginController {
     @RequestMapping(value = "/restaurantLogin", method = RequestMethod.POST)
     public ResponseEntity<?> restaurantLogin(@RequestBody String restaurantDetaiks) {
         System.out.println(restaurantDetaiks);
-        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong Password");
+        System.out.println(ResponseEntity.status(HttpStatus.OK).body("wrong pass"));
+        return  ResponseEntity.status(HttpStatus.OK).build();
 
     }
 
