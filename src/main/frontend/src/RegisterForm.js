@@ -46,6 +46,8 @@ class App extends Component {
         email: "",
         facebookUserAccessToken: "",
         facebookUserId: "",
+        facebookUserEmail: "",
+        facebookUserName:""
 
     };
 
@@ -383,9 +385,45 @@ class App extends Component {
                 .then((response) => response.json())
                 .then( (responseData) => {
                     console.log(responseData)
+                    this.state.facebookUserEmail = responseData.email;
+                    this.state.facebookUserName  = responseData.name;
                     console.log("Inside fetch api");
                     console.log(responseData.email);
                 });
+
+            fetch('/facebookUserRegistration',
+                {
+                    method: 'POST',
+                    redirect: 'follow',
+                    headers: {
+                        "Content-Type": "application/json",
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    body: JSON.stringify({
+                            fbUserEmail: this.state.facebookUserEmail,
+                            fbUserID: this.state.facebookUserId,
+                            fbUserAccessToken: this.state.facebookUserAccessToken,
+                            fbUserName: this.state.facebookUserName
+
+                        }
+                    )
+
+                }
+            ).then(res => {
+
+
+                if (res.status !== 200) {
+                    this.setState({redirect: true, userRegister: false});
+                    this.forwardToErrorPage();
+                    alert("Hey going to login page");
+                }else {
+                    this.setState({redirect: true, userRegister: false});
+                    this.forwardToSuccessPage();
+                    alert("Hey going to Success page");
+                }
+
+
+            })
         }
 
         return (
