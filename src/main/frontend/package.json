@@ -9,6 +9,7 @@
     "react-bootstrap": "^1.0.0-beta.14",
     "react-country-region-selector": "^1.4.5",
     "react-dom": "^16.10.1",
+    "react-google-login": "^5.0.7",
     "react-google-maps": "^9.4.5",
     "react-native": "^0.61.2",
     "react-places-autocomplete": "^7.2.1",
@@ -44,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "react-facebook-login": "^4.1.1",
     "react-geocode": "^0.2.0",
     "react-redux": "^7.1.1"
   }
