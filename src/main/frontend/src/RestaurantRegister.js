@@ -293,7 +293,7 @@ class App extends Component {
                                     </div>
                                     <div className="col-md-1" id="buttonOrder">
                                         <div className="md-form">
-                                            <button className="btn btn-lg btn-danger">Order</button>
+                                            <button className="btn btn-lg btn-danger">Search</button>
                                         </div>
                                     </div>
                                 </div>
@@ -325,7 +325,7 @@ class App extends Component {
 
                                         <div className="form-group">
                                             <button onClick={this.registerOtp.bind(this)} type="submit"
-                                                    className="btn btn-primary btn-lg btn-block login-btn">Sign Up
+                                                    className="btn btn-primary btn-lg btn-block login-btn">Verify
                                             </button>
                                         </div>
                                     </form>
@@ -349,7 +349,6 @@ class App extends Component {
                                     <form onSubmit={this.register.bind(this)}>
                                         <h2 className="text-center">Restaurant Sign Up</h2>
 
-                                        <div className="or-seperator"><i>or</i></div>
                                         <div className="form-group">
                                             <input value={this.state.restaurantFullName}
                                                    onChange={this.handleRestaurantFullName} type="text"
@@ -375,7 +374,7 @@ class App extends Component {
                                                    required="required"/>
                                         </div>
                                         <div className="form-group">
-                                            <input type="password" value={this.state.restaurantSecondaryEmailID}
+                                            <input type="text" value={this.state.restaurantSecondaryEmailID}
                                                    onChange={this.handleRestaurantSecondaryEmailID} className="form-control"
                                                    id="userPassword"
                                                    placeholder="Secondary Email ID"
