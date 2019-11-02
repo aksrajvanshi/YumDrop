@@ -36,6 +36,31 @@ public class LoginController {
         }
 
     }
+    @RequestMapping(value = "/restaurantLogin", method = RequestMethod.POST)
+    public ResponseEntity<?> restaurantLogin(@RequestBody String restaurantDetaiks) {
+        System.out.println(restaurantDetaiks);
+        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong Password");
+
+    }
+
+
+
+    @RequestMapping(value = "/setNewRestaurantPassword", method = RequestMethod.POST)
+    public ResponseEntity<?> setNewRestaurantPassword(@RequestBody String restaurantDetaiks) {
+        System.out.println(restaurantDetaiks);
+        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong Password");
+
+    }
+
+
+
+    @RequestMapping(value = "/forgotRestaurantPassword", method = RequestMethod.POST)
+    public ResponseEntity<?> forgotRestaurantPassword(@RequestBody String restaurantDetaiks) {
+        System.out.println(restaurantDetaiks);
+        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong Password");
+
+    }
+
 
 
 }

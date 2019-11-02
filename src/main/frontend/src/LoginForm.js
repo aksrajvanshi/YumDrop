@@ -114,6 +114,9 @@ class App extends Component {
         this.props.history.push("/loginErrorPAge")
     }
 
+    forwardToRestaurantregister = () => {
+        this.props.history.push("/RestaurantLogin")
+    }
     forwardToSuccessfullyChangedPasswordPage = () => {
         this.props.history.push("/successfullyChangedPasswordPage");
     }
@@ -379,7 +382,7 @@ class App extends Component {
                         <strong>USER</strong>
                     </Button>
                     <br/>
-                    <Button id="RestaurantId" onClick={this.restaurantRegister}>
+                    <Button id="RestaurantId" onClick={this.forwardToRestaurantregister}>
                         <strong>RESTAURANT</strong>
                     </Button>
                     <br/>

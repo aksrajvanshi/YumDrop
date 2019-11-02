@@ -7,25 +7,23 @@ import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 class App extends Component {
     state = {
-        loginSelect: true,
+        loginSelect: false,
         userLoginOption: false,
-        restaurantLoginOption: false,
+        restaurantLoginOption: true,
         deliveryAgentLoginOption: false,
         closeAllOptionsOfSelectionForm: false,
-        userName: "",
-        userPassword: "",
-        userPhoneNumber: "",
-        userEmail: "",
-        userTemporaryPassword: "",
+        restaurantPrimaryEmailId: "",
+        restaurantId: "",
+        restaurantPassword: "",
         redirect: false,
         forgotPasswordSelect: false,
-        emailSelectForgotPassword: false
-
+        emailSelectForgotPassword: false,
+        restaurantTemporaryPassword: ""
     };
 
 
     login = () => { debugger;
-        fetch('/loginDataForm', {
+        fetch('/restaurantLogin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -38,12 +36,13 @@ class App extends Component {
 
             alert("Entered");
             alert(res.status);
+            alert(res)
             if (res.status !== 200) {
-                this.setState({redirect: true, userRegister: false});
+                this.setState({redirect: true, restaurantRegister: false});
                 this.forwardToLoginErrorPage();
                 alert("Hey going to Error page");
             }else {
-                this.setState({redirect: true, userRegister: false});
+                this.setState({redirect: true, restaurantRegister: false});
                 this.forwardToLoginDashboard();
                 alert("Hey going to Login Dashboard page");
             }
@@ -54,7 +53,7 @@ class App extends Component {
     }
 
     passwordChange  = () => { debugger;
-        fetch('/setNewUserPassword', {
+        fetch('/setNewRestaurantPassword', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -68,6 +67,7 @@ class App extends Component {
 
             alert("Entered");
             alert(res.status);
+            alert(res)
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
@@ -84,7 +84,7 @@ class App extends Component {
     }
 
     forgotPasswordAPI = () => { debugger;
-        fetch('/forgotUserPassword', {
+        fetch('/forgotRestaurantPassword', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -119,18 +119,8 @@ class App extends Component {
     }
 
 
-    userName = (event) => {
-        this.setState({userName: event.target.value})
-    }
 
-    loginSelect = () => {
-        this.setState({
-            userLoginOption: false,
-            loginSelect: true,
-            restaurantLoginOption: false,
-            deliveryAgentLoginOption: false
-        });
-    };
+
 
 
     forwardToRegister = () => {
@@ -138,27 +128,27 @@ class App extends Component {
     }
 
     forwardToLoginDashboard = () => {
-        this.props.history.push('/LoginDashBoard')
+        this.props.history.push('/RestaurantDashboard')
+    }
+
+    forwardToLoginForm = () => {
+        this.props.history.push('/LoginForm')
     }
 
 
-    userPassword = (event) => {
-        this.setState({userPassword: event.target.value})
+    handleRestaurantPassword = (event) => {
+        this.setState({restaurantPassword: event.target.value})
     }
 
-    handelUserLoginOption = () => {
-        this.setState({ loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOption: false, userLoginOption: true  });
-    }
+
     handleRestaurantLoginOption = () => {
         this.setState({ loginSelect: false, selectLoginOption:false, deliveryAgentLoginOption: false, restaurantLoginOption: true  });
     }
 
-    handleUserTemporaryPassword = (event) => {
-        this.setState({userTemporaryPassword : event.target.value})
+    handleRestaurantTemporaryPassword = (event) => {
+        this.setState({restaurantTemporaryPassword : event.target.value})
     }
-    handleDeliveryAgentLoginOption  = () => {
-        this.setState({ loginSelect: false, selectLoginOption:false, restaurantLoginOption: false, deliveryAgentLoginOption: true  });
-    }
+
     closeAllOptionsOfSelectionForm= () => {
         this.setState({ userLoginOption: false, loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOption: false, forgotPasswordSelect: false, emailSelectForgotPassword: false  });
     }
@@ -169,74 +159,27 @@ class App extends Component {
 
 
 
-
-    handleUserNameChange =  (event) => {
+    handleRestaurantPasswordChange =  (event) => {
         this.setState({
-            userName: event.target.value,
-        });
-    };
-    handleUserPasswordChange =  (event) => {
-        this.setState({
-            userPassword: event.target.value,
+            restaurantPassword: event.target.value,
         });
     };
 
-    handleUserEmailIDChange =  (event) => {
+    handleRestaurantEmailIDChange =  (event) => {
         this.setState({
-            userEmail: event.target.value,
+            restaurantPrimaryEmailId: event.target.value,
         });
     };
+
+    handleRestaurantID = (event) => {
+        this.setState({
+            restaurantId: event.target.value
+        })
+    }
 
 
     render() {
-        const responseFacebook = (response) => {
-            console.log(response);
-            this.state.facebookUserAccessToken = response.accessToken;
-            this.state.facebookUserId = response.userID;
-            console.log("User ID", this.state.facebookUserId);
-            console.log("Access Token ",this.state.facebookUserAccessToken);
-            let api = 'https://graph.facebook.com/v2.8/' + this.state.facebookUserId +
-                '?fields=name,email&access_token=' + this.state.facebookUserAccessToken;
-            fetch(api)
-                .then((response) => response.json())
-                .then( (responseData) => {
-                    console.log(responseData)
-                    this.state.facebookUserEmail = responseData.email;
-                    this.state.facebookUserName  = responseData.name;
-                    console.log("Inside fetch api");
-                    console.log(responseData.email);
-                });
 
-            fetch('/facebookUserLogin',
-                {
-                    method: 'POST',
-                    redirect: 'follow',
-                    headers: {
-                        "Content-Type": "application/json",
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                    body: JSON.stringify({
-                            fbUserEmail: this.state.facebookUserEmail,
-                            fbUserID: this.state.facebookUserId,
-                            fbUserAccessToken: this.state.facebookUserAccessToken,
-                            fbUserName: this.state.facebookUserName
-
-                        }
-                    )
-
-                }
-            ).then(res => {
-
-
-                if (res.status !== 200) {
-                    this.forwardToErrorPage();
-                }else {
-                    this.forwardToLoginDashboard();
-                }
-
-
-            })
-        }
         return( <div className="App">
             <header>
                 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
@@ -260,7 +203,7 @@ class App extends Component {
                         <div className="collapse navbar-collapse" id="navBarLinks">
                             <ul className="navbar-nav mr-auto">
                                 <li className="nav-item">
-                                    <a className="nav-link" onClick={this.loginSelect}><i
+                                    <a className="nav-link" onClick={this.forwardToLoginForm}><i
                                         className="fa fa-fw fa-user"/>Login</a>
                                 </li>
                                 <li className="nav-item" id="SignUpID">
@@ -309,7 +252,7 @@ class App extends Component {
             </div>
 
             <Modal
-                show={this.state.userLoginOption}
+                show={this.state.restaurantLoginOption}
                 onHide={this.closeAllOptionsOfSelectionForm}
                 animation={false}
                 centered id="modal"
@@ -319,28 +262,27 @@ class App extends Component {
                         <div className="main">
                             <div className="login-form">
                                 <form onSubmit={this.login.bind(this)}>
-                                    <h2 className="text-center">User Login</h2>
+                                    <h2 className="text-center">Restaurant Login</h2>
                                     <div className="social-btn text-center">
-                                        <FacebookLogin
-                                            appId="1250006828526117"
-                                            callback={responseFacebook}
-                                            render={renderProps => (
-                                                <button className="btn btn-primary btn-block btn-lg" onClick={renderProps.onClick}><i
-                                                    className="fa fa-facebook"></i> Sign up with <b>Facebook</b> </button>
-                                            )}
-                                        />
                                     </div>
-                                    <div className="or-seperator"><i>or</i></div>
                                     <div className="form-group">
-                                        <input value={this.state.userName}
-                                               onChange={this.handleUserNameChange} type="text"
-                                               className="form-control" placeholder="Username"
+                                        <input value={this.state.restaurantPrimaryEmailId}
+                                               onChange={this.handleRestaurantEmailIDChange} type="text"
+                                               className="form-control" placeholder="Email ID"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
                                     </div>
                                     <div className="form-group">
-                                        <input value={this.state.userPassword}
-                                               onChange={this.handleUserPasswordChange} type="password"
+                                        <input value={this.state.restaurantId}
+                                               onChange={this.handleRestaurantID} type="text"
+                                               className="form-control" placeholder="Restaurant ID"
+                                               pattern="[a-z][A-Z]"
+                                               required="required"/>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <input value={this.state.restaurantPassword}
+                                               onChange={this.handleRestaurantPassword} type="password"
                                                className="form-control" placeholder="Password"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
@@ -363,31 +305,7 @@ class App extends Component {
                 </div>
 
             </Modal>
-            <Modal
-                show={this.state.loginSelect}
-                onHide={this.closeAllOptionsOfSelectionForm}
-                animation={false}
-                centered id="modal"
-            >
-                <Modal.Header className="modelheader" id="containerModal">
-                    <Modal.Title className="modeltitle" id="modeltitle">
-                        <strong>Select Account Type</strong>
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body id="CheckSelection">
-                    <Button id="UserID" onClick={this.handelUserLoginOption}>
-                        <strong>USER</strong>
-                    </Button>
-                    <br/>
-                    <Button id="RestaurantId" onClick={this.restaurantRegister}>
-                        <strong>RESTAURANT</strong>
-                    </Button>
-                    <br/>
-                    <Button id="DeliveryId" onClick={this.deliveryAgentRegister}>
-                        <strong>DELIVERY</strong>
-                    </Button>
-                </Modal.Body>
-            </Modal>
+
 
 
             <Modal
@@ -405,7 +323,7 @@ class App extends Component {
                                     <div className="form-group">
                                         <input value={this.state.userEmail}
                                                onChange={this.handleUserEmailIDChange} type="text"
-                                               className="form-control" placeholder="username / email ID"
+                                               className="form-control" placeholder="Email ID"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
                                     </div>
@@ -439,15 +357,15 @@ class App extends Component {
                                     <h2 className="text-center">Change Password</h2>
 
                                     <div className="form-group">
-                                        <input value={this.state.userTemporaryPassword}
-                                               onChange={this.handleUserTemporaryPassword} type="text"
-                                               className="form-control" placeholder="Username"
+                                        <input value={this.state.restaurantTemporaryPassword}
+                                               onChange={this.handleRestaurantTemporaryPassword} type="password"
+                                               className="form-control" placeholder="Temporary Password"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
                                     </div>
                                     <div className="form-group">
-                                        <input value={this.state.userPassword}
-                                               onChange={this.handleUserPasswordChange} type="password"
+                                        <input value={this.state.restaurantPassword}
+                                               onChange={this.handleRestaurantPassword} type="password"
                                                className="form-control" placeholder="Password"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
@@ -455,7 +373,7 @@ class App extends Component {
 
                                     <div className="form-group">
                                         <button onClick={this.passwordChange.bind(this)} type="submit"
-                                                className="btn btn-primary btn-lg btn-block login-btn">Login
+                                                className="btn btn-primary btn-lg btn-block login-btn">Submit
                                         </button>
                                     </div>
 
