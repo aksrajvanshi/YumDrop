@@ -4,14 +4,14 @@ import {Modal} from "react-bootstrap";
 class SuccessfulRegistration extends Component{
 
     state = {
-        errorSelect: true
+        successSelect: true
     }
 
     goBackToHomePage = () => {
         this.props.history.push('/');
     }
 
-    goBackToHomePage = () => {
+    goBackToRegisterForm = () => {
         this.props.history.push('/');
     }
     render() {
@@ -56,7 +56,7 @@ class SuccessfulRegistration extends Component{
                 </header>
 
                 <Modal
-                    show={this.state.errorSelect}
+                    show={this.state.successSelect}
                     animation={false}
                     id="modal"
                 >
