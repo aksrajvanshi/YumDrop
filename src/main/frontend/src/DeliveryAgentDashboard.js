@@ -44,15 +44,19 @@ class DeliveryAgentDashboard extends Component{
                     </nav>
                 </header>
 
+                <div>
+                    <h2>Delivery Orders</h2>
+                </div>
 
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-2">
                             <div class="productbox">
                                 <img src="https://thekatynews.com/wp-content/uploads/2017/06/mcdonalds-logo.jpg" class="img-responsive"/>
-                                <div class="producttitle">Pickup delivery at McDonald</div>
-                                <p class="text-justify">Burgers, Ice Cream</p>
-
+                                <div class="producttitle">Pickup at </div>
+                                <p class="text-justify">2819 E 3rd St, Bloomington, IN 47401</p>
+                                <div>Deliver at </div>
+                                <p>700 N Woodlawn Ave, Bloomington, IN 47408</p>
                                 <br/>
 
                             </div>

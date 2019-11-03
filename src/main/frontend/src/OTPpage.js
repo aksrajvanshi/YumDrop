@@ -71,11 +71,11 @@ class App extends Component {
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToErrorPage();
-                alert("Hey going to login page");
+
             }else {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToOTPpage();
-                alert("Hey going to otp page");
+
             }
 
 
