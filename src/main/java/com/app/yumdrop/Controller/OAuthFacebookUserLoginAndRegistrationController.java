@@ -20,7 +20,6 @@ public class OAuthFacebookUserLoginAndRegistrationController {
 
     @RequestMapping(value = "/facebookUserRegistration", method = RequestMethod.POST)
     public ResponseEntity<?> OAuthFacebookUserRegistration(@RequestBody OAuthFacebookUsers fbUserRegistrationDetails) {
-
         return oAuthFacebookUserLoginAndRegistrationService.registerFbUser(fbUserRegistrationDetails);
     }
 
