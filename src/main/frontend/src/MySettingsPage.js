@@ -15,7 +15,7 @@ class MySettingsPage extends Component{
     componentDidMount () {
         fetch('/getUserDetails')
             .then(response => {
-                alert("Inside first response checking");
+
                 if (!response.ok) {
                     throw Error('Network request failed.')
                 }
@@ -23,7 +23,7 @@ class MySettingsPage extends Component{
             })
             .then(data => data.json())
             .then(data => {
-                alert("Inside second response checking");
+
                 console.log("Inside this ", data);
                 this.setState({
                     data: data

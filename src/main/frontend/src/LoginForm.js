@@ -5,12 +5,13 @@ import './LoginFormCSS.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+
 class App extends Component {
     state = {
         loginSelect: true,
         userLoginOption: false,
         restaurantLoginOption: false,
-        deliveryAgentLoginOption: false,
+
         closeAllOptionsOfSelectionForm: false,
         userName: "",
         userPassword: "",
@@ -19,7 +20,14 @@ class App extends Component {
         userTemporaryPassword: "",
         redirect: false,
         forgotPasswordSelect: false,
-        emailSelectForgotPassword: false
+        emailSelectForgotPassword: false,
+
+        deliveryAgentLoginOptionSelected: false,
+        deliveryAgentEmail:"",
+        deliveryAgentName:"",
+        deliveryAgentPhonenum:"",
+        deliveryAgentPassword:"",
+        deliveryAgentOtp: ""
 
     };
 
@@ -36,21 +44,44 @@ class App extends Component {
             }),
         }).then(res => {
 
-            alert("Entered");
-            alert(res.status);
+
+
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
-                alert("Hey going to Error page");
+
             }else {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginDashboard();
-                alert("Hey going to Login Dashboard page");
+
             }
 
 
         })
 
+    }
+
+    deliveryAgentLogin = () => { debugger;
+        fetch('/deliveryAgentLoginDataForm', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                deliveryAgentEmail: this.state.deliveryAgentEmail,
+                deliveryAgentPassword: this.state.deliveryAgentPassword
+            }),
+        }).then(res => {
+
+
+            if (res.status !== 200) {
+                this.setState({redirect: true, deliveryAgentLoginOptionSelected: false});
+                this.forwardToLoginErrorPage();
+            }else {
+                this.setState({redirect: true, deliveryAgentLoginOptionSelected: false});
+                this.forwardToDeliveryAgentDashboard();
+            }
+        })
     }
 
     passwordChange  = () => { debugger;
@@ -66,16 +97,15 @@ class App extends Component {
             }),
         }).then(res => {
 
-            alert("Entered");
-            alert(res.status);
+
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
-                alert("Hey going to Error page");
+
             }else {
                 this.setState({redirect: true, userRegister: false, emailSelectForgotPassword: false, forgotPasswordSelect: true});
                 this.forwardToSuccessfullyChangedPasswordPage();
-                alert("Hey going to Login Dashboard page");
+
             }
 
 
@@ -94,15 +124,14 @@ class App extends Component {
             }),
         }).then(res => {
 
-            alert("Entered");
-            alert(res.status);
+
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
-                alert("Hey going to Error page");
+
             }else {
                 this.setState({redirect: true, userRegister: false, emailSelectForgotPassword: false, forgotPasswordSelect: true});
-                alert("Hey going to Login Dashboard page");
+
             }
 
 
@@ -128,7 +157,7 @@ class App extends Component {
             userLoginOption: false,
             loginSelect: true,
             restaurantLoginOption: false,
-            deliveryAgentLoginOption: false
+            deliveryAgentLoginOptionSelected: false
         });
     };
 
@@ -141,30 +170,36 @@ class App extends Component {
         this.props.history.push('/LoginDashBoard')
     }
 
+    forwardToDeliveryAgentDashboard = () => {
+        this.props.history.push('/DeliveryAgentDashboard')
+    }
 
     userPassword = (event) => {
         this.setState({userPassword: event.target.value})
     }
 
+
+
     handelUserLoginOption = () => {
-        this.setState({ loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOption: false, userLoginOption: true  });
+        this.setState({ loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOptionSelected: false, userLoginOption: true  });
     }
     handleRestaurantLoginOption = () => {
-        this.setState({ loginSelect: false, selectLoginOption:false, deliveryAgentLoginOption: false, restaurantLoginOption: true  });
+        this.setState({ loginSelect: false, selectLoginOption:false, deliveryAgentLoginOptionSelected: false, restaurantLoginOption: true  });
     }
-
+    handleDeliveryAgentLoginOptionSelected  = () => {
+        this.setState({ loginSelect: false, selectLoginOption:false, restaurantLoginOption: false, deliveryAgentLoginOptionSelected: true  });
+    }
     handleUserTemporaryPassword = (event) => {
         this.setState({userTemporaryPassword : event.target.value})
     }
-    handleDeliveryAgentLoginOption  = () => {
-        this.setState({ loginSelect: false, selectLoginOption:false, restaurantLoginOption: false, deliveryAgentLoginOption: true  });
-    }
+
+
     closeAllOptionsOfSelectionForm= () => {
-        this.setState({ userLoginOption: false, loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOption: false, forgotPasswordSelect: false, emailSelectForgotPassword: false  });
+        this.setState({ userLoginOption: false, loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOptionSelected: false, forgotPasswordSelect: false, emailSelectForgotPassword: false  });
     }
 
     handleForgotPasswordChange = () => {
-        this.setState({userLoginOption: false, loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOption: false, emailSelectForgotPassword: true  });
+        this.setState({userLoginOption: false, loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOptionSelected: false, emailSelectForgotPassword: true  });
     }
 
 
@@ -175,6 +210,9 @@ class App extends Component {
             userName: event.target.value,
         });
     };
+
+
+
     handleUserPasswordChange =  (event) => {
         this.setState({
             userPassword: event.target.value,
@@ -187,6 +225,19 @@ class App extends Component {
         });
     };
 
+
+
+    handleDeliveryAgentPasswordChange = (event) => {
+        this.setState({
+            deliveryAgentPassword: event.target.value,
+        });
+    };
+
+    handleDeliveryAgentEmailChange = (event) => {
+        this.setState({
+            deliveryAgentEmail: event.target.value,
+        });
+    };
 
     render() {
         const responseFacebook = (response) => {
@@ -380,8 +431,8 @@ class App extends Component {
                         <strong>RESTAURANT</strong>
                     </Button>
                     <br/>
-                    <Button id="DeliveryId" onClick={this.deliveryAgentRegister}>
-                        <strong>DELIVERY</strong>
+                    <Button id="DeliveryId" onClick={this.handleDeliveryAgentLoginOptionSelected}>
+                        <strong>DELIVERY AGENT</strong>
                     </Button>
                 </Modal.Body>
             </Modal>
@@ -464,8 +515,57 @@ class App extends Component {
                 </div>
 
             </Modal>
+            <Modal
+                show={this.state.deliveryAgentLoginOptionSelected}
+                onHide={this.closeAllOptionsOfSelectionForm}
+                animation={false}
+                centered id="modal"
+            >
+                <div className="container">
+                    <div className="row">
+                        <div className="main">
+                            <div className="login-form">
+                                <form onSubmit={this.deliveryAgentLogin.bind(this)}>
+                                    <h2 className="text-center">Delivery Agent Login</h2>
+                                    <div className="social-btn text-center">
+                                        <a href="#" className="btn btn-primary btn-block btn-lg"><i
+                                            className="fa fa-facebook"></i> Login with <b>Facebook</b></a>
+                                        <a href="#" className="btn btn-danger btn-block btn-lg"><i
+                                            className="fa fa-google"></i> Login with <b>Google</b></a>
+                                    </div>
+                                    <div className="or-seperator"><i>or</i></div>
+                                    <div className="form-group">
+                                        <input value={this.state.deliveryAgentEmail}
+                                               onChange={this.handleDeliveryAgentEmailChange} type="text"
+                                               className="form-control" placeholder="Email"
+                                               pattern="[a-z][A-Z]"
+                                               required="required"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <input value={this.state.deliveryAgentPassword}
+                                               onChange={this.handleDeliveryAgentPasswordChange} type="password"
+                                               className="form-control" placeholder="Password"
+                                               pattern="[a-z][A-Z]"
+                                               required="required"/>
+                                    </div>
+                                    <div className="col-md-12 offset-7 form-group">
+                                        <a href="#" onClick={this.handleForgotPasswordChange}>Forgot Password?</a>
+                                    </div>
 
+                                    <div className="form-group">
+                                        <button onClick={this.deliveryAgentLogin.bind(this)} type="submit"
+                                                className="btn btn-primary btn-lg btn-block login-btn">Login
+                                        </button>
+                                    </div>
 
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </Modal>
 
 
             <div className="how-section1">

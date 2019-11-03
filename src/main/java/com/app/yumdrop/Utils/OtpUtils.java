@@ -14,4 +14,9 @@ public class OtpUtils {
         String hashedFormPassword = convertOtpToHash(formOtp);
         return hashedFormPassword.equals(hashedUserOtpFromDb);
     }
+
+    public static boolean checkIfDAOtpMatches(String formDAOtp, String hashedDAOtpFromDb){
+        String hashedFormPassword = convertOtpToHash(formDAOtp);
+        return hashedFormPassword.equals(hashedDAOtpFromDb);
+    }
 }
