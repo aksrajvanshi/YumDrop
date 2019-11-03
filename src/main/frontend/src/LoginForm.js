@@ -205,7 +205,7 @@ class App extends Component {
                     this.state.facebookUserName  = responseData.name;
                     console.log("Inside fetch api");
                     console.log(responseData.email);
-                });
+                }).then( (res) => {
 
             fetch('/facebookUserLogin',
                 {
@@ -221,9 +221,7 @@ class App extends Component {
                             fbUserAccessToken: this.state.facebookUserAccessToken,
                             fbUserName: this.state.facebookUserName
 
-                        }
-                    )
-
+                        })
                 }
             ).then(res => {
 
@@ -233,9 +231,8 @@ class App extends Component {
                 }else {
                     this.forwardToLoginDashboard();
                 }
-
-
             })
+            });
         }
         return( <div className="App">
             <header>
@@ -326,7 +323,7 @@ class App extends Component {
                                             callback={responseFacebook}
                                             render={renderProps => (
                                                 <button className="btn btn-primary btn-block btn-lg" onClick={renderProps.onClick}><i
-                                                    className="fa fa-facebook"></i> Sign up with <b>Facebook</b> </button>
+                                                    className="fa fa-facebook"></i> Login with <b>Facebook</b> </button>
                                             )}
                                         />
                                     </div>
