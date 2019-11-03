@@ -46,7 +46,7 @@ class App extends Component {
         daPassword:"",
         daConfirmPassword:"",
         daOtp: "",
-        daOtpVal: false
+        daOtpVal: false,
         isLoggedIn: false,
         userID: "",
         name: "",
@@ -455,6 +455,7 @@ class App extends Component {
                 registerSelect: false,
                 daRegister: false
             });
+        };
 
     restaurantPhoneNumberAndPasswordConfirmation = () => {
         var password = document.getElementById("restaurantPassword");
@@ -474,7 +475,8 @@ class App extends Component {
           confirmPassword.setCustomValidity("");
         }
     }
-        daRegister = () => {
+
+    daRegister = () => {
             this.setState({
                 userRegister: false,
                 registerSelect: false,
@@ -544,7 +546,7 @@ class App extends Component {
             ).then(res => {
 
                 if (res.status !== 200) {
-                    thToErrorPage();
+                    this.forwardToErrorPage();
                 }else {
                     this.forwardToSuccessPage();
                 }
