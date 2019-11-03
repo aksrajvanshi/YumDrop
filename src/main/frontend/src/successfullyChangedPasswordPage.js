@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import {Modal} from "react-bootstrap";
 
-class errorPageForRegistration extends Component{
-
+class successfullyChangedPasswordPage extends Component{
 
     state = {
         errorSelect: true
@@ -10,10 +9,6 @@ class errorPageForRegistration extends Component{
 
     goBackToRegisterForm = () => {
         this.props.history.push('/RegisterForm');
-    }
-
-    goBackToHomePage = () => {
-        this.props.history.push('/');
     }
     render() {
         return (
@@ -48,7 +43,7 @@ class errorPageForRegistration extends Component{
                                             className="fa fa-fw fa-user"/>Login</a>
                                     </li>
                                     <li className="nav-item" id="SignUpID">
-                                        <a className="nav-link" onClick={this.goBackToRegisterForm}>Sign Up</a>
+                                        <a className="nav-link" onClick={this.registerSelect}>Sign Up</a>
                                     </li>
                                 </ul>
                             </div>
@@ -66,10 +61,10 @@ class errorPageForRegistration extends Component{
                             <div className="main">
                                 <div className="login-form">
                                     <form>
-                                        <h2 className="text-center">We are Sorry</h2>
-                                        <p className="text-center">There was an error in registration of user</p>
+                                        <h2 className="text-center">Congratulations</h2>
+                                        <p>You have successfully changed your password</p>
                                         <div className="form-group">
-                                            <button onClick={this.goBackToHomePage} type="submit"
+                                            <button onClick={this.goBackToRegisterForm} type="submit"
                                                     className="btn btn-primary btn-lg btn-block login-btn">Go to Home
                                             </button>
                                         </div>
@@ -87,4 +82,4 @@ class errorPageForRegistration extends Component{
 
 }
 
-export default errorPageForRegistration;
+export default successfullyChangedPasswordPage;

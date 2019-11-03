@@ -1,10 +1,10 @@
 package com.app.yumdrop.ServiceImplementation;
 
-import com.app.yumdrop.Entity.Users;
-import com.app.yumdrop.Entity.UsersTemporaryPassword;
-import com.app.yumdrop.Repository.UsersRepository;
-import com.app.yumdrop.Repository.UsersTemporaryPasswordRepository;
-import com.app.yumdrop.Service.ForgotPasswordService;
+import com.app.yumdrop.Entity.Delivery_Agent;
+import com.app.yumdrop.Entity.Delivery_Agent_Temporary_Password;
+import com.app.yumdrop.Repository.DeliveryAgentRepository;
+import com.app.yumdrop.Repository.DeliveryAgentTemporaryPasswordRepository;
+import com.app.yumdrop.Service.DeliveryAgentForgotPasswordService;
 import com.app.yumdrop.Utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,32 +16,32 @@ import org.springframework.stereotype.Service;
 import java.util.Random;
 
 @Service
-public class ForgotPasswordServiceImpl implements ForgotPasswordService {
+public class DeliveryAgentForgotPasswordServiceImpl implements DeliveryAgentForgotPasswordService {
 
     @Autowired
     public JavaMailSender javaMailSender;
     @Autowired
-    private UsersRepository usersRepository;
+    private DeliveryAgentRepository daRepository;
     @Autowired
-    private UsersTemporaryPasswordRepository usersTemporaryPasswordRepository;
+    private DeliveryAgentTemporaryPasswordRepository daTemporaryPasswordRepository;
 
     @Override
-    public ResponseEntity<?> sendMailWithTemporaryPassword(String userEmail) {
+    public ResponseEntity<?> sendMailWithTemporaryPassword(String daEmail) {
 
-        Users userExistsInDb = usersRepository.findByuserEmail(userEmail);
-        if (userExistsInDb != null) {
+        Delivery_Agent daExistsInDb = daRepository.findBydaEmail(daEmail);
+        if (daExistsInDb != null) {
             String temporaryPassword = generateRandomPassword();
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-            simpleMailMessage.setTo(userEmail);
+            simpleMailMessage.setTo(daEmail);
             simpleMailMessage.setSubject("Temporary Password from Yumdrop");
-            simpleMailMessage.setText("Hello user! Your temporary password is: " + temporaryPassword +
+            simpleMailMessage.setText("Hello delivery agent! Your temporary password is: " + temporaryPassword +
                     ". Please use this temporary password to set a new password and login into your account.");
 
             javaMailSender.send(simpleMailMessage);
 
-            UsersTemporaryPassword usersTemporaryPassword = new UsersTemporaryPassword(userEmail, PasswordUtils.convertPasswordToHash(temporaryPassword));
-            UsersTemporaryPassword newPasswordUser = usersTemporaryPasswordRepository.save(usersTemporaryPassword);
-            if (newPasswordUser != null)
+            Delivery_Agent_Temporary_Password daTemporaryPassword = new Delivery_Agent_Temporary_Password(daEmail, PasswordUtils.convertPasswordToHash(temporaryPassword));
+            Delivery_Agent_Temporary_Password newPasswordDA = daTemporaryPasswordRepository.save(daTemporaryPassword);
+            if (newPasswordDA != null)
                 return ResponseEntity.status(HttpStatus.OK).build();
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -51,13 +51,14 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
     }
 
     @Override
-    public ResponseEntity<?> verifyTemporaryPasswordAndSetNewPassword(String userEmail, String temporaryPassword, String newPassword) {
-        UsersTemporaryPassword user = usersTemporaryPasswordRepository.findByuserEmail(userEmail);
-        boolean isTempPasswordMatching = PasswordUtils.checkIfPasswordMatches(temporaryPassword, user.getTemporaryPassword());
+    public ResponseEntity<?> verifyTemporaryPasswordAndSetNewPassword(String daEmail, String temporaryPassword, String newPassword) {
+        Delivery_Agent_Temporary_Password da = daTemporaryPasswordRepository.findBydaEmail(daEmail);
+        boolean isTempPasswordMatching = PasswordUtils.checkIfPasswordMatches(temporaryPassword, da.getTemporaryPassword());
         if (isTempPasswordMatching) {
-            Users userInDb = usersRepository.findByuserEmail(userEmail);
-            userInDb.setUserPassword(newPassword);
-            usersRepository.save(userInDb);
+            Delivery_Agent daInDb = daRepository.findBydaEmail(daEmail);
+            daInDb.setDAPassword(PasswordUtils.convertPasswordToHash(newPassword));
+            //usersRepository.save(userInDb);
+            daRepository.save(daInDb);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
