@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import './index.css'
+import './index.css';
 import {connect} from 'react-redux';
 import SearchItem from './SearchItem';
+import ReactSearchBox from 'react-search-box';
 class App extends Component {
     state = {
-
+        data: [{value:"apple"}, {value:"orange"}, {value:"banana"}, {value:"grape"}],
+        searchQuery: "",
+        temp: null
     };
 
     forwardToLoginForm = () => {
@@ -15,6 +18,31 @@ class App extends Component {
     forwardToRegisterForm = () => {
         this.props.history.push('/RegisterForm')
     }
+
+    getQueryResults = () => {
+        let obj = {}
+        console.log("Enter")
+        fetch("/getQueryResults", {
+            method: 'GET'
+            }
+        ).then(res => res.json()
+        ).then(data => {
+                this.props.setSearchResults(data);
+            }
+        )
+        console.log("Out")
+    }
+
+    handleSearchQueryChange = (event) => {
+        this.setState({searchQuery: event})
+    }
+
+    setSearchResults = () => {
+        console.log("inininin");
+        //const please = evt;
+        //const newArray = please.map(restaurant => {restaurant.restaurantImage, restaurant.restaurantName, restaurant.restaurantTags});
+        //this.props.setSearchResults(this.state.temp);
+}
 
     render() {
         const { country, region } = this.state;
@@ -71,15 +99,12 @@ class App extends Component {
                                     </div>
                                     <div className="col-md-4">
                                         <div className="md-form">
-                                            <input type="text"
-                                                   placeholder="Search for food, cuisines, restaurants here.."
-                                                   id="form5" className="form-control validate"/>
-
+                                            <ReactSearchBox placeholder="Search for food, cuisines, yuppppppppppppp" data={this.state.data} value="Test" onChange={value => this.handleSearchQueryChange(value)} name="SearchBar"/>
                                         </div>
                                     </div>
                                     <div className="col-md-1" id="buttonOrder">
                                         <div className="md-form">
-                                            <button className="btn btn-lg btn-danger">Search</button>
+                                            <button className="btn btn-lg btn-danger" onClick={this.getQueryResults}>Search</button>
                                         </div>
                                     </div>
                                 </div>
@@ -150,9 +175,17 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-                        return {
-                            searchResults: state.searchResults
-                        }
-                    }
+    return {
+        searchResults: state.searchResults
+    }
+}
 
-export default connect(mapStateToProps) (App);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setSearchResults(evt){
+            dispatch({type: "setSearchResults", newSearchResults: evt})
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (App);
