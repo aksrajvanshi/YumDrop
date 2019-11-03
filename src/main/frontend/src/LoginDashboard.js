@@ -4,7 +4,11 @@ import './LoginDashBoardCSS.css';
 class LoginDashBoard extends Component{
 
     state = {
-        data: []
+        data: [
+            {
+
+            }
+        ]
     }
 
     componentDidMount () {

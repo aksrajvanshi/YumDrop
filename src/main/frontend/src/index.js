@@ -24,6 +24,7 @@ import RestaurantDashboard from "./RestaurantDashboard";
 import RestaurantAddMenuForm from "./RestaurantAddMenuForm";
 import RestaurantLogin from "./RestaurantLogin";
 import RestaurantSettingsPage from "./RestaurantSettingsPage";
+import UserSettingsPageAddresses from "./UserSettingsPageAddresses";
 
 
 const initialState = {
@@ -47,7 +48,7 @@ const routing = (
     <Provider store={store}>
         <Router>
             <div>
-                <Route exact path="/" component={App} />
+                <Route exact path="/App" component={App} />
                 <Route exact path="/Home" component={Home}/>
                 <Route exact path="/LoginPage" component={LoginPage} />
                 <Route exact path="/LoginForm" component={LoginForm} />
@@ -67,6 +68,7 @@ const routing = (
                 <Route exact path="/RestaurantAddMenuForm" component={RestaurantAddMenuForm} />
                 <Route exact path="/RestaurantLogin" component={RestaurantLogin} />
                 <Route exact path="/RestaurantSettingsPage" component={RestaurantSettingsPage} />
+                <Route exact path="/" component={UserSettingsPageAddresses} />
             </div>
         </Router>
     </Provider>
