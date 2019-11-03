@@ -4,14 +4,20 @@ import com.app.yumdrop.Entity.Users;
 import com.app.yumdrop.FormEntity.UserLoginDetails;
 import com.app.yumdrop.Repository.UsersRepository;
 import com.app.yumdrop.Utils.PasswordUtils;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Collections;
+import java.util.Map;
 
 @ComponentScan
 @Controller
@@ -60,6 +66,18 @@ public class LoginController {
         System.out.println(restaurantDetaiks);
         return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong Password");
 
+    }
+
+    @RequestMapping(value = "/userLocation", method = RequestMethod.POST)
+    public ResponseEntity<?> userLocation(@RequestBody String restaurantDetaiks) {
+        System.out.println(restaurantDetaiks);
+        return  ResponseEntity.status(HttpStatus.OK).build();
+
+    }
+
+    @RequestMapping(value = "/getUserDetails", method = RequestMethod.GET)
+    public  @ResponseBody String getString() {
+        return "{\"userName\":1, \"userEmailId\":\"foo\"}";
     }
 
 

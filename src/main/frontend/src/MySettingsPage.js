@@ -3,7 +3,10 @@ import './MySettingsPage.css';
 
 class MySettingsPage extends Component{
     state = {
-        data: []
+        data: [],
+        userName: "",
+        userEmailId:  "",
+        userPhoneNumber: ""
     }
      returnToLoginDahboard = () => {
     this.props.history.push('/errorPageForRegistration');
@@ -14,31 +17,17 @@ class MySettingsPage extends Component{
 
     componentDidMount () {
         fetch('/getUserDetails')
-            .then(response => {
-                alert("Inside first response checking");
-                if (!response.ok) {
-                    throw Error('Network request failed.')
-                }
-                return response;
-            })
-            .then(data => data.json())
-            .then(data => {
-                alert("Inside second response checking");
-                console.log("Inside this ", data);
-                this.setState({
-                    data: data
-                });
-                console.log('parsed json', data);
+            .then(res => res.json()
+            ).then(data => {
+            this.setState({userName: data.userName, userEmailId: data.userEmailId, userPhoneNumber: data.userPhoneNumber})
+        })}
 
-            }, (ex) => {
-                this.setState({
-                    requestError : true
-                });
-                console.log('parsing failed', ex)
-            })
-    }
 
     render() {
+        let trying = this.state.data;
+        console.log(trying);
+        console.log(this.state.trying);
+        console.log("hey trying to run this");
         return (
             <div>
                 <header>
@@ -135,27 +124,27 @@ class MySettingsPage extends Component{
                                     <div className="form-group">
                                         <label htmlFor="account-fn">First Name</label>
                                         <input className="form-control" type="text" id="account-fn"
-                                               required=""/>
+                                               placeholder={this.state.userName}/>
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="account-ln">Last Name</label>
-                                        <input className="form-control" type="text" id="account-ln"
+                                        <input className="form-control" type="text" id="account-ln" placeholder={this.state.userName}
                                                required=""/>
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="account-email">E-mail Address</label>
-                                        <input className="form-control" type="email" id="account-email"
+                                        <input className="form-control" type="email" id="account-email" placeholder={this.state.userEmailId}
                                                 disabled=""/>
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="account-phone">Phone Number</label>
-                                        <input className="form-control" type="text" id="account-phone"
+                                        <input className="form-control" type="text" id="account-phone" placeholder={this.state.userPhoneNumber}
                                                 required=""/>
                                     </div>
                                 </div>

@@ -29,16 +29,12 @@ import RestaurantSettingsPage from "./RestaurantSettingsPage";
 const initialState = {
     latitude: null,
     longitude: null,
-    restaurantPrimaryEmailId: null
 }
 
 const reducer = (state=initialState, action) => {
 
     if(action.type==="setLocation"){
         return {latitude: action.newLatitude, longitude: action.newLongitude}
-    }
-    else if (action.type === "setRestaurantEmailId"){
-        return {restaurantPrimaryEmailId: action.restaurantPrimaryEmailId}
     }
 
     return state;
@@ -52,25 +48,25 @@ const routing = (
         <Router>
             <div>
                 <Route exact path="/App" component={App} />
-                <Route path="/Home" component={Home}/>
-                <Route path="/LoginPage" component={LoginPage} />
-                <Route path="/LoginForm" component={LoginForm} />
-                <Route path="/RegisterForm" component={RegisterForm}/>
-                <Route path="/LoginDashBoard" component={LoginDashBoard}/>
-                <Route path="/OTPpage" component={OTPpage}/>
-                <Route path="/errorPageForRegistration" component={errorPageForRegistration} />
-                <Route path="/MySettingsPage" component={MySettingsPage}/>
-                <Route path="/OTPResetPassword" component={OTPResetPassword}/>
-                <Route path="/ResetPassword" component={ResetPassword}/>
-                <Route path="/loginErrorPAge" component={loginErrorPAge} />
-                <Route path="/SuccessfulRegistration" component={SuccessfulRegistration} />
-                <Route path="/MyCurrentLocation" component={MyCurrentLocation}/>
-                <Route path="/RestaurantDashboard" component={RestaurantDashboard}/>
-                <Route path="/Trying" component={Trying}/>
-                <Route path="/AddItemToMenu" component={AddItemToMenu}/>
-                <Route path="/RestaurantAddMenuForm" component={RestaurantAddMenuForm} />
-                <Route path="/" component={RestaurantLogin} />
-                <Route path="/RestaurantSettingsPage" component={RestaurantSettingsPage} />
+                <Route exact path="/Home" component={Home}/>
+                <Route exact path="/LoginPage" component={LoginPage} />
+                <Route exact path="/LoginForm" component={LoginForm} />
+                <Route exact path="/RegisterForm" component={RegisterForm}/>
+                <Route exact path="/" component={LoginDashBoard}/>
+                <Route exact path="/OTPpage" component={OTPpage}/>
+                <Route exact path="/errorPageForRegistration" component={errorPageForRegistration} />
+                <Route exact path="/MySettingsPage" component={MySettingsPage}/>
+                <Route exact path="/OTPResetPassword" component={OTPResetPassword}/>
+                <Route exact path="/ResetPassword" component={ResetPassword}/>
+                <Route exact path="/loginErrorPAge" component={loginErrorPAge} />
+                <Route exact path="/SuccessfulRegistration" component={SuccessfulRegistration} />
+                <Route exact path="/MyCurrentLocation" component={MyCurrentLocation}/>
+                <Route exact path="/RestaurantDashboard" component={RestaurantDashboard}/>
+                <Route exact path="/Trying" component={Trying}/>
+                <Route exact path="/AddItemToMenu" component={AddItemToMenu}/>
+                <Route exact path="/RestaurantAddMenuForm" component={RestaurantAddMenuForm} />
+                <Route exact path="/RestaurantLogin" component={RestaurantLogin} />
+                <Route exact path="/RestaurantSettingsPage" component={RestaurantSettingsPage} />
             </div>
         </Router>
     </Provider>
