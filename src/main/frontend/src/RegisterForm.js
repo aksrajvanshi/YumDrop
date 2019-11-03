@@ -90,6 +90,7 @@ class App extends Component {
         this.props.history.push('/errorPageForRegistration');
     }
 
+
     registerRestaurant() {
         debugger;
         let obj = {}
@@ -270,10 +271,6 @@ class App extends Component {
 
     forwardToSuccessPage = () => {
         this.props.history.push('/SuccessfulRegistration');
-    }
-
-    forwardToRestaurantRegistrationForm = () => {
-        this.props.history.push('/RestaurantRegister')
     }
 
     handleUserNameChange = (event) => {
@@ -692,31 +689,6 @@ class App extends Component {
                </Modal>
 
                     <Modal
-                        show={this.state.registerSelect}
-                        onHide={this.closeAllOptionsOfSelectionForm}
-                        animation={false}
-                        centered id="modal"
-                    >
-                        <Modal.Header className="modelheader" id="containerModal">
-                            <Modal.Title className="modeltitle" id="modeltitle">
-                                <strong>Select Account Type</strong>
-                            </Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body id="CheckSelection">
-                            <Button id="UserID" onClick={this.userRegister}>
-                                <strong>USER</strong>
-                            </Button>{" "}
-                            <br/>
-                            <Button id="RestaurantId" onClick={this.forwardToRestaurantRegistrationForm}>
-                                <strong>RESTAURANT</strong>
-                            </Button>{" "}
-                            <br/>
-                            <Button id="DeliveryId" onClick={this.deliveryAgentRegister}>
-                                <strong>DELIVERY</strong>
-                            </Button>
-                        </Modal.Body>
-                    </Modal>
-                    <Modal
                         show={this.state.daOtpVal}
                         onHide={this.closeAllOptionsOfSelectionForm}
                         animation={false}
@@ -938,6 +910,7 @@ class App extends Component {
                                 </div>
                             </div>
                         </div>
+
                     </Modal>
 
 

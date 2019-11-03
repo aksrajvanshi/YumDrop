@@ -10,6 +10,10 @@ class SuccessfulRegistration extends Component{
     goBackToHomePage = () => {
         this.props.history.push('/');
     }
+
+    goBackToHomePage = () => {
+        this.props.history.push('/');
+    }
     render() {
         return (
             <div>
