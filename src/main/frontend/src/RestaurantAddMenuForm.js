@@ -1,6 +1,76 @@
 import React, { Component } from "react";
 import "./RestaurantAddMenuForm.css";
 class RestaurantAddMenuForm extends Component{
+    state  = {
+        restaurantDishDescription: "",
+        restaurantDishName: "",
+        restaurantDishPrice: "",
+        restaurantDishCuisine: "",
+        restaurantDishAvailability: ""
+
+
+    }
+
+    handleRestaurantDishAvailability= (event) => {
+        this.setState({
+            restaurantDishAvailability: event.target.value,
+        })};
+
+    handleRestaurantDishCuisine= (event) => {
+        this.setState({
+            restaurantDishCuisine: event.target.value,
+        });
+    };
+
+    handleRestaurantDishDescription = (event) => {
+        this.setState({
+            restaurantDishDescription: event.target.value,
+        });
+    };
+
+    handleRestaurantDishName = (event) => {
+        this.setState({
+            restaurantDishName: event.target.value,
+        });
+    };
+
+    handleRestaurantDishPrice  = (event) => {
+        this.setState({
+            restaurantDishPrice: event.target.value,
+        });
+    };
+
+
+    restaurantAddDish() {debugger;
+        let obj = {}
+        fetch('/restaurantAddDish',
+    {
+        method: 'POST',
+        redirect: 'follow',
+        headers: {
+            "Content-Type": "application/json",
+            'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({
+                restaurantDishDescription: this.state.restaurantDishDescription,
+                restaurantDishName: this.state.restaurantDishName,
+                restaurantDishPrice: this.state.restaurantDishPrice,
+    }
+    )
+
+    }
+    ).then(res => {
+
+
+    if (res.status !== 200) {
+        this.forwardToErrorInAddingItem();
+
+    }else {
+        this.forwwardToSuccessInAddingItem();
+    }
+
+
+})}
 
     render(){
         return (
@@ -50,34 +120,34 @@ class RestaurantAddMenuForm extends Component{
                                     <div className="form-row">
                                         <div className="form-group col-md-6">
                                             <input id="Full Name" name="Full Name" placeholder="Dish Name"
-                                                   className="form-control" type="text"/>
+                                               value={this.state.restaurantDishName} onChange={this.handleRestaurantDishName}    className="form-control" type="text"/>
                                         </div>
                                         <div className="form-group col-md-6">
                                             <input type="text" className="form-control" id="inputEmail4"
-                                                   placeholder="Dish Price"/>
+                                                   value={this.state.restaurantDishPrice} onChange={this.handleRestaurantDishPrice}       placeholder="Dish Price"/>
                                         </div>
                                     </div>
                                     <div className="form-row">
                                         <div className="form-group col-md-6">
-                                            <input placeholder="Dish Cuisine"
+                                            <input placeholder="Dish Cuisine" value={this.state.restaurantDishCuisine} onChange={this.handleRestaurantDishCuisine}
                                                    className="form-control" required="required" type="text"/>
                                         </div>
                                         <div className="form-group col-md-6">
 
-                                            <select id="inputState" className="form-control">
+                                            <select id="inputState" className="form-control" value={this.state.restaurantDishAvailability} onChange={this.handleRestaurantDishAvailability}>
                                                 <option selected>Choose ...</option>
                                                 <option> Available</option>
                                                 <option> Not Available</option>
                                             </select>
                                         </div>
                                         <div className="form-group col-md-12">
-                                            <textarea id="comment" name="comment" cols="40" rows="5" placeholder="Description of dish"
+                                            <textarea value={this.state.restaurantDishDescription} value={this.handleRestaurantDishDescription} id="comment" name="comment" cols="40" rows="5" placeholder="Description of dish"
                                                       className="form-control"></textarea>
                                         </div>
                                     </div>
 
                                     <div className="form-row">
-                                        <button type="button" className="btn btn-danger">Save</button>
+                                        <button type="button" className="btn btn-danger" onClick={this.restaurantAddDish}>Save</button>
                                     </div>
                                 </form>
                             </div>

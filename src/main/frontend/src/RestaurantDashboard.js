@@ -10,26 +10,14 @@ class RestaurantDashboard extends Component{
     state = {
         Name: "",
         data: [
-            {"itemName": "item1", "itemDescription": "item1", "itemCuisine":"itemCuisine","itemCost": "4$", "itemAvailability": "Available"},
-            {"itemName": "item1", "itemDescription": "item1", "itemCuisine":"itemCuisine","itemCost": "4$", "itemAvailability": "Available"},
-            {"itemName": "item1", "itemDescription": "item1", "itemCuisine":"itemCuisine", "itemCost": "4$", "itemAvailability": "Available"},
-            {"itemName": "item1", "itemDescription": "item1", "itemCuisine":"itemCuisine", "itemCost": "4$", "itemAvailability": "Available"},
-            {"itemName": "item1", "itemDescription": "item1", "itemCuisine":"itemCuisine", "itemCost": "4$", "itemAvailability": "Available"},
-            {"itemName": "item1", "itemDescription": "item1", "itemCuisine":"itemCuisine", "itemCost": "4$", "itemAvailability": "Available"},
         ]
 }
-    componentWillMount() {
-        alert("in");
-        this.state.Name = this.props.restaurantPrimaryEmailId;
-        this.setState( {
-            Name: this.props.restaurantPrimaryEmailId
-            })
-            console.log(this.state.Name);
-        console.log(this.props.restaurantPrimaryEmailId);
-        console.log("Hey")
-
-
-    }
+    componentDidMount () {
+        fetch('/getRestaurantMenuDetails')
+            .then(res => res.json()
+            ).then(res => {
+            this.setState({data: res})
+        })}
 
     forwardToAddingAnItem = () => {
         this.props.history.push("/RestaurantAddMenuForm");
