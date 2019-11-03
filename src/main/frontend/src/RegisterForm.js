@@ -492,9 +492,9 @@ class App extends Component {
 
                                         </div>
                                     </div>
-                                    <div className="col-md-1" id="buttonOrder">
+                                    <div className="col-md-1" >
                                         <div className="md-form">
-                                            <button className="btn btn-lg btn-danger">Order</button>
+                                            <button className="btn btn-lg btn-danger">Search</button>
                                         </div>
                                     </div>
                                 </div>
@@ -509,24 +509,43 @@ class App extends Component {
                     animation={false}
                     centered id="modal"
                 >
-                    <Modal.Header className="modelheader" id="containerModal">
-                        <Modal.Title className="modeltitle" id="modeltitle">
-                            <strong>Select Account Type</strong>
+                    <Modal.Header className="modelheader" id="containerModal" center>
+                        <Modal.Title className="modeltitle" id="modeltitle" center>
+                            <strong>Select Account</strong>
                         </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body id="CheckSelection">
-                        <Button id="UserID" onClick={this.userRegister}>
-                            <strong>USER</strong>
-                        </Button>{" "}
-                        <br/>
-                        <Button id="RestaurantId" onClick={this.forwardToRestaurantRegistrationForm}>
-                            <strong>RESTAURANT</strong>
-                        </Button>{" "}
-                        <br/>
-                        <Button id="DeliveryId" onClick={this.deliveryAgentRegister}>
-                            <strong>DELIVERY</strong>
-                        </Button>
-                    </Modal.Body>
+
+
+                    <div className="container" id="containerSelectAccount">
+                        <div className="row">
+                            <div className="main">
+                                <div className="login-form">
+                                    <form>
+                                        <div className="form-group">
+                                            <button  type="submit"
+                                                     onClick={this.userRegister}   className="btn btn-primary btn-lg btn-block login-btn">User Registration
+                                            </button>
+                                        </div>
+
+                                        <div className="form-group">
+                                            <button  type="submit" onClick={this.forwardToRestaurantRegistrationForm}
+                                                    className="btn btn-primary btn-lg btn-block login-btn">Restaurant Registration
+                                            </button>
+                                        </div>
+
+                                        <div className="form-group">
+                                            <button  type="submit" onClick={this.deliveryAgentRegister}
+                                                    className="btn btn-primary btn-lg btn-block login-btn">Delivery Agent Registration
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </Modal>
                 <Modal
                     show={this.state.otpVal}
