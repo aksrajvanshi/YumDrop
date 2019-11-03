@@ -19,11 +19,16 @@ class RestaurantDashboard extends Component{
         ]
 }
     componentWillMount() {
+        alert("in");
+        this.state.Name = this.props.restaurantPrimaryEmailId;
         this.setState( {
             Name: this.props.restaurantPrimaryEmailId
-            }
+            })
+            console.log(this.state.Name);
+        console.log(this.props.restaurantPrimaryEmailId);
+        console.log("Hey")
 
-        )
+
     }
 
     forwardToAddingAnItem = () => {
