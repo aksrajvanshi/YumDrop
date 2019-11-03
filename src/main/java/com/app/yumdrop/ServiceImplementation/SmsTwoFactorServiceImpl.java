@@ -27,8 +27,6 @@ public class SmsTwoFactorServiceImpl implements SmsTwoFactorService {
     @Autowired
     DeliveryAgentOtpRepository deliveryAgentOtpRepository;
 
-    @Autowired
-    public JavaMailSender javaMailSender;
   
     @Autowired
     UsersOtpRepository usersOtpRepository;
