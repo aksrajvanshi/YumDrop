@@ -28,6 +28,7 @@ public class SearchController {
     public @ResponseBody SearchSuggestion[] getSearchSuggestions(@RequestBody String givenSearchQuery) {
         SearchSuggestion[] searchSuggestions = new SearchSuggestion[] {new SearchSuggestion("apple"), new SearchSuggestion("pear")};
         String[] result = new String[] {"apple", "pear"};
+        //test
         return searchSuggestions;
     }
 
