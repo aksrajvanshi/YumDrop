@@ -47,7 +47,6 @@ const routing = (
         <Router>
             <div>
                 <Route exact path="/" component={App} />
-                <Route path="/successfullyChangedPasswordPage" component={successfullyChangedPasswordPage} />
                 <Route path="/Home" component={Home}/>
                 <Route path="/LoginPage" component={LoginPage} />
                 <Route path="/LoginForm" component={LoginForm} />

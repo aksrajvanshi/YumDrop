@@ -4,6 +4,7 @@ import LoginPage from "./LoginPage";
 import './LoginFormCSS.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
 class App extends Component {
     state = {
@@ -239,7 +240,51 @@ class App extends Component {
     };
 
     render() {
-        const { country, region } = this.state;
+        const responseFacebook = (response) => {
+            console.log(response);
+            this.state.facebookUserAccessToken = response.accessToken;
+            this.state.facebookUserId = response.userID;
+            console.log("User ID", this.state.facebookUserId);
+            console.log("Access Token ",this.state.facebookUserAccessToken);
+            let api = 'https://graph.facebook.com/v2.8/' + this.state.facebookUserId +
+                '?fields=name,email&access_token=' + this.state.facebookUserAccessToken;
+            fetch(api)
+                .then((response) => response.json())
+                .then( (responseData) => {
+                    console.log(responseData)
+                    this.state.facebookUserEmail = responseData.email;
+                    this.state.facebookUserName  = responseData.name;
+                    console.log("Inside fetch api");
+                    console.log(responseData.email);
+                }).then( (res) => {
+
+            fetch('/facebookUserLogin',
+                {
+                    method: 'POST',
+                    redirect: 'follow',
+                    headers: {
+                        "Content-Type": "application/json",
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    body: JSON.stringify({
+                            fbUserEmail: this.state.facebookUserEmail,
+                            fbUserID: this.state.facebookUserId,
+                            fbUserAccessToken: this.state.facebookUserAccessToken,
+                            fbUserName: this.state.facebookUserName
+
+                        })
+                }
+            ).then(res => {
+
+
+                if (res.status !== 200) {
+                    this.forwardToErrorPage();
+                }else {
+                    this.forwardToLoginDashboard();
+                }
+            })
+            });
+        }
         return( <div className="App">
             <header>
                 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
@@ -324,10 +369,14 @@ class App extends Component {
                                 <form onSubmit={this.login.bind(this)}>
                                     <h2 className="text-center">User Login</h2>
                                     <div className="social-btn text-center">
-                                        <a href="#" className="btn btn-primary btn-block btn-lg"><i
-                                            className="fa fa-facebook"></i> Login with <b>Facebook</b></a>
-                                        <a href="#" className="btn btn-danger btn-block btn-lg"><i
-                                            className="fa fa-google"></i> Login with <b>Google</b></a>
+                                        <FacebookLogin
+                                            appId="1250006828526117"
+                                            callback={responseFacebook}
+                                            render={renderProps => (
+                                                <button className="btn btn-primary btn-block btn-lg" onClick={renderProps.onClick}><i
+                                                    className="fa fa-facebook"></i> Login with <b>Facebook</b> </button>
+                                            )}
+                                        />
                                     </div>
                                     <div className="or-seperator"><i>or</i></div>
                                     <div className="form-group">
