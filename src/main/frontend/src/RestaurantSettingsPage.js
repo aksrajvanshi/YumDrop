@@ -157,3 +157,4 @@ class RestaurantSettingsPage extends Component {
 
 
 }
+export default RestaurantSettingsPage;

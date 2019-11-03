@@ -1,7 +1,14 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
 
+const mapStateToProps = (state)=>{
+    return {
+        restaurantPrimaryEmailId: state.restaurantPrimaryEmailId
+    }
+};
 class RestaurantDashboard extends Component{
     state = {
+        Name: "",
         data: [
             {"itemName": "item1", "itemDescription": "item1", "itemCuisine":"itemCuisine","itemCost": "4$", "itemAvailability": "Available"},
             {"itemName": "item1", "itemDescription": "item1", "itemCuisine":"itemCuisine","itemCost": "4$", "itemAvailability": "Available"},
@@ -11,6 +18,13 @@ class RestaurantDashboard extends Component{
             {"itemName": "item1", "itemDescription": "item1", "itemCuisine":"itemCuisine", "itemCost": "4$", "itemAvailability": "Available"},
         ]
 }
+    componentWillMount() {
+        this.setState( {
+            Name: this.props.restaurantPrimaryEmailId
+            }
+
+        )
+    }
 
     forwardToAddingAnItem = () => {
         this.props.history.push("/RestaurantAddMenuForm");
@@ -58,7 +72,9 @@ class RestaurantDashboard extends Component{
                         </div>
                     </nav>
                 </header>
-
+                <p>chuck</p>
+                <p>{this.state.Name}</p>
+                <p>hey</p>
                 <div className="container">
                     <div className="row">
                         <div className="col-xs-10 ">
@@ -136,4 +152,4 @@ class RestaurantDashboard extends Component{
     }
 }
 
-export default RestaurantDashboard
+export default (RestaurantDashboard);

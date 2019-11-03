@@ -5,6 +5,24 @@ import './LoginFormCSS.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import {connect} from "react-redux";
+
+const mapStateToProps = (state)=>{
+    return {
+        restaurantPrimaryEmailId: state.restaurantPrimaryEmailId
+    }
+}
+
+
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setRestaurant(evt){
+            dispatch({type: "setRestaurantEmailId", restaurantPrimaryEmailId: evt.restaurantPrimaryEmailId});
+        }
+    }
+}
+
 class App extends Component {
     state = {
         loginSelect: false,
@@ -42,6 +60,7 @@ class App extends Component {
                 this.forwardToLoginErrorPage();
                 alert("Hey going to Error page");
             }else {
+                this.props.setRestaurant({restaurantEmailId: this.state.restaurantPrimaryEmailId})
                 this.setState({redirect: true, restaurantRegister: false});
                 this.forwardToLoginDashboard();
                 alert("Hey going to Login Dashboard page");
@@ -438,4 +457,4 @@ class App extends Component {
         </div>);
     }
 }
-export default App;
+export default connect(mapStateToProps,mapDispatchToProps)(App);
