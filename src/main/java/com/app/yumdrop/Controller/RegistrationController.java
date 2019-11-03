@@ -53,7 +53,6 @@ public class RegistrationController {
     @Autowired
     private DeliveryAgentOtpRepository deliveryAgentOtpRepository;
 
-
     @RequestMapping(value = "/userRegistration", method = RequestMethod.POST)
     public ResponseEntity<?> userRegistration(@RequestBody UsersDetails usersDetails) {
 
@@ -66,12 +65,6 @@ public class RegistrationController {
             return ResponseEntity.status(HttpStatus.OK).build();
         else
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    }
-
-    @RequestMapping(value = "/facebookUserRegistration", method = RequestMethod.POST)
-    public ResponseEntity<?> facebookUserRegistration(@RequestBody String faceBook){
-        System.out.println(faceBook);
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @RequestMapping(value = "/restaurantRegistration", method = RequestMethod.POST)
