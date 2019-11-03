@@ -52,7 +52,7 @@ public class RegistrationController {
     @Autowired
     private DeliveryAgentOtpRepository deliveryAgentOtpRepository;
 
-    // REST call
+
     @RequestMapping(value = "/userRegistration", method = RequestMethod.POST)
     public ResponseEntity<?> userRegistration(@RequestBody UsersDetails usersDetails) {
 
@@ -70,7 +70,6 @@ public class RegistrationController {
     @RequestMapping(value = "/restaurantRegistration", method = RequestMethod.POST)
     public ResponseEntity<?> restaurantRegistration(@RequestBody UsersDetails usersDetails) {
 
-
         return ResponseEntity.status(HttpStatus.OK).build();
 
     }
@@ -79,11 +78,10 @@ public class RegistrationController {
     @RequestMapping(value = "/deliveryAgentRegistration", method = RequestMethod.POST)
     public ResponseEntity<?> deliveryAgentRegistration(@RequestBody DeliveryAgentDetails deliveryAgentDetails) {
 
-        System.out.println("Received request from server!");
         Random rnd = new Random();
         int otpNumber = rnd.nextInt(999999);
-        System.out.println("Sending OTP to user " + otpNumber);
-        boolean isSmsSent = smsTwoFactorService.send2FaCodeAsEmail(deliveryAgentDetails.getDA_email(), String.format("%06d", otpNumber));
+        boolean isSmsSent = smsTwoFactorService.send2FaCodeAsEmailDA(deliveryAgentDetails.getDA_email(), String.format("%06d", otpNumber));
+
         if(isSmsSent)
             return ResponseEntity.status(HttpStatus.OK).build();
         else
@@ -109,7 +107,7 @@ public class RegistrationController {
     public ResponseEntity<?> verifyOTPandRegisterDA(@RequestBody DeliveryAgentRegisterForm daRegisterForm) {
 
         Delivery_Agent_Otp daOtp = deliveryAgentOtpRepository.findBydaEmail(daRegisterForm.getDA_email());
-        boolean checkOtpMatch = OtpUtils.checkIfOtpMatches(daRegisterForm.getDA_otp(), daOtp.getDAOtp());
+        boolean checkOtpMatch = OtpUtils.checkIfDAOtpMatches(daRegisterForm.getDA_otp(), daOtp.daOtp);
 
         if (checkOtpMatch) {
             deliveryAgentOtpRepository.deleteById(daRegisterForm.getDA_email());

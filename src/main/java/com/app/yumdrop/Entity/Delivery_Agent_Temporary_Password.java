@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "users_temporary_password")
+@Table(name = "delivery_agent_temporary_password")
 public class Delivery_Agent_Temporary_Password {
 
     @Id

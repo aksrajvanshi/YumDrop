@@ -105,10 +105,10 @@ class App extends Component {
                 if (res.status !== 200) {
                     this.setState({redirect: true, userRegister: false});
                     this.forwardToErrorPage();
-                    alert("Hey going to login page");
+
                 }else {
                     this.setState({redirect: true, userRegister: false, otpVal:true});
-                    alert("Hey going to otp page");
+
                 }
 
 
@@ -139,12 +139,11 @@ class App extends Component {
 
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
-                alert("Hey going to login page");
+
             }else {
                 this.setState({redirect: true, userRegister: false, otpVal:true});
-                alert("Hey going to otp page");
-            }
 
+            }
 
         })
     }
@@ -174,10 +173,10 @@ class App extends Component {
             if (res.status !== 200) {
                 this.setState({redirect: false, daRegister: false});
                 this.forwardToErrorPage();
-                alert("Hey going to login page");
+
             }else {
                 this.setState({redirect: false, daRegister: false, daOtpVal:true});
-                alert("Hey going to otp page");
+
             }
 
         })
@@ -212,11 +211,11 @@ class App extends Component {
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToErrorPage();
-                alert("Hey going to login page");
+
             }else {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToSuccessPage();
-                alert("Hey going to Success page");
+
             }
 
 
@@ -249,11 +248,11 @@ class App extends Component {
             if (res.status !== 200) {
                 this.setState({redirect: true, daRegister: false});
                 this.forwardToErrorPage();
-                alert("Hey going to login page");
+
             }else {
                 this.setState({redirect: true, daRegister: false});
                 this.forwardToSuccessPage();
-                alert("Hey going to Success page");
+
             }
         })
     }
@@ -344,6 +343,11 @@ class App extends Component {
                 restaurantConfirmPassword: event.target.value,
             })
         }
+    handleDeliveryAgentOtpChange = (event) => {
+        this.setState({
+            daOtp: event.target.value,
+        })
+    }
 
         handleDeliveryAgentEmail = (event) => {
             this.setState({
@@ -607,8 +611,8 @@ class App extends Component {
                                         <form onSubmit={this.daRegisterOtp.bind(this)}>
                                             <h2 className="text-center">Please provide 6 digit OTP</h2>
                                             <div className="form-group">
-                                                <input value={this.state.userOtp}
-                                                       onChange={this.handleUserOtpChange} type="text"
+                                                <input value={this.state.daOtp}
+                                                       onChange={this.handleDeliveryAgentOtpChange} type="text"
                                                        className="form-control" placeholder="OTP"
                                                        pattern="[a-z][A-Z]"
                                                        required="required"/>
@@ -796,7 +800,7 @@ class App extends Component {
                                                        value={this.state.daPhonenum}
                                                        onChange={this.handleDeliveryAgentPhonenum}
                                                        placeholder="Phone  Number"
-                                                       title="Please enter a valid phone number Ex: XXX-XXX-XXXX"
+
                                                        pattern="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$"
                                                        required="required"/>
                                             </div>

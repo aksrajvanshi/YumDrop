@@ -8,17 +8,17 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "da_otp")
+@Table(name = "delivery_agent_otp")
 public class Delivery_Agent_Otp extends CreateAndUpdateTimeModel {
 
     @Id
     @Column(name = "da_email", nullable = false)
     @Email(message = "Delivery agent email should be a valid email")
-    private String daEmail;
+    public String daEmail;
 
     @NotNull
     @Column(name = "da_otp", nullable = false)
-    private String daOtp;
+    public String daOtp;
 
     public Delivery_Agent_Otp() {
     }
