@@ -132,7 +132,7 @@ class App extends Component {
     register() {
         debugger;
         let obj = {}
-        fetch('/restaurantRegistration',
+        fetch('/userRegistration',
             {
                 method: 'POST',
                 redirect: 'follow',
