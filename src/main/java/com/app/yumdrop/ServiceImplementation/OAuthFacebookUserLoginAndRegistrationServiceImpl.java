@@ -17,6 +17,12 @@ public class OAuthFacebookUserLoginAndRegistrationServiceImpl implements OAuthFa
     @Override
     public ResponseEntity<?> registerFbUser(OAuthFacebookUsers fbUserRegistrationDetail) {
 
+        boolean isUserExists = oAuthFacebookUsersRepository.existsById(fbUserRegistrationDetail.getFbUserEmail());
+
+        if(isUserExists){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
         OAuthFacebookUsers fbUserRegistration = oAuthFacebookUsersRepository.save(fbUserRegistrationDetail);
         if(fbUserRegistration!=null){
             return ResponseEntity.status(HttpStatus.OK).build();
