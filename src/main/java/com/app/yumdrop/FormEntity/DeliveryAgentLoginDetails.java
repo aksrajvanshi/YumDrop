@@ -2,39 +2,39 @@ package com.app.yumdrop.FormEntity;
 
 public class DeliveryAgentLoginDetails {
 
-    public String da_email;
-    public String da_password;
+    public String deliveryAgentEmail;
+    public String deliveryAgentPassword;
 
     public DeliveryAgentLoginDetails() {
     }
 
-    public DeliveryAgentLoginDetails(String da_email, String da_password) {
+    public DeliveryAgentLoginDetails(String deliveryAgentEmail, String deliveryAgentPassword) {
 
-        this.da_email = da_email;
-        this.da_password = da_password;
+        this.deliveryAgentEmail = deliveryAgentEmail;
+        this.deliveryAgentPassword = deliveryAgentPassword;
     }
 
     @Override
     public String toString() {
         return "DeliveryAgentLoginDetails{" +
-                "da_email='" + da_email + '\'' +
-                ", da_password='" + da_password + '\'' +
+                "deliveryAgentEmail='" + deliveryAgentEmail + '\'' +
+                ", deliveryAgentPassword='" + deliveryAgentPassword + '\'' +
                 '}';
     }
 
-    public String getDAEmail() {
-        return da_email;
+    public String getdeliveryAgentLoginEmail() {
+        return deliveryAgentEmail;
     }
 
-    public void setDAEmail(String da_email) {
-        this.da_email = da_email;
+    public void setdeliveryAgentLoginEmail(String deliveryAgentEmail) {
+        this.deliveryAgentEmail = deliveryAgentEmail;
     }
 
-    public String getDAPassword() {
-        return da_password;
+    public String getdeliveryAgentLoginPassword() {
+        return deliveryAgentPassword;
     }
 
-    public void setDAPassword(String da_password) {
-        this.da_password = da_password;
+    public void setdeliveryAgentLoginPassword(String deliveryAgentPassword) {
+        this.deliveryAgentPassword = deliveryAgentPassword;
     }
 }

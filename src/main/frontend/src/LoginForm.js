@@ -187,7 +187,7 @@ class App extends Component {
     handleRestaurantLoginOption = () => {
         this.setState({ loginSelect: false, selectLoginOption:false, deliveryAgentLoginOptionSelected: false, restaurantLoginOption: true  });
     }
-    handleDeliveryAgentLoginOptionSelected  = (event) => {
+    handleDeliveryAgentLoginOptionSelected  = () => {
         this.setState({ loginSelect: false, selectLoginOption:false, restaurantLoginOption: false, deliveryAgentLoginOptionSelected: true  });
     }
     handleUserTemporaryPassword = (event) => {
@@ -226,11 +226,7 @@ class App extends Component {
         });
     };
 
-    handleDeliveryAgentNameChange = (event) => {
-        this.setState({
-            deliveryAgentName: event.target.value,
-        });
-    };
+
 
     handleDeliveryAgentPasswordChange = (event) => {
         this.setState({
@@ -472,7 +468,6 @@ class App extends Component {
                 </div>
 
             </Modal>
-
             <Modal
                 show={this.state.deliveryAgentLoginOptionSelected}
                 onHide={this.closeAllOptionsOfSelectionForm}
@@ -485,6 +480,13 @@ class App extends Component {
                             <div className="login-form">
                                 <form onSubmit={this.deliveryAgentLogin.bind(this)}>
                                     <h2 className="text-center">Delivery Agent Login</h2>
+                                    <div className="social-btn text-center">
+                                        <a href="#" className="btn btn-primary btn-block btn-lg"><i
+                                            className="fa fa-facebook"></i> Login with <b>Facebook</b></a>
+                                        <a href="#" className="btn btn-danger btn-block btn-lg"><i
+                                            className="fa fa-google"></i> Login with <b>Google</b></a>
+                                    </div>
+                                    <div className="or-seperator"><i>or</i></div>
                                     <div className="form-group">
                                         <input value={this.state.deliveryAgentEmail}
                                                onChange={this.handleDeliveryAgentEmailChange} type="text"
@@ -499,12 +501,16 @@ class App extends Component {
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
                                     </div>
+                                    <div className="col-md-12 offset-7 form-group">
+                                        <a href="#" onClick={this.handleForgotPasswordChange}>Forgot Password?</a>
+                                    </div>
 
                                     <div className="form-group">
                                         <button onClick={this.deliveryAgentLogin.bind(this)} type="submit"
                                                 className="btn btn-primary btn-lg btn-block login-btn">Login
                                         </button>
                                     </div>
+
                                 </form>
 
                             </div>
