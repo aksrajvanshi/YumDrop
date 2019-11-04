@@ -10,6 +10,10 @@ class successfullyChangedPasswordPage extends Component{
     goBackToRegisterForm = () => {
         this.props.history.push('/RegisterForm');
     }
+
+    goBackToHomePage = () => {
+        this.props.history.push('/');
+    }
     render() {
         return (
             <div>
@@ -43,7 +47,7 @@ class successfullyChangedPasswordPage extends Component{
                                             className="fa fa-fw fa-user"/>Login</a>
                                     </li>
                                     <li className="nav-item" id="SignUpID">
-                                        <a className="nav-link" onClick={this.registerSelect}>Sign Up</a>
+                                        <a className="nav-link" onClick={this.goBackToRegisterForm}>Sign Up</a>
                                     </li>
                                 </ul>
                             </div>
@@ -64,7 +68,7 @@ class successfullyChangedPasswordPage extends Component{
                                         <h2 className="text-center">Congratulations</h2>
                                         <p>You have successfully changed your password</p>
                                         <div className="form-group">
-                                            <button onClick={this.goBackToRegisterForm} type="submit"
+                                            <button onClick={this.goBackToHomePage} type="submit"
                                                     className="btn btn-primary btn-lg btn-block login-btn">Go to Home
                                             </button>
                                         </div>

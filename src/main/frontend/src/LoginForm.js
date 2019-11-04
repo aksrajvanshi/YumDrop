@@ -462,8 +462,8 @@ class App extends Component {
 
                                     <div className="form-group">
                                         <input value={this.state.userTemporaryPassword}
-                                               onChange={this.handleUserTemporaryPassword} type="text"
-                                               className="form-control" placeholder="Username"
+                                               onChange={this.handleUserTemporaryPassword} type="password"
+                                               className="form-control" placeholder="Temporary Password"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
                                     </div>

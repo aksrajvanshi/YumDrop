@@ -56,10 +56,14 @@ class MyCurrentLocation extends Component {
             }),
             err => console.log(err)
         );
+        this.setState({getLocation: true});
+        this.setState({positionSelect: false});
         console.log(this.state.latitude)
         console.log(this.state.longitude)
         this.props.setLocation({latitude: this.state.latitude, longitude: this.state.longitude})
-        this.props.history.push("/");
+        console.log(this.state.getLocation)
+        console.log("Value for positionSelect");
+        console.log(this.state.positionSelect);
     }
 
 

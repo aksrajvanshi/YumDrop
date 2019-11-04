@@ -25,6 +25,7 @@ import RestaurantAddMenuForm from "./RestaurantAddMenuForm";
 import RestaurantLogin from "./RestaurantLogin";
 import RestaurantSettingsPage from "./RestaurantSettingsPage";
 import UserSettingsPageAddresses from "./UserSettingsPageAddresses";
+import successfullyChangedPasswordPage from "./successfullyChangedPasswordPage";
 
 
 const initialState = {
@@ -53,7 +54,7 @@ const routing = (
                 <Route exact path="/LoginPage" component={LoginPage} />
                 <Route exact path="/LoginForm" component={LoginForm} />
                 <Route exact path="/RegisterForm" component={RegisterForm}/>
-                <Route exact path="/LoginDashBoard" component={LoginDashBoard}/>
+                <Route exact path="/" component={LoginDashBoard}/>
                 <Route exact path="/OTPpage" component={OTPpage}/>
                 <Route exact path="/errorPageForRegistration" component={errorPageForRegistration} />
                 <Route exact path="/MySettingsPage" component={MySettingsPage}/>
@@ -68,7 +69,8 @@ const routing = (
                 <Route exact path="/RestaurantAddMenuForm" component={RestaurantAddMenuForm} />
                 <Route exact path="/RestaurantLogin" component={RestaurantLogin} />
                 <Route exact path="/RestaurantSettingsPage" component={RestaurantSettingsPage} />
-                <Route exact path="/" component={UserSettingsPageAddresses} />
+                <Route exact path="/UserSettingsPageAddresses" component={UserSettingsPageAddresses} />
+                <Route exact path="/successfullyChangedPasswordPage" component={successfullyChangedPasswordPage}/>
             </div>
         </Router>
     </Provider>
