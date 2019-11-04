@@ -361,7 +361,7 @@ class App extends Component {
             userRegister: false,
             registerSelect: true,
             restaurantRegister: false,
-            deliveryAgentRegister: false
+            daRegister: false
         });
     };
 
@@ -371,7 +371,7 @@ class App extends Component {
             userRegister: false,
             restaurantRegister: false,
             registerSelect: false,
-            deliveryAgentRegister: false
+            daRegister: false
         });
     }
     forwardToLogin = () => {
@@ -392,7 +392,7 @@ class App extends Component {
             userRegister: true,
             registerSelect: false,
             restaurantRegister: false,
-            deliveryAgentRegister: false
+            daRegister: false
         });
     };
     restaurantRegister = () => {
@@ -400,7 +400,7 @@ class App extends Component {
             userRegister: false,
             registerSelect: false,
             restaurantRegister: true,
-            deliveryAgentRegister: false
+            daRegister: false
         });
     };
 
@@ -438,24 +438,8 @@ class App extends Component {
             })
         }
         
-        registerSelect = () => {
-            this.setState({
-                userRegister: false,
-                registerSelect: true,
-                restaurantRegister: false,
-                daRegister: false
-            });
-        };
 
 
-        closeAllOptionsOfSelectionForm = () => {
-            this.setState({
-                userRegister: false,
-                restaurantRegister: false,
-                registerSelect: false,
-                daRegister: false
-            });
-        };
 
     restaurantPhoneNumberAndPasswordConfirmation = () => {
         var password = document.getElementById("restaurantPassword");
@@ -650,8 +634,8 @@ class App extends Component {
                             <strong>RESTAURANT</strong>
                         </Button>{" "}
                         <br/>
-                        <Button id="DeliveryId" onClick={this.deliveryAgentRegister}>
-                            <strong>DELIVERY</strong>
+                        <Button id="DeliveryId" onClick={this.daRegister}>
+                            <strong>DELIVERY AGENT</strong>
                         </Button>
                     </Modal.Body>
                 </Modal>
@@ -847,13 +831,7 @@ class App extends Component {
                                     <div className="login-form">
                                         <form onSubmit={this.registerDeliveryAgent.bind(this)}>
                                             <h2 className="text-center">Delivery Agent Sign Up</h2>
-                                            <div className="social-btn text-center">
-                                                <a href="#" className="btn btn-primary btn-block btn-lg"><i
-                                                    className="fa fa-facebook"></i> Sign up with <b>Facebook</b></a>
-                                                <a href="#" className="btn btn-danger btn-block btn-lg"><i
-                                                    className="fa fa-google"></i> Sign up with <b>Google</b></a>
-                                            </div>
-                                            <div className="or-seperator"><i>or</i></div>
+
                                             <div className="form-group">
                                                 <input value={this.state.daName}
                                                        onChange={this.handleDeliveryAgentName} type="text"
