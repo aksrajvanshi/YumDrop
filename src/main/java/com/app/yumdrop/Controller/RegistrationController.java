@@ -1,7 +1,6 @@
 package com.app.yumdrop.Controller;
 
 import com.app.yumdrop.Entity.UsersOtp;
-import com.app.yumdrop.FormEntity.RestaurantDetails;
 import com.app.yumdrop.FormEntity.UserRegisterForm;
 import com.app.yumdrop.FormEntity.UsersDetails;
 import com.app.yumdrop.Repository.UsersOtpRepository;
@@ -68,25 +67,10 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/restaurantRegistration", method = RequestMethod.POST)
-    public ResponseEntity<?> restaurantRegistration(@RequestBody RestaurantDetails restaurantDetails) {
+    public ResponseEntity<?> restaurantRegistration(@RequestBody UsersDetails usersDetails) {
 
-        System.out.println("Received request from server!");
-        Random rnd = new Random();
-        int otpNumber = rnd.nextInt(999999);
-        System.out.println("Sending OTP to user " + otpNumber);
-        boolean isSmsSent = smsTwoFactorService.send2FaCodeAsEmail(restaurantDetails.getRestaurantPrimaryEmailId(), String.format("%06d", otpNumber));
-        if(isSmsSent)
-            return ResponseEntity.status(HttpStatus.OK).build();
-        else
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-
-    }
-
-    @RequestMapping(value = "/verifyOTPandRegisterRestaurant", method = RequestMethod.POST)
-    public ResponseEntity<?> verifyOTPandRegisterRestaurant(@RequestBody String restaurantRegisterForm) {
-
-        System.out.println(restaurantRegisterForm);
         return ResponseEntity.status(HttpStatus.OK).build();
+
     }
 
 

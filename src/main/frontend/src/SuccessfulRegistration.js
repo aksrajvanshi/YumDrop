@@ -7,8 +7,8 @@ class SuccessfulRegistration extends Component{
         successSelect: true
     }
 
-    goBackToHomePage = () => {
-        this.props.history.push('/');
+    goBackToRegisterForm = () => {
+        this.props.history.push('/RegisterForm');
     }
 
     goBackToRegisterForm = () => {
@@ -39,7 +39,7 @@ class SuccessfulRegistration extends Component{
                     <script src="//code.jquery.com/jquery-1.11.1.min.js"/>
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
-                            <a className="navbar-brand " href="#" onClick={this.goBackToHomePage}>YumDrop</a>
+                            <a className="navbar-brand " href="#">YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
                                     <li className="nav-item">
@@ -47,7 +47,7 @@ class SuccessfulRegistration extends Component{
                                             className="fa fa-fw fa-user"/>Login</a>
                                     </li>
                                     <li className="nav-item" id="SignUpID">
-                                        <a className="nav-link" onClick={this.goBackToHomePage}>Sign Up</a>
+                                        <a className="nav-link" onClick={this.registerSelect}>Sign Up</a>
                                     </li>
                                 </ul>
                             </div>
