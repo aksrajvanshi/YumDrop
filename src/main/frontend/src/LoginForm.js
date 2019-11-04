@@ -527,13 +527,7 @@ class App extends Component {
                             <div className="login-form">
                                 <form onSubmit={this.deliveryAgentLogin.bind(this)}>
                                     <h2 className="text-center">Delivery Agent Login</h2>
-                                    <div className="social-btn text-center">
-                                        <a href="#" className="btn btn-primary btn-block btn-lg"><i
-                                            className="fa fa-facebook"></i> Login with <b>Facebook</b></a>
-                                        <a href="#" className="btn btn-danger btn-block btn-lg"><i
-                                            className="fa fa-google"></i> Login with <b>Google</b></a>
-                                    </div>
-                                    <div className="or-seperator"><i>or</i></div>
+
                                     <div className="form-group">
                                         <input value={this.state.deliveryAgentEmail}
                                                onChange={this.handleDeliveryAgentEmailChange} type="text"
