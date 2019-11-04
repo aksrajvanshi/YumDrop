@@ -90,7 +90,6 @@ class App extends Component {
         this.props.history.push('/errorPageForRegistration');
     }
 
-
     registerRestaurant() {
         debugger;
         let obj = {}
@@ -128,6 +127,7 @@ class App extends Component {
         })
 
     }
+
 
     register() {
         debugger;

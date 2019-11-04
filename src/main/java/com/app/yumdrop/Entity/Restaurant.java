@@ -28,7 +28,7 @@ public class Restaurant extends CreateAndUpdateTimeModel {
 
         @NotNull
         @Column(name = "secondary_email_id", nullable = false)
-        private String secondaryEmailID;
+        private String restaurantSecondaryEmailID;
 
         @NotNull
         @Column(name = "primary_phonenum", nullable = false)
@@ -38,7 +38,6 @@ public class Restaurant extends CreateAndUpdateTimeModel {
         @Column(name = "secondary_phone_num", nullable = false)
         private String secondaryPhoneNumber;
 
-        @NotNull
         @Column(name = "restaurant_area", nullable = false)
         private String restaurantArea;
 
@@ -47,6 +46,30 @@ public class Restaurant extends CreateAndUpdateTimeModel {
 
         @Column(name = "restaurant_address", nullable = false)
         private String restaurantAddress;
+
+    public Restaurant() {
+    }
+
+    public Restaurant(String restaurantId, @NotNull String restaurantName, @NotNull String restaurantPrimaryEmailId, @NotNull String secondaryEmailID, @NotNull String primaryPhoneNumber, @NotNull String secondaryPhoneNumber) {
+        this.restaurantId = restaurantId;
+        this.restaurantName = restaurantName;
+        this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
+        this.restaurantSecondaryEmailID = secondaryEmailID;
+        this.primaryPhoneNumber = primaryPhoneNumber;
+        this.secondaryPhoneNumber = secondaryPhoneNumber;
+    }
+
+    public Restaurant(String restaurantId, @NotNull String restaurantName, @NotNull String restaurantPrimaryEmailId, @NotNull String secondaryEmailID, @NotNull String primaryPhoneNumber, @NotNull String secondaryPhoneNumber, String restaurantArea, String restaurantCity, String restaurantAddress) {
+        this.restaurantId = restaurantId;
+        this.restaurantName = restaurantName;
+        this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
+        this.restaurantSecondaryEmailID = secondaryEmailID;
+        this.primaryPhoneNumber = primaryPhoneNumber;
+        this.secondaryPhoneNumber = secondaryPhoneNumber;
+        this.restaurantArea = restaurantArea;
+        this.restaurantCity = restaurantCity;
+        this.restaurantAddress = restaurantAddress;
+    }
 
     public String getRestaurantId() {
         return restaurantId;
@@ -72,12 +95,12 @@ public class Restaurant extends CreateAndUpdateTimeModel {
         this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
     }
 
-    public String getSecondaryEmailID() {
-        return secondaryEmailID;
+    public String getRestaurantSecondaryEmailID() {
+        return restaurantSecondaryEmailID;
     }
 
-    public void setSecondaryEmailID(String secondaryEmailID) {
-        this.secondaryEmailID = secondaryEmailID;
+    public void setRestaurantSecondaryEmailID(String restaurantSecondaryEmailID) {
+        this.restaurantSecondaryEmailID = restaurantSecondaryEmailID;
     }
 
     public String getPrimaryPhoneNumber() {
@@ -126,7 +149,7 @@ public class Restaurant extends CreateAndUpdateTimeModel {
                 "restaurantId='" + restaurantId + '\'' +
                 ", restaurantName='" + restaurantName + '\'' +
                 ", restaurantPrimaryEmailId='" + restaurantPrimaryEmailId + '\'' +
-                ", secondaryEmailID='" + secondaryEmailID + '\'' +
+                ", secondaryEmailID='" + restaurantSecondaryEmailID + '\'' +
                 ", primaryPhoneNumber='" + primaryPhoneNumber + '\'' +
                 ", secondaryPhoneNumber='" + secondaryPhoneNumber + '\'' +
                 ", restaurantArea='" + restaurantArea + '\'' +

@@ -1,18 +1,10 @@
 package com.app.yumdrop.Controller;
 
-import com.app.yumdrop.Entity.UsersOtp;
-import com.app.yumdrop.FormEntity.RestaurantDetails;
-import com.app.yumdrop.FormEntity.UserRegisterForm;
-import com.app.yumdrop.FormEntity.UsersDetails;
-import com.app.yumdrop.Repository.UsersOtpRepository;
-import com.app.yumdrop.Repository.UsersRepository;
+import com.app.yumdrop.Entity.*;
+import com.app.yumdrop.FormEntity.*;
+import com.app.yumdrop.Repository.*;
 
-import com.app.yumdrop.Entity.Delivery_Agent_Otp;
-import com.app.yumdrop.FormEntity.DeliveryAgentRegisterForm;
-import com.app.yumdrop.FormEntity.DeliveryAgentDetails;
-import com.app.yumdrop.Repository.DeliveryAgentOtpRepository;
-import com.app.yumdrop.Repository.DeliveryAgentRepository;
-
+import com.app.yumdrop.Service.RestaurantRegistrationService;
 import com.app.yumdrop.Service.SmsTwoFactorService;
 import com.app.yumdrop.Service.UserRegistrationService;
 import com.app.yumdrop.Service.DeliveryAgentRegistrationService;
@@ -53,10 +45,23 @@ public class RegistrationController {
     @Autowired
     private DeliveryAgentOtpRepository deliveryAgentOtpRepository;
 
+    @Autowired
+    RestaurantRegistrationService restaurantRegistrationService;
+
+    @Autowired
+    RestaurantRepository restaurantRepository;
+
+    @Autowired
+    RestaurantOtpRepository restaurantOtpRepository;
+
     @RequestMapping(value = "/userRegistration", method = RequestMethod.POST)
     public ResponseEntity<?> userRegistration(@RequestBody UsersDetails usersDetails) {
 
-        System.out.println("Received request from server!");
+        Users isUserExisting = userRepository.findByuserEmail(usersDetails.getUser_email());
+        if(isUserExisting != null){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
         Random rnd = new Random();
         int otpNumber = rnd.nextInt(999999);
         System.out.println("Sending OTP to user " + otpNumber);
@@ -70,11 +75,15 @@ public class RegistrationController {
     @RequestMapping(value = "/restaurantRegistration", method = RequestMethod.POST)
     public ResponseEntity<?> restaurantRegistration(@RequestBody RestaurantDetails restaurantDetails) {
 
-        System.out.println("Received request from server!");
+        Restaurant isRestaurantExisting = restaurantRepository.findByrestaurantId(restaurantDetails.getRestaurantId());
+        if(isRestaurantExisting != null){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
         Random rnd = new Random();
         int otpNumber = rnd.nextInt(999999);
         System.out.println("Sending OTP to user " + otpNumber);
-        boolean isSmsSent = smsTwoFactorService.send2FaCodeAsEmail(restaurantDetails.getRestaurantPrimaryEmailId(), String.format("%06d", otpNumber));
+        boolean isSmsSent = smsTwoFactorService.send2FaCodeAsEmailToRestaurant(restaurantDetails.getRestaurantPrimaryEmailId(), restaurantDetails.getRestaurantId(), String.format("%06d", otpNumber));
         if(isSmsSent)
             return ResponseEntity.status(HttpStatus.OK).build();
         else
@@ -83,10 +92,17 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/verifyOTPandRegisterRestaurant", method = RequestMethod.POST)
-    public ResponseEntity<?> verifyOTPandRegisterRestaurant(@RequestBody String restaurantRegisterForm) {
+    public ResponseEntity<?> verifyOTPandRegisterRestaurant(@RequestBody RestaurantRegisterForm restaurantRegisterForm) {
 
-        System.out.println(restaurantRegisterForm);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        RestaurantOtp restaurantOtpRecord = restaurantOtpRepository.findByrestaurantID(restaurantRegisterForm.getRestaurantId());
+        boolean checkOtpMatch = OtpUtils.checkIfOtpMatches(restaurantRegisterForm.getRestaurantOtp(), restaurantOtpRecord.getRestaurantOtp());
+        if (checkOtpMatch) {
+            restaurantOtpRepository.deleteById(restaurantOtpRecord.getRestaurantID());
+            return restaurantRegistrationService.registerRestaurant(restaurantRegisterForm);
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
 

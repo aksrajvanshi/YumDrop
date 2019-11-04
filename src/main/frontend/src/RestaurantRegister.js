@@ -78,7 +78,7 @@ class App extends Component {
     registerOtp() {
         debugger;
         let obj = {}
-        fetch('/verifyOTPandRegisterUser',
+        fetch('/verifyOTPandRegisterRestaurant',
             {
                 method: 'POST',
                 redirect: 'follow',
@@ -88,19 +88,16 @@ class App extends Component {
                 },
                 body: JSON.stringify({
                     restaurantName: this.state.restaurantFullName,
-                    restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId,
                     restaurantId: this.state.restaurantId,
-                    secondaryEmailID: this.state.restaurantSecondaryEmailID,
+                    restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId,
+                    restaurantSecondaryEmailId: this.state.restaurantSecondaryEmailID,
                     primaryPhoneNumber: this.state.restaurantPrimaryPhoneNumber,
                     secondaryPhoneNumber: this.state.restaurantSecondaryPhoneNumber,
                     restaurantOtp: this.state.restaurantOtp
 
-                    }
-                )
-
+                    })
             }
         ).then(res => {
-
 
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
