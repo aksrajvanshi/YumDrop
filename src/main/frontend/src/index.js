@@ -35,6 +35,7 @@ import MyCurrentRestaurantLocation from "./MyCurrentRestaurantLocation";
 import RestaurantResetpassword from "./RestaurantResetpassword";
 import DeliveryAgentRegistration from "./DeliveryAgentRegistration";
 import DeliveryAgentLoginForm from "./DeliveryAgentLoginForm";
+import ErrorPageForDeliveryAgentRegistration from "./ErrorPageForDeliveryAgentRegistration";
 
 const initialState = {
     latitude: null,
@@ -87,6 +88,7 @@ const routing = (
                 <Route exact path="/RestaurantResetpassword" component={RestaurantResetpassword} />
                 <Route exact path="/restaurantAddressesPage" component={restaurantAddressesPage}/>
                 <Route exact path="/MyCurrentRestaurantLocation" component={MyCurrentRestaurantLocation} />
+                <Route exact path="/ErrorPageForDeliveryAgentRegistration" component={ErrorPageForDeliveryAgentRegistration}/>
                 <Route exact path="/DeliveryAgentLoginForm" component={DeliveryAgentLoginForm}/>
             </div>
         </Router>

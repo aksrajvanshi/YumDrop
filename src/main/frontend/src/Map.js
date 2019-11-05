@@ -16,6 +16,7 @@ class Map extends React.Component{
             city: '',
             area: '',
             state: '',
+            userEmailId: "",
             mapPosition: {
                 lat: this.props.center.lat,
                 lng: this.props.center.lng
@@ -37,7 +38,8 @@ class Map extends React.Component{
                 userAddress: this.state.address,
                 userCity: this.state.city,
                 userArea: this.state.area,
-                userState: this.state.area
+                userState: this.state.area,
+                userEmailId: this.state.userEmailId
             }),
         }).then(res => {
 
