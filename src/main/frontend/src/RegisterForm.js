@@ -227,36 +227,36 @@ class App extends Component {
                     this.state.facebookUserName  = responseData.name;
                     console.log("Inside fetch api");
                     console.log(responseData.email);
-                });
+                }).then((response) =>{
+                    fetch('/facebookUserRegistration',
+                    {
+                        method: 'POST',
+                        redirect: 'follow',
+                        headers: {
+                            "Content-Type": "application/json",
+                            'Access-Control-Allow-Origin': '*'
+                        },
+                        body: JSON.stringify({
+                                fbUserEmail: this.state.facebookUserEmail,
+                                fbUserID: this.state.facebookUserId,
+                                fbUserAccessToken: this.state.facebookUserAccessToken,
+                                fbUserName: this.state.facebookUserName
 
-            fetch('/facebookUserRegistration',
-                {
-                    method: 'POST',
-                    redirect: 'follow',
-                    headers: {
-                        "Content-Type": "application/json",
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                    body: JSON.stringify({
-                            fbUserEmail: this.state.facebookUserEmail,
-                            fbUserID: this.state.facebookUserId,
-                            fbUserAccessToken: this.state.facebookUserAccessToken,
-                            fbUserName: this.state.facebookUserName
+                            }
+                        )
 
-                        }
-                    )
-
-                }
-            ).then(res => {
-
-
-                if (res.status !== 200) {
-                    this.forwardToErrorPage();
-                }else {
-                    this.forwardToSuccessPage();
-                }
+                    }
+                ).then(res => {
 
 
+                    if (res.status !== 200) {
+                        this.forwardToErrorPage();
+                    }else {
+                        this.forwardToSuccessPage();
+                    }
+
+
+                })
             })
         }
 
