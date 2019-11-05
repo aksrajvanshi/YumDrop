@@ -235,7 +235,7 @@ class Map extends React.Component{
                         <label htmlFor="">Address</label>
                         <input type="text" name="address" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.address }/>
                     </div>
-                    <button onClick={this.submitAddress.bind(this)}>Submit</button><br/><br/>
+                    <button className="btn btn-success" onClick={this.submitAddress.bind(this)}>Submit</button><br/><br/>
                 </div>
 
                 <AsyncMap

@@ -20,13 +20,19 @@ import Home from './Home';
 import MyCurrentLocation from "./MyCurrentLocation";
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
-import RestaurantDashboard from "./RestaurantDashboard";
 import ErrorPageForRestaurantRegistration from "./ErrorPageForRestaurantRegistration";
 import RestaurantRegister from "./RestaurantRegister";
 import DeliveryAgentDashboard from "./DeliveryAgentDashboard";
 import DeliveryAgentOTPpage from "./DeliveryAgentOTPpage";
 import RestaurantLogin from "./RestaurantLogin";
 import successfullyChangedPasswordPage from "./successfullyChangedPasswordPage";
+import UserSettingsPageAddresses from "./UserSettingsPageAddresses";
+import RestaurantDashboard from "./RestaurantDashboard";
+import RestaurantAddMenuForm from "./RestaurantAddMenuForm";
+import RestaurantSettingsPage from "./RestaurantSettingsPage";
+import restaurantAddressesPage from "./restaurantAddressesPage";
+import MyCurrentRestaurantLocation from "./MyCurrentRestaurantLocation";
+import RestaurantResetpassword from "./RestaurantResetpassword";
 
 const initialState = {
     latitude: null,
@@ -49,13 +55,13 @@ const routing = (
     <Provider store={store}>
         <Router>
             <div>
-                <Route exact path="/App" component={App} />
+                <Route exact path="/" component={App} />
                 <Route exact path="/ErrorPageForRestaurantRegistration" component={ErrorPageForRestaurantRegistration}/>
                 <Route exact path="/Home" component={Home}/>
                 <Route exact path="/LoginPage" component={LoginPage} />
                 <Route exact path="/LoginForm" component={LoginForm} />
                 <Route exact path="/RegisterForm" component={RegisterForm}/>
-                <Route exact path="/" component={LoginDashBoard}/>
+                <Route exact path="/LoginDashBoard" component={LoginDashBoard}/>
                 <Route exact path="/OTPpage" component={OTPpage}/>
                 <Route exact path="/DeliveryAgentOTPpage" component={DeliveryAgentOTPpage}/>
                 <Route exact path="/errorPageForRegistration" component={errorPageForRegistration} />
@@ -72,6 +78,12 @@ const routing = (
                 <Route exact path="/DeliveryAgentDashboard" component={DeliveryAgentDashboard}/>
                 <Route exact path="/RestaurantLogin" component={RestaurantLogin}/>
                 <Route exact path="/successfullyChangedPasswordPage" component={successfullyChangedPasswordPage}/>
+                <Route exact path="/UserSettingsPageAddresses" component={UserSettingsPageAddresses}/>
+                <Route exact path="/RestaurantAddMenuForm" component={RestaurantAddMenuForm}/>
+                <Route exact path="/RestaurantSettingsPage" component={RestaurantSettingsPage}/>
+                <Route exact path="/RestaurantResetpassword" component={RestaurantResetpassword} />
+                <Route exact path="/restaurantAddressesPage" component={restaurantAddressesPage}/>
+                <Route exact path="/MyCurrentRestaurantLocation" component={MyCurrentRestaurantLocation} />
             </div>
         </Router>
     </Provider>
