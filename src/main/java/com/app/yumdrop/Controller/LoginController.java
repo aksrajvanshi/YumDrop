@@ -1,6 +1,7 @@
 package com.app.yumdrop.Controller;
 
 import com.app.yumdrop.Entity.Users;
+import com.app.yumdrop.FormEntity.RestaurantManagerLogin;
 import com.app.yumdrop.FormEntity.UserLoginDetails;
 import com.app.yumdrop.Repository.UsersRepository;
 import com.app.yumdrop.Utils.PasswordUtils;
@@ -36,6 +37,14 @@ public class LoginController {
         }
 
     }
+
+    @RequestMapping(value = "/restaurantLogin", method = RequestMethod.POST)
+    public ResponseEntity<?> restaurantManagerLogin(@RequestBody RestaurantManagerLogin restaurantManagerLogin){
+
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 
 }

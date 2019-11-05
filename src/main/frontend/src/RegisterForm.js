@@ -227,9 +227,8 @@ class App extends Component {
                     this.state.facebookUserName  = responseData.name;
                     console.log("Inside fetch api");
                     console.log(responseData.email);
-                });
-
-            fetch('/facebookUserRegistration',
+                }).then( response => {
+                    fetch('/facebookUserRegistration',
                 {
                     method: 'POST',
                     redirect: 'follow',
@@ -258,7 +257,7 @@ class App extends Component {
 
 
             })
-        }
+        }) }
 
 
 
