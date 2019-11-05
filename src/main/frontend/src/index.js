@@ -23,9 +23,10 @@ import {Provider} from 'react-redux';
 import RestaurantDashboard from "./RestaurantDashboard";
 import ErrorPageForRestaurantRegistration from "./ErrorPageForRestaurantRegistration";
 import RestaurantRegister from "./RestaurantRegister";
-import successfullyChangedPasswordPage from "./successfullyChangedPasswordPage";
 import DeliveryAgentDashboard from "./DeliveryAgentDashboard";
 import DeliveryAgentOTPpage from "./DeliveryAgentOTPpage";
+import RestaurantLogin from "./RestaurantLogin";
+import successfullyChangedPasswordPage from "./successfullyChangedPasswordPage";
 
 const initialState = {
     latitude: null,
@@ -49,26 +50,28 @@ const routing = (
         <Router>
             <div>
                 <Route exact path="/" component={App} />
-                <Route path="/ErrorPageForRestaurantRegistration" component={ErrorPageForRestaurantRegistration}/>
-                <Route path="/Home" component={Home}/>
-                <Route path="/LoginPage" component={LoginPage} />
-                <Route path="/LoginForm" component={LoginForm} />
-                <Route path="/RegisterForm" component={RegisterForm}/>
-                <Route path="/LoginDashBoard" component={LoginDashBoard}/>
-                <Route path="/OTPpage" component={OTPpage}/>
-                <Route path="/DeliveryAgentOTPpage" component={DeliveryAgentOTPpage}/>
-                <Route path="/errorPageForRegistration" component={errorPageForRegistration} />
-                <Route path="/MySettingsPage" component={MySettingsPage}/>
-                <Route path="/OTPResetPassword" component={OTPResetPassword}/>
-                <Route path="/ResetPassword" component={ResetPassword}/>
-                <Route path="/loginErrorPAge" component={loginErrorPAge} />
-                <Route path="/SuccessfulRegistration" component={SuccessfulRegistration} />
-                <Route path="/MyCurrentLocation" component={MyCurrentLocation}/>
-                <Route path="/RestaurantDashboard" component={RestaurantDashboard}/>
-                <Route path="/Trying" component={Trying}/>
-                <Route path="/AddItemToMenu" component={AddItemToMenu}/>
-                <Route path="/RestaurantRegister" component={RestaurantRegister} />
-                <Route path="/DeliveryAgentDashboard" component={DeliveryAgentDashboard}/>
+                <Route exact path="/ErrorPageForRestaurantRegistration" component={ErrorPageForRestaurantRegistration}/>
+                <Route exact path="/Home" component={Home}/>
+                <Route exact path="/LoginPage" component={LoginPage} />
+                <Route exact path="/LoginForm" component={LoginForm} />
+                <Route exact path="/RegisterForm" component={RegisterForm}/>
+                <Route exact path="/LoginDashBoard" component={LoginDashBoard}/>
+                <Route exact path="/OTPpage" component={OTPpage}/>
+                <Route exact path="/DeliveryAgentOTPpage" component={DeliveryAgentOTPpage}/>
+                <Route exact path="/errorPageForRegistration" component={errorPageForRegistration} />
+                <Route exact path="/MySettingsPage" component={MySettingsPage}/>
+                <Route exact path="/OTPResetPassword" component={OTPResetPassword}/>
+                <Route exact path="/ResetPassword" component={ResetPassword}/>
+                <Route exact path="/loginErrorPAge" component={loginErrorPAge} />
+                <Route exact path="/SuccessfulRegistration" component={SuccessfulRegistration} />
+                <Route exact path="/MyCurrentLocation" component={MyCurrentLocation}/>
+                <Route exact path="/RestaurantDashboard" component={RestaurantDashboard}/>
+                <Route exact path="/Trying" component={Trying}/>
+                <Route exact path="/AddItemToMenu" component={AddItemToMenu}/>
+                <Route exact path="/RestaurantRegister" component={RestaurantRegister} />
+                <Route exact path="/DeliveryAgentDashboard" component={DeliveryAgentDashboard}/>
+                <Route exact path="/RestaurantLogin" component={RestaurantLogin}/>
+                <Route exact path="/successfullyChangedPasswordPage" component={successfullyChangedPasswordPage}/>
             </div>
         </Router>
     </Provider>

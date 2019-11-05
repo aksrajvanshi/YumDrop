@@ -5,27 +5,43 @@ import './LoginFormCSS.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import {connect} from "react-redux";
+
+const mapStateToProps = (state)=>{
+    return {
+        restaurantPrimaryEmailId: state.restaurantPrimaryEmailId
+    }
+}
+
+
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setRestaurant(evt){
+            dispatch({type: "setRestaurantEmailId", restaurantPrimaryEmailId: evt.restaurantPrimaryEmailId});
+        }
+    }
+}
+
 class App extends Component {
     state = {
-        loginSelect: true,
+        loginSelect: false,
         userLoginOption: false,
-        restaurantLoginOption: false,
+        restaurantLoginOption: true,
         deliveryAgentLoginOption: false,
         closeAllOptionsOfSelectionForm: false,
-        userName: "",
-        userPassword: "",
-        userPhoneNumber: "",
-        userEmail: "",
-        userTemporaryPassword: "",
+        restaurantPrimaryEmailId: "",
+        restaurantId: "",
+        restaurantPassword: "",
         redirect: false,
         forgotPasswordSelect: false,
-        emailSelectForgotPassword: false
-
+        emailSelectForgotPassword: false,
+        restaurantTemporaryPassword: ""
     };
 
 
     login = () => { debugger;
-        fetch('/loginDataForm', {
+        fetch('/restaurantLogin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -38,12 +54,14 @@ class App extends Component {
 
             alert("Entered");
             alert(res.status);
+            alert(res)
             if (res.status !== 200) {
-                this.setState({redirect: true, userRegister: false});
+                this.setState({redirect: true, restaurantRegister: false});
                 this.forwardToLoginErrorPage();
                 alert("Hey going to Error page");
             }else {
-                this.setState({redirect: true, userRegister: false});
+                this.props.setRestaurant({restaurantEmailId: this.state.restaurantPrimaryEmailId})
+                this.setState({redirect: true, restaurantRegister: false});
                 this.forwardToLoginDashboard();
                 alert("Hey going to Login Dashboard page");
             }
@@ -54,7 +72,7 @@ class App extends Component {
     }
 
     passwordChange  = () => { debugger;
-        fetch('/setNewUserPassword', {
+        fetch('/setNewRestaurantPassword', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -68,6 +86,7 @@ class App extends Component {
 
             alert("Entered");
             alert(res.status);
+            alert(res)
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
@@ -84,7 +103,7 @@ class App extends Component {
     }
 
     forgotPasswordAPI = () => { debugger;
-        fetch('/forgotUserPassword', {
+        fetch('/forgotRestaurantPassword', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -114,22 +133,13 @@ class App extends Component {
         this.props.history.push("/loginErrorPAge")
     }
 
-    forwardToRestaurantregister = () => {
-        this.props.history.push("/RestaurantLogin")
-    }
     forwardToSuccessfullyChangedPasswordPage = () => {
         this.props.history.push("/successfullyChangedPasswordPage");
     }
 
 
-    loginSelect = () => {
-        this.setState({
-            userLoginOption: false,
-            loginSelect: true,
-            restaurantLoginOption: false,
-            deliveryAgentLoginOption: false
-        });
-    };
+
+
 
 
     forwardToRegister = () => {
@@ -137,18 +147,25 @@ class App extends Component {
     }
 
     forwardToLoginDashboard = () => {
-        this.props.history.push('/LoginDashBoard')
+        this.props.history.push('/RestaurantDashboard')
+    }
+
+    forwardToLoginForm = () => {
+        this.props.history.push('/LoginForm')
     }
 
 
-
-    handelUserLoginOption = () => {
-        this.setState({ loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOption: false, userLoginOption: true  });
+    handleRestaurantPassword = (event) => {
+        this.setState({restaurantPassword: event.target.value})
     }
 
 
-    handleUserTemporaryPassword = (event) => {
-        this.setState({userTemporaryPassword : event.target.value})
+    handleRestaurantLoginOption = () => {
+        this.setState({ loginSelect: false, selectLoginOption:false, deliveryAgentLoginOption: false, restaurantLoginOption: true  });
+    }
+
+    handleRestaurantTemporaryPassword = (event) => {
+        this.setState({restaurantTemporaryPassword : event.target.value})
     }
 
     closeAllOptionsOfSelectionForm= () => {
@@ -161,79 +178,26 @@ class App extends Component {
 
 
 
-
-    handleUserNameChange =  (event) => {
+    handleRestaurantPasswordChange =  (event) => {
         this.setState({
-            userName: event.target.value,
-        });
-    };
-    handleUserPasswordChange =  (event) => {
-        this.setState({
-            userPassword: event.target.value,
+            restaurantPassword: event.target.value,
         });
     };
 
-    handleUserEmailIDChange =  (event) => {
+    handleRestaurantEmailIDChange =  (event) => {
         this.setState({
-            userEmail: event.target.value,
+            restaurantPrimaryEmailId: event.target.value,
         });
     };
 
-    goBackToHomePAge = () => {
-        this.props.history.push("/")
+    handleRestaurantID = (event) => {
+        this.setState({
+            restaurantId: event.target.value
+        })
     }
 
 
     render() {
-        const responseFacebook = (response) => {
-            console.log(response);
-            this.state.facebookUserAccessToken = response.accessToken;
-            this.state.facebookUserId = response.userID;
-            console.log("User ID", this.state.facebookUserId);
-            console.log("Access Token ",this.state.facebookUserAccessToken);
-            let api = 'https://graph.facebook.com/v2.8/' + this.state.facebookUserId +
-                '?fields=name,email&access_token=' + this.state.facebookUserAccessToken;
-            fetch(api)
-                .then((response) => response.json())
-                .then( (responseData) => {
-                    console.log(responseData)
-                    this.state.facebookUserEmail = responseData.email;
-                    this.state.facebookUserName  = responseData.name;
-                    console.log("Inside fetch api");
-                    console.log(responseData.email);
-                }).then(res => {
-                fetch('/facebookUserLogin',
-                    {
-                        method: 'POST',
-                        redirect: 'follow',
-                        headers: {
-                            "Content-Type": "application/json",
-                            'Access-Control-Allow-Origin': '*'
-                        },
-                        body: JSON.stringify({
-                                fbUserEmail: this.state.facebookUserEmail,
-                                fbUserID: this.state.facebookUserId,
-                                fbUserAccessToken: this.state.facebookUserAccessToken,
-                                fbUserName: this.state.facebookUserName
-
-                            }
-                        )
-
-                    }
-                ).then(res => {
-
-
-                    if (res.status !== 200) {
-                        this.forwardToErrorPage();
-                    }else {
-                        this.forwardToLoginDashboard();
-                    }
-
-
-                })
-            })};
-
-
 
         return( <div className="App">
             <header>
@@ -254,11 +218,11 @@ class App extends Component {
                 <script src="//code.jquery.com/jquery-1.11.1.min.js"/>
                 <nav className=" navbar navbar-expand-lg navbar-dark ">
                     <div className="container">
-                        <a className="navbar-brand " href="#" onClick={this.goBackToHomePAge}>YumDrop</a>
+                        <a className="navbar-brand " href="#">YumDrop</a>
                         <div className="collapse navbar-collapse" id="navBarLinks">
                             <ul className="navbar-nav mr-auto">
                                 <li className="nav-item">
-                                    <a className="nav-link" onClick={this.loginSelect}><i
+                                    <a className="nav-link" onClick={this.forwardToLoginForm}><i
                                         className="fa fa-fw fa-user"/>Login</a>
                                 </li>
                                 <li className="nav-item" id="SignUpID">
@@ -295,7 +259,7 @@ class App extends Component {
 
                                     </div>
                                 </div>
-                                <div className="col-md-1" >
+                                <div className="col-md-1" id="buttonOrder">
                                     <div className="md-form">
                                         <button className="btn btn-lg btn-danger">Search</button>
                                     </div>
@@ -307,39 +271,37 @@ class App extends Component {
             </div>
 
             <Modal
-                show={this.state.userLoginOption}
+                show={this.state.restaurantLoginOption}
                 onHide={this.closeAllOptionsOfSelectionForm}
                 animation={false}
                 centered id="modal"
             >
-
                 <div className="container">
                     <div className="row">
                         <div className="main">
                             <div className="login-form">
                                 <form onSubmit={this.login.bind(this)}>
-                                    <h2 className="text-center">User Login</h2>
+                                    <h2 className="text-center">Restaurant Login</h2>
                                     <div className="social-btn text-center">
-                                        <FacebookLogin
-                                            appId="1250006828526117"
-                                            callback={responseFacebook}
-                                            render={renderProps => (
-                                                <button className="btn btn-primary btn-block btn-lg" onClick={renderProps.onClick}><i
-                                                    className="fa fa-facebook"></i> Login with <b>Facebook</b> </button>
-                                            )}
-                                        />
                                     </div>
-                                    <div className="or-seperator"><i>or</i></div>
                                     <div className="form-group">
-                                        <input value={this.state.userName}
-                                               onChange={this.handleUserNameChange} type="text"
-                                               className="form-control" placeholder="Username"
+                                        <input value={this.state.restaurantPrimaryEmailId}
+                                               onChange={this.handleRestaurantEmailIDChange} type="text"
+                                               className="form-control" placeholder="Email ID"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
                                     </div>
                                     <div className="form-group">
-                                        <input value={this.state.userPassword}
-                                               onChange={this.handleUserPasswordChange} type="password"
+                                        <input value={this.state.restaurantId}
+                                               onChange={this.handleRestaurantID} type="text"
+                                               className="form-control" placeholder="Restaurant ID"
+                                               pattern="[a-z][A-Z]"
+                                               required="required"/>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <input value={this.state.restaurantPassword}
+                                               onChange={this.handleRestaurantPassword} type="password"
                                                className="form-control" placeholder="Password"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
@@ -362,49 +324,7 @@ class App extends Component {
                 </div>
 
             </Modal>
-            <Modal
-                show={this.state.loginSelect}
-                onHide={this.closeAllOptionsOfSelectionForm}
-                animation={false}
-                centered id="modal"
-            >
-                <Modal.Header className="modelheader" id="containerModal" center>
-                    <Modal.Title className="modeltitle" id="modeltitle" center>
-                        <strong>Select Account</strong>
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body id="CheckSelection">
-                    <div className="container" id="containerSelectAccount">
-                        <div className="row">
-                            <div className="main">
-                                <div className="login-form">
-                                    <form>
-                                        <div className="form-group">
-                                            <button  type="submit"
-                                                     onClick={this.handelUserLoginOption} className="btn btn-primary btn-lg btn-block login-btn">User Login
-                                            </button>
-                                        </div>
 
-                                        <div className="form-group">
-                                            <button  type="submit" onClick={this.forwardToRestaurantregister}
-                                                     className="btn btn-primary btn-lg btn-block login-btn">Restaurant Login
-                                            </button>
-                                        </div>
-
-                                        <div className="form-group">
-                                            <button  type="submit" onClick={this.deliveryAgentRegister}
-                                                     className="btn btn-primary btn-lg btn-block login-btn">Delivery Agent Login
-                                            </button>
-                                        </div>
-                                    </form>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </Modal.Body>
-            </Modal>
 
 
             <Modal
@@ -422,7 +342,7 @@ class App extends Component {
                                     <div className="form-group">
                                         <input value={this.state.userEmail}
                                                onChange={this.handleUserEmailIDChange} type="text"
-                                               className="form-control" placeholder="username / email ID"
+                                               className="form-control" placeholder="Email ID"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
                                     </div>
@@ -456,15 +376,15 @@ class App extends Component {
                                     <h2 className="text-center">Change Password</h2>
 
                                     <div className="form-group">
-                                        <input value={this.state.userTemporaryPassword}
-                                               onChange={this.handleUserTemporaryPassword} type="password"
+                                        <input value={this.state.restaurantTemporaryPassword}
+                                               onChange={this.handleRestaurantTemporaryPassword} type="password"
                                                className="form-control" placeholder="Temporary Password"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
                                     </div>
                                     <div className="form-group">
-                                        <input value={this.state.userPassword}
-                                               onChange={this.handleUserPasswordChange} type="password"
+                                        <input value={this.state.restaurantPassword}
+                                               onChange={this.handleRestaurantPassword} type="password"
                                                className="form-control" placeholder="Password"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
@@ -472,7 +392,7 @@ class App extends Component {
 
                                     <div className="form-group">
                                         <button onClick={this.passwordChange.bind(this)} type="submit"
-                                                className="btn btn-primary btn-lg btn-block login-btn">Login
+                                                className="btn btn-primary btn-lg btn-block login-btn">Submit
                                         </button>
                                     </div>
 
@@ -507,26 +427,26 @@ class App extends Component {
 
                     </div>
                     <div className="col-md-6 how-img">
-                        <img src="https://cdn.clipart.email/3a7d43627822f0b19af9bd540aebd827_food-delivery-man-clipart-clipartxtras_170-155.jpeg"
+                        <img src="https://cdn4.vectorstock.com/i/1000x1000/05/13/man-holding-pizza-box-and-courier-bag-vector-17210513.jpg"
                              className="rounded-circle img-fluid" alt=""/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-6 how-img">
-                        <img src="https://activmeals.com/images/step3.png"
+                        <img src="https://cdn5.vectorstock.com/i/1000x1000/37/04/food-delivery-icon-image-vector-16143704.jpg"
                              className="rounded-circle img-fluid" alt=""/>
                     </div>
                     <div className="col-md-6">
                         <h4>Pickup or delivery from restaurants near you</h4>
 
-                        <h4 className="subheading">Explore restaurants that deliver near you, or try yummy takeout fare. With a place for every taste, it’s easy to find food you crave, and order online or through the YumDrop app. Find great meals fast with lots of local menus. Enjoy eating the convenient way with places that deliver to your door..</h4>
+                        <p className="text-muted">Explore restaurants that deliver near you, or try yummy takeout fare. With a place for every taste, it’s easy to find food you crave, and order online or through the YumDrop app. Find great meals fast with lots of local menus. Enjoy eating the convenient way with places that deliver to your door..</p>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-6">
                         <h4>Easy Pay</h4>
-                        <h4 className="subheading">Pay for food with one click of a button.
-                            Multiple payment options. </h4>
+                        <p className="text-muted">Pay for food with one click of a button.
+                            Multiple payment options. Choose a payment method that works best for you</p>
                     </div>
                     <div className="col-md-6 how-img">
                         <img src="https://www.trzcacak.rs/myfile/full/377-3774169_payment-channel-payment-channel-payment-channel-payment-bank.png"
@@ -537,4 +457,4 @@ class App extends Component {
         </div>);
     }
 }
-export default App;
+export default connect(mapStateToProps,mapDispatchToProps)(App);

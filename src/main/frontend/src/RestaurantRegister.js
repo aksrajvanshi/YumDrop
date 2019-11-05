@@ -78,7 +78,7 @@ class App extends Component {
     registerOtp() {
         debugger;
         let obj = {}
-        fetch('/verifyOTPandRegisterUser',
+        fetch('/verifyOTPandRegisterRestaurant',
             {
                 method: 'POST',
                 redirect: 'follow',
@@ -156,30 +156,15 @@ class App extends Component {
         })
     }
 
-    handleRestaurantOtpChange = (event) => {
-        this.setState({
-            userOtp: event.target.value,
-        })
+    goBackToHomePAge = ()=> {
+        this.props.history.push('/');
     }
+
     handlerestaurantSecondaryPhoneNumber = (event) => {
         this.setState({
             restaurantSecondaryPhoneNumber: event.target.value,
         })
     }
-
-    handleRestaurantPassword = (event) => {
-        this.setState({
-            restaurantPassword: event.target.value,
-        })
-    }
-
-    handleRestaurantConfirmPassword = (event) => {
-        this.setState({
-            restaurantConfirmPassword: event.target.value,
-        })
-    }
-
-
 
 
     closeAllOptionsOfSelectionForm = () => {
@@ -193,35 +178,7 @@ class App extends Component {
 
 
 
-    userPasswordConfirmation = () => {
-        var password = document.getElementById("userPassword");
-        var confirmPassword = document.getElementById("userConfirmPassword");
-        if (password.value !== confirmPassword.value) {
-            confirmPassword.setCustomValidity("Passwords must match");
-        }
-        else {
-            confirmPassword.setCustomValidity("");
-        }
-    }
 
-    restaurantPhoneNumberAndPasswordConfirmation = () => {
-        var password = document.getElementById("restaurantPassword");
-        var confirmPassword = document.getElementById("restaurantConfirmPassword");
-        var primePhone = document.getElementById("primaryPhoneNumber");
-        var secondPhone = document.getElementById("secondaryPhoneNumber");
-        if (primePhone.value === secondPhone.value){
-            secondPhone.setCustomValidity("Phone numbers cannot match");
-        }
-        else {
-            secondPhone.setCustomValidity("");
-        }
-        if (password.value !== confirmPassword.value) {
-            confirmPassword.setCustomValidity("Passwords must match");
-        }
-        else {
-            confirmPassword.setCustomValidity("");
-        }
-    }
 
     render()
     {
@@ -250,7 +207,7 @@ class App extends Component {
                     <script src="//code.jquery.com/jquery-1.11.1.min.js"/>
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
-                            <a className="navbar-brand " href="#">YumDrop</a>
+                            <a className="navbar-brand "  onClick={this.goBackToHomePAge}>YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
                                     <li className="nav-item">
