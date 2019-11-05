@@ -332,3 +332,86 @@ img.rounded {
 .img-raised {
     box-shadow: 0 5px 15px -8px rgba(0,0,0,.24), 0 8px 10px -5px rgba(0,0,0,.2);
 }
+
+
+.pt-100{
+    padding-top:100px;
+}
+.pb-100{
+    padding-top:100px;
+}
+.mb-60 {
+    margin-bottom: 60px;
+}
+.section-title p {
+    font-size: 24px;
+    font-family: Oleo Script;
+    margin-bottom: 0px;
+    margin-top:50px;
+}
+.section-title h4 {
+    font-size: 40px;
+    text-transform: capitalize;
+    color: #FF5E18;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 25px;
+}
+.section-title h4::before {
+    width: 80px;
+    height: 1.5px;
+    bottom: 0;
+    left: 50%;
+    margin-left: -40px;
+}
+.section-title h4::before, .section-title h4::after {
+    position: absolute;
+    content: "";
+    background-color: #FF5E18;
+}
+.single_menu_list img {
+    max-width: 30%;
+    position: absolute;
+    left: 0px;
+    top: 0;
+    border: 1px solid #ddd;
+    padding: 3px;
+    border-radius: 50%;
+    transition: .4s;
+}
+
+.menu_style1 .single_menu_list img {
+    position: static;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 45px;
+}
+.single_menu_list h4 {
+    font-size: 20px;
+    border-bottom: 1px dashed #333;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+}
+.single_menu_list h4 span {
+    float: right;
+    font-weight: bold;
+    color: #FF5E18;
+    font-style: italic;
+}
+p {
+    font-weight: 300;
+    font-size: 14px;
+}
+.menu_style1 .single_menu_list {
+    text-align: center;
+}
+.single_menu_list:hover img {
+    border-radius: 0;
+    transition: .4s;
+}
+
+#containerForRestaurantDisplay{
+    padding-top: 20px;
+}
+
