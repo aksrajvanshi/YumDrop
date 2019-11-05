@@ -33,6 +33,7 @@ import RestaurantSettingsPage from "./RestaurantSettingsPage";
 import restaurantAddressesPage from "./restaurantAddressesPage";
 import MyCurrentRestaurantLocation from "./MyCurrentRestaurantLocation";
 import RestaurantResetpassword from "./RestaurantResetpassword";
+import DeliveryAgentRegistration from "./DeliveryAgentRegistration";
 
 const initialState = {
     latitude: null,
@@ -76,6 +77,7 @@ const routing = (
                 <Route exact path="/AddItemToMenu" component={AddItemToMenu}/>
                 <Route exact path="/RestaurantRegister" component={RestaurantRegister} />
                 <Route exact path="/DeliveryAgentDashboard" component={DeliveryAgentDashboard}/>
+                <Route exact path="/DeliveryAgentRegistration" component={DeliveryAgentRegistration}/>
                 <Route exact path="/RestaurantLogin" component={RestaurantLogin}/>
                 <Route exact path="/successfullyChangedPasswordPage" component={successfullyChangedPasswordPage}/>
                 <Route exact path="/UserSettingsPageAddresses" component={UserSettingsPageAddresses}/>
