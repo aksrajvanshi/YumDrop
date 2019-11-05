@@ -4,21 +4,7 @@ import './LoginDashBoardCSS.css';
 class LoginDashBoard extends Component{
 
     state = {
-        data: [
-            {
-                restaurantImgUrl: "https://cdn.livekindly.co/wp-content/uploads/2018/01/livekindly_dominos_vegan_pizza_australia.jpg" , restaurantName: "Dominos", restaurantDescription: "Pizza with Delicious topping. Etc Etc", restaurantAverageCost: "4$", restaurantCuisine: "Italian"
 
-            },
-            {
-                restaurantImgUrl: "https://pbs.twimg.com/profile_images/766346170566316032/BrObUpAM_400x400.jpg" , restaurantName: "Dominos", restaurantDescription: "Pizza with Delicious topping. Etc Etc", restaurantAverageCost: "4$", restaurantCuisine: "Italian"
-            },
-            {
-                restaurantImgUrl: "https://cdn.livekindly.co/wp-content/uploads/2018/01/livekindly_dominos_vegan_pizza_australia.jpg" , restaurantName: "Dominos", restaurantDescription: "Pizza with Delicious topping. Etc Etc", restaurantAverageCost: "4$", restaurantCuisine: "Italian"
-            },
-            {
-                restaurantImgUrl: "https://cdn.livekindly.co/wp-content/uploads/2018/01/livekindly_dominos_vegan_pizza_australia.jpg" , restaurantName: "Dominos", restaurantDescription: "Pizza with Delicious topping. Etc Etc", restaurantAverageCost: "4$", restaurantCuisine: "Italian"
-            }
-        ]
     }
 
     componentDidMount () {
@@ -64,6 +50,9 @@ class LoginDashBoard extends Component{
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
@@ -75,8 +64,8 @@ class LoginDashBoard extends Component{
                                         <a className="nav-link"><i
                                             className="fa fa-fw fa-user"/>My Cart</a>
                                     </li>
-                                    <li className="nav-item" id="SignUpID">
-                                        <a className="nav-link" onClick={this.forwardToSettingsPage}>My Settings</a>
+                                    <li className="nav-item">
+                                        <a className="nav-link"  onClick={this.forwardToSettingsPage}><span>My Settings</span></a>
                                     </li>
                                 </ul>
                             </div>
@@ -85,8 +74,9 @@ class LoginDashBoard extends Component{
                 </header>
 
                 <div className="container mt-5">
-                    <div className="title">
-                        <h3>Cuisines Available</h3>
+                    <div className="section-title text-center">
+                        <p>Try from the variety of Cuisines available</p>
+                        <h4>Cuisines</h4>
                     </div>
 
                     <div className="row">
@@ -105,7 +95,7 @@ class LoginDashBoard extends Component{
                         <div className="col-sm-2">
                             <h5>Italian</h5>
                             <img
-                                src="https://image.shutterstock.com/z/stock-vector-fast-food-pizza-slice-icon-delivery-toppings-isolated-on-white-background-532221031.jpg"
+                                src="https://icons-for-free.com/iconfiles/png/512/food+food+italian+food+junk+food+pizza+icon-1320168016349880751.png"
                                 alt="Rounded Image" height="70%" width="70%" className="rounded img-fluid"/>
                         </div>
                         <div className="col-sm-2">
@@ -120,58 +110,123 @@ class LoginDashBoard extends Component{
                                 src="https://image.flaticon.com/icons/png/512/644/644758.png"
                                 alt="Rounded Image" height="70%" width="70%" className="rounded img-fluid"/>
                         </div>
-                        <div className="col-sm-2">
+                        <div className="col-sm-2" >
                             <h5>Barbecue</h5>
                             <img
                                 src="https://cdn3.iconfinder.com/data/icons/food-3-11/128/food_Barbecue-Bbq-Skewer-Kabob-Hot-512.png"
-                                alt="Rounded Image" height="70%" width="70%" className="rounded img-fluid"/>
+                                height="70%" width="70%" className="rounded img-fluid"/>
                         </div>
 
                     </div>
 
                 </div>
                 <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-
-
-                {this.state.data.map(function(d,restaurantName,restaurantImgUrl,restaurantDescription,restaurantAverageCost, restaurantCuisine){
-                    return (
-
-
-                        <div className="container">
-
-                            <h1 className="my-4">{d.restaurantName}</h1>
 
 
 
-                            <div className="row">
-                                <div className="col-md-7">
-                                    <a href="#">
-                                        <img className="img-fluid rounded mb-3 mb-md-0" width="60%" height="60%" src={d.restaurantImgUrl}
-                                             alt=""/>
-                                    </a>
-                                </div>
-                                <div className="col-md-5">
-                                    <h2>Project One</h2>
-                                    <h4 id="paragraph">{d.restaurantDescription}</h4>
-                                    <p id="paragraph">{d.restaurantAverageCost}</p>
-                                    <p className="subheading">{d.restaurantCuisine}</p>
-                                    <a className="btn btn-primary" href="#">View Menu</a>
-                                </div></div>
-                            <hr/>
+
+                        <div>
+                            <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,900"
+                                  rel="stylesheet"/>
+                            <link href="https://fonts.googleapis.com/css?family=Oleo+Script" rel="stylesheet"/>
+
+                            <section className="about-area pt-80">
+                                <div className="container" >
+                                    <div className="row">
+                                        <div className="col-xl-12 mb-60">
+                                            <div className="section-title text-center">
+                                                <p>Popular Restaurants Near You</p>
+                                                <h4>Restaurants</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row menu_style1">
+                                        <div className="col-md-4">
+                                            <div className="single_menu_list">
+                                                <img
+                                                    src="https://www.culinaryhill.com/wp-content/uploads/2017/09/Chipotle-Steak-Recipe-Culinary-Hill-2.jpg"
+                                                    alt=""/>
+                                                <div className="menu_content">
+                                                    <h4>Chipotle <span>$8</span></h4>
+                                                    <p>Burritos, Tacos, Salads, Bowls, Chips</p>
+                                                    <h5>Mexican, Vegetarian, Vegan, Non-Vegetarian</h5>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <div className="single_menu_list">
+                                                <img
+                                                    src="https://assets.grab.com/wp-content/uploads/sites/4/2019/03/18143157/grabfood-singapore-delivery-dominos-700x700.jpg"
+                                                    alt=""/>
+                                                    <div className="menu_content">
+                                                        <h4>Dominos <span>$15</span></h4>
+                                                        <p>Domino for pizza, sides, sandwiches, pasta, crusts, topping, breads, desserts, salads, dressings, sauce, and dipping cups!</p>
+                                                        <h5>Italian, Vegetarian, Non-Vegetarian</h5>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <div className="single_menu_list" >
+                                                <img
+                                                    src="https://pbs.twimg.com/profile_images/692830789365403649/Iw_yGrfl_400x400.jpg"
+                                                    alt=""/>
+                                                    <div className="menu_content">
+                                                        <h4>Fazoli<span>$5</span></h4>
+                                                        <p>Snacks, Breadsticks, pizza, spaghetti, pasta, sandwiches, submarines, salads</p>
+                                                        <h5>Italian, Vegetarian, Vegan, Non-Vegetarian</h5>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <div className="single_menu_list" id="containerForRestaurantDisplay">
+                                                <img
+                                                    src="https://www.mcdonalds.com/is/image/content/dam/usa/nfl/nutrition/items/regular/desktop/h-mcdonalds-Quarter-Pounder-with-Cheese-Extra-Value-Meals.jpg"
+                                                    alt=""/>
+                                                    <div className="menu_content">
+                                                        <h4>McDonald's<span>Avg Price: $5</span></h4>
+                                                        <p>Nuggets, Burgers, Beverages, Coffee, Salads, Burritos</p>
+                                                        <h5>American, Non-Vegetarian</h5>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <div className="single_menu_list" id="containerForRestaurantDisplay">
+                                                <img
+                                                    src="https://img.grouponcdn.com/deal/oQL9HWSYQo9PQxYG2mBC/YH-2048x1229/v1/sc600x600.jpg"
+                                                    alt=""/>
+                                                    <div className="menu_content">
+                                                        <h4>Indian Palace<span>Avg Price: $15</span></h4>
+                                                        <p>North Indian, Rice, Breads, Curries</p>
+                                                        <h5>Indian, Vegetarian, Vegan, Non-Vegetarian</h5>
+                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-4">
+                                            <div className="single_menu_list" id="containerForRestaurantDisplay">
+                                                <img
+                                                    src="http://infinityflamesoft.com/html/restarunt-preview/assets/img/menu/menu-3.jpg"
+                                                    alt=""/>
+                                                    <div className="menu_content">
+                                                        <h4>Kha Thai<span>Avg Price: $15</span></h4>
+                                                        <p>Soups, Appetizers, Rice, Salads, Grill</p>
+                                                        <h5>Thai, Vegetarian, Vegan, Non-Vegetarian</h5>
+                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <br/><br/><br/><br/><br/>
 
 
+                                    </div></div>
+                                <br/><br/><br/><br/><br/>
+                            </section>
+                            <br/><br/><br/><br/><br/>
+                            <a href="#"></a>
                         </div>
 
 
-
-
-
-                    )})}}
             </div>
 
         );

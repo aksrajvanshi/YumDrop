@@ -47,9 +47,8 @@ class App extends Component {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                user_name: this.state.userName,
-                userPassword: this.state.userPassword
-            }),
+                restaurantId: this.state.restaurantId,
+                urestaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId            }),
         }).then(res => {
 
             alert("Entered");
@@ -58,12 +57,10 @@ class App extends Component {
             if (res.status !== 200) {
                 this.setState({redirect: true, restaurantRegister: false});
                 this.forwardToLoginErrorPage();
-                alert("Hey going to Error page");
             }else {
                 this.props.setRestaurant({restaurantEmailId: this.state.restaurantPrimaryEmailId})
                 this.setState({redirect: true, restaurantRegister: false});
                 this.forwardToLoginDashboard();
-                alert("Hey going to Login Dashboard page");
             }
 
 
@@ -78,9 +75,9 @@ class App extends Component {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: this.state.userEmail,
-                temporaryPassword: this.state.userTemporaryPassword,
-                newPassword: this.state.userPassword
+                restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId,
+                temporaryPassword: this.state.restaurantTemporaryPassword,
+                newPassword: this.state.restaurantPassword
             }),
         }).then(res => {
 
@@ -88,13 +85,12 @@ class App extends Component {
             alert(res.status);
             alert(res)
             if (res.status !== 200) {
-                this.setState({redirect: true, userRegister: false});
+
                 this.forwardToLoginErrorPage();
                 alert("Hey going to Error page");
             }else {
-                this.setState({redirect: true, userRegister: false, emailSelectForgotPassword: false, forgotPasswordSelect: true});
+                this.setState({redirect: true, restaurantLoginOption: false, emailSelectForgotPassword: false, forgotPasswordSelect: true});
                 this.forwardToSuccessfullyChangedPasswordPage();
-                alert("Hey going to Login Dashboard page");
             }
 
 
@@ -109,7 +105,7 @@ class App extends Component {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: this.state.userEmail
+                restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId
             }),
         }).then(res => {
 
@@ -120,7 +116,7 @@ class App extends Component {
                 this.forwardToLoginErrorPage();
                 alert("Hey going to Error page");
             }else {
-                this.setState({redirect: true, userRegister: false, emailSelectForgotPassword: false, forgotPasswordSelect: true});
+                this.setState({redirect: true, restaurantLoginOption: false, emailSelectForgotPassword: false, forgotPasswordSelect: true});
                 alert("Hey going to Login Dashboard page");
             }
 
