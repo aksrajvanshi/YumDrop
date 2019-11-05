@@ -12,32 +12,36 @@ import javax.validation.constraints.NotNull;
 @Table(name = "restaurant_manager_otp")
 public class RestaurantOtp extends CreateAndUpdateTimeModel {
 
+    @Id
+    @NotNull
+    @Column(name = "restaurant_id", nullable = false)
+    private String restaurantID;
 
-        @Id
-        @Column(name = "restaurant_primary_email", nullable = false)
-        @Email(message = "Restaurant primary email should be a valid email")
-        private String restaurantPrimaryEmail;
+    @Column(name = "restaurant_primary_email", nullable = false)
+    @Email(message = "Restaurant primary email should be a valid email")
+    private String restaurantPrimaryEmail;
 
-        @NotNull
-        @Column(name = "restaurant_id", nullable = false)
-        private String restaurantID;
+    @NotNull
+    @Column(name = "restaurant_otp", nullable = false)
+    private String restaurantOtp;
 
-        @NotNull
-        @Column(name="restaurant_otp", nullable = false)
-        private String restaurantOtp;
+    public RestaurantOtp() {
+    }
 
-    public RestaurantOtp(@Email(message = "Restaurant primary email should be a valid email") String restaurantPrimaryEmail, @NotNull String restaurantID, @NotNull String restaurantOtp) {
-        this.restaurantPrimaryEmail = restaurantPrimaryEmail;
+
+    public RestaurantOtp(@NotNull String restaurantID, @Email(message = "Restaurant primary email should be a valid email") String restaurantPrimaryEmail, @NotNull String restaurantOtp) {
         this.restaurantID = restaurantID;
+        this.restaurantPrimaryEmail = restaurantPrimaryEmail;
         this.restaurantOtp = restaurantOtp;
     }
 
-    public String getRestaurantPrimaryEmail() {
-        return restaurantPrimaryEmail;
-    }
-
-    public void setRestaurantPrimaryEmail(String restaurantPrimaryEmail) {
-        this.restaurantPrimaryEmail = restaurantPrimaryEmail;
+    @Override
+    public String toString() {
+        return "RestaurantOtp{" +
+                "restaurantID='" + restaurantID + '\'' +
+                ", restaurantPrimaryEmail='" + restaurantPrimaryEmail + '\'' +
+                ", restaurantOtp='" + restaurantOtp + '\'' +
+                '}';
     }
 
     public String getRestaurantID() {
@@ -48,20 +52,19 @@ public class RestaurantOtp extends CreateAndUpdateTimeModel {
         this.restaurantID = restaurantID;
     }
 
+    public String getRestaurantPrimaryEmail() {
+        return restaurantPrimaryEmail;
+    }
+
+    public void setRestaurantPrimaryEmail(String restaurantPrimaryEmail) {
+        this.restaurantPrimaryEmail = restaurantPrimaryEmail;
+    }
+
     public String getRestaurantOtp() {
         return restaurantOtp;
     }
 
     public void setRestaurantOtp(String restaurantOtp) {
         this.restaurantOtp = restaurantOtp;
-    }
-
-    @Override
-    public String toString() {
-        return "RestaurantOtp{" +
-                "restaurantPrimaryEmail='" + restaurantPrimaryEmail + '\'' +
-                ", restaurantID='" + restaurantID + '\'' +
-                ", restaurantOtp='" + restaurantOtp + '\'' +
-                '}';
     }
 }
