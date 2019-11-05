@@ -48,7 +48,8 @@ class App extends Component {
             },
             body:JSON.stringify({
                 restaurantId: this.state.restaurantId,
-                urestaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId            }),
+                restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId
+            }),
         }).then(res => {
 
             alert("Entered");
