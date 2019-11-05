@@ -216,49 +216,47 @@ class App extends Component {
             this.state.facebookUserAccessToken = response.accessToken;
             this.state.facebookUserId = response.userID;
             console.log("User ID", this.state.facebookUserId);
-            console.log("Access Token ",this.state.facebookUserAccessToken);
+            console.log("Access Token ", this.state.facebookUserAccessToken);
             let api = 'https://graph.facebook.com/v2.8/' + this.state.facebookUserId +
                 '?fields=name,email&access_token=' + this.state.facebookUserAccessToken;
             fetch(api)
                 .then((response) => response.json())
-                .then( (responseData) => {
+                .then((responseData) => {
                     console.log(responseData)
                     this.state.facebookUserEmail = responseData.email;
-                    this.state.facebookUserName  = responseData.name;
+                    this.state.facebookUserName = responseData.name;
                     console.log("Inside fetch api");
                     console.log(responseData.email);
-                }).then( response => {
-                    fetch('/facebookUserRegistration',
-                {
-                    method: 'POST',
-                    redirect: 'follow',
-                    headers: {
-                        "Content-Type": "application/json",
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                    body: JSON.stringify({
-                            fbUserEmail: this.state.facebookUserEmail,
-                            fbUserID: this.state.facebookUserId,
-                            fbUserAccessToken: this.state.facebookUserAccessToken,
-                            fbUserName: this.state.facebookUserName
+                }).then(response => {
+                fetch('/facebookUserRegistration',
+                    {
+                        method: 'POST',
+                        redirect: 'follow',
+                        headers: {
+                            "Content-Type": "application/json",
+                            'Access-Control-Allow-Origin': '*'
+                        },
+                        body: JSON.stringify({
+                                fbUserEmail: this.state.facebookUserEmail,
+                                fbUserID: this.state.facebookUserId,
+                                fbUserAccessToken: this.state.facebookUserAccessToken,
+                                fbUserName: this.state.facebookUserName
 
-                        }
-                    )
+                            }
+                        )
 
-                }
-            ).then(res => {
+                    }
+                ).then(res => {
 
-
-                if (res.status !== 200) {
-                    this.forwardToErrorPage();
-                }else {
-                    this.forwardToSuccessPage();
-                }
-
+                    if (res.status !== 200) {
+                        this.forwardToErrorPage();
+                    } else {
+                        this.forwardToSuccessPage();
+                    }
+                })
 
             })
-        }) }
-
+        }
 
 
         return (
