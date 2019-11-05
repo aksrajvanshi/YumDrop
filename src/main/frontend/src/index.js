@@ -49,13 +49,13 @@ const routing = (
     <Provider store={store}>
         <Router>
             <div>
-                <Route exact path="/" component={App} />
+                <Route exact path="/App" component={App} />
                 <Route exact path="/ErrorPageForRestaurantRegistration" component={ErrorPageForRestaurantRegistration}/>
                 <Route exact path="/Home" component={Home}/>
                 <Route exact path="/LoginPage" component={LoginPage} />
                 <Route exact path="/LoginForm" component={LoginForm} />
                 <Route exact path="/RegisterForm" component={RegisterForm}/>
-                <Route exact path="/LoginDashBoard" component={LoginDashBoard}/>
+                <Route exact path="/" component={LoginDashBoard}/>
                 <Route exact path="/OTPpage" component={OTPpage}/>
                 <Route exact path="/DeliveryAgentOTPpage" component={DeliveryAgentOTPpage}/>
                 <Route exact path="/errorPageForRegistration" component={errorPageForRegistration} />
