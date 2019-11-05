@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch)=> {
     }
 }
 
-class MyCurrentLocation extends Component {
+class MyCurrentRestaurantLocation extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -122,6 +122,7 @@ class MyCurrentLocation extends Component {
                     show={this.state.positionSelect}
                     animation={false}
                     id="modal"
+                    centered
                 >
                     <div className="container">
                         <div className="row">
@@ -146,6 +147,7 @@ class MyCurrentLocation extends Component {
                     show={this.state.getLocation}
                     animation={false}
                     id="modal"
+                    centered
                 >
                     <div className="container">
                         <div className="row">
@@ -172,4 +174,4 @@ class MyCurrentLocation extends Component {
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps) (MyCurrentLocation);
+export default connect(mapStateToProps,mapDispatchToProps) (MyCurrentRestaurantLocation);

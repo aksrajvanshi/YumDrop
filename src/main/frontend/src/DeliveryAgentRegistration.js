@@ -8,34 +8,29 @@ import { isMobilePhone, isEmail } from "validator";
 
 
 
-class App extends Component {
+class DeliveryAgentRegistration extends Component {
     constructor(props){
         super(props)
     }
     state = {
         closeAllOptionsOfSelectionForm: false,
         userRegister: false,
-        restaurantRegister: true,
-        deliveryAgentRegister: false,
-        userPhoneNumber: "",
-        userEmailID: "",
+        restaurantRegister: false,
+        deliveryAgentRegister: true,
         otpVal: false,
         registerSelect: false,
-        restaurantFullName: "",
-        restaurantPrimaryEmailId: "",
-        restaurantId: "",
-        restaurantSecondaryEmailID: "",
-        restaurantPrimaryPhoneNumber: "",
-        restaurantSecondaryPhoneNumber: "",
-        restaurantPassword: "",
-        restaurantConfirmPassword: "",
+        deliveryAgentFullName: "",
+        deliveryAgentEmailId: "",
+        deliveryAgentPhoneNumber: "",
+        deliveryAgentPassword: "",
+        deliveryAgentConfirmPassword: "",
         redirect: false,
-        restaurantOtp: ""
+        deliveryAgentOtp: ""
     };
 
 
     forwardToErrorPage = () => {
-        this.props.history.push('/ErrorPageForRestaurantRegistration');
+        this.props.history.push('/ErrorPageForDeliveryAgentRegistration');
     }
 
     forwardToRegisterForm = () => {
@@ -43,10 +38,12 @@ class App extends Component {
     }
 
 
+
+
     register() {
         debugger;
         let obj = {}
-        fetch('/restaurantRegistration',
+        fetch('/deliveryAgentRegistration',
             {
                 method: 'POST',
                 redirect: 'follow',
@@ -55,20 +52,21 @@ class App extends Component {
                     'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify({
-                    restaurantId: this.state.restaurantId,
-                    restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId
+                        deliveryAgentEmailId: this.state.deliveryAgentEmailId,
+                        deliveryAgentPhoneNumber: this.state.deliveryAgentPhoneNumber
                     }
                 )
 
             }
         ).then(res => {
 
-
+            alert(res)
+            alert(res.status)
             if (res.status !== 200) {
-                this.setState({redirect: true, restaurantRegister: false});
+                this.setState({redirect: true, deliveryAgentRegister: false});
                 this.forwardToErrorPage();
             }else {
-                this.setState({redirect: true, restaurantRegister: false, otpVal:true});
+                this.setState({redirect: true, deliveryAgentRegister: false, otpVal:true});
             }
 
 
@@ -78,7 +76,7 @@ class App extends Component {
     registerOtp() {
         debugger;
         let obj = {}
-        fetch('/verifyOTPandRegisterRestaurant',
+        fetch('/verifyOTPandRegisterDeliveryAgent',
             {
                 method: 'POST',
                 redirect: 'follow',
@@ -87,13 +85,10 @@ class App extends Component {
                     'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify({
-                    restaurantName: this.state.restaurantFullName,
-                    restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId,
-                    restaurantId: this.state.restaurantId,
-                    secondaryEmailID: this.state.restaurantSecondaryEmailID,
-                    primaryPhoneNumber: this.state.restaurantPrimaryPhoneNumber,
-                    secondaryPhoneNumber: this.state.restaurantSecondaryPhoneNumber,
-                    restaurantOtp: this.state.restaurantOtp
+                        deliveryAgentName: this.state.deliveryAgentFullName,
+                        deliveryAgentEmailId: this.state.deliveryAgentEmailId,
+                        deliveryAgentPhoneNumber: this.state.deliveryAgentPhoneNumber,
+                        deliveryAgentOtp: this.state.deliveryAgentOtp
 
                     }
                 )
@@ -124,35 +119,42 @@ class App extends Component {
 
 
 
-
-
-    handleRestaurantFullName = (event) => {
+    handleDeliveryAgentFullName = (event) => {
         this.setState({
-            restaurantFullName: event.target.value,
+            deliveryAgentFullName: event.target.value,
         });
     };
 
-    handleRestaurantPrimaryEmailId = (event) => {
+    deliveryAgentOtp = (event) => {
         this.setState({
-            restaurantPrimaryEmailId: event.target.value,
+            deliveryAgentOtp : event.target.value
+        })
+
+    }
+
+
+    handleDeliveryAgentPrimaryEmailId = (event) => {
+        this.setState({
+            deliveryAgentEmailId: event.target.value,
         })
     }
 
-    handleRestaurantId = (event) => {
+
+
+    handleDeliveryAgentPhoneNumber = (event) => {
         this.setState({
-            restaurantId: event.target.value,
+            deliveryAgentPhoneNumber: event.target.value,
         })
     }
 
-    handleRestaurantSecondaryEmailID = (event) => {
+    handleDeliveryAgentPassword = (event) => {
         this.setState({
-            restaurantSecondaryEmailID: event.target.value,
+            deliveryAgentPassword: event.target.value,
         })
     }
-
-    handleRestaurantPrimaryPhoneNumber = (event) => {
+    handleDeliveryAgentConfirmPassword = (event) => {
         this.setState({
-            restaurantPrimaryPhoneNumber: event.target.value,
+            deliveryAgentConfirmPassword: event.target.value,
         })
     }
 
@@ -160,10 +162,8 @@ class App extends Component {
         this.props.history.push('/');
     }
 
-    handlerestaurantSecondaryPhoneNumber = (event) => {
-        this.setState({
-            restaurantSecondaryPhoneNumber: event.target.value,
-        })
+    forwardToLoginForm = () => {
+        this.props.history.push('/LoginForm')
     }
 
 
@@ -182,7 +182,7 @@ class App extends Component {
 
     render()
     {
-        const {country, region} = this.state;
+
         return (
             <div className="App">
                 <header>
@@ -235,8 +235,55 @@ class App extends Component {
                                     <div className="col-md-5" id="firstbar">
                                         <div className="md-form">
                                             <select className="form-control" id="exampleFormControlSelect1">
-                                                <option>Bloomington, Indiana</option>
-                                                <option>Indianapolis, Indiana</option>
+                                                <option value="AL">Alabama</option>
+                                                <option value="AK">Alaska</option>
+                                                <option value="AR">Arizona</option>
+                                                <option value="AZ">Arkansas</option>
+                                                <option value="CA">California</option>
+                                                <option value="CO">Colorado</option>
+                                                <option value="CT">Connecticut</option>
+                                                <option value="DC">Delaware</option>
+                                                <option value="FL">Florida</option>
+                                                <option value="GA">Georgia</option>
+                                                <option value="HI">Hawaii</option>
+                                                <option value="IA">Idaho</option>
+                                                <option value="ID">Illinois</option>
+                                                <option value="IN">Indiana</option>
+                                                <option value="KS">Iowa</option>
+                                                <option value="KY">Kansas</option>
+                                                <option value="LA">Kentucky</option>
+                                                <option value="MA">Louisiana</option>
+                                                <option value="MD">Maine</option>
+                                                <option value="ME">Maryland</option>
+                                                <option value="MI">Massachusetts</option>
+                                                <option value="MN">Michigan</option>
+                                                <option value="MO">Minnesota</option>
+                                                <option value="MS">Mississippi</option>
+                                                <option value="MT">Missouri</option>
+                                                <option value="NC">Montana</option>
+                                                <option value="NE">Nebraska</option>
+                                                <option value="NH">Nevada</option>
+                                                <option value="NJ">New Hampshire</option>
+                                                <option value="NM">New Jersey</option>
+                                                <option value="NV">New Mexico</option>
+                                                <option value="NY">New York</option>
+                                                <option value="ND">North Carolina</option>
+                                                <option value="OH">North Dakota</option>
+                                                <option value="OK">Ohio</option>
+                                                <option value="OR">Oregon</option>
+                                                <option value="PA">Pennsylvania</option>
+                                                <option value="RI">Rhode Island</option>
+                                                <option value="SC">South Carolina</option>
+                                                <option value="SD">South Dakota</option>
+                                                <option value="TN">Tennessee</option>
+                                                <option value="TX">Texas</option>
+                                                <option value="UT">Utah</option>
+                                                <option value="VT">Vermont</option>
+                                                <option value="VA">Virginia</option>
+                                                <option value="WA">Washington</option>
+                                                <option value="WI">West Virginia</option>
+                                                <option value="WV">Wisconsin</option>
+                                                <option value="WY">Wyoming</option>
                                             </select>
                                         </div>
                                     </div>
@@ -273,8 +320,8 @@ class App extends Component {
                                     <form onSubmit={this.registerOtp.bind(this)}>
                                         <h2 className="text-center">Please provide 6 digit OTP</h2>
                                         <div className="form-group">
-                                            <input value={this.state.userOtp}
-                                                   onChange={this.handleUserOtpChange} type="text"
+                                            <input value={this.state.deliveryAgentOtp}
+                                                   onChange={this.deliveryAgentOtp} type="text"
                                                    className="form-control" placeholder="OTP"
                                                    pattern="[a-z][A-Z]"
                                                    required="required"/>
@@ -294,7 +341,7 @@ class App extends Component {
 
                 </Modal>
                 <Modal
-                    show={this.state.restaurantRegister}
+                    show={this.state.deliveryAgentRegister}
                     onHide={this.closeAllOptionsOfSelectionForm}
                     animation={false}
                     id="modal"
@@ -304,56 +351,48 @@ class App extends Component {
                             <div className="main">
                                 <div className="login-form">
                                     <form onSubmit={this.register.bind(this)}>
-                                        <h2 className="text-center">Restaurant Sign Up</h2>
+                                        <h2 className="text-center">Delivery Agent Sign Up</h2>
 
                                         <div className="form-group">
-                                            <input value={this.state.restaurantFullName}
-                                                   onChange={this.handleRestaurantFullName} type="text"
+                                            <input value={this.state.deliveryAgentFullName}
+                                                   onChange={this.handleDeliveryAgentFullName} type="text"
                                                    className="form-control" placeholder="Full Name"
-                                                   title="Please enter restaurant full name"
+                                                   title="Please enter Delivery Agent full name"
                                                    pattern="(?=.*[a-zA-Z]).{1,}"
                                                    required="required"/>
                                         </div>
+
                                         <div className="form-group">
-                                            <input value={this.state.restaurantId}
-                                                   onChange={this.handleRestaurantId} type="text"
-                                                   className="form-control" placeholder="ID"
-                                                   title="Please enter a valid Restaurant ID"
-                                                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                                                   required="required"/>
-                                        </div>
-                                        <div className="form-group">
-                                            <input value={this.state.restaurantPrimaryEmailId}
-                                                   onChange={this.handleRestaurantPrimaryEmailId} type="text"
-                                                   className="form-control" placeholder="Primary Email ID"
+                                            <input value={this.state.deliveryAgentEmailId}
+                                                   onChange={this.handleDeliveryAgentPrimaryEmailId} type="text"
+                                                   className="form-control" placeholder="Email ID"
                                                    title="Please enter a valid email address"
                                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                                    required="required"/>
                                         </div>
+
                                         <div className="form-group">
-                                            <input type="text" value={this.state.restaurantSecondaryEmailID}
-                                                   onChange={this.handleRestaurantSecondaryEmailID} className="form-control"
-                                                   id="userPassword"
-                                                   placeholder="Secondary Email ID"
-                                                   pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                                   required="required"/>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="text" value={this.state.restaurantPrimaryPhoneNumber}
-                                                   onChange={this.handleRestaurantPrimaryPhoneNumber}
+                                            <input type="text" value={this.state.deliveryAgentPhoneNumber}
+                                                   onChange={this.handleDeliveryAgentPhoneNumber}
                                                    id="userConfirmPassword"
-                                                   className="form-control" placeholder="Restaurant Primary Phone Number"
+                                                   className="form-control" placeholder="Phone Number"
                                                    title="Primary Phone Number"
                                                    pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                                    required="required"/>
                                         </div>
                                         <div className="form-group">
-                                            <input type="text" value={this.state.restaurantSecondaryPhoneNumber}
-                                                   onChange={this.handlerestaurantSecondaryPhoneNumber}
+                                            <input type="password" value={this.state.deliveryAgentPassword}
+                                                   onChange={this.handleDeliveryAgentPassword}
                                                    id="userConfirmPassword"
-                                                   className="form-control" placeholder="Secondary Phone Number"
-                                                   pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                                   required="required"/>
+                                                   className="form-control" placeholder="Password"
+                                                   />
+                                        </div>
+                                        <div className="form-group">
+                                            <input type="password" value={this.state.deliveryAgentConfirmPassword}
+                                                   onChange={this.handleDeliveryAgentConfirmPassword}
+                                                   id="userConfirmPassword"
+                                                   className="form-control" placeholder="Confirm Password"
+                                            />
                                         </div>
                                         <div className="form-group">
                                             <button onClick={this.register.bind(this)} type="submit"
@@ -422,4 +461,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default  DeliveryAgentRegistration;

@@ -139,7 +139,6 @@
     }
 }
 
-/*Sidenav*/
 .sidenav {
     height: 100%;
     width: 0;
@@ -281,4 +280,55 @@
 .pricetext {
     font-weight:bold;
     font-size:1.4em;
+}
+
+.section .row{
+    margin-top: 7%;
+    margin-bottom: 10%;
+}
+.section .row .col-md-6{
+    background: #f5f5f5;
+    margin-right: -2%;
+    padding: 5%;
+}
+.section h3{
+    color: #004085;
+}
+.section p{
+    margin-top: 10%;
+    color: #545b62;
+}
+.section img
+{
+    width: 70%;
+}
+
+#paragraph{
+    padding-left: 10px;
+
+}
+
+.title h3{
+    font-size: 25px !important;
+    margin-top: 20px;
+    margin-bottom: 25px;
+    line-height: 1.4em !important;
+    font-weight: 300;
+}
+
+.container h4 {
+    font-size: 1.125rem;
+    font-weight: 300;
+    line-height: 1.5em;
+    margin-bottom: 30px;
+}
+
+
+
+img.rounded {
+    border-radius: 6px!important;
+}
+
+.img-raised {
+    box-shadow: 0 5px 15px -8px rgba(0,0,0,.24), 0 8px 10px -5px rgba(0,0,0,.2);
 }
