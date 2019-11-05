@@ -57,6 +57,7 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
         if (isTempPasswordMatching) {
             Users userInDb = usersRepository.findByuserEmail(userEmail);
             userInDb.setUserPassword(newPassword);
+            usersTemporaryPasswordRepository.deleteById(userEmail);
             usersRepository.save(userInDb);
             return ResponseEntity.status(HttpStatus.OK).build();
         }

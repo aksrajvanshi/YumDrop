@@ -2,23 +2,65 @@ package com.app.yumdrop.FormEntity;
 
 public class RestaurantRegisterForm {
 
+
     public String restaurantId;
     private String restaurantName;
     private String restaurantPrimaryEmailId;
-    private String secondaryEmailID;
+    private String restaurantSecondaryEmailId;
     private String primaryPhoneNumber;
     private String secondaryPhoneNumber;
+    private String restaurantOtp;
     private String restaurantArea;
     private String restaurantCity;
     private String restaurantAddress;
 
-    public RestaurantRegisterForm(String restaurantId, String restaurantName, String restaurantPrimaryEmailId, String secondaryEmailID, String primaryPhoneNumber, String secondaryPhoneNumber, String restaurantArea, String restaurantCity, String restaurantAddress) {
+    public RestaurantRegisterForm(){
+
+    }
+
+    @Override
+    public String toString() {
+        return "RestaurantRegisterForm{" +
+                "restaurantId='" + restaurantId + '\'' +
+                ", restaurantName='" + restaurantName + '\'' +
+                ", restaurantPrimaryEmailId='" + restaurantPrimaryEmailId + '\'' +
+                ", restaurantSecondaryEmailId='" + restaurantSecondaryEmailId + '\'' +
+                ", primaryPhoneNumber='" + primaryPhoneNumber + '\'' +
+                ", secondaryPhoneNumber='" + secondaryPhoneNumber + '\'' +
+                ", restaurantOtp='" + restaurantOtp + '\'' +
+                ", restaurantArea='" + restaurantArea + '\'' +
+                ", restaurantCity='" + restaurantCity + '\'' +
+                ", restaurantAddress='" + restaurantAddress + '\'' +
+                '}';
+    }
+
+    public RestaurantRegisterForm(String restaurantId, String restaurantName, String restaurantPrimaryEmailId, String restaurantSecondaryEmailId, String primaryPhoneNumber, String secondaryPhoneNumber) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
-        this.secondaryEmailID = secondaryEmailID;
+        this.restaurantSecondaryEmailId = restaurantSecondaryEmailId;
         this.primaryPhoneNumber = primaryPhoneNumber;
         this.secondaryPhoneNumber = secondaryPhoneNumber;
+    }
+
+    public RestaurantRegisterForm(String restaurantId, String restaurantName, String restaurantPrimaryEmailId, String restaurantSecondaryEmailId, String primaryPhoneNumber, String secondaryPhoneNumber, String restaurantOtp) {
+        this.restaurantId = restaurantId;
+        this.restaurantName = restaurantName;
+        this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
+        this.restaurantSecondaryEmailId = restaurantSecondaryEmailId;
+        this.primaryPhoneNumber = primaryPhoneNumber;
+        this.secondaryPhoneNumber = secondaryPhoneNumber;
+        this.restaurantOtp = restaurantOtp;
+    }
+
+    public RestaurantRegisterForm(String restaurantId, String restaurantName, String restaurantPrimaryEmailId, String restaurantSecondaryEmailId, String primaryPhoneNumber, String secondaryPhoneNumber, String restaurantOtp, String restaurantArea, String restaurantCity, String restaurantAddress) {
+        this.restaurantId = restaurantId;
+        this.restaurantName = restaurantName;
+        this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
+        this.restaurantSecondaryEmailId = restaurantSecondaryEmailId;
+        this.primaryPhoneNumber = primaryPhoneNumber;
+        this.secondaryPhoneNumber = secondaryPhoneNumber;
+        this.restaurantOtp = restaurantOtp;
         this.restaurantArea = restaurantArea;
         this.restaurantCity = restaurantCity;
         this.restaurantAddress = restaurantAddress;
@@ -48,12 +90,12 @@ public class RestaurantRegisterForm {
         this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
     }
 
-    public String getSecondaryEmailID() {
-        return secondaryEmailID;
+    public String getRestaurantSecondaryEmailId() {
+        return restaurantSecondaryEmailId;
     }
 
-    public void setSecondaryEmailID(String secondaryEmailID) {
-        this.secondaryEmailID = secondaryEmailID;
+    public void setRestaurantSecondaryEmailId(String restaurantSecondaryEmailId) {
+        this.restaurantSecondaryEmailId = restaurantSecondaryEmailId;
     }
 
     public String getPrimaryPhoneNumber() {
@@ -70,6 +112,14 @@ public class RestaurantRegisterForm {
 
     public void setSecondaryPhoneNumber(String secondaryPhoneNumber) {
         this.secondaryPhoneNumber = secondaryPhoneNumber;
+    }
+
+    public String getRestaurantOtp() {
+        return restaurantOtp;
+    }
+
+    public void setRestaurantOtp(String restaurantOtp) {
+        this.restaurantOtp = restaurantOtp;
     }
 
     public String getRestaurantArea() {
