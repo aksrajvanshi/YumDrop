@@ -45,10 +45,10 @@ class LoginDashBoard extends Component{
 
                                     <li className="nav-item">
                                         <a className="nav-link"><i
-                                            className="fa fa-fw fa-user"/>My Cart</a>
+                                            className="fa fa-fw fa-user"/>Cart</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link"  onClick={this.onClick} ><span>My Settings</span></a>
+                                        <a className="nav-link"  onClick={this.onClick} ><span>Settings</span></a>
                                     </li>
                                 </ul>
                             </div>

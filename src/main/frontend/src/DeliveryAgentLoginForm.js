@@ -81,9 +81,6 @@ class App extends Component {
             }),
         }).then(res => {
 
-            alert("Entered");
-            alert(res.status);
-            alert(res)
             if (res.status !== 200) {
 
                 this.forwardToLoginErrorPage();
@@ -242,22 +239,69 @@ class App extends Component {
                                 <div className="col-md-5" id="firstbar">
                                     <div className="md-form">
                                         <select className="form-control" id="exampleFormControlSelect1">
-                                            <option>Bloomington, Indiana</option>
-                                            <option>Indianapolis, Indiana</option>
+                                            <option value="AL">Alabama</option>
+                                            <option value="AK">Alaska</option>
+                                            <option value="AR">Arizona</option>
+                                            <option value="AZ">Arkansas</option>
+                                            <option value="CA">California</option>
+                                            <option value="CO">Colorado</option>
+                                            <option value="CT">Connecticut</option>
+                                            <option value="DC">Delaware</option>
+                                            <option value="FL">Florida</option>
+                                            <option value="GA">Georgia</option>
+                                            <option value="HI">Hawaii</option>
+                                            <option value="IA">Idaho</option>
+                                            <option value="ID">Illinois</option>
+                                            <option value="IN">Indiana</option>
+                                            <option value="KS">Iowa</option>
+                                            <option value="KY">Kansas</option>
+                                            <option value="LA">Kentucky</option>
+                                            <option value="MA">Louisiana</option>
+                                            <option value="MD">Maine</option>
+                                            <option value="ME">Maryland</option>
+                                            <option value="MI">Massachusetts</option>
+                                            <option value="MN">Michigan</option>
+                                            <option value="MO">Minnesota</option>
+                                            <option value="MS">Mississippi</option>
+                                            <option value="MT">Missouri</option>
+                                            <option value="NC">Montana</option>
+                                            <option value="NE">Nebraska</option>
+                                            <option value="NH">Nevada</option>
+                                            <option value="NJ">New Hampshire</option>
+                                            <option value="NM">New Jersey</option>
+                                            <option value="NV">New Mexico</option>
+                                            <option value="NY">New York</option>
+                                            <option value="ND">North Carolina</option>
+                                            <option value="OH">North Dakota</option>
+                                            <option value="OK">Ohio</option>
+                                            <option value="OR">Oregon</option>
+                                            <option value="PA">Pennsylvania</option>
+                                            <option value="RI">Rhode Island</option>
+                                            <option value="SC">South Carolina</option>
+                                            <option value="SD">South Dakota</option>
+                                            <option value="TN">Tennessee</option>
+                                            <option value="TX">Texas</option>
+                                            <option value="UT">Utah</option>
+                                            <option value="VT">Vermont</option>
+                                            <option value="VA">Virginia</option>
+                                            <option value="WA">Washington</option>
+                                            <option value="WI">West Virginia</option>
+                                            <option value="WV">Wisconsin</option>
+                                            <option value="WY">Wyoming</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div className="col-md-4">
                                     <div className="md-form">
                                         <input type="text"
-                                               placeholder="Search for food, cuisines, deliveryAgents here.."
-                                               id="form5" className="form-control validate"/>
+                                               placeholder="Search for food, cuisines, restaurants here.."
+                                               className="form-control validate"/>
 
                                     </div>
                                 </div>
-                                <div className="col-md-1" id="buttonOrder">
+                                <div className="col-md-1" >
                                     <div className="md-form">
-                                        <button className="btn btn-lg btn-danger">Search</button>
+                                        <button className="btn btn-primary btn-md"><span id="SearchBar">Search</span></button>
                                     </div>
                                 </div>
                             </div>
@@ -265,6 +309,9 @@ class App extends Component {
                     </ul>
                 </div>
             </div>
+            <br/>
+            <br/>
+
 
             <Modal
                 show={this.state.deliveryAgentLoginOption}

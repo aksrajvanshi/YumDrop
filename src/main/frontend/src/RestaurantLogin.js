@@ -302,13 +302,13 @@ class App extends Component {
                                     <div className="md-form">
                                         <input type="text"
                                                placeholder="Search for food, cuisines, restaurants here.."
-                                               id="form5" className="form-control validate"/>
+                                               className="form-control validate"/>
 
                                     </div>
                                 </div>
-                                <div className="col-md-1" id="buttonOrder">
+                                <div className="col-md-1" >
                                     <div className="md-form">
-                                        <button className="btn btn-lg btn-danger">Search</button>
+                                        <button className="btn btn-primary btn-md"><span id="SearchBar">Search</span></button>
                                     </div>
                                 </div>
                             </div>
@@ -316,6 +316,10 @@ class App extends Component {
                     </ul>
                 </div>
             </div>
+
+            <br/>
+            <br/>
+            <br/>
 
             <Modal
                 show={this.state.restaurantLoginOption}
@@ -363,6 +367,7 @@ class App extends Component {
                                         verifyCallback={this.verifyCallback}
 
                                     />
+                                    <br/>
                                     <div className="form-group">
                                         <button onClick={this.login.bind(this)} type="submit"
                                                 className="btn btn-primary btn-lg btn-block login-btn">Login
@@ -402,7 +407,7 @@ class App extends Component {
 
                                     <div className="form-group">
                                         <button onClick={this.forgotPasswordAPI.bind(this)} type="submit"
-                                                className="btn btn-primary btn-lg btn-block login-btn">Submit
+                                                className="btn btn-primary btn-lg btn-block ">Submit
                                         </button>
                                     </div>
                                 </form>
