@@ -90,7 +90,7 @@ class App extends Component {
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
-                alert("Hey going to Error page");
+
             }else {
                 this.setState({redirect: true, userRegister: false, emailSelectForgotPassword: false, forgotPasswordSelect: true});
                 this.forwardToSuccessfullyChangedPasswordPage();
@@ -112,8 +112,7 @@ class App extends Component {
             }),
         }).then(res => {
 
-            alert("Entered");
-            alert(res.status);
+
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
