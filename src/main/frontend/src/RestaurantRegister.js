@@ -5,8 +5,7 @@ import {connect} from 'react-redux';
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import { isMobilePhone, isEmail } from "validator";
-
-
+import Recaptcha from 'react-recaptcha';
 
 class App extends Component {
     constructor(props){
@@ -30,7 +29,8 @@ class App extends Component {
         restaurantPassword: "",
         restaurantConfirmPassword: "",
         redirect: false,
-        restaurantOtp: ""
+        restaurantOtp: "",
+        isReCaptchaVerified: false
     };
 
 
@@ -42,6 +42,13 @@ class App extends Component {
         this.props.history.push("/RegisterForm");
     }
 
+    verifyCallback = response => {
+        if(response) {
+            this.setState({
+                isReCaptchaVerified: true
+            })
+        }
+    }
 
     register() {
         debugger;
@@ -68,7 +75,13 @@ class App extends Component {
                 this.setState({redirect: true, restaurantRegister: false});
                 this.forwardToErrorPage();
             }else {
-                this.setState({redirect: true, restaurantRegister: false, otpVal:true});
+                if (this.state.isReCaptchaVerified) {
+                    this.setState({redirect: true, restaurantRegister: false, otpVal: true});
+                }
+                else {
+                    this.setState({redirect: true, restaurantRegister: false});
+                    this.forwardToErrorPage();
+                }
             }
 
 
@@ -408,6 +421,13 @@ class App extends Component {
                                                    pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                                    required="required"/>
                                         </div>
+                                        <Recaptcha
+                                            sitekey="6LfA28AUAAAAAAdm39FjgIVi38BoyQoLDKTM5EJN"
+                                            render="explicit"
+                                            onloadCallback={this.recaptchaLoaded}
+                                            verifyCallback={this.verifyCallback}
+
+                                        />
                                         <div className="form-group">
                                             <button onClick={this.register.bind(this)} type="submit"
                                                     className="btn btn-primary btn-lg btn-block login-btn">Sign Up

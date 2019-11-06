@@ -67,7 +67,7 @@ class LoginDashBoard extends Component{
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
                                     <li className="nav-item">
-                                        Welcome <a>{this.props.userEmailId}  {this.state.userEmailId}</a></li>
+                                        Welcome <a>{this.props.userEmailId}  </a></li>
                                     <li className="nav-item">
                                         <a className="nav-link"><i
                                             className="fa fa-fw fa-user"/>My Cart</a>
