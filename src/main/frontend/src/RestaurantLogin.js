@@ -79,9 +79,7 @@ class App extends Component {
             }),
         }).then(res => {
 
-            alert("Entered");
-            alert(res.status);
-            alert(res)
+
             if (res.status !== 200) {
                 this.forwardToLoginErrorPage();
             }else {
@@ -105,8 +103,7 @@ class App extends Component {
             }),
         }).then(res => {
 
-            alert("Entered");
-            alert(res.status);
+
             if (res.status !== 200) {
                 this.forwardToLoginErrorPage();
             }else {
