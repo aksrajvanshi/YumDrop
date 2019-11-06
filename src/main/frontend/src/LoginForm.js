@@ -86,8 +86,7 @@ class App extends Component {
             }),
         }).then(res => {
 
-            alert("Entered");
-            alert(res.status);
+
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
@@ -411,6 +410,7 @@ class App extends Component {
                                     <div className="col-md-12 offset-7 form-group">
                                         <a href="#" onClick={this.handleForgotPasswordChange}>Forgot Password?</a>
                                     </div>
+                                    <div className="form-group">
                                     <Recaptcha
                                         sitekey="6LfA28AUAAAAAAdm39FjgIVi38BoyQoLDKTM5EJN"
                                         render="explicit"
@@ -418,6 +418,7 @@ class App extends Component {
                                         verifyCallback={this.verifyCallback}
 
                                     />
+                                    </div>
                                     <div className="form-group">
                                         <button onClick={this.login.bind(this)} type="submit"
                                                 className="btn btn-primary btn-lg btn-block login-btn">Login

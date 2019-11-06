@@ -421,6 +421,7 @@ class App extends Component {
                                                    pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                                    required="required"/>
                                         </div>
+                                        <div className="form-group">
                                         <Recaptcha
                                             sitekey="6LfA28AUAAAAAAdm39FjgIVi38BoyQoLDKTM5EJN"
                                             render="explicit"
@@ -428,6 +429,7 @@ class App extends Component {
                                             verifyCallback={this.verifyCallback}
 
                                         />
+                                        </div>
                                         <div className="form-group">
                                             <button onClick={this.register.bind(this)} type="submit"
                                                     className="btn btn-primary btn-lg btn-block login-btn">Sign Up

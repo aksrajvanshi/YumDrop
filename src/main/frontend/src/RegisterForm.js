@@ -545,6 +545,7 @@ class App extends Component {
                                                    pattern="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$"
                                                    required="required"/>
                                         </div>
+                                        <div className="form-group">
                                         <Recaptcha
                                             sitekey="6LfA28AUAAAAAAdm39FjgIVi38BoyQoLDKTM5EJN"
                                             render="explicit"
@@ -552,6 +553,7 @@ class App extends Component {
                                             verifyCallback={this.verifyCallback}
 
                                         />
+                                        </div>
                                         <div className="form-group">
                                             <button onClick={this.register.bind(this)} type="submit"
                                                     className="btn btn-primary btn-lg btn-block login-btn">Sign Up
