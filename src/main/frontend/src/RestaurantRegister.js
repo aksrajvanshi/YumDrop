@@ -114,7 +114,7 @@ class App extends Component {
             }
         ).then(res => {
 
-            alert(res.status);
+            
             console.log(res.status)
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
