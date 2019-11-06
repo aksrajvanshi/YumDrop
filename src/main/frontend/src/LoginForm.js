@@ -361,7 +361,7 @@ class App extends Component {
                                 </div>
                                 <div className="col-md-1" >
                                     <div className="md-form">
-                                        <button className="btn btn-lg btn-danger">Search</button>
+                                        <button className="btn btn-primary btn-md"><span id="SearchBar">Search</span></button>
                                     </div>
                                 </div>
                             </div>
@@ -370,6 +370,8 @@ class App extends Component {
                 </div>
             </div>
 
+
+            <br/><br/><br/><br/>
             <Modal
                 show={this.state.userLoginOption}
                 onHide={this.closeAllOptionsOfSelectionForm}
@@ -418,9 +420,10 @@ class App extends Component {
                                         verifyCallback={this.verifyCallback}
 
                                     />
+                                    <br/>
                                     <div className="form-group">
                                         <button onClick={this.login.bind(this)} type="submit"
-                                                className="btn btn-primary btn-lg btn-block login-btn">Login
+                                                className="btn btn-primary btn-lg btn-block">Login
                                         </button>
                                     </div>
 
@@ -451,19 +454,19 @@ class App extends Component {
                                     <form>
                                         <div className="form-group">
                                             <button  type="submit"
-                                                     onClick={this.handelUserLoginOption} className="btn btn-primary btn-lg btn-block login-btn">User Login
+                                                     onClick={this.handelUserLoginOption} className="btn btn-primary btn-lg btn-block">User Login
                                             </button>
                                         </div>
 
                                         <div className="form-group">
                                             <button  type="submit" onClick={this.forwardToRestaurantregister}
-                                                     className="btn btn-primary btn-lg btn-block login-btn">Restaurant Login
+                                                     className="btn btn-primary btn-lg btn-block">Restaurant Login
                                             </button>
                                         </div>
 
                                         <div className="form-group">
                                             <button  type="submit" onClick={this.forwardToDeliveryAgentLoginForm}
-                                                     className="btn btn-primary btn-lg btn-block login-btn">Delivery Agent Login
+                                                     className="btn btn-primary btn-lg btn-block">Delivery Agent Login
                                             </button>
                                         </div>
                                     </form>
