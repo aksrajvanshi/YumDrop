@@ -390,7 +390,7 @@ class App extends Component {
                                     </div>
                                     <div className="col-md-1" >
                                         <div className="md-form">
-                                            <button className="btn btn-lg btn-danger">Search</button>
+                                            <button className="btn btn-primary btn-md"><span id="SearchBar">Search</span></button>
                                         </div>
                                     </div>
                                 </div>
@@ -419,19 +419,19 @@ class App extends Component {
                                     <form>
                                         <div className="form-group">
                                             <button  type="submit"
-                                                     onClick={this.userRegister}   className="btn btn-primary btn-lg btn-block login-btn">User Registration
+                                                     onClick={this.userRegister}   className="btn btn-primary btn-lg btn-block">User
                                             </button>
                                         </div>
 
                                         <div className="form-group">
-                                            <button  type="submit" onClick={this.forwardToRestaurantRegistrationForm}
-                                                     className="btn btn-primary btn-lg btn-block login-btn">Restaurant Registration
+                                            <button  onClick={this.forwardToRestaurantRegistrationForm}
+                                                     className="btn btn-primary btn-lg btn-block">Restaurant
                                             </button>
                                         </div>
 
                                         <div className="form-group">
                                             <button  type="submit" onClick={this.forwardToDeliveryAgentRegistration}
-                                                     className="btn btn-primary btn-lg btn-block login-btn">Delivery Agent Registration
+                                                     className="btn btn-primary btn-lg btn-block">Delivery Agent
                                             </button>
                                         </div>
                                     </form>
@@ -552,9 +552,10 @@ class App extends Component {
                                             verifyCallback={this.verifyCallback}
 
                                         />
+                                        <br/>
                                         <div className="form-group">
                                             <button onClick={this.register.bind(this)} type="submit"
-                                                    className="btn btn-primary btn-lg btn-block login-btn">Sign Up
+                                                    className="btn btn-primary btn-lg btn-block">Sign Up
                                             </button>
                                         </div>
                                     </form>
@@ -568,6 +569,7 @@ class App extends Component {
 
 
 
+                <br/><br/><br/><br/>
                 <div className="how-section1">
                     <div className="row">
                         <div className="col-md-6 how-img">

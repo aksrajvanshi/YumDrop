@@ -131,7 +131,7 @@ class App extends Component {
                                     </div>
                                     <div className="col-md-1" >
                                         <div className="md-form">
-                                            <button className="btn btn-lg btn-danger">Search</button>
+                                            <button className="btn btn-primary btn-md"><span id="SearchBar">Search</span></button>
                                         </div>
                                     </div>
                                 </div>

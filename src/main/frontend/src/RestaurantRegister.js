@@ -314,9 +314,9 @@ class App extends Component {
 
                                         </div>
                                     </div>
-                                    <div className="col-md-1" id="buttonOrder">
+                                    <div className="col-md-1" >
                                         <div className="md-form">
-                                            <button className="btn btn-lg btn-danger">Search</button>
+                                            <button className="btn btn-primary btn-md"><span id="SearchBar">Search</span></button>
                                         </div>
                                     </div>
                                 </div>
@@ -348,7 +348,7 @@ class App extends Component {
 
                                         <div className="form-group">
                                             <button onClick={this.registerOtp.bind(this)} type="submit"
-                                                    className="btn btn-primary btn-lg btn-block login-btn">Verify
+                                                    className="btn btn-primary btn-lg btn-block">Verify
                                             </button>
                                         </div>
                                     </form>
@@ -383,7 +383,7 @@ class App extends Component {
                                         <div className="form-group">
                                             <input value={this.state.restaurantId}
                                                    onChange={this.handleRestaurantId} type="text"
-                                                   className="form-control" placeholder="ID"
+                                                   className="form-control" placeholder="Restaurant ID"
                                                    title="Please enter a valid Restaurant ID"
                                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                                    required="required"/>
@@ -408,7 +408,7 @@ class App extends Component {
                                             <input type="text" value={this.state.restaurantPrimaryPhoneNumber}
                                                    onChange={this.handleRestaurantPrimaryPhoneNumber}
                                                    id="userConfirmPassword"
-                                                   className="form-control" placeholder="Restaurant Primary Phone Number"
+                                                   className="form-control" placeholder="Primary Phone Number"
                                                    title="Primary Phone Number"
                                                    pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                                    required="required"/>
@@ -428,9 +428,10 @@ class App extends Component {
                                             verifyCallback={this.verifyCallback}
 
                                         />
+                                        <br/>
                                         <div className="form-group">
                                             <button onClick={this.register.bind(this)} type="submit"
-                                                    className="btn btn-primary btn-lg btn-block login-btn">Sign Up
+                                                    className="btn btn-primary btn-lg btn-block">Sign Up
                                             </button>
                                         </div>
                                     </form>
@@ -444,6 +445,7 @@ class App extends Component {
 
 
 
+                <br/><br/><br/><br/>
                 <div className="how-section1">
                     <div className="row">
                         <div className="col-md-6 how-img">
@@ -463,26 +465,26 @@ class App extends Component {
 
                         </div>
                         <div className="col-md-6 how-img">
-                            <img src="https://cdn4.vectorstock.com/i/1000x1000/05/13/man-holding-pizza-box-and-courier-bag-vector-17210513.jpg"
+                            <img src="https://cdn.clipart.email/3a7d43627822f0b19af9bd540aebd827_food-delivery-man-clipart-clipartxtras_170-155.jpeg"
                                  className="rounded-circle img-fluid" alt=""/>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-md-6 how-img">
-                            <img src="https://cdn5.vectorstock.com/i/1000x1000/37/04/food-delivery-icon-image-vector-16143704.jpg"
+                            <img src="https://activmeals.com/images/step3.png"
                                  className="rounded-circle img-fluid" alt=""/>
                         </div>
                         <div className="col-md-6">
                             <h4>Pickup or delivery from restaurants near you</h4>
 
-                            <p className="text-muted">Explore restaurants that deliver near you, or try yummy takeout fare. With a place for every taste, it’s easy to find food you crave, and order online or through the YumDrop app. Find great meals fast with lots of local menus. Enjoy eating the convenient way with places that deliver to your door..</p>
+                            <h4 className="subheading">Explore restaurants that deliver near you, or try yummy takeout fare. With a place for every taste, it’s easy to find food you crave, and order online or through the YumDrop app. Find great meals fast with lots of local menus. Enjoy eating the convenient way with places that deliver to your door..</h4>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-md-6">
                             <h4>Easy Pay</h4>
-                            <p className="text-muted">Pay for food with one click of a button.
-                                Multiple payment options. </p>
+                            <h4 className="subheading">Pay for food with one click of a button.
+                                Multiple payment options. </h4>
                         </div>
                         <div className="col-md-6 how-img">
                             <img src="https://www.trzcacak.rs/myfile/full/377-3774169_payment-channel-payment-channel-payment-channel-payment-bank.png"
