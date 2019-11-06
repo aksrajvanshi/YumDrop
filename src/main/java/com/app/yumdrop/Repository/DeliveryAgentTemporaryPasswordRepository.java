@@ -1,10 +1,10 @@
 package com.app.yumdrop.Repository;
 
-import com.app.yumdrop.Entity.Delivery_Agent_Temporary_Password;
+import com.app.yumdrop.Entity.DeliveryAgentTemporaryPassword;
 import org.springframework.data.repository.CrudRepository;
 
 
-public interface DeliveryAgentTemporaryPasswordRepository extends CrudRepository<Delivery_Agent_Temporary_Password, String> {
+public interface DeliveryAgentTemporaryPasswordRepository extends CrudRepository<DeliveryAgentTemporaryPassword, String> {
 
-    Delivery_Agent_Temporary_Password findBydaEmail(String daEmail);
+    DeliveryAgentTemporaryPassword findBydaEmail(String daEmail);
 }
