@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import {connect} from "react-redux";
+import Recaptcha from 'react-recaptcha';
 
 const mapStateToProps = (state)=>{
     return {
@@ -36,9 +37,17 @@ class App extends Component {
         redirect: false,
         forgotPasswordSelect: false,
         emailSelectForgotPassword: false,
-        restaurantTemporaryPassword: ""
+        restaurantTemporaryPassword: "",
+        isReCaptchaVerified: false
     };
 
+    verifyCallback = response => {
+        if(response) {
+            this.setState({
+                isReCaptchaVerified: true
+            })
+        }
+    }
 
     login = () => { debugger;
         fetch('/restaurantLogin', {
@@ -56,9 +65,14 @@ class App extends Component {
             if (res.status !== 200) {
                 this.forwardToLoginErrorPage();
             }else {
-                this.props.setRestaurant({restaurantEmailId: this.state.restaurantPrimaryEmailId})
-                this.setState({restaurantRegister: false});
-                this.forwardToLoginDashboard();
+                if(this.state.isReCaptchaVerified) {
+                    this.props.setRestaurant({restaurantEmailId: this.state.restaurantPrimaryEmailId})
+                    this.setState({restaurantRegister: false});
+                    this.forwardToLoginDashboard();
+                }
+                else {
+                    this.forwardToLoginErrorPage();
+                }
             }
 
 
@@ -79,9 +93,7 @@ class App extends Component {
             }),
         }).then(res => {
 
-            alert("Entered");
-            alert(res.status);
-            alert(res)
+
             if (res.status !== 200) {
                 this.forwardToLoginErrorPage();
             }else {
@@ -105,8 +117,7 @@ class App extends Component {
             }),
         }).then(res => {
 
-            alert("Entered");
-            alert(res.status);
+
             if (res.status !== 200) {
                 this.forwardToLoginErrorPage();
             }else {
@@ -345,7 +356,13 @@ class App extends Component {
                                     <div className="col-md-12 offset-7 form-group">
                                         <a href="#" onClick={this.handleForgotPasswordChange}>Forgot Password?</a>
                                     </div>
+                                    <Recaptcha
+                                        sitekey="6LfA28AUAAAAAAdm39FjgIVi38BoyQoLDKTM5EJN"
+                                        render="explicit"
+                                        onloadCallback={this.recaptchaLoaded}
+                                        verifyCallback={this.verifyCallback}
 
+                                    />
                                     <div className="form-group">
                                         <button onClick={this.login.bind(this)} type="submit"
                                                 className="btn btn-primary btn-lg btn-block login-btn">Login

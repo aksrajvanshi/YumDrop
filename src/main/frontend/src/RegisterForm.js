@@ -6,6 +6,8 @@ import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
+import Recaptcha from 'react-recaptcha';
+
 class App extends Component {
     constructor(props){
         super(props)
@@ -43,9 +45,19 @@ class App extends Component {
         facebookUserAccessToken: "",
         facebookUserId: "",
         facebookUserEmail: "",
-        facebookUserName:""
+        facebookUserName:"",
+        isReCaptchaVerified: false
 
     };
+
+    verifyCallback = response => {
+        if(response) {
+            this.setState({
+                isReCaptchaVerified: true
+            })
+        }
+    }
+
     forwardToLoginForm = () => {
         this.props.history.push('/LoginForm');
     }
@@ -78,7 +90,12 @@ class App extends Component {
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
             }else {
-                this.setState({redirect: true, userRegister: false, otpVal:true});
+                if(this.state.isReCaptchaVerified) {
+                    this.setState({redirect: true, userRegister: false, otpVal: true});
+                }
+                else {
+                    this.setState({redirect: true, userRegister: false});
+                }
             }
 
 
@@ -528,6 +545,13 @@ class App extends Component {
                                                    pattern="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$"
                                                    required="required"/>
                                         </div>
+                                        <Recaptcha
+                                            sitekey="6LfA28AUAAAAAAdm39FjgIVi38BoyQoLDKTM5EJN"
+                                            render="explicit"
+                                            onloadCallback={this.recaptchaLoaded}
+                                            verifyCallback={this.verifyCallback}
+
+                                        />
                                         <div className="form-group">
                                             <button onClick={this.register.bind(this)} type="submit"
                                                     className="btn btn-primary btn-lg btn-block login-btn">Sign Up
