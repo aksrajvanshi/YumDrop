@@ -36,38 +36,13 @@ class LoginDashBoard extends Component{
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-                    <link rel="stylesheet"
-                          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
-                    <link rel="stylesheet"
-                          href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
-                          integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX"
-                          crossOrigin="anonymous"/>
-                    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
-                          rel="stylesheet"/>
-                    <link rel="stylesheet" type="text/css"
-                          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
-                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-                    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
-                    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-                    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
                             <a className="navbar-brand " href="#" onClick={this.goBackToLoginDashboard}>YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
-                                    <li className="nav-item">
-                                        Welcome <a>{this.props.userEmailId}  </a></li>
+
                                     <li className="nav-item">
                                         <a className="nav-link"><i
                                             className="fa fa-fw fa-user"/>My Cart</a>
@@ -171,7 +146,7 @@ class LoginDashBoard extends Component{
                                                     src="https://assets.grab.com/wp-content/uploads/sites/4/2019/03/18143157/grabfood-singapore-delivery-dominos-700x700.jpg"
                                                     alt=""/>
                                                     <div className="menu_content">
-                                                        <h4>Dominos <span>$15</span></h4>
+                                                        <h4>Dominos <span>Avg %15</span></h4>
                                                         <p>Domino for pizza, sides, sandwiches, pasta, crusts, topping, breads, desserts, salads, dressings, sauce, and dipping cups!</p>
                                                         <h5>Italian, Vegetarian, Non-Vegetarian</h5>
                                                     </div>
@@ -195,7 +170,7 @@ class LoginDashBoard extends Component{
                                                     src="https://www.mcdonalds.com/is/image/content/dam/usa/nfl/nutrition/items/regular/desktop/h-mcdonalds-Quarter-Pounder-with-Cheese-Extra-Value-Meals.jpg"
                                                     alt=""/>
                                                     <div className="menu_content">
-                                                        <h4>McDonald's<span>Avg Price: $5</span></h4>
+                                                        <h4>McDonald's<span>$5</span></h4>
                                                         <p>Nuggets, Burgers, Beverages, Coffee, Salads, Burritos</p>
                                                         <h5>American, Non-Vegetarian</h5>
                                                     </div>
@@ -207,7 +182,7 @@ class LoginDashBoard extends Component{
                                                     src="https://img.grouponcdn.com/deal/oQL9HWSYQo9PQxYG2mBC/YH-2048x1229/v1/sc600x600.jpg"
                                                     alt=""/>
                                                     <div className="menu_content">
-                                                        <h4>Indian Palace<span>Avg Price: $15</span></h4>
+                                                        <h4>Indian Palace<span>$15</span></h4>
                                                         <p>North Indian, Rice, Breads, Curries</p>
                                                         <h5>Indian, Vegetarian, Vegan, Non-Vegetarian</h5>
                                                     </div>
@@ -220,7 +195,7 @@ class LoginDashBoard extends Component{
                                                     src="http://infinityflamesoft.com/html/restarunt-preview/assets/img/menu/menu-3.jpg"
                                                     alt=""/>
                                                     <div className="menu_content">
-                                                        <h4>Kha Thai<span>Avg Price: $15</span></h4>
+                                                        <h4>Kha Thai<span>$15</span></h4>
                                                         <p>Soups, Appetizers, Rice, Salads, Grill</p>
                                                         <h5>Thai, Vegetarian, Vegan, Non-Vegetarian</h5>
                                                     </div>
