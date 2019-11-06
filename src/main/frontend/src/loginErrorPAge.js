@@ -62,7 +62,7 @@ class loginErrorPAge extends Component{
                                 <div className="login-form">
                                     <form>
                                         <h2 className="text-center">We are Sorry</h2>
-                                        <p>There was an error in login of user</p>
+                                        <p  className="text-center">There was an error in login of user</p>
                                         <div className="form-group">
                                             <button onClick={this.goBackToRegisterForm} type="submit"
                                                     className="btn btn-primary btn-lg btn-block login-btn">Go to Home

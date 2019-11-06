@@ -1,5 +1,14 @@
 import React, { Component } from "react";
 import './MySettingsPage.css';
+import {connect} from "react-redux";
+
+
+const mapStateToProps = (state)=>{
+    return {
+        userEmailId: state.emailId
+    }
+}
+
 
 class MySettingsPage extends Component{
     state = {
@@ -52,6 +61,7 @@ class MySettingsPage extends Component{
                             <a className="navbar-brand " href="#">YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
+                                    <li>{this.props.userEmailId}</li>
                                     <li className="upper-links dropdown"><a className="links" onClick={this.returnToLoginDahboard}
                                     >Home</a>
                                         <ul className="dropdown-menu">
@@ -78,7 +88,6 @@ class MySettingsPage extends Component{
                         </div>
                     </nav>
                 </header>
-
                 <div className="container mt-5">
                     <div className="row">
                         <div className="col-lg-4 pb-5">
@@ -179,4 +188,4 @@ class MySettingsPage extends Component{
 
 }
 
-export default MySettingsPage;
+export default connect(mapStateToProps) (MySettingsPage);

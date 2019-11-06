@@ -56,20 +56,13 @@ class RestaurantDashboard extends Component{
 
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
-                            <a className="navbar-brand " href="#" onClick={this.goBackToRestaurantDashboard}>YumDrop</a>
+                            <a className="navbar-brand " href="#" onClick={this.forwardToLogiDashboard}>YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
-                                    <li className="upper-links"><a className="links text-white" onClick={this.forwardToLogiDashboard}
-                                    >Home</a>
-
+                                    <li className="nav-item" >
+                                        <a className="nav-link" onClick={this.forwardToRestaurantSettingsPage}><i
+                                            className="fa fa-fw fa-user"></i>My Settings</a>
                                     </li>
-
-                                    <li className="upper-links"><a className="links text-white" onClick={this.forwardToRestaurantSettingsPage}
-                                    >My Settings</a>
-
-                                    </li>
-
-
                                 </ul>
                             </div>
                         </div>

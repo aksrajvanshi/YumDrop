@@ -51,16 +51,13 @@ class App extends Component {
                 restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId
             }),
         }).then(res => {
-
-            alert("Entered");
-            alert(res.status);
-            alert(res)
+            console.log(res)
+            console.long(res.status)
             if (res.status !== 200) {
-                this.setState({redirect: true, restaurantRegister: false});
                 this.forwardToLoginErrorPage();
             }else {
                 this.props.setRestaurant({restaurantEmailId: this.state.restaurantPrimaryEmailId})
-                this.setState({redirect: true, restaurantRegister: false});
+                this.setState({restaurantRegister: false});
                 this.forwardToLoginDashboard();
             }
 
@@ -86,9 +83,7 @@ class App extends Component {
             alert(res.status);
             alert(res)
             if (res.status !== 200) {
-
                 this.forwardToLoginErrorPage();
-                alert("Hey going to Error page");
             }else {
                 this.setState({redirect: true, restaurantLoginOption: false, emailSelectForgotPassword: false, forgotPasswordSelect: true});
                 this.forwardToSuccessfullyChangedPasswordPage();
@@ -113,12 +108,9 @@ class App extends Component {
             alert("Entered");
             alert(res.status);
             if (res.status !== 200) {
-                this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
-                alert("Hey going to Error page");
             }else {
                 this.setState({redirect: true, restaurantLoginOption: false, emailSelectForgotPassword: false, forgotPasswordSelect: true});
-                alert("Hey going to Login Dashboard page");
             }
 
 
@@ -133,10 +125,6 @@ class App extends Component {
     forwardToSuccessfullyChangedPasswordPage = () => {
         this.props.history.push("/successfullyChangedPasswordPage");
     }
-
-
-
-
 
 
     forwardToRegister = () => {
@@ -193,6 +181,10 @@ class App extends Component {
         })
     }
 
+    goBackToHomePage = () => {
+        this.props.history.push("/")
+    }
+
 
     render() {
 
@@ -215,7 +207,7 @@ class App extends Component {
                 <script src="//code.jquery.com/jquery-1.11.1.min.js"/>
                 <nav className=" navbar navbar-expand-lg navbar-dark ">
                     <div className="container">
-                        <a className="navbar-brand " href="#">YumDrop</a>
+                        <a className="navbar-brand " href="#" onClick={this.goBackToHomePage}>YumDrop</a>
                         <div className="collapse navbar-collapse" id="navBarLinks">
                             <ul className="navbar-nav mr-auto">
                                 <li className="nav-item">
@@ -243,8 +235,55 @@ class App extends Component {
                                 <div className="col-md-5" id="firstbar">
                                     <div className="md-form">
                                         <select className="form-control" id="exampleFormControlSelect1">
-                                            <option>Bloomington, Indiana</option>
-                                            <option>Indianapolis, Indiana</option>
+                                            <option value="AL">Alabama</option>
+                                            <option value="AK">Alaska</option>
+                                            <option value="AR">Arizona</option>
+                                            <option value="AZ">Arkansas</option>
+                                            <option value="CA">California</option>
+                                            <option value="CO">Colorado</option>
+                                            <option value="CT">Connecticut</option>
+                                            <option value="DC">Delaware</option>
+                                            <option value="FL">Florida</option>
+                                            <option value="GA">Georgia</option>
+                                            <option value="HI">Hawaii</option>
+                                            <option value="IA">Idaho</option>
+                                            <option value="ID">Illinois</option>
+                                            <option value="IN">Indiana</option>
+                                            <option value="KS">Iowa</option>
+                                            <option value="KY">Kansas</option>
+                                            <option value="LA">Kentucky</option>
+                                            <option value="MA">Louisiana</option>
+                                            <option value="MD">Maine</option>
+                                            <option value="ME">Maryland</option>
+                                            <option value="MI">Massachusetts</option>
+                                            <option value="MN">Michigan</option>
+                                            <option value="MO">Minnesota</option>
+                                            <option value="MS">Mississippi</option>
+                                            <option value="MT">Missouri</option>
+                                            <option value="NC">Montana</option>
+                                            <option value="NE">Nebraska</option>
+                                            <option value="NH">Nevada</option>
+                                            <option value="NJ">New Hampshire</option>
+                                            <option value="NM">New Jersey</option>
+                                            <option value="NV">New Mexico</option>
+                                            <option value="NY">New York</option>
+                                            <option value="ND">North Carolina</option>
+                                            <option value="OH">North Dakota</option>
+                                            <option value="OK">Ohio</option>
+                                            <option value="OR">Oregon</option>
+                                            <option value="PA">Pennsylvania</option>
+                                            <option value="RI">Rhode Island</option>
+                                            <option value="SC">South Carolina</option>
+                                            <option value="SD">South Dakota</option>
+                                            <option value="TN">Tennessee</option>
+                                            <option value="TX">Texas</option>
+                                            <option value="UT">Utah</option>
+                                            <option value="VT">Vermont</option>
+                                            <option value="VA">Virginia</option>
+                                            <option value="WA">Washington</option>
+                                            <option value="WI">West Virginia</option>
+                                            <option value="WV">Wisconsin</option>
+                                            <option value="WY">Wyoming</option>
                                         </select>
                                     </div>
                                 </div>

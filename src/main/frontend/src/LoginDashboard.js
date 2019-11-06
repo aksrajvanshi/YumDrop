@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import './LoginDashBoardCSS.css';
+import {connect} from "react-redux";
 
 class LoginDashBoard extends Component{
 
     state = {
-
+        userEmailId : "this.props.userEmailId"
     }
 
     componentDidMount () {
@@ -17,6 +18,11 @@ class LoginDashBoard extends Component{
 
     forwardToSettingsPage = () => {
         this.props.history.push('/MySettingsPage');
+    }
+
+    onClick= (event) => {
+        this.props.setUser(this.state.userName);
+        this.forwardToSettingsPage();
     }
 
     goBackToLoginDashboard = () => {
@@ -61,11 +67,13 @@ class LoginDashBoard extends Component{
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
                                     <li className="nav-item">
+                                        Welcome <a>{this.props.userEmailId}  {this.state.userEmailId}</a></li>
+                                    <li className="nav-item">
                                         <a className="nav-link"><i
                                             className="fa fa-fw fa-user"/>My Cart</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link"  onClick={this.forwardToSettingsPage}><span>My Settings</span></a>
+                                        <a className="nav-link"  onClick={this.onClick} ><span>My Settings</span></a>
                                     </li>
                                 </ul>
                             </div>
@@ -120,8 +128,11 @@ class LoginDashBoard extends Component{
                     </div>
 
                 </div>
+
                 <br/>
 
+<br/>
+<br/>
 
 
 
@@ -233,5 +244,17 @@ class LoginDashBoard extends Component{
     }
 
 }
+const mapStateToProps = (state)=> {
+    return {
+        userEmailId: state.emailId
+    }
+}
 
-export default LoginDashBoard;
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUser(evt){
+            dispatch({type: "setEmailId", newEmailId: evt});
+        }
+    }
+}
+export default  connect(mapStateToProps, mapDispatchToProps) (LoginDashBoard);
