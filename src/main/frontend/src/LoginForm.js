@@ -6,6 +6,8 @@ import './LoginFormCSS.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import Recaptcha from 'react-recaptcha';
+
 class App extends Component {
     state = {
         loginSelect: true,
@@ -20,13 +22,23 @@ class App extends Component {
         userTemporaryPassword: "",
         redirect: false,
         forgotPasswordSelect: false,
-        emailSelectForgotPassword: false
+        emailSelectForgotPassword: false,
+        isReCaptchaVerified: false
 
     };
 
     forwardToDeliveryAgentLoginForm = () => {
         this.props.history.push("/DeliveryAgentLoginForm")
     }
+
+    verifyCallback = response => {
+        if(response) {
+            this.setState({
+                isReCaptchaVerified: true
+            })
+        }
+    }
+
 
     login = () => { debugger;
         fetch('/loginDataForm', {
@@ -45,9 +57,15 @@ class App extends Component {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
             }else {
-                this.setState({redirect: true, userRegister: false});
-                this.forwardToLoginDashboard();
-                this.props.setUser(this.state.userName);
+                if(this.state.isReCaptchaVerified) {
+                    this.setState({redirect: true, userRegister: false});
+                    this.forwardToLoginDashboard();
+                    this.props.setUser(this.state.userName);
+                }
+                else {
+                    this.setState({redirect: true, userRegister: false});
+                    this.forwardToLoginErrorPage();
+                }
             }
 
 
@@ -68,11 +86,11 @@ class App extends Component {
             }),
         }).then(res => {
 
-
+           
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
-
+               
             }else {
                 this.setState({redirect: true, userRegister: false, emailSelectForgotPassword: false, forgotPasswordSelect: true});
                 this.forwardToSuccessfullyChangedPasswordPage();
@@ -94,7 +112,7 @@ class App extends Component {
             }),
         }).then(res => {
 
-
+            
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
@@ -341,7 +359,7 @@ class App extends Component {
                                 </div>
                                 <div className="col-md-1" >
                                     <div className="md-form">
-                                        <button className="btn btn-lg btn-danger">Search</button>
+                                        <button className="btn btn-primary btn-md"><span id="SearchBar">Search</span></button>
                                     </div>
                                 </div>
                             </div>
@@ -350,6 +368,8 @@ class App extends Component {
                 </div>
             </div>
 
+
+            <br/><br/><br/><br/>
             <Modal
                 show={this.state.userLoginOption}
                 onHide={this.closeAllOptionsOfSelectionForm}
@@ -391,10 +411,17 @@ class App extends Component {
                                     <div className="col-md-12 offset-7 form-group">
                                         <a href="#" onClick={this.handleForgotPasswordChange}>Forgot Password?</a>
                                     </div>
+                                    <Recaptcha
+                                        sitekey="6LfA28AUAAAAAAdm39FjgIVi38BoyQoLDKTM5EJN"
+                                        render="explicit"
+                                        onloadCallback={this.recaptchaLoaded}
+                                        verifyCallback={this.verifyCallback}
 
+                                    />
+                                    <br/>
                                     <div className="form-group">
                                         <button onClick={this.login.bind(this)} type="submit"
-                                                className="btn btn-primary btn-lg btn-block login-btn">Login
+                                                className="btn btn-primary btn-lg btn-block">Login
                                         </button>
                                     </div>
 
@@ -425,19 +452,19 @@ class App extends Component {
                                     <form>
                                         <div className="form-group">
                                             <button  type="submit"
-                                                     onClick={this.handelUserLoginOption} className="btn btn-primary btn-lg btn-block login-btn">User Login
+                                                     onClick={this.handelUserLoginOption} className="btn btn-primary btn-lg btn-block">User Login
                                             </button>
                                         </div>
 
                                         <div className="form-group">
                                             <button  type="submit" onClick={this.forwardToRestaurantregister}
-                                                     className="btn btn-primary btn-lg btn-block login-btn">Restaurant Login
+                                                     className="btn btn-primary btn-lg btn-block">Restaurant Login
                                             </button>
                                         </div>
 
                                         <div className="form-group">
                                             <button  type="submit" onClick={this.forwardToDeliveryAgentLoginForm}
-                                                     className="btn btn-primary btn-lg btn-block login-btn">Delivery Agent Login
+                                                     className="btn btn-primary btn-lg btn-block">Delivery Agent Login
                                             </button>
                                         </div>
                                     </form>
@@ -513,7 +540,6 @@ class App extends Component {
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
                                     </div>
-
                                     <div className="form-group">
                                         <button onClick={this.passwordChange.bind(this)} type="submit"
                                                 className="btn btn-primary btn-lg btn-block login-btn">Login

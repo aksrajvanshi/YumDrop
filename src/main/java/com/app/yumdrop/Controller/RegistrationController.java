@@ -6,7 +6,7 @@ import com.app.yumdrop.Entity.UsersOtp;
 import com.app.yumdrop.FormEntity.*;
 import com.app.yumdrop.Repository.*;
 
-import com.app.yumdrop.Entity.Delivery_Agent_Otp;
+import com.app.yumdrop.Entity.DeliveryAgentOtp;
 
 import com.app.yumdrop.Service.RestaurantRegistrationService;
 import com.app.yumdrop.Service.SmsTwoFactorService;
@@ -113,6 +113,7 @@ public class RegistrationController {
     @RequestMapping(value = "/deliveryAgentRegistration", method = RequestMethod.POST)
     public ResponseEntity<?> deliveryAgentRegistration(@RequestBody DeliveryAgentDetails deliveryAgentDetails) {
 
+        System.out.println(deliveryAgentDetails.getDA_email() + " -- " + deliveryAgentDetails.getDA_phonenum());
         Random rnd = new Random();
         int otpNumber = rnd.nextInt(999999);
         boolean isSmsSent = smsTwoFactorService.send2FaCodeAsEmailDA(deliveryAgentDetails.getDA_email(), String.format("%06d", otpNumber));
@@ -141,7 +142,7 @@ public class RegistrationController {
     @RequestMapping(value = "/verifyOTPandRegisterDA", method = RequestMethod.POST)
     public ResponseEntity<?> verifyOTPandRegisterDA(@RequestBody DeliveryAgentRegisterForm daRegisterForm) {
 
-        Delivery_Agent_Otp daOtp = deliveryAgentOtpRepository.findBydaEmail(daRegisterForm.getDA_email());
+        DeliveryAgentOtp daOtp = deliveryAgentOtpRepository.findBydaEmail(daRegisterForm.getDA_email());
         boolean checkOtpMatch = OtpUtils.checkIfDAOtpMatches(daRegisterForm.getDA_otp().trim(), daOtp.daOtp);
 
         if (checkOtpMatch) {

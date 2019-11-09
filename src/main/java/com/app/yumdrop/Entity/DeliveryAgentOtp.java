@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "delivery_agent_otp")
-public class Delivery_Agent_Otp extends CreateAndUpdateTimeModel {
+public class DeliveryAgentOtp extends CreateAndUpdateTimeModel {
 
     @Id
     @Column(name = "da_email", nullable = false)
@@ -20,10 +20,10 @@ public class Delivery_Agent_Otp extends CreateAndUpdateTimeModel {
     @Column(name = "da_otp", nullable = false)
     public String daOtp;
 
-    public Delivery_Agent_Otp() {
+    public DeliveryAgentOtp() {
     }
 
-    public Delivery_Agent_Otp(@Email(message = "Delivery agent email should be a valid email") String daEmail, @NotNull String daOtp) {
+    public DeliveryAgentOtp(@Email(message = "Delivery agent email should be a valid email") String daEmail, @NotNull String daOtp) {
         this.daEmail = daEmail;
         this.daOtp = daOtp;
     }

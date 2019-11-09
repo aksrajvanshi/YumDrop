@@ -7,7 +7,6 @@ import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import { isMobilePhone, isEmail } from "validator";
 
 
-
 class DeliveryAgentRegistration extends Component {
     constructor(props){
         super(props)
@@ -295,9 +294,9 @@ class DeliveryAgentRegistration extends Component {
 
                                         </div>
                                     </div>
-                                    <div className="col-md-1" id="buttonOrder">
+                                    <div className="col-md-1" >
                                         <div className="md-form">
-                                            <button className="btn btn-lg btn-danger">Search</button>
+                                            <button className="btn btn-primary btn-md"><span id="SearchBar">Search</span></button>
                                         </div>
                                     </div>
                                 </div>
@@ -396,7 +395,7 @@ class DeliveryAgentRegistration extends Component {
                                         </div>
                                         <div className="form-group">
                                             <button onClick={this.register.bind(this)} type="submit"
-                                                    className="btn btn-primary btn-lg btn-block login-btn">Sign Up
+                                                    className="btn btn-primary btn-lg btn-block">Sign Up
                                             </button>
                                         </div>
                                     </form>

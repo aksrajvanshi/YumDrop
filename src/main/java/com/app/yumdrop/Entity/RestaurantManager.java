@@ -1,13 +1,11 @@
 package com.app.yumdrop.Entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "restaurant_manager")
+@IdClass(RestaurantManagerId.class)
 public class RestaurantManager extends CreateAndUpdateTimeModel {
 
     @Id
@@ -15,6 +13,7 @@ public class RestaurantManager extends CreateAndUpdateTimeModel {
     @Column(name = "restaurant_id", nullable = false)
     private String restaurantId;
 
+    @Id
     @NotNull
     @Column(name = "restaurant_manager_email", nullable = false)
     private String restaurantManagerEmailId;
@@ -23,22 +22,18 @@ public class RestaurantManager extends CreateAndUpdateTimeModel {
     @Column(name = "password", nullable = false)
     private String restaurantManagerPassword;
 
+    @NotNull
+    @Column(name = "manager_first_login", nullable = false)
+    private boolean managerFirstLogin;
+
     public RestaurantManager() {
     }
 
-    public RestaurantManager(@NotNull String restaurantId, @NotNull String restaurantManagerEmailId, @NotNull String restaurantManagerPassword) {
+    public RestaurantManager(@NotNull String restaurantId, @NotNull String restaurantManagerEmailId, @NotNull String restaurantManagerPassword, @NotNull boolean managerFirstLogin) {
         this.restaurantId = restaurantId;
         this.restaurantManagerEmailId = restaurantManagerEmailId;
         this.restaurantManagerPassword = restaurantManagerPassword;
-    }
-
-    @Override
-    public String toString() {
-        return "RestaurantManager{" +
-                "restaurantId='" + restaurantId + '\'' +
-                ", restaurantManagerEmailId='" + restaurantManagerEmailId + '\'' +
-                ", restaurantManagerPassword='" + restaurantManagerPassword + '\'' +
-                '}';
+        this.managerFirstLogin = managerFirstLogin;
     }
 
     public String getRestaurantId() {
@@ -63,5 +58,13 @@ public class RestaurantManager extends CreateAndUpdateTimeModel {
 
     public void setRestaurantManagerPassword(String restaurantManagerPassword) {
         this.restaurantManagerPassword = restaurantManagerPassword;
+    }
+
+    public boolean isManagerFirstLogin() {
+        return managerFirstLogin;
+    }
+
+    public void setManagerFirstLogin(boolean managerFirstLogin) {
+        this.managerFirstLogin = managerFirstLogin;
     }
 }

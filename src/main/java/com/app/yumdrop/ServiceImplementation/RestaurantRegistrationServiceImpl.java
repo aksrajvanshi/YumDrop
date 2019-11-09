@@ -7,13 +7,16 @@ import com.app.yumdrop.Repository.RestaurantManagerRepository;
 import com.app.yumdrop.Repository.RestaurantRepository;
 import com.app.yumdrop.Service.RestaurantRegistrationService;
 import com.app.yumdrop.Utils.PasswordUtils;
+import com.sendgrid.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -29,11 +32,16 @@ public class RestaurantRegistrationServiceImpl implements RestaurantRegistration
     @Autowired
     public RestaurantRepository restaurantRepository;
 
+    @Value("${sendgrid.api.key}")
+    String sendGridAPIKey;
+
     @Override
     public ResponseEntity<?> registerRestaurant(RestaurantRegisterForm restaurantRegisterForm) {
 
         boolean primaryManagerEmailSent = sendMailWithTemporaryPasswordToRestaurantManager(restaurantRegisterForm.getRestaurantId(), restaurantRegisterForm.getRestaurantPrimaryEmailId());
+        System.out.println(" primary Manager Email Sent " + primaryManagerEmailSent);
         boolean secondaryManagerEmailSent = sendMailWithTemporaryPasswordToRestaurantManager(restaurantRegisterForm.getRestaurantId(), restaurantRegisterForm.getRestaurantSecondaryEmailId());
+        System.out.println(" secondary Manager Email Sent " + secondaryManagerEmailSent);
 
         if (primaryManagerEmailSent && secondaryManagerEmailSent) {
             Restaurant newRestaurantRegister = new Restaurant(restaurantRegisterForm.getRestaurantId(), restaurantRegisterForm.getRestaurantName(), restaurantRegisterForm.getRestaurantPrimaryEmailId(),
@@ -55,7 +63,8 @@ public class RestaurantRegistrationServiceImpl implements RestaurantRegistration
 
         List<RestaurantManager> managerExistsInDb = restaurantManagerRepository.findByrestaurantId(restaurantId);
         boolean doesManagerExist = false;
-        if (managerExistsInDb != null) {
+        System.out.println(managerExistsInDb + " -- " + managerExistsInDb.size() + " -- " + restaurantManagerEmail);
+        if (managerExistsInDb.size() != 0) {
             for (int i = 0; i < managerExistsInDb.size(); i++) {
                 if (managerExistsInDb.get(i).getRestaurantManagerEmailId().equals(restaurantManagerEmail)) {
                     doesManagerExist = true;
@@ -63,19 +72,34 @@ public class RestaurantRegistrationServiceImpl implements RestaurantRegistration
                 }
             }
         }
-        if (doesManagerExist) {
+
+        System.out.println(doesManagerExist);
+
+        if (!doesManagerExist) {
             String temporaryPassword = generateRandomPassword();
-            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-            simpleMailMessage.setTo(restaurantManagerEmail);
-            simpleMailMessage.setSubject("Temporary Password from Yumdrop");
-            simpleMailMessage.setText("Hello user! Your temporary password is: " + temporaryPassword +
-                    ". Please use this temporary password to set a new password and login into your account.");
+            Email from = new Email("yumdrop.help@gmail.com");
+            String subject = "Your One Time Password from Yumdrop!";
+            Email to = new Email(restaurantManagerEmail);
 
-            javaMailSender.send(simpleMailMessage);
+            Content content = new Content("text/html", "Hello User! Your one time password is <strong> " + temporaryPassword + " </strong> \n" +
+                    "Please enter this code to complete registration with Yumdrop");
+            Mail mail = new Mail(from, subject, to, content);
+            mail.personalization.get(0).addSubstitution("-username-", "Some blog user");
+            SendGrid sg = new SendGrid(sendGridAPIKey);
 
-            RestaurantManager restaurantManagerTemporaryPassword = new RestaurantManager(restaurantId, restaurantManagerEmail, PasswordUtils.convertPasswordToHash(temporaryPassword));
-            RestaurantManager newRestaurantManager = restaurantManagerRepository.save(restaurantManagerTemporaryPassword);
-            return newRestaurantManager != null;
+            Request request = new Request();
+            try {
+                request.setMethod(Method.POST);
+                request.setEndpoint("mail/send");
+                request.setBody(mail.build());
+
+                Response response = sg.api(request);
+            } catch (IOException ex) {
+            }
+
+            RestaurantManager restaurantManagerWithTemporaryPassword = new RestaurantManager(restaurantId, restaurantManagerEmail, PasswordUtils.convertPasswordToHash(temporaryPassword), true);
+            RestaurantManager newRestaurantManager = restaurantManagerRepository.save(restaurantManagerWithTemporaryPassword);
+            return true;
         }
 
         return false;

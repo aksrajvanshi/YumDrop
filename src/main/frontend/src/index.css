@@ -1,13 +1,18 @@
 #navBarLinks{
     padding-left: 850px;
 }
-.btn-lg {
-    padding: 10px 10px;
+.btn-md {
     font-size: 20px;
     border-radius: 5px;
-    width:100%;
-    height: 40px;
+    width:80%;
+    height: 35px;
+    text-align: center;
 }
+
+#SearchBar{
+    padding-bottom: 50px;
+}
+
 #SignUpID{
     padding-left: 20px;
 }
