@@ -95,7 +95,7 @@ public class SmsTwoFactorServiceImpl implements SmsTwoFactorService {
     }
 
     @Override
-    public boolean send2FaCodeAsEmailDA(String daEmail, String twoFactorCode) {
+    public boolean send2FaCodeAsEmailDeliveryAgent(String daEmail, String twoFactorCode) {
 
         Email from = new Email("yumdrop.help@gmail.com");
         String subject = "Your One Time Password from Yumdrop!";

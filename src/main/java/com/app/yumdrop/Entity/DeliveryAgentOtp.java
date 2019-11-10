@@ -14,41 +14,41 @@ public class DeliveryAgentOtp extends CreateAndUpdateTimeModel {
     @Id
     @Column(name = "da_email", nullable = false)
     @Email(message = "Delivery agent email should be a valid email")
-    public String daEmail;
+    public String deliveryAgentEmail;
 
     @NotNull
     @Column(name = "da_otp", nullable = false)
-    public String daOtp;
+    public String deliveryAgentOtp;
 
     public DeliveryAgentOtp() {
     }
 
-    public DeliveryAgentOtp(@Email(message = "Delivery agent email should be a valid email") String daEmail, @NotNull String daOtp) {
-        this.daEmail = daEmail;
-        this.daOtp = daOtp;
+    public DeliveryAgentOtp(@Email(message = "Delivery agent email should be a valid email") String deliveryAgentEmail, @NotNull String deliveryAgentOtp) {
+        this.deliveryAgentEmail = deliveryAgentEmail;
+        this.deliveryAgentOtp = deliveryAgentOtp;
     }
 
     @Override
     public String toString() {
         return "Delivery_Agent_Otp{" +
-                "daEmail='" + daEmail + '\'' +
-                ", daOtp='" + daOtp + '\'' +
+                "deliveryAgentEmail='" + deliveryAgentEmail + '\'' +
+                ", deliveryAgentOtp='" + deliveryAgentOtp + '\'' +
                 '}';
     }
 
-    public String getDAEmail() {
-        return daEmail;
+    public String getDeliveryAgentEmail() {
+        return deliveryAgentEmail;
     }
 
-    public void setDAEmail(String daEmail) {
-        this.daEmail = daEmail;
+    public void setDeliveryAgentEmail(String deliveryAgentEmail) {
+        this.deliveryAgentEmail = deliveryAgentEmail;
     }
 
-    public String getDAOtp() {
-        return daOtp;
+    public String getDeliveryAgentOtp() {
+        return deliveryAgentOtp;
     }
 
-    public void setDAOtp(String daOtp) {
-        this.daOtp = daOtp;
+    public void setDeliveryAgentOtp(String deliveryAgentOtp) {
+        this.deliveryAgentOtp = deliveryAgentOtp;
     }
 }

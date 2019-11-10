@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface DeliveryAgentRepository extends CrudRepository<Delivery_Agent, String> {
 
-    Delivery_Agent findBydaEmail(String daEmail);
+    Delivery_Agent findByDeliveryAgentEmail(String deliveryAgentEmail);
 }

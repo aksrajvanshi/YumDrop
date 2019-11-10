@@ -125,7 +125,7 @@ class App extends Component {
                                         <div className="md-form">
                                             <input type="text"
                                                    placeholder="Search for food, cuisines, restaurants here.."
-                                                    className="form-control validate"/>
+                                                   className="form-control validate"/>
 
                                         </div>
                                     </div>

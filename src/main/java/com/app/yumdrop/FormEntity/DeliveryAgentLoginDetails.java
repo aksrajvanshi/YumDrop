@@ -6,6 +6,7 @@ public class DeliveryAgentLoginDetails {
     public String deliveryAgentPassword;
 
     public DeliveryAgentLoginDetails() {
+
     }
 
     public DeliveryAgentLoginDetails(String deliveryAgentEmail, String deliveryAgentPassword) {

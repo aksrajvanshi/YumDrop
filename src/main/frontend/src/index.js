@@ -36,6 +36,8 @@ import RestaurantResetpassword from "./RestaurantResetpassword";
 import DeliveryAgentRegistration from "./DeliveryAgentRegistration";
 import DeliveryAgentLoginForm from "./DeliveryAgentLoginForm";
 import ErrorPageForDeliveryAgentRegistration from "./ErrorPageForDeliveryAgentRegistration";
+import DeliveryAgentLoginErrorPage from "./DeliveryAgentLoginErrorPage";
+import DeliveryAgentOTPResetPassword from "./DeliveryAgentOTPResetPassword";
 
 const initialState = {
     latitude: null,
@@ -94,6 +96,8 @@ const routing = (
                 <Route exact path="/MyCurrentRestaurantLocation" component={MyCurrentRestaurantLocation} />
                 <Route exact path="/ErrorPageForDeliveryAgentRegistration" component={ErrorPageForDeliveryAgentRegistration}/>
                 <Route exact path="/DeliveryAgentLoginForm" component={DeliveryAgentLoginForm}/>
+                <Route exact path="/DeliveryAgentLoginErrorPage" component={DeliveryAgentLoginErrorPage}/>
+                <Route exact path="/DeliveryAgentOTPResetPassword" component={DeliveryAgentOTPResetPassword}/>
             </div>
         </Router>
     </Provider>
