@@ -40,12 +40,10 @@ public class RestaurantRegistrationServiceImpl implements RestaurantRegistration
 
         boolean primaryManagerEmailSent = sendMailWithTemporaryPasswordToRestaurantManager(restaurantRegisterForm.getRestaurantId(), restaurantRegisterForm.getRestaurantPrimaryEmailId());
         System.out.println(" primary Manager Email Sent " + primaryManagerEmailSent);
-        boolean secondaryManagerEmailSent = sendMailWithTemporaryPasswordToRestaurantManager(restaurantRegisterForm.getRestaurantId(), restaurantRegisterForm.getRestaurantSecondaryEmailId());
-        System.out.println(" secondary Manager Email Sent " + secondaryManagerEmailSent);
 
-        if (primaryManagerEmailSent && secondaryManagerEmailSent) {
+        if (primaryManagerEmailSent) {
             Restaurant newRestaurantRegister = new Restaurant(restaurantRegisterForm.getRestaurantId(), restaurantRegisterForm.getRestaurantName(), restaurantRegisterForm.getRestaurantPrimaryEmailId(),
-                    restaurantRegisterForm.getRestaurantSecondaryEmailId(), restaurantRegisterForm.getPrimaryPhoneNumber(), restaurantRegisterForm.getSecondaryPhoneNumber());
+                    restaurantRegisterForm.getPrimaryPhoneNumber());
             Restaurant registeredRestaurant = restaurantRepository.save(newRestaurantRegister);
             if(registeredRestaurant == null){
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
