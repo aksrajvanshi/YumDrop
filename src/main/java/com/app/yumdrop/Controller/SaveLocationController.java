@@ -35,9 +35,7 @@ public class SaveLocationController {
     @RequestMapping(value = "/saveRestaurantAddress", method = RequestMethod.POST)
     public ResponseEntity<?> saveRestaurantAddress(@RequestBody Restaurant restaurantWithAddress){
 
-
-        SuccessMessage successfulLoginMessage = new SuccessMessage(new Date(), "Successfully logged in");
-        return new ResponseEntity<>(successfulLoginMessage, HttpStatus.OK);
+        return saveRestaurantAddressService.saveRestaurantAddress(restaurantWithAddress);
     }
 
 }
