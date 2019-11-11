@@ -54,7 +54,9 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
             return new ResponseEntity<>(mailNotSent, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        ErrorMessage mailNotSent = new ErrorMessage(new Date(), "Our records indicate that this email doesn't exist in the system",
+                "");
+        return new ResponseEntity<>(mailNotSent, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
