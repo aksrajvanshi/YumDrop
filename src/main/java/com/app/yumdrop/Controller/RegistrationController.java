@@ -65,8 +65,8 @@ public class RegistrationController {
         Random rnd = new Random();
         int otpNumber = rnd.nextInt(999999);
         System.out.println("Sending OTP to user " + otpNumber);
-        boolean isSmsSent = smsTwoFactorService.send2FaCodeAsEmail(usersDetails.getUser_email(), String.format("%06d", otpNumber));
-        if(isSmsSent)
+        boolean isMailSentToUser = smsTwoFactorService.send2FaCodeAsEmail(usersDetails.getUser_email(), String.format("%06d", otpNumber));
+        if(isMailSentToUser)
             return ResponseEntity.status(HttpStatus.OK).build();
         else
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -83,8 +83,8 @@ public class RegistrationController {
         Random rnd = new Random();
         int otpNumber = rnd.nextInt(999999);
         System.out.println("Sending OTP to user " + otpNumber);
-        boolean isSmsSent = smsTwoFactorService.send2FaCodeAsEmailToRestaurant(restaurantDetails.getRestaurantPrimaryEmailId(), restaurantDetails.getRestaurantId(), String.format("%06d", otpNumber));
-        if(isSmsSent)
+        boolean isMailSentToPrimaryManager = smsTwoFactorService.send2FaCodeAsEmailToRestaurant(restaurantDetails.getRestaurantPrimaryEmailId(), restaurantDetails.getRestaurantId(), String.format("%06d", otpNumber));
+        if(isMailSentToPrimaryManager)
             return ResponseEntity.status(HttpStatus.OK).build();
         else
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
