@@ -4,8 +4,8 @@ import org.springframework.http.ResponseEntity;
 
 public interface DeliveryAgentForgotPasswordService {
 
-    ResponseEntity<?> sendMailWithTemporaryPassword(String daEmail);
+    ResponseEntity<?> sendMailWithTemporaryPassword(String deliveryAgentEmail);
 
-    ResponseEntity<?> verifyTemporaryPasswordAndSetNewPassword(String daEmail, String temporaryPassword, String newPassword);
+    ResponseEntity<?> verifyTemporaryPasswordAndSetNewPassword(String deliveryAgentEmail, String temporaryPassword, String newPassword);
 
 }

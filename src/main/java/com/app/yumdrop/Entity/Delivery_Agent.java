@@ -15,20 +15,20 @@ public class Delivery_Agent extends CreateAndUpdateTimeModel{
     @Id
     @Column(name = "da_email", nullable = false)
     @Email(message = "delivery agent email should be a valid email")
-    public String daEmail;
+    public String deliveryAgentEmail;
 
     @NotNull
     @Column(name = "da_name", nullable = false)
-    private String daName;
+    private String deliveryAgentName;
 
     @NotNull
     @Column(name = "da_phonenum", nullable = false)
-    private String daPhoneNumber;
+    private String deliveryAgentPhoneNumber;
 
 
     @NotNull
     @Column(name = "da_password", nullable = false)
-    private String daPassword;
+    private String deliveryAgentPassword;
 
     @NotNull
     @Column(name = "last_updated_user", nullable = false)
@@ -39,65 +39,65 @@ public class Delivery_Agent extends CreateAndUpdateTimeModel{
     private String lastCreatedUser;
 
     @Column(name = "da_address", nullable = false)
-    private String daAddress;
+    private String deliveryAgentAddress;
 
     public Delivery_Agent(){
     }
 
-    public Delivery_Agent(@Email(message = "delivery agent email should be a valid email") String daEmail, @NotNull String daName, @NotNull String daPhoneNumber, @NotNull String daPassword, String daAddress, @NotNull String lastUpdatedUser, @NotNull String lastCreatedUser) {
-        this.daEmail = daEmail;
-        this.daName = daName;
-        this.daPhoneNumber = daPhoneNumber;
-        this.daPassword = daPassword;
+    public Delivery_Agent(@Email(message = "delivery agent email should be a valid email") String deliveryAgentEmail, @NotNull String deliveryAgentName, @NotNull String deliveryAgentPhoneNumber, @NotNull String deliveryAgentPassword, String deliveryAgentAddress, @NotNull String lastUpdatedUser, @NotNull String lastCreatedUser) {
+        this.deliveryAgentEmail = deliveryAgentEmail;
+        this.deliveryAgentName = deliveryAgentName;
+        this.deliveryAgentPhoneNumber = deliveryAgentPhoneNumber;
+        this.deliveryAgentPassword = deliveryAgentPassword;
         this.lastUpdatedUser = lastUpdatedUser;
         this.lastCreatedUser = lastCreatedUser;
-        this.daAddress = daAddress;
+        this.deliveryAgentAddress = deliveryAgentAddress;
     }
 
     @Override
     public String toString() {
         return "Delivery_Agent{" +
-                "daEmail='" + daEmail + '\'' +
-                ", daName='" + daName + '\'' +
-                ", daPhoneNumber='" + daPhoneNumber + '\'' +
-                ", daPassword='" + daPassword + '\'' +
+                "deliveryAgentEmail='" + deliveryAgentEmail + '\'' +
+                ", deliveryAgentName='" + deliveryAgentName + '\'' +
+                ", deliveryAgentPhoneNumber='" + deliveryAgentPhoneNumber + '\'' +
+                ", deliveryAgentPassword='" + deliveryAgentPassword + '\'' +
                 ", lastUpdatedUser='" + lastUpdatedUser + '\'' +
                 ", lastCreatedUser='" + lastCreatedUser + '\'' +
-                ", daAddress='" + daAddress + '\'' +
+                ", deliveryAgentAddress='" + deliveryAgentAddress + '\'' +
                 '}';
     }
 
-    public String getDAEmail() {
-        return daEmail;
+    public String getDeliveryAgentEmail() {
+        return deliveryAgentEmail;
     }
 
-    public void setDAEmail(String daEmail) {
-        this.daEmail = daEmail;
+    public void setDeliveryAgentEmail(String deliveryAgentEmail) {
+        this.deliveryAgentEmail = deliveryAgentEmail;
     }
 
-    public String getDAName() {
-        return daName;
+    public String getDeliveryAgentName() {
+        return deliveryAgentName;
     }
 
-    public void setDAName(String daName) {
-        this.daName = daName;
+    public void setDeliveryAgentName(String deliveryAgentName) {
+        this.deliveryAgentName = deliveryAgentName;
     }
 
-    public String getDAPhoneNumber() {
-        return daPhoneNumber;
+    public String getDeliveryAgentPhoneNumber() {
+        return deliveryAgentPhoneNumber;
     }
 
-    public void setDAPhoneNumber(String daPhoneNumber) {
-        this.daPhoneNumber = daPhoneNumber;
+    public void setDeliveryAgentPhoneNumber(String deliveryAgentPhoneNumber) {
+        this.deliveryAgentPhoneNumber = deliveryAgentPhoneNumber;
     }
 
 
-    public String getDAPassword() {
-        return daPassword;
+    public String getDeliveryAgentPassword() {
+        return deliveryAgentPassword;
     }
 
-    public void setDAPassword(String daPassword) {
-        this.daPassword = daPassword;
+    public void setDeliveryAgentPassword(String deliveryAgentPassword) {
+        this.deliveryAgentPassword = deliveryAgentPassword;
     }
 
     public String getLastUpdatedUser() {
@@ -116,12 +116,12 @@ public class Delivery_Agent extends CreateAndUpdateTimeModel{
         this.lastCreatedUser = lastCreatedUser;
     }
 
-    public String getDAAddress() {
-        return daAddress;
+    public String getDeliveryAgentAddress() {
+        return deliveryAgentAddress;
     }
 
-    public void setDAAddress(String daAddress) {
-        this.daAddress = daAddress;
+    public void setDeliveryAgentAddress(String deliveryAgentAddress) {
+        this.deliveryAgentAddress = deliveryAgentAddress;
     }
 }
 

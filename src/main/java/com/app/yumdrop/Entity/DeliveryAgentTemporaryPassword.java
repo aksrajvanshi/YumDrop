@@ -13,7 +13,7 @@ public class DeliveryAgentTemporaryPassword {
     @Id
     @Column(name = "da_email", nullable = false)
     @Email(message = "delivery agent email should be a valid email")
-    private String daEmail;
+    private String deliveryAgentEmail;
 
     @Column(name = "da_temp_password", nullable = false)
     private String temporaryPassword;
@@ -21,25 +21,25 @@ public class DeliveryAgentTemporaryPassword {
     public DeliveryAgentTemporaryPassword() {
     }
 
-    public DeliveryAgentTemporaryPassword(String daEmail, String temporaryPassword) {
-        this.daEmail = daEmail;
+    public DeliveryAgentTemporaryPassword(String deliveryAgentEmail, String temporaryPassword) {
+        this.deliveryAgentEmail = deliveryAgentEmail;
         this.temporaryPassword = temporaryPassword;
     }
 
     @Override
     public String toString() {
         return "Delivery_Agent_Temporary_Password{" +
-                "daEmail='" + daEmail + '\'' +
+                "deliveryAgentEmail='" + deliveryAgentEmail + '\'' +
                 ", temporaryPassword='" + temporaryPassword + '\'' +
                 '}';
     }
 
-    public String getDAEmail() {
-        return daEmail;
+    public String getDeliveryAgentEmail() {
+        return deliveryAgentEmail;
     }
 
-    public void setDAEmail(String daEmail) {
-        this.daEmail = daEmail;
+    public void setDeliveryAgentEmail(String deliveryAgentEmail) {
+        this.deliveryAgentEmail = deliveryAgentEmail;
     }
 
     public String getTemporaryPassword() {

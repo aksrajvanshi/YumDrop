@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import './LoginDashBoardCSS.css';
+import './DeliveryAgentDashboardCSS.css';
 
 class DeliveryAgentDashboard extends Component{
 

@@ -4,6 +4,8 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 
+import DeliveryAgentOTPpage from "./DeliveryAgentOTPpage";
+import DeliveryAgentRegistration from "./DeliveryAgentRegistration";
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 import Recaptcha from 'react-recaptcha';
@@ -12,8 +14,6 @@ class App extends Component {
     constructor(props){
         super(props)
     }
-
-
 
     state = {
         closeAllOptionsOfSelectionForm: false,
@@ -136,7 +136,6 @@ class App extends Component {
                 this.forwardToSuccessPage();
                 
             }
-
 
         })
     }

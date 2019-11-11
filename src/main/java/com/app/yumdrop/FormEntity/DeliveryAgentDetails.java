@@ -4,60 +4,60 @@ import javax.persistence.Id;
 
 public class DeliveryAgentDetails {
 
-    public String da_name;
-    public String da_password;
+    public String deliveryAgent_name;
+    public String deliveryAgent_password;
 
     @Id
-    public String da_email;
-    public String da_phonenum;
+    public String deliveryAgent_email;
+    public String deliveryAgent_phonenum;
 
 
     DeliveryAgentDetails(){
 
     }
 
-    public DeliveryAgentDetails(String da_name, String da_password) {
-        this.da_name = da_name;
-        this.da_password = da_password;
+    public DeliveryAgentDetails(String deliveryAgent_name, String deliveryAgent_password) {
+        this.deliveryAgent_name = deliveryAgent_name;
+        this.deliveryAgent_password = deliveryAgent_password;
     }
 
-    public DeliveryAgentDetails(String da_name, String da_password, String da_email, String da_phonenum) {
-        this.da_name = da_name;
-        this.da_password = da_password;
-        this.da_email = da_email;
-        this.da_phonenum = da_phonenum;
+    public DeliveryAgentDetails(String deliveryAgent_name, String deliveryAgent_password, String deliveryAgent_email, String deliveryAgent_phonenum) {
+        this.deliveryAgent_name = deliveryAgent_name;
+        this.deliveryAgent_password = deliveryAgent_password;
+        this.deliveryAgent_email = deliveryAgent_email;
+        this.deliveryAgent_phonenum = deliveryAgent_phonenum;
     }
 
-    public String getDA_name() {
-        return da_name;
+    public String getDeliveryAgent_name() {
+        return deliveryAgent_name;
     }
 
-    public void setDA_name(String da_name) {
-        this.da_name = da_name;
+    public void setDeliveryAgent_name(String deliveryAgent_name) {
+        this.deliveryAgent_name = deliveryAgent_name;
     }
 
-    public String getDAPassword() {
-        return da_password;
+    public String getDeliveryAgentPassword() {
+        return deliveryAgent_password;
     }
 
-    public void setDAPassword(String da_password) {
-        this.da_password = da_password;
+    public void setDeliveryAgentPassword(String deliveryAgent_password) {
+        this.deliveryAgent_password = deliveryAgent_password;
     }
 
-    public String getDA_email() {
-        return da_email;
+    public String getDeliveryAgent_email() {
+        return deliveryAgent_email;
     }
 
-    public void setDA_email(String da_email) {
-        this.da_email = da_email;
+    public void setDeliveryAgent_email(String deliveryAgent_email) {
+        this.deliveryAgent_email = deliveryAgent_email;
     }
 
-    public String getDA_phonenum() {
-        return da_phonenum;
+    public String getDeliveryAgent_phonenum() {
+        return deliveryAgent_phonenum;
     }
 
-    public void setDA_phonenum(String da_phonenum) {
-        this.da_phonenum = da_phonenum;
+    public void setDeliveryAgent_phonenum(String deliveryAgent_phonenum) {
+        this.deliveryAgent_phonenum = deliveryAgent_phonenum;
     }
 
 }

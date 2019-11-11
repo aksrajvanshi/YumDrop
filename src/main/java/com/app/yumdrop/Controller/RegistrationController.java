@@ -110,19 +110,7 @@ public class RegistrationController {
     }
 
 
-    @RequestMapping(value = "/deliveryAgentRegistration", method = RequestMethod.POST)
-    public ResponseEntity<?> deliveryAgentRegistration(@RequestBody DeliveryAgentDetails deliveryAgentDetails) {
 
-        System.out.println(deliveryAgentDetails.getDA_email() + " -- " + deliveryAgentDetails.getDA_phonenum());
-        Random rnd = new Random();
-        int otpNumber = rnd.nextInt(999999);
-        boolean isSmsSent = smsTwoFactorService.send2FaCodeAsEmailDA(deliveryAgentDetails.getDA_email(), String.format("%06d", otpNumber));
-
-        if(isSmsSent)
-            return ResponseEntity.status(HttpStatus.OK).build();
-        else
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    }
 
     @RequestMapping(value = "/verifyOTPandRegisterUser", method = RequestMethod.POST)
     public ResponseEntity<?> verifyOTPandRegisterUser(@RequestBody UserRegisterForm userRegisterForm) {
@@ -139,19 +127,6 @@ public class RegistrationController {
 
     }
 
-    @RequestMapping(value = "/verifyOTPandRegisterDA", method = RequestMethod.POST)
-    public ResponseEntity<?> verifyOTPandRegisterDA(@RequestBody DeliveryAgentRegisterForm daRegisterForm) {
 
-        DeliveryAgentOtp daOtp = deliveryAgentOtpRepository.findBydaEmail(daRegisterForm.getDA_email());
-        boolean checkOtpMatch = OtpUtils.checkIfDAOtpMatches(daRegisterForm.getDA_otp().trim(), daOtp.daOtp);
-
-        if (checkOtpMatch) {
-            deliveryAgentOtpRepository.deleteById(daRegisterForm.getDA_email());
-            return deliveryAgentRegistrationService.registerDeliveryAgent(daRegisterForm);
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-
-    }
 
 }
