@@ -5,49 +5,51 @@ import ReactSearchBox from 'react-search-box';
 
 class Search extends Component {
     state = {
-        searchOptions: [{value: "apple"}, {value: "orange"}, {value: "banana"}, {value: "grape"}],
         searchQuery: "",
-        temp: null
+        searchOptions: [],
     };
 
     getQueryResults = () => {
         let obj = {}
         fetch("/getQueryResults", {
                 method: 'POST',
-                body: {
+                body: JSON.stringify({
                     searchQuery: this.state.searchQuery
-                }
+                } )
             }
         ).then(res => res.json()
         ).then(data => {
+                console.log(data);
+                this.props.setSearchResults([]);
                 this.props.setSearchResults(data);
             }
         )
     }
 
-    getSearchSuggestions = () => {
+    getSearchSuggestions = (event) => {
         let obj = {}
         fetch( "/getSearchSuggestions", {
             method: 'POST',
-            body: {
-                searchQuery: this.state.searchQuery
-            }
+            body: JSON.stringify({
+                    searchQuery: event
+                })
         }
         ).then(res => res.json()
         ).then(data => {
-            this.setState({searchOptions: data})
+            console.log(data)
+            this.setState({searchOptions: data});
         })
     }
 
     handleSearchQueryChange = (event) => {
         this.setState({searchQuery: event})
-        this.getSearchSuggestions()
+        this.getSearchSuggestions(event)
     }
 
     render() {
         return (
             <div>
-                <ReactSearchBox placeholder="Search for food, cuisines, yuppppppppppppp" data={this.state.searchOptions} value="Test" onChange={value => this.handleSearchQueryChange(value)} name="SearchBar"/>
+                <ReactSearchBox placeholder="Search for restaurants here..." data={this.state.searchOptions} onChange={value => this.handleSearchQueryChange(value)} name="SearchBar"/>
                 <button className="btn btn-lg btn-danger" onClick={this.getQueryResults}>Search</button>
                 <div className="container-fluid">
                     {this.props.searchResults.map(restaurant => (
