@@ -16,24 +16,22 @@ public class UsersAddress {
     private String userEmail;
 
     @NotNull
-    @Column(name = "user_area", nullable = false)
-    private String userArea;
-
-    @NotNull
-    @Column(name = "user_city", nullable = false)
-    private String userCity;
-
-    @NotNull
     @Column(name = "user_address", nullable = false)
     private String userAddress;
+
+    @Override
+    public String toString() {
+        return "UsersAddress{" +
+                "userEmail='" + userEmail + '\'' +
+                ", userAddress='" + userAddress + '\'' +
+                '}';
+    }
 
     public UsersAddress() {
     }
 
-    public UsersAddress(@NotNull String userEmail, @NotNull String userArea, @NotNull String userCity, @NotNull String userAddress) {
+    public UsersAddress(@NotNull String userEmail, @NotNull String userAddress) {
         this.userEmail = userEmail;
-        this.userArea = userArea;
-        this.userCity = userCity;
         this.userAddress = userAddress;
     }
 
@@ -43,22 +41,6 @@ public class UsersAddress {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
-    }
-
-    public String getUserArea() {
-        return userArea;
-    }
-
-    public void setUserArea(String userArea) {
-        this.userArea = userArea;
-    }
-
-    public String getUserCity() {
-        return userCity;
-    }
-
-    public void setUserCity(String userCity) {
-        this.userCity = userCity;
     }
 
     public String getUserAddress() {

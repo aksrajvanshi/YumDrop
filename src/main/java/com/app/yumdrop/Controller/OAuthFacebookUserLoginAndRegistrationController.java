@@ -1,7 +1,6 @@
 package com.app.yumdrop.Controller;
 
 import com.app.yumdrop.Entity.OAuthFacebookUsers;
-import com.app.yumdrop.FormEntity.UserLoginDetails;
 import com.app.yumdrop.Service.OAuthFacebookUserLoginAndRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;

@@ -1,20 +1,27 @@
-package com.app.yumdrop.ExceptionHandler;
+package com.app.yumdrop.Messages;
 
 import java.util.Date;
 
-public class ErrorDetails {
+public class SuccessMessage {
 
     private Date timestamp;
 
     private String message;
 
-    private String details;
+    @Override
+    public String toString() {
+        return "SuccessMessage{" +
+                "timestamp=" + timestamp +
+                ", message='" + message + '\'' +
+                '}';
+    }
 
-    public ErrorDetails(Date timestamp, String message, String details) {
-        super();
+    public SuccessMessage() {
+    }
+
+    public SuccessMessage(Date timestamp, String message) {
         this.timestamp = timestamp;
         this.message = message;
-        this.details = details;
     }
 
     public Date getTimestamp() {
@@ -31,13 +38,5 @@ public class ErrorDetails {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
     }
 }

@@ -2,6 +2,8 @@ package com.app.yumdrop.ServiceImplementation;
 
 import com.app.yumdrop.Entity.Users;
 import com.app.yumdrop.Entity.UsersTemporaryPassword;
+import com.app.yumdrop.Messages.ErrorMessage;
+import com.app.yumdrop.Messages.SuccessMessage;
 import com.app.yumdrop.Repository.UsersRepository;
 import com.app.yumdrop.Repository.UsersTemporaryPasswordRepository;
 import com.app.yumdrop.Service.ForgotPasswordService;
@@ -13,6 +15,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Random;
 
 @Service
@@ -41,13 +44,19 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
             UsersTemporaryPassword usersTemporaryPassword = new UsersTemporaryPassword(userEmail, PasswordUtils.convertPasswordToHash(temporaryPassword));
             UsersTemporaryPassword newPasswordUser = usersTemporaryPasswordRepository.save(usersTemporaryPassword);
-            if (newPasswordUser != null)
-                return ResponseEntity.status(HttpStatus.OK).build();
+            if (newPasswordUser != null) {
+                SuccessMessage temporaryPasswordSucessfullySent = new SuccessMessage(new Date(), "Temporary password sent to the user");
+                return new ResponseEntity<>(temporaryPasswordSucessfullySent, HttpStatus.OK);
+            }
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            ErrorMessage mailNotSent = new ErrorMessage(new Date(), "Internal System error.",
+                    "");
+            return new ResponseEntity<>(mailNotSent, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        ErrorMessage mailNotSent = new ErrorMessage(new Date(), "Our records indicate that this email doesn't exist in the system",
+                "");
+        return new ResponseEntity<>(mailNotSent, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
@@ -59,9 +68,13 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
             userInDb.setUserPassword(newPassword);
             usersTemporaryPasswordRepository.deleteById(userEmail);
             usersRepository.save(userInDb);
-            return ResponseEntity.status(HttpStatus.OK).build();
+            SuccessMessage newPasswordSet = new SuccessMessage(new Date(), "Successfully set the new password");
+            return new ResponseEntity<>(newPasswordSet, HttpStatus.OK);
         }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
+        ErrorMessage problemWithVerifyTemporaryPasswordAndSetNewPassword = new ErrorMessage(new Date(), "Internal System error.",
+                "");
+        return new ResponseEntity<>(problemWithVerifyTemporaryPasswordAndSetNewPassword, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private String generateRandomPassword() {
