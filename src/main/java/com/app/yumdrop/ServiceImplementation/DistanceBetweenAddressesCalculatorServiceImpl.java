@@ -20,8 +20,6 @@ public class DistanceBetweenAddressesCalculatorServiceImpl implements DistanceBe
     @Value("${google.maps.distanceapi.key}")
     String googleMapsAPIKey;
 
-    OkHttpClient client = new OkHttpClient();
-
     @Override
     public void calculateDistance(String userAddress, String restaurantAddress) {
 

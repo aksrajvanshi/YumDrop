@@ -43,6 +43,10 @@ public class Users extends CreateAndUpdateTimeModel{
     public Users() {
     }
 
+    public Users(@Email(message = "user email should be a valid email") String userEmail) {
+        this.userEmail = userEmail;
+    }
+
     public Users(@Email(message = "user email should be a valid email") String userEmail, @NotNull String userName, @NotNull String userPassword) {
         this.userEmail = userEmail;
         this.userName = userName;

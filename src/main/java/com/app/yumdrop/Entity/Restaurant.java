@@ -33,6 +33,10 @@ public class Restaurant extends CreateAndUpdateTimeModel {
     public Restaurant() {
     }
 
+    public Restaurant(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+
     public Restaurant(String restaurantId, String restaurantAddress) {
         this.restaurantId = restaurantId;
         this.restaurantAddress = restaurantAddress;
