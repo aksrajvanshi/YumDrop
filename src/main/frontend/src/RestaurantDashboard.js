@@ -6,9 +6,18 @@ const mapStateToProps = (state)=>{
         restaurantPrimaryEmailId: state.restaurantPrimaryEmailId
     }
 };
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setTest(evt){
+            dispatch({type: "SET_TEST", newTest: evt.target.value});
+        }
+    }
+}
 class RestaurantDashboard extends Component{
     state = {
-        Name: "",
+        Name: "Restaurant 1",
+        restaurantPrimaryEmailId: "Restaurant 1",
         data: [
             {itemName: "first dish",itemDescription: "First item ",itemCost: "4$",itemAvailability: "Available"},
             {itemName: "first dish",itemDescription: "First item ",itemCost: "4$",itemAvailability: "Available"},
@@ -18,10 +27,11 @@ class RestaurantDashboard extends Component{
         ]
     }
     componentDidMount () {
-        fetch('/getRestaurantMenuDetails')
+        fetch('/getRestaurantDataForDashboard')
             .then(res => res.json()
             ).then(res => {
-            this.setState({data: res})
+                console.log(res)
+            this.setState({data: res.data})
         })}
 
     forwardToAddingAnItem = () => {
@@ -84,7 +94,7 @@ class RestaurantDashboard extends Component{
                     </div>
                 </div>
                 <br/><br/><br/>
-
+                {this.props.emailId}
 
                 <div className="container">
                     <div className="row">
@@ -114,7 +124,7 @@ class RestaurantDashboard extends Component{
 
                                                     </td>
                                                     <td className="col-md-5"><h5>{d.itemDescription}</h5>
-                                                        <span>Vegetarian</span><br/><span><strong>{d.itemCuisine}</strong></span></td>
+                                                        </td>
                                                     <td className="col-md-4 text-center"><strong>{d.itemCost}</strong></td>
                                                     <td className="col-md-4 text-center"><strong>{d.itemAvailability}</strong></td>
                                                     <td className="col-md-8">
@@ -142,8 +152,9 @@ class RestaurantDashboard extends Component{
                     </div>
                 </div>
             </div>
+
         )
     }
 }
 
-export default (RestaurantDashboard);
+export default connect(mapStateToProps) (RestaurantDashboard);

@@ -1,19 +1,28 @@
 import React, { Component } from "react";
 import "./RestaurantAddMenuForm.css";
+
+const mapStateToProps = (state)=>{
+    return {
+        restaurantPrimaryEmailId: state.restaurantPrimaryEmailId
+    }
+}
+
 class RestaurantAddMenuForm extends Component{
     state  = {
         restaurantDishDescription: "",
         restaurantDishName: "",
         restaurantDishPrice: "",
         restaurantDishCuisine: "",
-        restaurantDishAvailability: ""
+        restaurantDishAvailability: "",
+        restaurantPrimaryEmailId: "",
+        restaurantId: "toi"
 
 
     }
 
     handleRestaurantDishAvailability= (event) => {
         this.setState({
-            restaurantDishAvailability: event.target.value,
+            restaurantDishAvailability: "1",
         })};
 
     handleRestaurantDishCuisine= (event) => {
@@ -43,7 +52,7 @@ class RestaurantAddMenuForm extends Component{
 
     restaurantAddDish() {debugger;
         let obj = {}
-        fetch('/restaurantAddDish',
+        fetch('/addDishToRestaurantMenu',
             {
                 method: 'POST',
                 redirect: 'follow',
@@ -52,9 +61,11 @@ class RestaurantAddMenuForm extends Component{
                     'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify({
-                        restaurantDishDescription: this.state.restaurantDishDescription,
-                        restaurantDishName: this.state.restaurantDishName,
-                        restaurantDishPrice: this.state.restaurantDishPrice,
+                        restaurantId: this.state.restaurantId,
+                    dishAvailable: this.state.restaurantDishAvailability,
+                    dishDescription: this.state.restaurantDishDescription,
+                        dishName: this.state.restaurantDishName,
+                    dishPrice: this.state.restaurantDishPrice,
                     }
                 )
 
@@ -137,10 +148,7 @@ class RestaurantAddMenuForm extends Component{
                                         </div>
                                     </div>
                                     <div className="form-row">
-                                        <div className="form-group col-md-6">
-                                            <input placeholder="Dish Cuisine" value={this.state.restaurantDishCuisine} onChange={this.handleRestaurantDishCuisine}
-                                                   className="form-control" required="required" type="text"/>
-                                        </div>
+
                                         <div className="form-group col-md-6">
 
                                             <select id="inputState" className="form-control" value={this.state.restaurantDishAvailability} onChange={this.handleRestaurantDishAvailability}>
@@ -150,7 +158,7 @@ class RestaurantAddMenuForm extends Component{
                                             </select>
                                         </div>
                                         <div className="form-group col-md-12">
-                                            <textarea value={this.state.restaurantDishDescription} value={this.handleRestaurantDishDescription} id="comment" name="comment" cols="40" rows="5" placeholder="Description of dish"
+                                            <textarea value={this.state.restaurantDishDescription} onChange={this.handleRestaurantDishDescription} id="comment" name="comment" cols="40" rows="5" placeholder="Description of dish"
                                                       className="form-control"></textarea>
                                         </div>
                                     </div>

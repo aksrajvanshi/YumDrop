@@ -42,7 +42,7 @@ import DeliveryAgentOTPResetPassword from "./DeliveryAgentOTPResetPassword";
 const initialState = {
     latitude: null,
     longitude: null,
-    emailId: null
+    emailId: null,
 }
 
 const reducer = (state=initialState, action) => {
@@ -51,11 +51,13 @@ const reducer = (state=initialState, action) => {
         return {latitude: action.newLatitude, longitude: action.newLongitude}
     }
     else if (action.type === "setEmailId"){
-        return {emailId: action.newEmailId}
+        return {emailId: action.emailId}
     }
+
 
     return state;
 }
+
 
 const store = createStore(reducer)
 

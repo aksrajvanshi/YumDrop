@@ -8,6 +8,20 @@ import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import Recaptcha from 'react-recaptcha';
 
+
+const mapStateToProps = (state)=>{
+    return {
+        emailId: state.emailId,
+    }
+}
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail(evt){
+            dispatch({type: "setEmailId", emailId: evt.emailId});
+        }
+    }
+}
 class App extends Component {
     state = {
         loginSelect: true,
@@ -15,10 +29,9 @@ class App extends Component {
         restaurantLoginOption: false,
         deliveryAgentLoginOption: false,
         closeAllOptionsOfSelectionForm: false,
-        userName: "",
+        emailId: "",
         userPassword: "",
         userPhoneNumber: "",
-        userEmail: "",
         userTemporaryPassword: "",
         redirect: false,
         forgotPasswordSelect: false,
@@ -47,7 +60,7 @@ class App extends Component {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                user_name: this.state.userName,
+                user_name: this.state.emailId,
                 userPassword: this.state.userPassword
             }),
         }).then(res => {
@@ -80,7 +93,7 @@ class App extends Component {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: this.state.userEmail,
+                userEmail: this.state.emailId,
                 temporaryPassword: this.state.userTemporaryPassword,
                 newPassword: this.state.userPassword
             }),
@@ -108,7 +121,7 @@ class App extends Component {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: this.state.userEmail
+                userEmail: this.state.emailId
             }),
         }).then(res => {
 
@@ -179,7 +192,7 @@ class App extends Component {
 
     handleUserNameChange =  (event) => {
         this.setState({
-            userName: event.target.value,
+            emailId: event.target.value,
         });
     };
     handleUserPasswordChange =  (event) => {
@@ -190,12 +203,17 @@ class App extends Component {
 
     handleUserEmailIDChange =  (event) => {
         this.setState({
-            userEmail: event.target.value,
+            emailId: event.target.value,
         });
     };
 
     goBackToHomePAge = () => {
         this.props.history.push("/")
+    }
+
+    callHandlers = (event) => {
+        this.handleUserNameChange(event);
+        this.props.setUserEmail(event);
     }
 
 
@@ -284,6 +302,7 @@ class App extends Component {
                     </div>
                 </nav>
             </header>
+            {this.state.userEmail}
             <div className="view rgba-black-light">
                 <br/><br/><br/>
                 <div className="">
@@ -395,8 +414,8 @@ class App extends Component {
                                     </div>
                                     <div className="or-seperator"><i>or</i></div>
                                     <div className="form-group">
-                                        <input value={this.state.userName}
-                                               onChange={this.handleUserNameChange} type="text"
+                                        <input value={this.state.emailId}
+                                               onChange={this.callHandlers} type="text"
                                                className="form-control" placeholder="Username"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
@@ -608,18 +627,6 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = (state)=>{
-    return {
-        userEmailId: state.emailId
-    }
-}
 
-const mapDispatchToProps = (dispatch)=> {
-    return {
-        setUser(evt){
-            dispatch({type: "setEmailId", newEmailId: evt});
-        }
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps,mapDispatchToProps)(App);

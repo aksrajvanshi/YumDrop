@@ -13,10 +13,7 @@ class Map extends React.Component{
         super( props );
         this.state = {
             address: '',
-            city: '',
-            area: '',
-            state: '',
-            userEmailId: "",
+            userEmailId: "maithreyi.prabhu95@gmail.com",
             mapPosition: {
                 lat: this.props.center.lat,
                 lng: this.props.center.lng
@@ -29,17 +26,14 @@ class Map extends React.Component{
     }
 
     submitAddress = () => { debugger;
-        fetch('/userLocation', {
+        fetch('/saveUserAddress', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
                 userAddress: this.state.address,
-                userCity: this.state.city,
-                userArea: this.state.area,
-                userState: this.state.area,
-                userEmailId: this.state.userEmailId
+                userEmail: this.state.userEmailId
             }),
         }).then(res => {
 
@@ -221,18 +215,6 @@ class Map extends React.Component{
         if( this.props.center.lat !== undefined ) {
             map = <div>
                 <div>
-                    <div className="form-group">
-                        <label htmlFor="">City</label>
-                        <input type="text" name="city" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.city }/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="">Area</label>
-                        <input type="text" name="area" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.area }/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="">State</label>
-                        <input type="text" name="state" className="form-control" onChange={ this.onChange }  readOnly="readOnly" value={ this.state.state }/>
-                    </div>
                     <div className="form-group">
                         <label htmlFor="">Address</label>
                         <input type="text" name="address" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.address }/>

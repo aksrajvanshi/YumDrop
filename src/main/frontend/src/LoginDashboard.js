@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import './LoginDashBoardCSS.css';
 import {connect} from "react-redux";
 
+
 class LoginDashBoard extends Component{
 
     state = {
-        userEmailId : "this.props.userEmailId"
+        emailId : ""
     }
 
     componentDidMount () {
@@ -21,7 +22,7 @@ class LoginDashBoard extends Component{
     }
 
     onClick= (event) => {
-        this.props.setUser(this.state.userName);
+        this.props.setUser(this.state.emailId);
         this.forwardToSettingsPage();
     }
 
@@ -55,7 +56,9 @@ class LoginDashBoard extends Component{
                         </div>
                     </nav>
                 </header>
-
+                <p>{this.props.emailId}<br/>
+                {this.state.userEmailId}
+                    hey</p>
                 <div className="container mt-5">
                     <div className="section-title text-center">
                         <p>Try from the variety of Cuisines available</p>
@@ -221,14 +224,14 @@ class LoginDashBoard extends Component{
 }
 const mapStateToProps = (state)=> {
     return {
-        userEmailId: state.emailId
+        emailId: state.emailId
     }
 }
 
 const mapDispatchToProps = (dispatch)=> {
     return {
         setUser(evt){
-            dispatch({type: "setEmailId", newEmailId: evt});
+            dispatch({type: "setEmailId", emailId: evt});
         }
     }
 }

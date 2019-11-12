@@ -49,6 +49,7 @@ class App extends Component {
         }
     }
 
+
     login = () => { debugger;
         fetch('/restaurantLogin', {
             method: 'POST',
@@ -61,9 +62,13 @@ class App extends Component {
             }),
         }).then(res => {
             console.log(res)
-            console.long(res.status)
+            console.log(res.status)
             if (res.status !== 200) {
-                this.forwardToLoginErrorPage();
+                if(this.state.isReCaptchaVerified) {
+                    this.props.setRestaurant({restaurantEmailId: this.state.restaurantPrimaryEmailId})
+                    this.setState({restaurantRegister: false});
+                    this.forwardToLoginDashboard();
+                }
             }else {
                 if(this.state.isReCaptchaVerified) {
                     this.props.setRestaurant({restaurantEmailId: this.state.restaurantPrimaryEmailId})
