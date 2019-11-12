@@ -16,21 +16,21 @@ public class DeliveryAgentTemporaryPassword {
     private String deliveryAgentEmail;
 
     @Column(name = "da_temp_password", nullable = false)
-    private String temporaryPassword;
+    private String deliveryAgentTemporaryPassword;
 
     public DeliveryAgentTemporaryPassword() {
     }
 
-    public DeliveryAgentTemporaryPassword(String deliveryAgentEmail, String temporaryPassword) {
+    public DeliveryAgentTemporaryPassword(String deliveryAgentEmail, String deliveryAgentTemporaryPassword) {
         this.deliveryAgentEmail = deliveryAgentEmail;
-        this.temporaryPassword = temporaryPassword;
+        this.deliveryAgentTemporaryPassword = deliveryAgentTemporaryPassword;
     }
 
     @Override
     public String toString() {
         return "Delivery_Agent_Temporary_Password{" +
                 "deliveryAgentEmail='" + deliveryAgentEmail + '\'' +
-                ", temporaryPassword='" + temporaryPassword + '\'' +
+                ", deliveryAgentTemporaryPassword='" + deliveryAgentTemporaryPassword + '\'' +
                 '}';
     }
 
@@ -42,11 +42,11 @@ public class DeliveryAgentTemporaryPassword {
         this.deliveryAgentEmail = deliveryAgentEmail;
     }
 
-    public String getTemporaryPassword() {
-        return temporaryPassword;
+    public String getDeliveryAgentTemporaryPassword() {
+        return deliveryAgentTemporaryPassword;
     }
 
-    public void setTemporaryPassword(String temporaryPassword) {
-        this.temporaryPassword = temporaryPassword;
+    public void setTemporaryPassword(String deliveryAgentTemporaryPassword) {
+        this.deliveryAgentTemporaryPassword = deliveryAgentTemporaryPassword;
     }
 }

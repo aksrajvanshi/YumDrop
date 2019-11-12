@@ -24,13 +24,14 @@ public class DeliveryAgentLoginController {
     @RequestMapping(value = "/deliveryAgentLoginDataForm", method = RequestMethod.POST)
     public ResponseEntity<?> deliveryAgentLogin(@RequestBody DeliveryAgentLoginDetails deliveryAgentLoginDetails) {
 
-        Delivery_Agent loggedInUser = deliveryAgentRepository.findByDeliveryAgentEmail(deliveryAgentLoginDetails.getdeliveryAgentLoginEmail());
-        if (loggedInUser == null) {
+        Delivery_Agent loggedInDeliveryAgent = deliveryAgentRepository.findByDeliveryAgentEmail(deliveryAgentLoginDetails.getdeliveryAgentLoginEmail());
+        if (loggedInDeliveryAgent == null) {
+
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        if (loggedInUser.getDeliveryAgentEmail().equals(deliveryAgentLoginDetails.getdeliveryAgentLoginEmail())
-                && PasswordUtils.checkIfPasswordMatches(deliveryAgentLoginDetails.getdeliveryAgentLoginPassword(), loggedInUser.getDeliveryAgentPassword())) {
+        if (loggedInDeliveryAgent.getDeliveryAgentEmail().equals(deliveryAgentLoginDetails.getdeliveryAgentLoginEmail())
+                && PasswordUtils.checkIfPasswordMatches(deliveryAgentLoginDetails.getdeliveryAgentLoginPassword(), loggedInDeliveryAgent.getDeliveryAgentPassword())) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

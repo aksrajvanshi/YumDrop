@@ -3,7 +3,7 @@ package com.app.yumdrop.FormEntity;
 public class DeliveryAgentForgotPasswordForm {
 
     private String deliveryAgentEmail;
-    private String temporaryPassword;
+    private String deliveryAgentTemporaryPassword;
     private String newPassword;
 
     public DeliveryAgentForgotPasswordForm() {
@@ -13,18 +13,17 @@ public class DeliveryAgentForgotPasswordForm {
         this.deliveryAgentEmail = deliveryAgentEmail;
     }
 
-    public DeliveryAgentForgotPasswordForm(String deliveryAgentEmail, String temporaryPassword, String newPassword) {
+    public DeliveryAgentForgotPasswordForm(String deliveryAgentEmail, String deliveryAgentTemporaryPassword, String newPassword) {
         this.deliveryAgentEmail = deliveryAgentEmail;
-        this.temporaryPassword = temporaryPassword;
+        this.deliveryAgentTemporaryPassword = deliveryAgentTemporaryPassword;
         this.newPassword = newPassword;
     }
-
 
     @Override
     public String toString() {
         return "DeliveryAgentForgotPasswordForm{" +
                 "daEmail='" + deliveryAgentEmail + '\'' +
-                ", temporaryPassword='" + temporaryPassword + '\'' +
+                ", deliveryAgentTemporaryPassword='" + deliveryAgentTemporaryPassword + '\'' +
                 ", newPassword='" + newPassword + '\'' +
                 '}';
     }
@@ -33,16 +32,16 @@ public class DeliveryAgentForgotPasswordForm {
         return deliveryAgentEmail;
     }
 
-    public void setDeliveryAgentEmail(String daEmail) {
+    public void setDeliveryAgentEmail(String deliveryAgentEmail) {
         this.deliveryAgentEmail = deliveryAgentEmail;
     }
 
-    public String getTemporaryPassword() {
-        return temporaryPassword;
+    public String getDeliveryAgentTemporaryPassword() {
+        return deliveryAgentTemporaryPassword;
     }
 
-    public void setTemporaryPassword(String temporaryPassword) {
-        this.temporaryPassword = temporaryPassword;
+    public void setTemporaryPassword(String deliveryAgentTemporaryPassword) {
+        this.deliveryAgentTemporaryPassword = deliveryAgentTemporaryPassword;
     }
 
     public String getNewPassword() {

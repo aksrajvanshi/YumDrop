@@ -493,7 +493,7 @@ class App extends Component {
                                     <div className="form-group">
                                         <input value={this.state.userEmail}
                                                onChange={this.handleUserEmailIDChange} type="text"
-                                               className="form-control" placeholder="username / email ID"
+                                               className="form-control" placeholder="User Email ID"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
                                     </div>

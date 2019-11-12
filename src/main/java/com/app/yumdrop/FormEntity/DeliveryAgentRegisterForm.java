@@ -28,7 +28,7 @@ public class DeliveryAgentRegisterForm {
         return deliveryAgent_name;
     }
 
-    public void setDeliveryAgent_name(String da_name) {
+    public void setDeliveryAgent_name(String deliveryAgent_name) {
         this.deliveryAgent_name = deliveryAgent_name;
     }
 

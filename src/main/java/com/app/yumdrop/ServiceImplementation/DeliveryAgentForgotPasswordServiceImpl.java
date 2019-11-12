@@ -28,8 +28,8 @@ public class DeliveryAgentForgotPasswordServiceImpl implements DeliveryAgentForg
     @Override
     public ResponseEntity<?> sendMailWithTemporaryPassword(String deliveryAgentEmail) {
 
-        Delivery_Agent daExistsInDb = deliveryAgentRepository.findByDeliveryAgentEmail(deliveryAgentEmail);
-        if (daExistsInDb != null) {
+        Delivery_Agent deliveryAgentExistsInDb = deliveryAgentRepository.findByDeliveryAgentEmail(deliveryAgentEmail);
+        if (deliveryAgentExistsInDb != null) {
             String temporaryPassword = generateRandomPassword();
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
             simpleMailMessage.setTo(deliveryAgentEmail);
@@ -39,9 +39,9 @@ public class DeliveryAgentForgotPasswordServiceImpl implements DeliveryAgentForg
 
             javaMailSender.send(simpleMailMessage);
 
-            DeliveryAgentTemporaryPassword daTemporaryPassword = new DeliveryAgentTemporaryPassword(deliveryAgentEmail, PasswordUtils.convertPasswordToHash(temporaryPassword));
-            DeliveryAgentTemporaryPassword newPasswordDA = deliveryAgentTemporaryPasswordRepository.save(daTemporaryPassword);
-            if (newPasswordDA != null)
+            DeliveryAgentTemporaryPassword deliveryAgentTemporaryPassword = new DeliveryAgentTemporaryPassword(deliveryAgentEmail, PasswordUtils.convertPasswordToHash(temporaryPassword));
+            DeliveryAgentTemporaryPassword newPasswordDeliveryAgent = deliveryAgentTemporaryPasswordRepository.save(deliveryAgentTemporaryPassword);
+            if (newPasswordDeliveryAgent != null)
                 return ResponseEntity.status(HttpStatus.OK).build();
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -51,11 +51,11 @@ public class DeliveryAgentForgotPasswordServiceImpl implements DeliveryAgentForg
     }
 
     @Override
-    public ResponseEntity<?> verifyTemporaryPasswordAndSetNewPassword(String daEmail, String temporaryPassword, String newPassword) {
-        DeliveryAgentTemporaryPassword da = deliveryAgentTemporaryPasswordRepository.findByDeliveryAgentEmail(daEmail);
-        boolean isTempPasswordMatching = PasswordUtils.checkIfPasswordMatches(temporaryPassword, da.getTemporaryPassword());
+    public ResponseEntity<?> verifyTemporaryPasswordAndSetNewPasswordDeliveryAgent(String deliveryAgentEmail, String deliveryAgentTemporaryPassword, String newPassword) {
+        DeliveryAgentTemporaryPassword deliveryAgent = deliveryAgentTemporaryPasswordRepository.findByDeliveryAgentEmail(deliveryAgentEmail);
+        boolean isTempPasswordMatching = PasswordUtils.checkIfPasswordMatches(deliveryAgentTemporaryPassword, deliveryAgent.getDeliveryAgentTemporaryPassword());
         if (isTempPasswordMatching) {
-            Delivery_Agent deliveryAgentInDb = deliveryAgentRepository.findByDeliveryAgentEmail(daEmail);
+            Delivery_Agent deliveryAgentInDb = deliveryAgentRepository.findByDeliveryAgentEmail(deliveryAgentEmail);
             deliveryAgentInDb.setDeliveryAgentPassword(PasswordUtils.convertPasswordToHash(newPassword));
             deliveryAgentRepository.save(deliveryAgentInDb);
             return ResponseEntity.status(HttpStatus.OK).build();
