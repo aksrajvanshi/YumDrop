@@ -63,8 +63,21 @@ class App extends Component {
                 user_name: this.state.emailId,
                 userPassword: this.state.userPassword
             }),
-        }).then(res => {
+        }).then(function(response) {
+                return response.json();
+            })
+                .then(function(data) {
+                    console.log(data);
+                }).then(res => {
 
+            console.log(res);
+            console.log(res.body);
+            console.log(res.statusText);
+            console.log(res.toString());
+            console.log(res.json());
+            console.log(res.json().toString());
+            console.log(res.text())
+            console.log("done");
 
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});

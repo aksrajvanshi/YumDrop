@@ -38,11 +38,31 @@ class MySettingsPage extends Component{
     }
 
     componentDidMount () {
-        fetch('/getUserDetails')
-            .then(res => res.json()
-            ).then(data => {
-            this.setState({userName: data.userName, userEmailId: data.userEmailId, userPhoneNumber: data.userPhoneNumber})
-        })}
+        fetch('/getUserDataForDashboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userEmail: "maithreyi.prabhu95@gmail.com"
+            }),
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            console.log(data);
+            console.log(data.userName);
+        }).then(res => {
+
+            if (res.status !== 200) {
+
+                alert("Hey going to Error page");
+            }else {
+                alert("Hey going to Login Dashboard page");
+            }
+
+
+        })
+        }
 
 
     render() {
