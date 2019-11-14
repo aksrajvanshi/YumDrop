@@ -36,7 +36,9 @@ class App extends Component {
         redirect: false,
         forgotPasswordSelect: false,
         emailSelectForgotPassword: false,
-        isReCaptchaVerified: false
+        isReCaptchaVerified: false,
+        responseMessageForLogin: [],
+        errorSelect: false
 
     };
 
@@ -63,41 +65,26 @@ class App extends Component {
                 user_name: this.state.emailId,
                 userPassword: this.state.userPassword
             }),
-        }).then(function(response) {
-                return response.json();
-            })
-                .then(function(data) {
-                    console.log(data);
-                }).then(res => {
-
-            console.log(res);
-            console.log(res.body);
-            console.log(res.statusText);
-            console.log(res.toString());
-            console.log(res.json());
-            console.log(res.json().toString());
-            console.log(res.text())
-            console.log("done");
-
-            if (res.status !== 200) {
-                this.setState({redirect: true, userRegister: false});
-                this.forwardToLoginErrorPage();
-            }else {
+        }).then(res => {
+            if (res.status === 200){
                 if(this.state.isReCaptchaVerified) {
-                    this.setState({redirect: true, userRegister: false});
-                    this.forwardToLoginDashboard();
-                    this.props.setUser(this.state.userName);
-                }
-                else {
-                    this.setState({redirect: true, userRegister: false});
-                    this.forwardToLoginErrorPage();
-                }
+                this.forwardToLoginDashboard();
+
+            }}
+            else{
+                return res.json();
             }
+        }).then(data => {
+                    console.log(data);
+                    this.setState({
+                        responseMessageForLogin: data, errorSelect: true, userLoginOption: false, loginSelect: false
+                    })
+                    console.log(this.state.responseMessageForLogin.message);
+                    console.log(this.state.errorSelect);
+                })
+        }
 
 
-        })
-
-    }
 
     passwordChange  = () => { debugger;
         fetch('/setNewUserPassword', {
@@ -457,6 +444,31 @@ class App extends Component {
                                         </button>
                                     </div>
 
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </Modal>
+            <Modal
+                show={this.state.errorSelect}
+                animation={false}
+                id="modal"
+            >
+                <div className="container">
+                    <div className="row">
+                        <div className="main">
+                            <div className="login-form">
+                                <form>
+                                    <h2 className="text-center">{this.state.responseMessageForLogin}</h2>
+
+                                    <div className="form-group">
+                                        <button onClick={this.goBackToHomePage} type="submit"
+                                                className="btn btn-primary btn-lg btn-block login-btn">Go to Home
+                                        </button>
+                                    </div>
                                 </form>
 
                             </div>

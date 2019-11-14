@@ -23,14 +23,14 @@ public class LoadDashboardDataController {
     @Autowired
     RestaurantRepository restaurantRepository;
 
-    @RequestMapping(value = "/getUserDataForDashboard", method = RequestMethod.GET)
+    @RequestMapping(value = "/getUserDataForDashboard", method = RequestMethod.POST)
     public ResponseEntity<?> loadUserDataForDashboard(@RequestBody Users user) {
-
+        System.out.print("Inside this");
         Users userData = usersRepository.findByuserEmail(user.getUserEmail());
         return new ResponseEntity<>(userData, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/getRestaurantDataForDashboard", method = RequestMethod.GET)
+    @RequestMapping(value = "/getRestaurantDataForDashboard", method = RequestMethod.POST)
     public ResponseEntity<?> loadRestaurantDataForDashboard(@RequestBody Restaurant restaurantData) {
 
         Restaurant restaurantDataForDashboard = restaurantRepository.findByrestaurantId(restaurantData.getRestaurantId());

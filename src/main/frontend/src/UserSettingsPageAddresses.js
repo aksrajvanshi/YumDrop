@@ -5,7 +5,7 @@ class UserSettingsPageAddresses extends Component{
     state = {
         data: [],
         userName: "",
-        userEmailId:  "",
+        userEmailId:  "maithreyi.prabhu95@gmail.com",
         userPhoneNumber: "",
         userState: "",
         userCity: "",
@@ -23,12 +23,32 @@ class UserSettingsPageAddresses extends Component{
         this.props.history.push('/MyCurrentLocation');
     }
 
-    componentDidMount () {
-        fetch('/getUserDetails')
-            .then(res => res.json()
-            ).then(data => {
-            this.setState({userCity: data.userCity, userArea: data.userArea, userAddress: data.userAddress, userState: data.userState})
-        })}
+    componentDidMount() {
+        let currentComponent = this;
+        fetch('/getUserDataForDashboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userEmail: "maithreyi.prabhu95@gmail.com"
+            }),
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            console.log(data);
+            console.log(data.userAddress);
+            const userAddress = data.userAddress;
+            console.log("Will mount username", userAddress);
+            currentComponent.setState({
+                userAddress: data.userAddress,
+                userName: data.userName
+            });
+            console.log(currentComponent.state.userAddress);
+        })
+    }
+
+
 
 
     render() {
@@ -116,29 +136,17 @@ class UserSettingsPageAddresses extends Component{
                             <form className="row">
                                 <div className="col-md-6">
                                     <div className="form-group">
-                                        <label htmlFor="account-fn">Address</label>
+                                        <label htmlFor="account-fn">Full Name</label>
                                         <input className="form-control" type="text" id="account-fn"
-                                               placeholder={this.state.userAddress}/>
+                                               placeholder={this.state.userName}/>
                                     </div>
                                 </div>
+
+
                                 <div className="col-md-6">
                                     <div className="form-group">
-                                        <label htmlFor="account-ln">City</label>
-                                        <input className="form-control" type="text" id="account-ln" placeholder={this.state.userCity}
-                                               required=""/>
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="form-group">
-                                        <label htmlFor="account-email">Area</label>
-                                        <input className="form-control" type="email" id="account-email" placeholder={this.state.userArea}
-                                               disabled=""/>
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="form-group">
-                                        <label htmlFor="account-phone">State</label>
-                                        <input className="form-control" type="text" id="account-phone" placeholder={this.state.userState}
+                                        <label htmlFor="account-phone">Address</label>
+                                        <input className="form-control" type="text" id="account-phone" placeholder={this.state.userAddress}
                                                required=""/>
                                     </div>
                                 </div>

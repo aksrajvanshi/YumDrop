@@ -13,7 +13,7 @@ const mapStateToProps = (state)=>{
 
 class MySettingsPage extends Component{
     state = {
-        data: [],
+        dataReceived: [],
         userName: "",
         userEmailId:  "",
         userPhoneNumber: ""
@@ -37,30 +37,29 @@ class MySettingsPage extends Component{
         this.props.history.push('/LoginDashboard')
     }
 
-    componentDidMount () {
+    componentDidMount() {
+        let currentComponent = this;
         fetch('/getUserDataForDashboard', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: "maithreyi.prabhu95@gmail.com"
+                userEmail: this.state.userEmailId
             }),
         }).then(function(response) {
             return response.json();
         }).then(function(data) {
             console.log(data);
             console.log(data.userName);
-        }).then(res => {
-
-            if (res.status !== 200) {
-
-                alert("Hey going to Error page");
-            }else {
-                alert("Hey going to Login Dashboard page");
-            }
-
-
+            const userName = data.userName;
+            console.log("Will mount username", userName);
+            currentComponent.setState({
+                userName: data.userName,
+                userEmail: data.userEmail,
+                userPhoneNumber: data.userPhoneNumber
+            });
+            console.log(currentComponent.state.userName);
         })
         }
 
@@ -69,6 +68,7 @@ class MySettingsPage extends Component{
         let trying = this.state.data;
         console.log(trying);
         console.log(this.state.trying);
+        console.log(this.state.userName);
         console.log("hey trying to run this");
         return (
             <div>
@@ -107,6 +107,7 @@ class MySettingsPage extends Component{
                     </nav>
 
                 </header>
+
                 <div className="container mt-5">
                     <div className="row">
                         <div className="col-lg-4 pb-5">
@@ -136,16 +137,7 @@ class MySettingsPage extends Component{
                                     </a><a className="list-group-item active" href="#"><i
                                     className="fe-icon-user text-muted"></i>Profile Settings</a><a
                                     className="list-group-item" href="#" onClick={this.forwardToSettingsAddresses}><i className="fe-icon-map-pin text-muted"></i>Addresses</a>
-                                    <a className="list-group-item" href="#">
-                                        <div className="d-flex justify-content-between align-items-center">
-                                            <div><i className="fe-icon-heart mr-1 text-muted"></i>
-                                                <div className="d-inline-block font-weight-medium text-uppercase">My
-                                                    Cart
-                                                </div>
-                                            </div>
 
-                                        </div>
-                                    </a>
                                 </nav>
                             </div>
                         </div>
@@ -159,13 +151,7 @@ class MySettingsPage extends Component{
                                                placeholder={this.state.userName}/>
                                     </div>
                                 </div>
-                                <div className="col-md-6">
-                                    <div className="form-group">
-                                        <label htmlFor="account-ln">Last Name</label>
-                                        <input className="form-control" type="text" id="account-ln" placeholder={this.state.userName}
-                                               required=""/>
-                                    </div>
-                                </div>
+
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="account-email">E-mail Address</label>
@@ -189,10 +175,7 @@ class MySettingsPage extends Component{
                                                    id="subscribe_me" checked=""/>
 
                                         </div>
-                                        <button className="btn btn-style-1 btn-primary" type="button" data-toast=""
-                                                data-toast-position="topRight" data-toast-type="success"
-                                                data-toast-icon="fe-icon-check-circle" data-toast-title="Success!"
-                                                data-toast-message="Your profile updated successfuly.">Update
+                                        <button className="btn btn-style-1 btn-primary" type="button" >Update
                                             Profile
                                         </button>
                                     </div>
