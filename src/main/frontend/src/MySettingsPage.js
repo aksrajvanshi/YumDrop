@@ -6,7 +6,7 @@ import './LoginDashBoardCSS.css';
 
 const mapStateToProps = (state)=>{
     return {
-        userEmailId: state.emailId
+        userEmailId: state.userId
     }
 }
 
@@ -107,7 +107,7 @@ class MySettingsPage extends Component{
                     </nav>
 
                 </header>
-
+                <p>{this.props.userEmailId}</p>
                 <div className="container mt-5">
                     <div className="row">
                         <div className="col-lg-4 pb-5">

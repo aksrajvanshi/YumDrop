@@ -11,14 +11,14 @@ import Recaptcha from 'react-recaptcha';
 
 const mapStateToProps = (state)=>{
     return {
-        emailId: state.emailId,
+        emailId: state.userId,
     }
 }
 
 const mapDispatchToProps = (dispatch)=> {
     return {
         setUserEmail(evt){
-            dispatch({type: "setEmailId", emailId: evt.emailId});
+            dispatch({type: "setUserId", userId: evt.target.value});
         }
     }
 }
@@ -69,7 +69,6 @@ class App extends Component {
             if (res.status === 200){
                 if(this.state.isReCaptchaVerified) {
                 this.forwardToLoginDashboard();
-
             }}
             else{
                 return res.json();

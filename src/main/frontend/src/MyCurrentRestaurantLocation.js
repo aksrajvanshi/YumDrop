@@ -5,10 +5,10 @@ import {Modal} from "react-bootstrap";
 const mapStateToProps = (state)=>{
     return {
         latitude: state.latitude,
-        longitude: state.longitude
+        longitude: state.longitude,
+        restaurantId: state.userId,
     }
 }
-
 
 
 const mapDispatchToProps = (dispatch)=> {
@@ -117,7 +117,7 @@ class MyCurrentRestaurantLocation extends Component {
                         </div>
                     </nav>
                 </header>
-
+                <p>{this.props.restaurantId}</p>
                 <Modal
                     show={this.state.positionSelect}
                     animation={false}

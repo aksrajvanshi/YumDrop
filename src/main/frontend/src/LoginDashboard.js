@@ -22,7 +22,6 @@ class LoginDashBoard extends Component{
     }
 
     onClick= (event) => {
-        this.props.setUser(this.state.emailId);
         this.forwardToSettingsPage();
     }
 
@@ -224,14 +223,14 @@ class LoginDashBoard extends Component{
 }
 const mapStateToProps = (state)=> {
     return {
-        emailId: state.emailId
+        emailId: state.userId
     }
 }
 
 const mapDispatchToProps = (dispatch)=> {
     return {
-        setUser(evt){
-            dispatch({type: "setEmailId", emailId: evt});
+        setUserEmail(evt){
+            dispatch({type: "setUserId", emailId: evt});
         }
     }
 }

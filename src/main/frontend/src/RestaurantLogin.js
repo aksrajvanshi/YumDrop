@@ -10,7 +10,7 @@ import Recaptcha from 'react-recaptcha';
 
 const mapStateToProps = (state)=>{
     return {
-        restaurantPrimaryEmailId: state.restaurantPrimaryEmailId
+        restaurantId: state.userId
     }
 }
 
@@ -19,7 +19,7 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch)=> {
     return {
         setRestaurant(evt){
-            dispatch({type: "setRestaurantEmailId", restaurantPrimaryEmailId: evt.restaurantPrimaryEmailId});
+            dispatch({type: "setUserId", userId: evt});
         }
     }
 }
@@ -63,15 +63,17 @@ class App extends Component {
         }).then(res => {
             console.log(res)
             console.log(res.status)
+            this.props.setRestaurant(this.state.restaurantId);
+            this.forwardToLoginDashboard();
             if (res.status !== 200) {
                 if(this.state.isReCaptchaVerified) {
-                    this.props.setRestaurant({restaurantEmailId: this.state.restaurantPrimaryEmailId})
+                    this.props.setRestaurant(this.state.restaurantId);
                     this.setState({restaurantRegister: false});
                     this.forwardToLoginDashboard();
                 }
             }else {
                 if(this.state.isReCaptchaVerified) {
-                    this.props.setRestaurant({restaurantEmailId: this.state.restaurantPrimaryEmailId})
+                    this.props.setRestaurant(this.state.restaurantId);
                     this.setState({restaurantRegister: false});
                     this.forwardToLoginDashboard();
                 }
@@ -238,6 +240,7 @@ class App extends Component {
                     </div>
                 </nav>
             </header>
+            <p>{this.props.restaurantId}</p>
             <div className="view rgba-black-light">
                 <br/><br/><br/>
                 <div className="">

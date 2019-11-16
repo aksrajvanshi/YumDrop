@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux';
 import './MySettingsPage.css';
 
 class UserSettingsPageAddresses extends Component{
@@ -82,7 +83,7 @@ class UserSettingsPageAddresses extends Component{
                         </div>
                     </nav>
                 </header>
-
+                <p>{this.props.restaurantId}</p>
                <div className="container mt-5">
                 <div className="row">
                     <div className="col-lg-4 pb-5">
@@ -176,4 +177,9 @@ class UserSettingsPageAddresses extends Component{
 
 }
 
-export default UserSettingsPageAddresses;
+const mapStateToProps = (state) => {
+    return {
+        restaurantId: state.userId
+    }
+};
+export default connect(mapStateToProps) (UserSettingsPageAddresses);

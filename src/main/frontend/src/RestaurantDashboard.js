@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 
 const mapStateToProps = (state)=>{
     return {
-        restaurantPrimaryEmailId: state.restaurantPrimaryEmailId
+        restaurantId: state.userId
     }
 };
 
@@ -78,6 +78,7 @@ class RestaurantDashboard extends Component{
                         </div>
                     </nav>
                 </header>
+                <p>{this.props.restaurantId}</p>
                 <div className="container">
                     <div className="row">
                         <div className="col-xs-10 ">
@@ -94,7 +95,6 @@ class RestaurantDashboard extends Component{
                     </div>
                 </div>
                 <br/><br/><br/>
-                {this.props.emailId}
 
                 <div className="container">
                     <div className="row">
