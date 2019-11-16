@@ -33,21 +33,34 @@ class MySettingsPage extends Component{
         this.props.history.push('/MySettingsPage')
     }
 
+    goBackToProfileSettingsPage = () => {
+        this.props.history.push('/MySettingsPage')
+    }
+
     goBackToLoginDashboard = () => {
         this.props.history.push('/LoginDashboard')
     }
 
+    forwardToMyCart = () => {
+        this.props.history.push('/MyCart')
+    }
+
     componentDidMount() {
         let currentComponent = this;
+        console.log(currentComponent.state.userEmailId);
+        console.log(this.props.userEmailId);
+        console.log(currentComponent.props.userEmailId)
         fetch('/getUserDataForDashboard', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: this.state.userEmailId
+                userEmail: currentComponent.props.userEmailId
             }),
         }).then(function(response) {
+            console.log("returned");
+            console.log(response);
             return response.json();
         }).then(function(data) {
             console.log(data);
@@ -56,7 +69,7 @@ class MySettingsPage extends Component{
             console.log("Will mount username", userName);
             currentComponent.setState({
                 userName: data.userName,
-                userEmail: data.userEmail,
+                userEmailId: data.userEmail,
                 userPhoneNumber: data.userPhoneNumber
             });
             console.log(currentComponent.state.userName);
@@ -128,16 +141,25 @@ class MySettingsPage extends Component{
                                     <a className="list-group-item" href="#">
                                         <div className="d-flex justify-content-between align-items-center">
                                             <div><i className="fe-icon-shopping-bag mr-1 text-muted"></i>
-                                                <div className="d-inline-block font-weight-medium text-uppercase">Orders
+                                                <div className="d-inline-block font-weight-medium text-uppercase" >Orders
                                                     List
                                                 </div>
                                             </div>
 
                                         </div>
                                     </a><a className="list-group-item active" href="#"><i
-                                    className="fe-icon-user text-muted"></i>Profile Settings</a><a
+                                    className="fe-icon-user text-muted" onClick={this.goBackToProfileSettingsPage}></i>Profile Settings</a><a
                                     className="list-group-item" href="#" onClick={this.forwardToSettingsAddresses}><i className="fe-icon-map-pin text-muted"></i>Addresses</a>
+                                    <a className="list-group-item" href="#">
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div><i className="fe-icon-heart mr-1 text-muted"></i>
+                                                <div className="d-inline-block font-weight-medium text-uppercase" onClick={this.forwardToMyCart}>My
+                                                    Cart
+                                                </div>
+                                            </div>
 
+                                        </div>
+                                    </a>
                                 </nav>
                             </div>
                         </div>

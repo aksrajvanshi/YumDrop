@@ -24,6 +24,9 @@ class Map extends React.Component{
             }
         }
     }
+    forwardToHomePage = () => {
+        this.props.history.push('/LoginDashBoard');
+    }
 
     submitAddress = () => { debugger;
         fetch('/saveUserAddress', {
@@ -43,7 +46,8 @@ class Map extends React.Component{
 
                 alert("Hey going to Error page");
             }else {
-                alert("Hey going to Login Dashboard page");
+                alert("Successfully added address");
+                this.forwardToHomePage();
             }
 
 

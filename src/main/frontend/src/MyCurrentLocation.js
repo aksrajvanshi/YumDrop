@@ -129,30 +129,6 @@ class MyCurrentLocation extends Component {
                             <div className="main">
                                 <div className="login-form">
                                     <form>
-                                        <h2 className="text-center">Allow  Access for Location</h2>
-                                        <div className="form-group">
-                                            <button  onClick={this.position}  className='Filter' type="submit"
-                                                     className="btn btn-primary btn-lg btn-block login-btn">Allow Access
-                                            </button>
-                                        </div>
-                                    </form>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </Modal>
-                <Modal
-                    show={this.state.getLocation}
-                    animation={false}
-                    id="modal"
-                >
-                    <div className="container">
-                        <div className="row">
-                            <div className="main">
-                                <div className="login-form">
-                                    <form>
                                         <h2 className="text-center">Get My Current Location</h2>
                                         <div className="form-group">
                                             <button  onClick={this.forwardToMapsPage}  className='Filter' type="submit"

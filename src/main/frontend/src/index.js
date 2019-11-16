@@ -38,6 +38,8 @@ import DeliveryAgentLoginForm from "./DeliveryAgentLoginForm";
 import ErrorPageForDeliveryAgentRegistration from "./ErrorPageForDeliveryAgentRegistration";
 import DeliveryAgentLoginErrorPage from "./DeliveryAgentLoginErrorPage";
 import DeliveryAgentOTPResetPassword from "./DeliveryAgentOTPResetPassword";
+import MyCart from "./MyCart";
+import paymentSystemForUsers from "./paymentSystemForUsers";
 
 const initialState = {
     latitude: null,
@@ -76,6 +78,8 @@ const routing = (
                 <Route exact path="/RegisterForm" component={RegisterForm}/>
                 <Route exact path="/LoginDashBoard" component={LoginDashBoard}/>
                 <Route exact path="/OTPpage" component={OTPpage}/>
+                <Route exact path="/paymentSystemForUsers" component={paymentSystemForUsers}/>
+                <Route exact path="/MyCart" component={MyCart}/>
                 <Route exact path="/DeliveryAgentOTPpage" component={DeliveryAgentOTPpage}/>
                 <Route exact path="/errorPageForRegistration" component={errorPageForRegistration} />
                 <Route exact path="/MySettingsPage" component={MySettingsPage}/>
