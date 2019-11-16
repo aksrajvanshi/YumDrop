@@ -1,6 +1,6 @@
 package com.app.yumdrop.Controller;
 
-import com.app.yumdrop.Entity.Delivery_Agent;
+import com.app.yumdrop.Entity.DeliveryAgent;
 import com.app.yumdrop.FormEntity.DeliveryAgentLoginDetails;
 import com.app.yumdrop.Repository.DeliveryAgentRepository;
 
@@ -24,7 +24,7 @@ public class DeliveryAgentLoginController {
     @RequestMapping(value = "/deliveryAgentLoginDataForm", method = RequestMethod.POST)
     public ResponseEntity<?> deliveryAgentLogin(@RequestBody DeliveryAgentLoginDetails deliveryAgentLoginDetails) {
 
-        Delivery_Agent loggedInUser = deliveryAgentRepository.findByDeliveryAgentEmail(deliveryAgentLoginDetails.getdeliveryAgentLoginEmail());
+        DeliveryAgent loggedInUser = deliveryAgentRepository.findByDeliveryAgentEmail(deliveryAgentLoginDetails.getdeliveryAgentLoginEmail());
         if (loggedInUser == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }

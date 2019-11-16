@@ -1,6 +1,6 @@
 package com.app.yumdrop.ServiceImplementation;
 
-import com.app.yumdrop.Entity.Delivery_Agent;
+import com.app.yumdrop.Entity.DeliveryAgent;
 import com.app.yumdrop.Entity.DeliveryAgentTemporaryPassword;
 import com.app.yumdrop.Repository.DeliveryAgentRepository;
 import com.app.yumdrop.Repository.DeliveryAgentTemporaryPasswordRepository;
@@ -28,7 +28,7 @@ public class DeliveryAgentForgotPasswordServiceImpl implements DeliveryAgentForg
     @Override
     public ResponseEntity<?> sendMailWithTemporaryPassword(String deliveryAgentEmail) {
 
-        Delivery_Agent daExistsInDb = deliveryAgentRepository.findByDeliveryAgentEmail(deliveryAgentEmail);
+        DeliveryAgent daExistsInDb = deliveryAgentRepository.findByDeliveryAgentEmail(deliveryAgentEmail);
         if (daExistsInDb != null) {
             String temporaryPassword = generateRandomPassword();
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -55,7 +55,7 @@ public class DeliveryAgentForgotPasswordServiceImpl implements DeliveryAgentForg
         DeliveryAgentTemporaryPassword da = deliveryAgentTemporaryPasswordRepository.findByDeliveryAgentEmail(daEmail);
         boolean isTempPasswordMatching = PasswordUtils.checkIfPasswordMatches(temporaryPassword, da.getTemporaryPassword());
         if (isTempPasswordMatching) {
-            Delivery_Agent deliveryAgentInDb = deliveryAgentRepository.findByDeliveryAgentEmail(daEmail);
+            DeliveryAgent deliveryAgentInDb = deliveryAgentRepository.findByDeliveryAgentEmail(daEmail);
             deliveryAgentInDb.setDeliveryAgentPassword(PasswordUtils.convertPasswordToHash(newPassword));
             deliveryAgentRepository.save(deliveryAgentInDb);
             return ResponseEntity.status(HttpStatus.OK).build();

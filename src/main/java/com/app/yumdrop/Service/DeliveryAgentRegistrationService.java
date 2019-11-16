@@ -1,6 +1,5 @@
 package com.app.yumdrop.Service;
 
-import com.app.yumdrop.Entity.Delivery_Agent;
 import com.app.yumdrop.FormEntity.DeliveryAgentRegisterForm;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;

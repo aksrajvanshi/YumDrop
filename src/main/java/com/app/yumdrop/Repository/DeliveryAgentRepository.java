@@ -1,9 +1,9 @@
 package com.app.yumdrop.Repository;
 
-import com.app.yumdrop.Entity.Delivery_Agent;
+import com.app.yumdrop.Entity.DeliveryAgent;
 import org.springframework.data.repository.CrudRepository;
 
-public interface DeliveryAgentRepository extends CrudRepository<Delivery_Agent, String> {
+public interface DeliveryAgentRepository extends CrudRepository<DeliveryAgent, String> {
 
-    Delivery_Agent findByDeliveryAgentEmail(String deliveryAgentEmail);
+    DeliveryAgent findByDeliveryAgentEmail(String deliveryAgentEmail);
 }

@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "delivery_agent")
-public class Delivery_Agent extends CreateAndUpdateTimeModel{
+public class DeliveryAgent extends CreateAndUpdateTimeModel{
 
     @Id
     @Column(name = "da_email", nullable = false)
@@ -41,10 +41,10 @@ public class Delivery_Agent extends CreateAndUpdateTimeModel{
     @Column(name = "da_address", nullable = false)
     private String deliveryAgentAddress;
 
-    public Delivery_Agent(){
+    public DeliveryAgent(){
     }
 
-    public Delivery_Agent(@Email(message = "delivery agent email should be a valid email") String deliveryAgentEmail, @NotNull String deliveryAgentName, @NotNull String deliveryAgentPhoneNumber, @NotNull String deliveryAgentPassword, String deliveryAgentAddress, @NotNull String lastUpdatedUser, @NotNull String lastCreatedUser) {
+    public DeliveryAgent(@Email(message = "delivery agent email should be a valid email") String deliveryAgentEmail, @NotNull String deliveryAgentName, @NotNull String deliveryAgentPhoneNumber, @NotNull String deliveryAgentPassword, String deliveryAgentAddress, @NotNull String lastUpdatedUser, @NotNull String lastCreatedUser) {
         this.deliveryAgentEmail = deliveryAgentEmail;
         this.deliveryAgentName = deliveryAgentName;
         this.deliveryAgentPhoneNumber = deliveryAgentPhoneNumber;
