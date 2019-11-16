@@ -75,6 +75,24 @@ class MySettingsPage extends Component{
         })
     }
 
+    handleTokenAPI = (token) => {
+        console.log("Insdie this");
+        console.log(token);
+        console.log(token.card);
+        console.log("Later")
+        token = token.json();
+        console.log(token.card);
+        console.log(token.email);
+        console.log(token.brand);
+        console.log(token.country);
+        console.log(token.cvc_check);
+        console.log(token.exp_month);
+        console.log(token.exp_year);
+        console.log(token.funding);
+        console.log(token.last4);
+        console.log("End")
+    }
+
 
     render() {
         let trying = this.state.data;
@@ -186,8 +204,7 @@ class MySettingsPage extends Component{
                                                    id="subscribe_me" checked=""/>
 
                                         </div></div>
-                                        <button className="btn btn-style-2 btn-primary" onClick={this.forwardToPaymentPage} type="button" >Order
-                                        </button>
+
 
                                 </div>
                             </form>
@@ -196,7 +213,7 @@ class MySettingsPage extends Component{
 
                                     <StripeCheckout stripeKey="pk_live_qksmj6ho2DblvlfR5PNKgzea00zC51Ydfw"
                                                     amount={this.state.totalPrice}
-                                                    token={handleToken}
+                                                    token={this.handleTokenAPI}
                                                     name={this.state.restaurantName}
 
 
