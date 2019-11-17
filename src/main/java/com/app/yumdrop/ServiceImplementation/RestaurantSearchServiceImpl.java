@@ -41,12 +41,12 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
 
         List<Restaurant> searchedRestaurant = restaurantRepository.findByrestaurantName(restaurantSearchKeyword);
         List<RestaurantSearchResults> restaurantResultsWithDetails = new ArrayList<>(searchedRestaurant.size());
-        if(searchedRestaurant.size() == 0){
+        if (searchedRestaurant.size() == 0) {
             SuccessMessage searchResultsWithZeroRest = new SuccessMessage(new Date(), "No restaurants matched your query");
             return new ResponseEntity<>(searchResultsWithZeroRest, HttpStatus.OK);
         }
 
-        for(int i=0; i < searchedRestaurant.size(); i++){
+        for (int i = 0; i < searchedRestaurant.size(); i++) {
 
             RestaurantSearchResults res = new RestaurantSearchResults();
 
@@ -65,12 +65,12 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
     public ResponseEntity<?> getRestaurantResultsByLocationFromDashboard(String userAddress, String userEmail, String restaurantSearchKeyword) {
         List<Restaurant> searchedRestaurant = restaurantRepository.findByrestaurantName(restaurantSearchKeyword);
         List<RestaurantSearchResults> restaurantResultsWithDetails = new ArrayList<>(searchedRestaurant.size());
-        if(searchedRestaurant.size() == 0){
+        if (searchedRestaurant.size() == 0) {
             SuccessMessage searchResultsWithZeroRest = new SuccessMessage(new Date(), "No restaurants matched your query");
             return new ResponseEntity<>(searchResultsWithZeroRest, HttpStatus.OK);
         }
 
-        for(int i=0; i < searchedRestaurant.size(); i++){
+        for (int i = 0; i < searchedRestaurant.size(); i++) {
 
             RestaurantSearchResults res = new RestaurantSearchResults();
 
@@ -78,8 +78,8 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
             res.setRestaurantDetails(currentRestaurant);
             RestaurantRatings currentRestaurantRatings = restaurantRatingsRepository.findByrestaurantId(currentRestaurant.getRestaurantId());
             res.setRestaurantRatings(currentRestaurantRatings);
-            Optional<UserRestaurantRatings> userRatingForRestaurant = userRestaurantRatingsRepository.findById(new UserRestaurantRatingsId(userEmail,currentRestaurant.getRestaurantId()));
-            if(userRatingForRestaurant.isPresent())
+            Optional<UserRestaurantRatings> userRatingForRestaurant = userRestaurantRatingsRepository.findById(new UserRestaurantRatingsId(userEmail, currentRestaurant.getRestaurantId()));
+            if (userRatingForRestaurant.isPresent())
                 res.setUserRestaurantRatings(userRatingForRestaurant.get());
 
             distanceBetweenAddressesCalculatorService.calculateDistance(userAddress, res);
@@ -93,12 +93,12 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
     public ResponseEntity<?> getAllRestaurantDetails(String userAddress) {
         List<Restaurant> searchedRestaurant = (List<Restaurant>) restaurantRepository.findAll();
         List<RestaurantSearchResults> restaurantResultsWithDetails = new ArrayList<>(searchedRestaurant.size());
-        if(searchedRestaurant.size() == 0){
+        if (searchedRestaurant.size() == 0) {
             SuccessMessage searchResultsWithZeroRest = new SuccessMessage(new Date(), "No restaurants matched your query");
             return new ResponseEntity<>(searchResultsWithZeroRest, HttpStatus.OK);
         }
 
-        for(int i=0; i < searchedRestaurant.size(); i++){
+        for (int i = 0; i < searchedRestaurant.size(); i++) {
 
             RestaurantSearchResults res = new RestaurantSearchResults();
 

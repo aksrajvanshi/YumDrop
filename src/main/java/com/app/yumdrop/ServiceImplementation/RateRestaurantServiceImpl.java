@@ -36,7 +36,7 @@ public class RateRestaurantServiceImpl implements RateRestaurantService {
 
         Users userInDb = usersRepository.findByuserEmail(userRestaurantRatings.getUserEmail());
         Restaurant restaurantInDb = restaurantRepository.findByrestaurantId(userRestaurantRatings.getRestaurantId());
-        if(userInDb == null || restaurantInDb == null){
+        if (userInDb == null || restaurantInDb == null) {
             ErrorMessage userNotExist = new ErrorMessage(new Date(), "Invalid request",
                     "");
             return new ResponseEntity<>(userNotExist, HttpStatus.UNAUTHORIZED);
@@ -48,11 +48,11 @@ public class RateRestaurantServiceImpl implements RateRestaurantService {
         RestaurantRatings currentRestaurantRating = restaurantRatingsRepository.findByrestaurantId(
                 userRestaurantRatings.getRestaurantId());
 
-        if(hasUserRatedRestaurant!= null && !hasUserRatedRestaurant.isPresent()){
+        if (hasUserRatedRestaurant != null && !hasUserRatedRestaurant.isPresent()) {
             UserRestaurantRatings userRatings = null;
             RestaurantRatings updatedRestaurantRatings = null;
 
-            if(currentRestaurantRating!= null) {
+            if (currentRestaurantRating != null) {
                 userRatings = userRestaurantRatingsRepository.save(userRestaurantRatings);
                 double overallRating = currentRestaurantRating.getOverallRating();
                 int numUsers = currentRestaurantRating.getNumberOfUsers();
@@ -61,18 +61,16 @@ public class RateRestaurantServiceImpl implements RateRestaurantService {
                 numUsers += 1;
                 updatedRestaurantRatings = restaurantRatingsRepository.save(
                         new RestaurantRatings(currentRestaurantRating.getRestaurantId(), overallRating, numUsers));
-            }
-            else{
+            } else {
                 userRatings = userRestaurantRatingsRepository.save(userRestaurantRatings);
-                updatedRestaurantRatings =  restaurantRatingsRepository.save(
+                updatedRestaurantRatings = restaurantRatingsRepository.save(
                         new RestaurantRatings(userRestaurantRatings.getRestaurantId(), userRestaurantRatings.getRestaurantRating(), 1));
             }
 
-            if(userRatings!= null && updatedRestaurantRatings!= null){
+            if (userRatings != null && updatedRestaurantRatings != null) {
                 SuccessMessage successfulRatingsSaved = new SuccessMessage(new Date(), "Ratings saved!");
                 return new ResponseEntity<>(successfulRatingsSaved, HttpStatus.OK);
-            }
-            else{
+            } else {
                 ErrorMessage ratingsError = new ErrorMessage(new Date(), "Ratings for this restaurants not saved",
                         "");
                 return new ResponseEntity<>(ratingsError, HttpStatus.INTERNAL_SERVER_ERROR);

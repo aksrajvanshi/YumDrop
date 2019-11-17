@@ -11,19 +11,14 @@ import com.app.yumdrop.Repository.RestaurantRatingsRepository;
 import com.app.yumdrop.Repository.RestaurantRepository;
 import com.app.yumdrop.Service.RestaurantRegistrationService;
 import com.app.yumdrop.Utils.PasswordUtils;
-import com.sendgrid.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.Date;
-import java.util.List;
-import java.util.Random;
 
 @Service
 public class RestaurantRegistrationServiceImpl implements RestaurantRegistrationService {
@@ -50,7 +45,7 @@ public class RestaurantRegistrationServiceImpl implements RestaurantRegistration
                 PasswordUtils.convertPasswordToHash(restaurantRegisterForm.getRestaurantPrimaryPassword()), false);
         RestaurantManager newRestaurantManager = restaurantManagerRepository.save(restaurantPrimaryManager);
 
-        if(newRestaurantManager!= null) {
+        if (newRestaurantManager != null) {
             Restaurant newRestaurantRegister = new Restaurant(restaurantRegisterForm.getRestaurantId(), restaurantRegisterForm.getRestaurantName(), restaurantRegisterForm.getRestaurantPrimaryEmailId(),
                     restaurantRegisterForm.getPrimaryPhoneNumber());
             Restaurant registeredRestaurant = restaurantRepository.save(newRestaurantRegister);
