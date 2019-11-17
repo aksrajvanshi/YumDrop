@@ -33,8 +33,7 @@ public class SearchRestaurantController {
 
     @RequestMapping(value = "/getAllRestaurants", method = RequestMethod.GET)
     public ResponseEntity<?> getAllRestaurants(@RequestBody RestaurantSearchRequest restaurantSearchRequest) {
-        restaurantSearchService.getAllRestaurantDetails(restaurantSearchRequest.getUserAddress());
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return restaurantSearchService.getAllRestaurantDetails(restaurantSearchRequest.getUserAddress());
     }
 
 }

@@ -91,7 +91,26 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
 
     @Override
     public ResponseEntity<?> getAllRestaurantDetails(String userAddress) {
-        return null;
+        List<Restaurant> searchedRestaurant = (List<Restaurant>) restaurantRepository.findAll();
+        List<RestaurantSearchResults> restaurantResultsWithDetails = new ArrayList<>(searchedRestaurant.size());
+        if(searchedRestaurant.size() == 0){
+            SuccessMessage searchResultsWithZeroRest = new SuccessMessage(new Date(), "No restaurants matched your query");
+            return new ResponseEntity<>(searchResultsWithZeroRest, HttpStatus.OK);
+        }
+
+        for(int i=0; i < searchedRestaurant.size(); i++){
+
+            RestaurantSearchResults res = new RestaurantSearchResults();
+
+            Restaurant currentRestaurant = searchedRestaurant.get(i);
+            res.setRestaurantDetails(currentRestaurant);
+            RestaurantRatings currentRestaurantRatings = restaurantRatingsRepository.findByrestaurantId(currentRestaurant.getRestaurantId());
+            res.setRestaurantRatings(currentRestaurantRatings);
+            distanceBetweenAddressesCalculatorService.calculateDistance(userAddress, res);
+            restaurantResultsWithDetails.add(res);
+        }
+
+        return new ResponseEntity<>(restaurantResultsWithDetails, HttpStatus.OK);
     }
 
     @Override
