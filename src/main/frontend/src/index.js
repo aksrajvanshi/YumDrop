@@ -70,7 +70,7 @@ const routing = (
     <Provider store={store}>
         <Router>
             <div>
-                <Route exact path="/" component={App} />
+                <Route exact path="/App" component={App} />
                 <Route exact path="/ErrorPageForRestaurantRegistration" component={ErrorPageForRestaurantRegistration}/>
                 <Route exact path="/Home" component={Home}/>
                 <Route exact path="/LoginPage" component={LoginPage} />
@@ -79,7 +79,7 @@ const routing = (
                 <Route exact path="/LoginDashBoard" component={LoginDashBoard}/>
                 <Route exact path="/OTPpage" component={OTPpage}/>
                 <Route exact path="/paymentSystemForUsers" component={paymentSystemForUsers}/>
-                <Route exact path="/MyCart" component={MyCart}/>
+                <Route exact path="/" component={MyCart}/>
                 <Route exact path="/DeliveryAgentOTPpage" component={DeliveryAgentOTPpage}/>
                 <Route exact path="/errorPageForRegistration" component={errorPageForRegistration} />
                 <Route exact path="/MySettingsPage" component={MySettingsPage}/>

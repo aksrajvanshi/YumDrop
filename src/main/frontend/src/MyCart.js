@@ -19,7 +19,15 @@ class MySettingsPage extends Component{
         dataReceived: [],
         userName: "",
         userEmailId:  "",
-        userPhoneNumber: ""
+        userPhoneNumber: "",
+        email: "",
+        brand: "",
+        country: "",
+        cvc_check: "",
+        exp_month: "",
+        funding: "",
+        last4: ""
+
     }
     returnToLoginDahboard = () => {
         this.props.history.push('/errorPageForRegistration');
@@ -75,22 +83,59 @@ class MySettingsPage extends Component{
         })
     }
 
+    forwardToMyOrdersPage = () => {
+        this.props.history.push('/MyOderListSettings')
+    }
+
     handleTokenAPI = (token) => {
         console.log("Insdie this");
-        console.log(token);
-        console.log(token.card);
-        console.log("Later")
-        token = token.json();
-        console.log(token.card);
         console.log(token.email);
-        console.log(token.brand);
-        console.log(token.country);
-        console.log(token.cvc_check);
-        console.log(token.exp_month);
-        console.log(token.exp_year);
-        console.log(token.funding);
-        console.log(token.last4);
+        console.log("Later");
+        console.log(token.card.brand);
+        console.log(token.card.country);
+        console.log(token.card.cvc_check);
+        console.log(token.card.exp_month);
+        console.log(token.card.exp_year);
+        console.log(token.card.funding);
+        console.log(token.card.last4);
+        this.setState({
+            email: token.email,
+            brand: token.card.brand,
+            country: token.country,
+            cvc_check: token.card.cvc_check,
+            exp_month: token.card.exp_month,
+            funding: token.card.funding,
+            last4: token.card.last4
+        })
         console.log("End")
+        this.sendCardDetailsForPayment();
+    }
+
+    sendCardDetailsForPayment = () => {
+        fetch('/payForUserCart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userEmail: this.props.userEmailId,
+                email: this.state.email,
+                brand: this.state.brand,
+                country: this.state.country,
+                cvc_check: this.state.cvc_check,
+                exp_month: this.state.exp_month,
+                funding: this.state.funding,
+                last4: this.state.last4
+            }),
+        }).then(res => {
+            if (res.status===200){
+                this.forwardToMyOrdersPage();
+            }
+            else{
+                alert("Invalid Card details");
+            }
+        })
+
     }
 
 
