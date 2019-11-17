@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "restaurant_rating_main")
+@Table(name = "user_restaurant_ratings")
 @IdClass(UserRestaurantRatingsId.class)
 public class UserRestaurantRatings {
 
@@ -23,6 +23,12 @@ public class UserRestaurantRatings {
     private double restaurantRating;
 
     public UserRestaurantRatings() {
+    }
+
+
+    public UserRestaurantRatings(@NotNull String userEmail, @NotNull String restaurantId) {
+        this.userEmail = userEmail;
+        this.restaurantId = restaurantId;
     }
 
     public UserRestaurantRatings(@NotNull String userEmail, @NotNull String restaurantId, @NotNull double restaurantRating) {
