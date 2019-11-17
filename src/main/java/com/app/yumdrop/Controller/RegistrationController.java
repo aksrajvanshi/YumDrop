@@ -94,12 +94,10 @@ public class RegistrationController {
     @RequestMapping(value = "/verifyOTPandRegisterRestaurant", method = RequestMethod.POST)
     public ResponseEntity<?> verifyOTPandRegisterRestaurant(@RequestBody RestaurantRegisterForm restaurantRegisterForm) {
 
-        System.out.println(" Entered verify OTP method! ");
+
         RestaurantOtp restaurantOtpRecord = restaurantOtpRepository.findByrestaurantID(restaurantRegisterForm.getRestaurantId());
-        System.out.println(restaurantOtpRecord.getRestaurantID() + " -- " + restaurantOtpRecord.getRestaurantPrimaryEmail()
-        + " -- " + restaurantRegisterForm.getRestaurantOtp());
         boolean checkOtpMatch = OtpUtils.checkIfOtpMatches(restaurantRegisterForm.getRestaurantOtp().trim(), restaurantOtpRecord.getRestaurantOtp());
-        System.out.println("Did OTP match? " + checkOtpMatch);
+
         if (checkOtpMatch) {
             restaurantOtpRepository.deleteById(restaurantOtpRecord.getRestaurantID());
             return restaurantRegistrationService.registerRestaurant(restaurantRegisterForm);
