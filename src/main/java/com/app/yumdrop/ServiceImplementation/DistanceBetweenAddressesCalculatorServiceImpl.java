@@ -1,5 +1,6 @@
 package com.app.yumdrop.ServiceImplementation;
 
+import com.app.yumdrop.FormEntity.RestaurantSearchResults;
 import com.app.yumdrop.Service.DistanceBetweenAddressesCalculatorService;
 import com.google.maps.DirectionsApi;
 import com.google.maps.DistanceMatrixApi;
@@ -20,7 +21,7 @@ public class DistanceBetweenAddressesCalculatorServiceImpl implements DistanceBe
     String googleMapsAPIKey;
 
     @Override
-    public void calculateDistance(String userAddress, String restaurantAddress) {
+    public void calculateDistance(String userAddress, RestaurantSearchResults restaurantSearchResults) {
 
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey(googleMapsAPIKey)
@@ -29,7 +30,7 @@ public class DistanceBetweenAddressesCalculatorServiceImpl implements DistanceBe
         DistanceMatrix result = null;
         try {
             result = req.origins(userAddress)
-                    .destinations(restaurantAddress)
+                    .destinations(restaurantSearchResults.getRestaurantDetails().getRestaurantAddress())
                     .mode(TravelMode.DRIVING)
                     .avoid(DirectionsApi.RouteRestriction.TOLLS)
                     .language("en-US")
@@ -42,7 +43,8 @@ public class DistanceBetweenAddressesCalculatorServiceImpl implements DistanceBe
             e.printStackTrace();
         }
 
-        System.out.println(result.rows[0].elements[0].distance.inMeters + " -- " + result.rows[0].elements[0].distance.humanReadable);
+        restaurantSearchResults.setDistanceFromUserInMeters(result.rows[0].elements[0].distance.inMeters);
+        restaurantSearchResults.setDistanceFromUserWithMetrics(result.rows[0].elements[0].distance.humanReadable);
 
     }
 }

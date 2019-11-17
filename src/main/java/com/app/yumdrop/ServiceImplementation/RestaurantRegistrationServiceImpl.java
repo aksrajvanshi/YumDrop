@@ -2,10 +2,12 @@ package com.app.yumdrop.ServiceImplementation;
 
 import com.app.yumdrop.Entity.Restaurant;
 import com.app.yumdrop.Entity.RestaurantManager;
+import com.app.yumdrop.Entity.RestaurantRatings;
 import com.app.yumdrop.FormEntity.RestaurantRegisterForm;
 import com.app.yumdrop.Messages.ErrorMessage;
 import com.app.yumdrop.Messages.SuccessMessage;
 import com.app.yumdrop.Repository.RestaurantManagerRepository;
+import com.app.yumdrop.Repository.RestaurantRatingsRepository;
 import com.app.yumdrop.Repository.RestaurantRepository;
 import com.app.yumdrop.Service.RestaurantRegistrationService;
 import com.app.yumdrop.Utils.PasswordUtils;
@@ -35,6 +37,9 @@ public class RestaurantRegistrationServiceImpl implements RestaurantRegistration
     @Autowired
     public RestaurantRepository restaurantRepository;
 
+    @Autowired
+    RestaurantRatingsRepository restaurantRatingsRepository;
+
     @Value("${sendgrid.api.key}")
     String sendGridAPIKey;
 
@@ -54,6 +59,8 @@ public class RestaurantRegistrationServiceImpl implements RestaurantRegistration
                         "");
                 return new ResponseEntity<>(restaurantNotRegistered, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
+                // create restaurant ratings record for new restaurants.
+                restaurantRatingsRepository.save(new RestaurantRatings(restaurantRegisterForm.getRestaurantId(), 0.0, 0));
                 SuccessMessage restaurantRegisteredSuccessfully = new SuccessMessage(new Date(), "Restaurant is registered successfully");
                 return new ResponseEntity<>(restaurantRegisteredSuccessfully, HttpStatus.OK);
             }

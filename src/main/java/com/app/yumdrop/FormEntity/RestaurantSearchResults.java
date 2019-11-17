@@ -12,7 +12,7 @@ public class RestaurantSearchResults {
 
     UserRestaurantRatings userRestaurantRatings;
 
-    int distanceFromUserInMeters;
+    long distanceFromUserInMeters;
 
     String distanceFromUserWithMetrics;
 
@@ -20,7 +20,7 @@ public class RestaurantSearchResults {
     public RestaurantSearchResults() {
     }
 
-    public RestaurantSearchResults(Restaurant restaurantDetails, RestaurantRatings restaurantRatings, UserRestaurantRatings userRestaurantRatings, int distanceFromUserInMeters, String distanceFromUserWithMetrics) {
+    public RestaurantSearchResults(Restaurant restaurantDetails, RestaurantRatings restaurantRatings, UserRestaurantRatings userRestaurantRatings, long distanceFromUserInMeters, String distanceFromUserWithMetrics) {
         this.restaurantDetails = restaurantDetails;
         this.restaurantRatings = restaurantRatings;
         this.userRestaurantRatings = userRestaurantRatings;
@@ -52,11 +52,11 @@ public class RestaurantSearchResults {
         this.userRestaurantRatings = userRestaurantRatings;
     }
 
-    public int getDistanceFromUserInMeters() {
+    public long getDistanceFromUserInMeters() {
         return distanceFromUserInMeters;
     }
 
-    public void setDistanceFromUserInMeters(int distanceFromUserInMeters) {
+    public void setDistanceFromUserInMeters(long distanceFromUserInMeters) {
         this.distanceFromUserInMeters = distanceFromUserInMeters;
     }
 

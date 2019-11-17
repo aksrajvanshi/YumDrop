@@ -4,7 +4,9 @@ import org.springframework.http.ResponseEntity;
 
 public interface RestaurantSearchService {
 
-    ResponseEntity<?> getRestaurantResultsByLocation(String userAddress);
+    ResponseEntity<?> getRestaurantResultsByLocationFromPublicPage(String userAddress, String restaurantSearchKeyword);
+
+    ResponseEntity<?> getRestaurantResultsByLocationFromDashboard(String userAddress, String userEmail, String restaurantSearchKeyword);
 
     ResponseEntity<?> getAllRestaurantDetails(String userAddress);
 

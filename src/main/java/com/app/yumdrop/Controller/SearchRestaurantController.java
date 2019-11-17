@@ -1,11 +1,15 @@
 package com.app.yumdrop.Controller;
 
+import com.app.yumdrop.FormEntity.RestaurantSearchRequest;
 import com.app.yumdrop.Repository.RestaurantRepository;
+import com.app.yumdrop.Service.RestaurantSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,16 +19,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class SearchRestaurantController {
 
     @Autowired
-    RestaurantRepository restaurantRepository;
+    RestaurantSearchService restaurantSearchService;
 
-    @RequestMapping(value = "/searchRestaurantByLocation", method = RequestMethod.POST)
-    public ResponseEntity<?> searchRestaurantByLocation(@RequestParam("userAddress") String userAddress, @RequestParam("restaurantSearchKeyword") String restaurantSearchKeyword) {
-        return null;
+    @RequestMapping(value = "/searchRestaurantByLocationFromPublicPage", method = RequestMethod.GET)
+    public ResponseEntity<?> searchRestaurantByLocation(@RequestBody RestaurantSearchRequest restaurantSearchRequest) {
+        return restaurantSearchService.getRestaurantResultsByLocationFromPublicPage(restaurantSearchRequest.getUserAddress(), restaurantSearchRequest.getRestaurantSearchKeyword());
     }
 
-    @RequestMapping(value = "/getAllRestaurants", method = RequestMethod.POST)
-    public ResponseEntity<?> getAllRestaurants(@RequestParam("userAddress") String userAddress) {
-        return null;
+    @RequestMapping(value = "/searchRestaurantByLocationFromUserDashboard", method = RequestMethod.GET)
+    public ResponseEntity<?> searchRestaurantByLocationFromUserDashboard(@RequestBody RestaurantSearchRequest restaurantSearchRequest) {
+        return restaurantSearchService.getRestaurantResultsByLocationFromDashboard(restaurantSearchRequest.getUserAddress(), restaurantSearchRequest.getUserEmail() ,restaurantSearchRequest.getRestaurantSearchKeyword());
+    }
+
+    @RequestMapping(value = "/getAllRestaurants", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllRestaurants(@RequestBody RestaurantSearchRequest restaurantSearchRequest) {
+        restaurantSearchService.getAllRestaurantDetails(restaurantSearchRequest.getUserAddress());
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }
