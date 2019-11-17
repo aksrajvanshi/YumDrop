@@ -1,5 +1,5 @@
 #navBarLinks{
-    padding-left: 850px;
+    padding-left: 75%;
 }
 .btn-md {
     font-size: 20px;
@@ -90,7 +90,7 @@ h3 {
 }
 
 .how-section1{
-    margin-top:-15%;
+    margin-top:-10%;
     padding: 10%;
 }
 .how-section1 h4{
@@ -104,7 +104,7 @@ h3 {
 }
 .how-section1 .row
 {
-    margin-top: 10%;
+    margin-top: 1%;
 }
 .how-img
 {

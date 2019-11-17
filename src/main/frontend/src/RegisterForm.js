@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
-
-import DeliveryAgentOTPpage from "./DeliveryAgentOTPpage";
-import DeliveryAgentRegistration from "./DeliveryAgentRegistration";
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 import Recaptcha from 'react-recaptcha';
@@ -297,6 +293,7 @@ class App extends Component {
                           id="bootstrap-css"/>
                     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"/>
                     <script src="//code.jquery.com/jquery-1.11.1.min.js"/>
+
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
                             <a className="navbar-brand " onClick={this.goBackToHomePAge}>YumDrop</a>
@@ -406,7 +403,7 @@ class App extends Component {
                 >
                     <Modal.Header className="modelheader" id="containerModal" center>
                         <Modal.Title className="modeltitle" id="modeltitle" center>
-                            <strong>Select Account</strong>
+                            <strong>Register me as a</strong>
                         </Modal.Title>
                     </Modal.Header>
 
@@ -418,13 +415,13 @@ class App extends Component {
                                     <form>
                                         <div className="form-group">
                                             <button  type="submit"
-                                                     onClick={this.userRegister}   className="btn btn-primary btn-lg btn-block">User
+                                                     onClick={this.userRegister}   className="btn btn-primary btn-lg btn-block">Customer
                                             </button>
                                         </div>
 
                                         <div className="form-group">
                                             <button  onClick={this.forwardToRestaurantRegistrationForm}
-                                                     className="btn btn-primary btn-lg btn-block">Restaurant
+                                                     className="btn btn-primary btn-lg btn-block">Restaurant Owner
                                             </button>
                                         </div>
 
@@ -486,7 +483,8 @@ class App extends Component {
                             <div className="main">
                                 <div className="login-form">
                                     <form onSubmit={this.register.bind(this)}>
-                                        <h2 className="text-center">User Sign Up</h2>
+                                        <h2 className="text-center">Customer Sign Up</h2>
+                                        <br/>
                                         <div className="social-btn text-center">
 
                                             <FacebookLogin

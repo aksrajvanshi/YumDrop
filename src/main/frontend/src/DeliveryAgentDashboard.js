@@ -2,26 +2,31 @@ import React, { Component } from "react";
 import './LoginDashBoardCSS.css';
 import './DeliveryAgentDashboardCSS.css';
 
-class DeliveryAgentDashboard extends Component{
 
-    constructor(props){
+class DeliveryAgentDashboard extends Component {
+
+    constructor(props) {
         super(props)
+
     }
 
     forwardToSettingsPage = () => {
         this.props.history.push('/MySettingsPage');
     }
 
+
     render() {
 
         return (
             <div>
                 <header>
-                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"
+                          id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
                     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
                     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
-                    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"
+                          id="bootstrap-css"/>
                     <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
                     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
@@ -53,23 +58,31 @@ class DeliveryAgentDashboard extends Component{
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-2">
                             <div class="productbox">
-                                <img src="https://thekatynews.com/wp-content/uploads/2017/06/mcdonalds-logo.jpg" class="img-responsive"/>
-                                <div class="producttitle">Pickup at </div>
+                                <img src="https://thekatynews.com/wp-content/uploads/2017/06/mcdonalds-logo.jpg"
+                                     class="img-responsive"/>
+                                <div class="producttitle">Pickup at</div>
                                 <p class="text-justify">2819 E 3rd St, Bloomington, IN 47401</p>
-                                <div>Deliver at </div>
+                                <div>Deliver at</div>
                                 <p>700 N Woodlawn Ave, Bloomington, IN 47408</p>
                                 <br/>
 
                             </div>
                         </div>
-
-
                     </div>
                 </div>
+
+                <div id="deliveryAgentNavigation">
+
+
+
+
+                </div>
+
             </div>
 
         );
     }
 
 }
+
 export default DeliveryAgentDashboard;

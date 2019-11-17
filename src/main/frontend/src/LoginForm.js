@@ -267,6 +267,7 @@ class App extends Component {
                       id="bootstrap-css"/>
                 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"/>
                 <script src="//code.jquery.com/jquery-1.11.1.min.js"/>
+
                 <nav className=" navbar navbar-expand-lg navbar-dark ">
                     <div className="container">
                         <a className="navbar-brand " href="#" onClick={this.goBackToHomePAge}>YumDrop</a>
@@ -382,14 +383,15 @@ class App extends Component {
                         <div className="main">
                             <div className="login-form">
                                 <form onSubmit={this.login.bind(this)}>
-                                    <h2 className="text-center">User Login</h2>
+                                    <h2 className="text-center">Customer Login</h2>
+                                    <br/>
                                     <div className="social-btn text-center">
                                         <FacebookLogin
                                             appId="1250006828526117"
                                             callback={responseFacebook}
                                             render={renderProps => (
-                                                <button className="btn btn-primary btn-block btn-lg" onClick={renderProps.onClick}><i
-                                                    className="fa fa-facebook"></i> Login with <b>Facebook</b> </button>
+                                                <button className="btn btn-primary" onClick={renderProps.onClick}><i
+                                                    className="fa fa-facebook"></i>Login with <b>Facebook</b> </button>
                                             )}
                                         />
                                     </div>
@@ -421,7 +423,7 @@ class App extends Component {
                                     <br/>
                                     <div className="form-group">
                                         <button onClick={this.login.bind(this)} type="submit"
-                                                className="btn btn-primary btn-lg btn-block">Login
+                                                className="btn btn-primary btn-lg">Login
                                         </button>
                                     </div>
 
@@ -441,7 +443,7 @@ class App extends Component {
             >
                 <Modal.Header className="modelheader" id="containerModal" center>
                     <Modal.Title className="modeltitle" id="modeltitle" center>
-                        <strong>Select Account</strong>
+                        <strong>Login me as a</strong>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body id="CheckSelection">
@@ -452,19 +454,19 @@ class App extends Component {
                                     <form>
                                         <div className="form-group">
                                             <button  type="submit"
-                                                     onClick={this.handelUserLoginOption} className="btn btn-primary btn-lg btn-block">User Login
+                                                     onClick={this.handelUserLoginOption} className="btn btn-primary btn-lg btn-block">Customer
                                             </button>
                                         </div>
 
                                         <div className="form-group">
                                             <button  type="submit" onClick={this.forwardToRestaurantregister}
-                                                     className="btn btn-primary btn-lg btn-block">Restaurant Login
+                                                     className="btn btn-primary btn-lg btn-block">Restaurant Owner
                                             </button>
                                         </div>
 
                                         <div className="form-group">
                                             <button  type="submit" onClick={this.forwardToDeliveryAgentLoginForm}
-                                                     className="btn btn-primary btn-lg btn-block">Delivery Agent Login
+                                                     className="btn btn-primary btn-lg btn-block">Delivery Agent
                                             </button>
                                         </div>
                                     </form>

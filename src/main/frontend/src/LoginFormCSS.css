@@ -2,7 +2,7 @@
     font-family: "Helvetica Neue", Helvetica, sans-serif;
     font-size: 30px;
     outline: none;
-    padding-left: 120px;
+
 }
 
 #Recaptch{
@@ -47,7 +47,7 @@
     background-image: url(https://freedesignfile.com/upload/2016/12/Tasty-Chinese-Food-HD-picture-04.jpg);
 }
 #navBarLinks{
-    padding-left: 850px;
+    padding-left: 75%;
 }
 
 #SignUpID{
@@ -63,7 +63,7 @@
 }
 
 #firstbar{
-    padding-left: 300px;
+    padding-left: 18%;
 
 }
 
@@ -95,7 +95,7 @@
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    height: 100vh;
+    height: 70vh;
 }
 
 .image-grid-cover {
@@ -185,12 +185,14 @@ h3 {
 
 #modal {
     position: fixed;
-    left: 35%;
+    left: 50%;
+    top: -10%;
 }
 
 #modal2 {
     position: fixed;
-    left: 35%;
+    left: 50%;
+    top: -10%;
 }
 
 #modalForm{
@@ -199,33 +201,30 @@ h3 {
     height: 1200px;
 }
 
-
-
-
 .form-control:focus {
     border-color: #99c432;
 }
 .login-form {
-    width: 350px;
+    width: 120%;
 
 }
 .login-form form {
     color: #999;
 
     background: #fff;
-    padding-bottom: 30px;
-    padding-right: 10px;
+    padding-bottom: 0%;
+    padding-right: 0%;
 }
 .login-form h2 {
     font-size: 24px;
     color: #454959;
-    margin: 45px 0 25px;
+    margin: 10% 0% 0% 0%;
     font-family: 'Francois One', sans-serif;
 }
 
 .login-form .btn {
     color: #fff;
-    border-radius: 4px;
+    border-radius: 4%;
     text-decoration: none;
     transition: all 0.4s;
     line-height: normal;
