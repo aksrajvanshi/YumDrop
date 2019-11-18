@@ -30,7 +30,7 @@ public class AddDishToRestaurantController {
         Optional<RestaurantMenuItem> menuItem = restaurantMenuItemRepository.findById(
                 new RestaurantMenuItemId(restaurantMenuItem.getRestaurantId(), restaurantMenuItem.getDishName()));
 
-        if (menuItem != null) {
+        if (menuItem.isPresent()) {
             ErrorMessage dishNotAddedToDb = new ErrorMessage(new Date(), "This menu item already exists",
                     "");
             return new ResponseEntity<>(dishNotAddedToDb, HttpStatus.BAD_REQUEST);
