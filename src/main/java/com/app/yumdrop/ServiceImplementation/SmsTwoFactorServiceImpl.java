@@ -1,38 +1,123 @@
 package com.app.yumdrop.ServiceImplementation;
 
+import com.app.yumdrop.Entity.RestaurantOtp;
 import com.app.yumdrop.Entity.UsersOtp;
+import com.app.yumdrop.Repository.RestaurantOtpRepository;
 import com.app.yumdrop.Repository.UsersOtpRepository;
+import com.app.yumdrop.Entity.DeliveryAgentOtp;
+import com.app.yumdrop.Repository.DeliveryAgentOtpRepository;
 import com.app.yumdrop.Service.SmsTwoFactorService;
 import com.app.yumdrop.Utils.PasswordUtils;
-import com.twilio.Twilio;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
+import com.sendgrid.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 @Service
 public class SmsTwoFactorServiceImpl implements SmsTwoFactorService {
 
-    private final static String ACCOUNT_SID = "ACb1dccceafdf2b145395f15aff91fda12";
-    private final static String AUTH_TOKEN = "9337c4a5d281f63782b649d78d5eb7a7";
+    @Autowired
+    public JavaMailSender javaMailSender;
 
-    static {
-        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-    }
-
+    @Autowired
+    DeliveryAgentOtpRepository deliveryAgentOtpRepository;
+  
     @Autowired
     UsersOtpRepository usersOtpRepository;
 
-    @Override
-    public boolean send2FaCodeAsSms(String email, String mobilePhoneNumber, String twoFactorCode) {
+    @Autowired
+    RestaurantOtpRepository restaurantOtpRepository;
 
+    @Value("${sendgrid.api.key}")
+    String sendGridAPIKey;
+
+
+    public boolean send2FaCodeAsEmail(String userEmail, String twoFactorCode) {
+
+        //SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        //simpleMailMessage.setTo(userEmail);
+        Email from = new Email("yumdrop.help@gmail.com");
+        String subject = "Your One Time Password from Yumdrop!";
+        Email to = new Email(userEmail);
+
+        Content content = new Content("text/html", "Hello User! Your one time password is <strong> " + twoFactorCode + " </strong> \n" +
+                "Please enter this code to complete registration with Yumdrop");
+        Mail mail = new Mail(from, subject, to, content);
+        mail.personalization.get(0).addSubstitution("-username-", "Some blog user");
+        SendGrid sg = new SendGrid(sendGridAPIKey);
+
+        Request request = new Request();
         try {
-            Message.creator(new PhoneNumber(mobilePhoneNumber), new PhoneNumber("+16197802581"),
-                    "Hello from Yumdrop! Your Two Factor Authentication Code is: " + twoFactorCode).create();
-        } catch(Exception e){
-            return false;
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+
+            Response response = sg.api(request);
+        } catch (IOException ex) {
         }
-        usersOtpRepository.save(new UsersOtp(email, PasswordUtils.convertPasswordToHash(twoFactorCode)));
+
+    /*    simpleMailMessage.setSubject("One Time Password from Yumdrop");
+        simpleMailMessage.setText("Hello user! Your One Time Password is: " + twoFactorCode +
+                ". Please use this temporary password to set a new password and login into your account.");
+
+        javaMailSender.send(simpleMailMessage); */
+        usersOtpRepository.save(new UsersOtp(userEmail, PasswordUtils.convertPasswordToHash(twoFactorCode)));
+        return true;
+    }
+
+    @Override
+    public boolean send2FaCodeAsEmailToRestaurant(String restaurantPrimaryEmail, String restaurantId, String twoFactorCode) {
+        Email from = new Email("yumdrop.help@gmail.com");
+        String subject = "Your One Time Password from Yumdrop!";
+        Email to = new Email(restaurantPrimaryEmail);
+
+        Content content = new Content("text/html", "Hello Restaurant Manager! Your one time password is <strong> " + twoFactorCode + " </strong> \n" +
+                "Please enter this code to complete registration with Yumdrop");
+        Mail mail = new Mail(from, subject, to, content);
+        mail.personalization.get(0).addSubstitution("-username-", "Some blog user");
+        SendGrid sg = new SendGrid(sendGridAPIKey);
+
+        Request request = new Request();
+        try {
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+
+            Response response = sg.api(request);
+        } catch (IOException ex) {
+        }
+
+        restaurantOtpRepository.save(new RestaurantOtp(restaurantId, restaurantPrimaryEmail, PasswordUtils.convertPasswordToHash(twoFactorCode)));
+        return true;
+    }
+
+    @Override
+    public boolean send2FaCodeAsEmailDeliveryAgent(String daEmail, String twoFactorCode) {
+
+        Email from = new Email("yumdrop.help@gmail.com");
+        String subject = "Your One Time Password from Yumdrop!";
+        Email to = new Email(daEmail);
+
+        Content content = new Content("text/html", "Hello User! Your one time password is <strong> " + twoFactorCode + " </strong> \n" +
+                "Please enter this code to complete registration with Yumdrop" );
+        Mail mail = new Mail(from, subject, to, content);
+        mail.personalization.get(0).addSubstitution("-username-", "Some blog user");
+        SendGrid sg = new SendGrid(sendGridAPIKey);
+
+        Request request = new Request();
+        try {
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+
+            Response response = sg.api(request);
+        } catch (IOException ex) {
+        }
+
+        deliveryAgentOtpRepository.save(new DeliveryAgentOtp(daEmail, PasswordUtils.convertPasswordToHash(twoFactorCode)));
         return true;
     }
 }

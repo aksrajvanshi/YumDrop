@@ -1,104 +1,113 @@
-#navBarLinks{
-    padding-left: 850px;
+#navBarLinks {
+  padding-left: 850px;
+}
+.btn-md {
+  font-size: 20px;
+  border-radius: 5px;
+  width: 80%;
+  height: 35px;
+  text-align: center;
 }
 
-#SignUpID{
-    padding-left: 20px;
+#SearchBar {
+  padding-bottom: 50px;
 }
 
-#ContainerID{
-    padding-top: 150px;
+#SignUpID {
+  padding-left: 20px;
+}
+
+#ContainerID {
+  padding-top: 150px;
 }
 
 .nopadding {
-    margin-top: 0 !important;
+  margin-top: 0 !important;
 }
 
-#firstbar{
-    padding-left: 300px;
-
+#firstbar {
+  padding-left: 300px;
 }
 
-#exampleFormControlSelect1{
-    height: 34px;
+#exampleFormControlSelect1 {
+  height: 34px;
 }
 
-#buttonSearch{
-    padding-bottom: 1100px;
+#buttonSearch {
+  padding-bottom: 1100px;
 }
 .navbar {
-    background-color: black;
-    align-items: center;
-    align-content: center;
+  background-color: black;
+  align-items: center;
+  align-content: center;
 }
 
-#para{
-    font-size: 70px;
-    color: white;
+#para {
+  font-size: 70px;
+  color: white;
 }
 
 .pattern-4 {
-    background-attachment: fixed;
+  background-attachment: fixed;
 }
-
-
-
 
 .main {
-    max-width: 320px;
-    margin: 0 auto;
+  max-width: 320px;
+  margin: 0 auto;
 }
 .login-or {
-    position: relative;
-    font-size: 18px;
-    color: #aaa;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+  position: relative;
+  font-size: 18px;
+  color: #aaa;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .span-or {
-    display: block;
-    position: absolute;
-    left: 50%;
-    top: -2px;
-    margin-left: -25px;
-    background-color: #fff;
-    width: 50px;
-    text-align: center;
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: -2px;
+  margin-left: -25px;
+  background-color: #fff;
+  width: 50px;
+  text-align: center;
 }
 .hr-or {
-    background-color: #cdcdcd;
-    height: 1px;
-    margin-top: 0px !important;
-    margin-bottom: 0px !important;
+  background-color: #cdcdcd;
+  height: 1px;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
 }
 h3 {
-    text-align: center;
-    line-height: 300%;
+  text-align: center;
+  line-height: 300%;
 }
 
-.how-section1{
-    margin-top:-15%;
-    padding: 10%;
+.how-section1 {
+  margin-top: -15%;
+  padding: 10%;
 }
-.how-section1 h4{
-    color: #ffa500;
-    font-weight: bold;
-    font-size: 30px;
+.how-section1 h4 {
+  color: #ffa500;
+  font-weight: bold;
+  font-size: 30px;
 }
-.how-section1 .subheading{
-    color: black;
-    font-size: 20px;
+.how-section1 .subheading {
+  color: black;
+  font-size: 20px;
 }
-.how-section1 .row
-{
-    margin-top: 10%;
+.how-section1 .row {
+  margin-top: 10%;
 }
-.how-img
-{
-    text-align: center;
+.how-img {
+  text-align: center;
 }
-.how-img img{
-    width: 40%;
+.how-img img {
+  width: 40%;
+}
+
+#containerSelectAccount {
+  padding-top: 20px;
 }

@@ -5,6 +5,10 @@
     padding-left: 120px;
 }
 
+#Recaptch{
+    width: 350px;
+}
+
 #UserID:hover, #RestaurantId:hover, #DeliveryId:hover{
     border: 1px solid #06D85F;
     background:  darkslategrey;
