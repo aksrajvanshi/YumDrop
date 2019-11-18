@@ -10,6 +10,13 @@ const mapStateToProps = (state)=>{
     }
 }
 
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+
 
 class MySettingsPage extends Component{
     state = {
@@ -37,6 +44,11 @@ class MySettingsPage extends Component{
         this.props.history.push('/MySettingsPage')
     }
 
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
+    }
+
     goBackToLoginDashboard = () => {
         this.props.history.push('/LoginDashboard')
     }
@@ -47,9 +59,6 @@ class MySettingsPage extends Component{
 
     componentDidMount() {
         let currentComponent = this;
-        console.log(currentComponent.state.userEmailId);
-        console.log(this.props.userEmailId);
-        console.log(currentComponent.props.userEmailId)
         fetch('/getUserDataForDashboard', {
             method: 'POST',
             headers: {
@@ -59,30 +68,23 @@ class MySettingsPage extends Component{
                 userEmail: currentComponent.props.userEmailId
             }),
         }).then(function(response) {
-            console.log("returned");
-            console.log(response);
             return response.json();
         }).then(function(data) {
-            console.log(data);
-            console.log(data.userName);
             const userName = data.userName;
-            console.log("Will mount username", userName);
             currentComponent.setState({
                 userName: data.userName,
                 userEmailId: data.userEmail,
                 userPhoneNumber: data.userPhoneNumber
             });
-            console.log(currentComponent.state.userName);
         })
         }
 
 
     render() {
         let trying = this.state.data;
-        console.log(trying);
-        console.log(this.state.trying);
-        console.log(this.state.userName);
-        console.log("hey trying to run this");
+        if(this.props.userEmailId === null) {
+            this.props.history.push('/')
+        }
         return (
             <div>
                 <header>
@@ -108,11 +110,14 @@ class MySettingsPage extends Component{
                                             className="fa fa-fw fa-user" onClick={this.goBackToLoginDashboard}/>Home</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link"><i
+                                        <a className="nav-link" onClick={this.forwardToMyCart}><i
                                             className="fa fa-fw fa-user"/>Cart</a>
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link"   onClick={this.settingsPage} ><span>Settings</span></a>
+                                    </li>
+                                    <li>
+                                        <a className="nav-link" onClick={this.signOut}>Sign Out</a>
                                     </li>
                                 </ul>
                             </div>
@@ -120,7 +125,6 @@ class MySettingsPage extends Component{
                     </nav>
 
                 </header>
-                <p>{this.props.userEmailId}</p>
                 <div className="container mt-5">
                     <div className="row">
                         <div className="col-lg-4 pb-5">
@@ -150,10 +154,10 @@ class MySettingsPage extends Component{
                                     </a><a className="list-group-item active" href="#"><i
                                     className="fe-icon-user text-muted" onClick={this.goBackToProfileSettingsPage}></i>Profile Settings</a><a
                                     className="list-group-item" href="#" onClick={this.forwardToSettingsAddresses}><i className="fe-icon-map-pin text-muted"></i>Addresses</a>
-                                    <a className="list-group-item" href="#">
+                                    <a className="list-group-item" href="#" onClick={this.forwardToMyCart}>
                                         <div className="d-flex justify-content-between align-items-center">
                                             <div><i className="fe-icon-heart mr-1 text-muted"></i>
-                                                <div className="d-inline-block font-weight-medium text-uppercase" onClick={this.forwardToMyCart}>My
+                                                <div className="d-inline-block font-weight-medium text-uppercase" >My
                                                     Cart
                                                 </div>
                                             </div>
@@ -212,4 +216,4 @@ class MySettingsPage extends Component{
 
 }
 
-export default connect(mapStateToProps) (MySettingsPage);
+export default connect(mapStateToProps, mapDispatchToProps) (MySettingsPage);

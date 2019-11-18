@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {connect} from "react-redux";
 
 import LoginPage from "./LoginPage";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -23,6 +24,12 @@ class App extends Component {
     }
 
     render() {
+        if (this.props.accountType === "user") {
+            this.props.history.push("/LoginDashboard");
+        }
+        else if (this.props.accountType === "restaurant") {
+            this.props.history.push("/RestaurantDashboard")
+        }
         return (
             <div className="App">
                 <header>
@@ -126,7 +133,6 @@ class App extends Component {
                                             <input type="text"
                                                    placeholder="Search for food, cuisines, restaurants here.."
                                                    className="form-control validate"/>
-
                                         </div>
                                     </div>
                                     <div className="col-md-1" >
@@ -191,4 +197,10 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        accountType: state.accountType
+    }
+}
+
+export default connect(mapStateToProps) (App);

@@ -117,7 +117,6 @@ class MyCurrentRestaurantLocation extends Component {
                         </div>
                     </nav>
                 </header>
-                <p>{this.props.restaurantId}</p>
                 <Modal
                     show={this.state.positionSelect}
                     animation={false}

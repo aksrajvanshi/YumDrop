@@ -9,11 +9,11 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch)=> {
     return {
-        setTest(evt){
-            dispatch({type: "SET_TEST", newTest: evt.target.value});
-        }
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
     }
 }
+
 class RestaurantDashboard extends Component{
     state = {
         Name: "Restaurant 1",
@@ -38,6 +38,11 @@ class RestaurantDashboard extends Component{
         this.props.history.push("/RestaurantAddMenuForm");
     }
 
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
+    }
+
     forwardToRestaurantSettingsPage = () => {
         this.props.history.push("/RestaurantSettingsPage");
     }
@@ -46,7 +51,9 @@ class RestaurantDashboard extends Component{
         this.props.history.push("/RestaurantDashboard");
     }
     render() {
-
+        if(this.props.restaurantId === null) {
+            this.props.history.push('/')
+        }
         return(
             <div>
                 <header>
@@ -73,12 +80,14 @@ class RestaurantDashboard extends Component{
                                         <a className="nav-link" onClick={this.forwardToRestaurantSettingsPage}><i
                                             className="fa fa-fw fa-user"></i>My Settings</a>
                                     </li>
+                                    <li>
+                                        <a className="nav-link" onClick={this.signOut}>Sign Out</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </nav>
                 </header>
-                <p>{this.props.restaurantId}</p>
                 <div className="container">
                     <div className="row">
                         <div className="col-xs-10 ">
@@ -157,4 +166,4 @@ class RestaurantDashboard extends Component{
     }
 }
 
-export default connect(mapStateToProps) (RestaurantDashboard);
+export default connect(mapStateToProps, mapDispatchToProps) (RestaurantDashboard);

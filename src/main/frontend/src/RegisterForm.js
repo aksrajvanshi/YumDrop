@@ -188,12 +188,17 @@ class App extends Component {
     }
 
     closeAllOptionsOfSelectionForm = () => {
+        this.goBackToHomePage();
         this.setState({
             userRegister: false,
             restaurantRegister: false,
             registerSelect: false,
             deliveryAgentRegister: false
         });
+    }
+
+    goBackToHomePage = () => {
+        this.props.history.push("/")
     }
 
     userRegister = () => {
@@ -228,21 +233,15 @@ class App extends Component {
     render()
     {
         const responseFacebook = (response) => {
-            console.log(response);
             this.state.facebookUserAccessToken = response.accessToken;
             this.state.facebookUserId = response.userID;
-            console.log("User ID", this.state.facebookUserId);
-            console.log("Access Token ", this.state.facebookUserAccessToken);
             let api = 'https://graph.facebook.com/v2.8/' + this.state.facebookUserId +
                 '?fields=name,email&access_token=' + this.state.facebookUserAccessToken;
             fetch(api)
                 .then((response) => response.json())
                 .then((responseData) => {
-                    console.log(responseData)
                     this.state.facebookUserEmail = responseData.email;
                     this.state.facebookUserName = responseData.name;
-                    console.log("Inside fetch api");
-                    console.log(responseData.email);
                 }).then(response => {
                 fetch('/facebookUserRegistration',
                     {
@@ -418,7 +417,8 @@ class App extends Component {
                                     <form>
                                         <div className="form-group">
                                             <button  type="submit"
-                                                     onClick={this.userRegister}   className="btn btn-primary btn-lg btn-block">User
+                                                     onClick={this.userRegister}
+                                                     className="btn btn-primary btn-lg btn-block">User
                                             </button>
                                         </div>
 

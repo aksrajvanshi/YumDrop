@@ -10,7 +10,8 @@ import Recaptcha from 'react-recaptcha';
 
 const mapStateToProps = (state)=>{
     return {
-        restaurantId: state.userId
+        restaurantId: state.userId,
+        accountType: state.accountType,
     }
 }
 
@@ -19,7 +20,7 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch)=> {
     return {
         setRestaurant(evt){
-            dispatch({type: "setUserId", userId: evt});
+            dispatch({type: "setUserId", userId: evt, accountType: "restaurant"});
         }
     }
 }
@@ -61,8 +62,6 @@ class App extends Component {
                 restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId
             }),
         }).then(res => {
-            console.log(res)
-            console.log(res.status)
             this.props.setRestaurant(this.state.restaurantId);
             this.forwardToLoginDashboard();
             if (res.status !== 200) {
@@ -172,6 +171,7 @@ class App extends Component {
     }
 
     closeAllOptionsOfSelectionForm= () => {
+        this.goBackToHomePage();
         this.setState({ userLoginOption: false, loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOption: false, forgotPasswordSelect: false, emailSelectForgotPassword: false  });
     }
 
@@ -205,6 +205,12 @@ class App extends Component {
 
 
     render() {
+        if (this.props.accountType === "user") {
+            this.props.history.push("/LoginDashboard");
+        }
+        else if (this.props.accountType === "restaurant") {
+            this.props.history.push("/RestaurantDashboard")
+        }
 
         return( <div className="App">
             <header>

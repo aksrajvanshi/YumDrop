@@ -118,7 +118,6 @@ class MyCurrentLocation extends Component {
                         </div>
                     </nav>
                 </header>
-                <p>{this.props.userEmail}</p>
                 <Modal
                     show={this.state.positionSelect}
                     animation={false}

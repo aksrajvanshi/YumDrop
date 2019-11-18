@@ -6,7 +6,7 @@ class UserSettingsPageAddresses extends Component{
     state = {
         data: [],
         userName: "",
-        userEmailId:  "maithreyi.prabhu95@gmail.com",
+        userEmailId:  this.props.userEmail,
         userPhoneNumber: "",
         userState: "",
         userCity: "",
@@ -28,6 +28,19 @@ class UserSettingsPageAddresses extends Component{
         this.props.history.push('/MyCart')
     }
 
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
+    }
+
+    forwardToSettingsPage = () => {
+        this.props.history.push('/MySettingsPage')
+    }
+
+    goBackToLoginDashboard = () => {
+        this.props.history.push('/LoginDashboard')
+    }
+
     componentDidMount() {
         let currentComponent = this;
         fetch('/getUserDataForDashboard', {
@@ -36,20 +49,16 @@ class UserSettingsPageAddresses extends Component{
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: "maithreyi.prabhu95@gmail.com"
+                userEmail: currentComponent.state.userEmailId
             }),
         }).then(function(response) {
             return response.json();
         }).then(function(data) {
-            console.log(data);
-            console.log(data.userAddress);
             const userAddress = data.userAddress;
-            console.log("Will mount username", userAddress);
             currentComponent.setState({
                 userAddress: data.userAddress,
                 userName: data.userName
             });
-            console.log(currentComponent.state.userAddress);
         })
     }
 
@@ -58,9 +67,9 @@ class UserSettingsPageAddresses extends Component{
 
     render() {
         let trying = this.state.data;
-        console.log(trying);
-        console.log(this.state.trying);
-        console.log("hey trying to run this");
+        if(this.props.userEmail === null) {
+            this.props.history.push('/')
+        }
         return (
             <div>
                 <header>
@@ -82,20 +91,20 @@ class UserSettingsPageAddresses extends Component{
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
                                     <li className="nav-item">
-                                        <a className="nav-link"><i
+                                        <a className="nav-link" onClick={this.forwardToMyCart}><i
                                             className="fa fa-fw fa-user"/>My Cart</a>
                                     </li>
                                     <li className="nav-item" id="SignUpID">
                                         <a className="nav-link" onClick={this.forwardToSettingsPage}>My Settings</a>
+                                    </li>
+                                    <li>
+                                        <a className="nav-link" onClick={this.signOut}>Sign Out </a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </nav>
                 </header>
-                <p>{this.props.userEmail}</p>
-
-
                 <div className="container mt-5">
                     <div className="row">
                         <div className="col-lg-4 pb-5">
@@ -122,13 +131,13 @@ class UserSettingsPageAddresses extends Component{
                                             </div>
 
                                         </div>
-                                    </a><a className="list-group-item " href="#"><i
-                                    className="fe-icon-user text-muted"></i>Profile Settings</a><a
+                                    </a><a className="list-group-item " href="#" onClick={this.forwardToSettingsPage}>
+                                    <i className="fe-icon-user text-muted"></i>Profile Settings</a><a
                                     className="list-group-item active" href="#" active><i className="fe-icon-map-pin text-muted"></i>Addresses</a>
-                                    <a className="list-group-item" href="#">
+                                    <a className="list-group-item" href="#" onClick={this.forwardToMyCart}>
                                         <div className="d-flex justify-content-between align-items-center">
                                             <div><i className="fe-icon-heart mr-1 text-muted"></i>
-                                                <div className="d-inline-block font-weight-medium text-uppercase" onClick={this.forwardToMyCart}>My
+                                                <div className="d-inline-block font-weight-medium text-uppercase">My
                                                     Cart
                                                 </div>
                                             </div>
@@ -189,4 +198,11 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps) (UserSettingsPageAddresses);
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (UserSettingsPageAddresses);

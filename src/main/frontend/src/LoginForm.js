@@ -12,16 +12,18 @@ import Recaptcha from 'react-recaptcha';
 const mapStateToProps = (state)=>{
     return {
         emailId: state.userId,
+        accountType: state.accountType,
     }
 }
 
 const mapDispatchToProps = (dispatch)=> {
     return {
         setUserEmail(evt){
-            dispatch({type: "setUserId", userId: evt.target.value});
+            dispatch({type: "setUserId", userId: evt, accountType: "user"});
         }
     }
 }
+
 class App extends Component {
     state = {
         loginSelect: true,
@@ -68,18 +70,16 @@ class App extends Component {
         }).then(res => {
             if (res.status === 200){
                 if(this.state.isReCaptchaVerified) {
-                this.forwardToLoginDashboard();
+                    this.props.setUserEmail(this.state.emailId);
+                    this.forwardToLoginDashboard();
             }}
             else{
                 return res.json();
             }
         }).then(data => {
-                    console.log(data);
                     this.setState({
                         responseMessageForLogin: data, errorSelect: true, userLoginOption: false, loginSelect: false
                     })
-                    console.log(this.state.responseMessageForLogin.message);
-                    console.log(this.state.errorSelect);
                 })
         }
 
@@ -97,8 +97,6 @@ class App extends Component {
                 newPassword: this.state.userPassword
             }),
         }).then(res => {
-
-           
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
@@ -179,6 +177,7 @@ class App extends Component {
     }
 
     closeAllOptionsOfSelectionForm= () => {
+        this.goBackToHomePage();
         this.setState({ userLoginOption: false, loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOption: false, forgotPasswordSelect: false, emailSelectForgotPassword: false  });
     }
 
@@ -206,7 +205,7 @@ class App extends Component {
         });
     };
 
-    goBackToHomePAge = () => {
+    goBackToHomePage = () => {
         this.props.history.push("/")
     }
 
@@ -217,22 +216,23 @@ class App extends Component {
 
 
     render() {
+        if (this.props.accountType === "user") {
+            this.props.history.push("/LoginDashboard");
+        }
+        else if (this.props.accountType === "restaurant") {
+            this.props.history.push("/RestaurantDashboard")
+        }
+
         const responseFacebook = (response) => {
-            console.log(response);
             this.state.facebookUserAccessToken = response.accessToken;
             this.state.facebookUserId = response.userID;
-            console.log("User ID", this.state.facebookUserId);
-            console.log("Access Token ",this.state.facebookUserAccessToken);
             let api = 'https://graph.facebook.com/v2.8/' + this.state.facebookUserId +
                 '?fields=name,email&access_token=' + this.state.facebookUserAccessToken;
             fetch(api)
                 .then((response) => response.json())
                 .then( (responseData) => {
-                    console.log(responseData)
                     this.state.facebookUserEmail = responseData.email;
                     this.state.facebookUserName  = responseData.name;
-                    console.log("Inside fetch api");
-                    console.log(responseData.email);
                 }).then(res => {
                 fetch('/facebookUserLogin',
                     {
@@ -247,21 +247,15 @@ class App extends Component {
                                 fbUserID: this.state.facebookUserId,
                                 fbUserAccessToken: this.state.facebookUserAccessToken,
                                 fbUserName: this.state.facebookUserName
-
                             }
                         )
-
                     }
                 ).then(res => {
-
-
                     if (res.status !== 200) {
                         this.forwardToErrorPage();
                     }else {
                         this.forwardToLoginDashboard();
                     }
-
-
                 })
             })};
 

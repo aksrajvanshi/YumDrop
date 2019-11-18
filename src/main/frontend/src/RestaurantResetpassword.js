@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
 
 class RestaurantSettingsPage extends Component {
     state = {
@@ -11,12 +12,25 @@ class RestaurantSettingsPage extends Component {
         this.props.history.push('/MyCurrentLocation');
     }
 
+    forwardToRestaurantSettingsPage = () => {
+        this.props.history.push('/RestaurantSettingsPage');
+    }
+
     forwardToAddressPage = () => {
         this.props.history.push('/restaurantAddressesPage')
     }
 
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
+    }
+
     forwardToResetpassword = () => {
         this.props.history.push('./RestaurantResetpassword');
+    }
+
+    forwardToRestaurantDashboard = () => {
+        this.props.history.push('/RestaurantDashboard');
     }
 
     componentDidMount () {
@@ -43,6 +57,9 @@ class RestaurantSettingsPage extends Component {
             })
     }
     render() {
+        if(this.props.restaurantId === null) {
+            this.props.history.push('/')
+        }
         return(
 
             <div>
@@ -61,15 +78,15 @@ class RestaurantSettingsPage extends Component {
 
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
-                            <a className="navbar-brand " href="#">YumDrop</a>
+                            <a className="navbar-brand " href="#" onClick={this.forwardToRestaurantDashboard}>YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
                                     <li className="upper-links dropdown"><a className="links" onClick={this.returnToLoginDahboard}
                                     >Home</a>
-
                                     </li>
-
-
+                                    <li className="nav-link">
+                                        <a onClick={this.signOut}>Sign Out</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -95,13 +112,12 @@ class RestaurantSettingsPage extends Component {
                                 <nav className="list-group list-group-flush">
                                     <a className="list-group-item" href="#">
 
-                                    </a><a className="list-group-item active" href="#"><i
+                                    </a><a className="list-group-item " href="#" onClick={this.forwardToRestaurantSettingsPage}><i
                                     className="fe-icon-user text-muted"></i>Restaurant Profile Settings</a>
                                     <a
                                         className="list-group-item" href="#" onClick={this.forwardToAddressPage}><i className="fe-icon-map-pin text-muted"></i>Address</a>
                                     <a
-                                        className="list-group-item" href="#" onClick={this.forwardToResetpassword}><i className="fe-icon-map-pin text-muted"></i>Reset Password</a>
-
+                                        className="list-group-item active" href="#" onClick={this.forwardToResetpassword}><i className="fe-icon-map-pin text-muted"></i>Reset Password</a>
                                 </nav>
                             </div>
                         </div>
@@ -150,7 +166,19 @@ class RestaurantSettingsPage extends Component {
             </div>
         );
     }
-
-
 }
-export default RestaurantSettingsPage;
+
+const mapStateToProps = (state)=>{
+    return {
+        restaurantId: state.userId
+    }
+};
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (RestaurantSettingsPage);

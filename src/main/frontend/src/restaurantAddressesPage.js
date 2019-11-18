@@ -20,6 +20,15 @@ class UserSettingsPageAddresses extends Component{
         this.props.history.push('/MyCurrentRestaurantLocation');
     }
 
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
+    }
+
+    forwardToRestaurantDashboard = () => {
+        this.props.history.push('/RestaurantDashboard');
+    }
+
     forwardToAddAddress = () => {
         this.props.history.push('/MyCurrentRestaurantLocation');
     }
@@ -41,9 +50,9 @@ class UserSettingsPageAddresses extends Component{
 
     render() {
         let trying = this.state.data;
-        console.log(trying);
-        console.log(this.state.trying);
-        console.log("hey trying to run this");
+        if(this.props.restaurantId === null) {
+            this.props.history.push('/')
+        }
         return (
             <div>
                 <header>
@@ -61,7 +70,7 @@ class UserSettingsPageAddresses extends Component{
 
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
-                            <a className="navbar-brand " href="#">YumDrop</a>
+                            <a className="navbar-brand " href="#" onClick={this.forwardToRestaurantDashboard}>YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
                                     <li className="upper-links dropdown"><a className="links" onClick={this.returnToLoginDahboard}
@@ -71,6 +80,9 @@ class UserSettingsPageAddresses extends Component{
                                             >My Account</a></li>
                                             <li className="profile-li"><a>My Orders</a></li>
                                         </ul>
+                                    </li>
+                                    <li>
+                                        <a className="nav-link" onClick={this.signOut}>Sign Out</a>
                                     </li>
                                     <li>
                                         <div className="cart largenav col-sm-2">
@@ -83,7 +95,6 @@ class UserSettingsPageAddresses extends Component{
                         </div>
                     </nav>
                 </header>
-                <p>{this.props.restaurantId}</p>
                <div className="container mt-5">
                 <div className="row">
                     <div className="col-lg-4 pb-5">
@@ -105,13 +116,13 @@ class UserSettingsPageAddresses extends Component{
                                     <div className="d-flex justify-content-between align-items-center">
 
                                     </div>
-                                </a><a className="list-group-item " href="#"><i
-                                className="fe-icon-user text-muted" onClick={this.goBacktToMyRestaurantSettings}></i>Profile Settings</a><a
-                                className="list-group-item active" href="#" active><i className="fe-icon-map-pin text-muted"></i>Addresses</a>
-                                <a className="list-group-item" href="#">
+                                </a><a className="list-group-item " href="#" onClick={this.goBacktToMyRestaurantSettings}><i
+                                className="fe-icon-user text-muted" ></i>Profile Settings</a><a
+                                className="list-group-item active" href="#"><i className="fe-icon-map-pin text-muted"></i>Addresses</a>
+                                <a className="list-group-item" href="#" onClick={this.forwardToResetPassword}>
                                     <div className="d-flex justify-content-between align-items-center">
                                         <div><i className="fe-icon-heart mr-1 text-muted"></i>
-                                            <div className="d-inline-block font-weight-medium text-uppercase" onClick={this.forwardToResetPassword}>Reset Password
+                                            <div className="d-inline-block font-weight-medium text-uppercase">Reset Password
                                             </div>
                                         </div>
 
@@ -182,4 +193,12 @@ const mapStateToProps = (state) => {
         restaurantId: state.userId
     }
 };
-export default connect(mapStateToProps) (UserSettingsPageAddresses);
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (UserSettingsPageAddresses);

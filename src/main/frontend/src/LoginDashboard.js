@@ -21,15 +21,23 @@ class LoginDashBoard extends Component{
         this.props.history.push('/MySettingsPage');
     }
 
+    forwardToMyCart = () => {
+        this.props.history.push('/MyCart')
+    }
+
     onClick= (event) => {
         this.forwardToSettingsPage();
     }
 
-    goBackToLoginDashboard = () => {
-        this.props.history.push('/goBackToLoginDashboard');
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
     }
 
     render() {
+        if(this.props.emailId === null) {
+            this.props.history.push('/')
+        }
         return (
             <div>
                 <header>
@@ -39,25 +47,25 @@ class LoginDashBoard extends Component{
 
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
-                            <a className="navbar-brand " href="#" onClick={this.goBackToLoginDashboard}>YumDrop</a>
+                            <a className="navbar-brand " href="#">YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
 
                                     <li className="nav-item">
-                                        <a className="nav-link"><i
+                                        <a className="nav-link" onClick={this.forwardToMyCart}><i
                                             className="fa fa-fw fa-user"/>Cart</a>
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link"  onClick={this.onClick} ><span>Settings</span></a>
+                                    </li>
+                                    <li>
+                                        <a className="nav-link" onClick={this.signOut}>Sign Out</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </nav>
                 </header>
-                <p>{this.props.emailId}<br/>
-                {this.state.userEmailId}
-                    hey</p>
                 <div className="container mt-5">
                     <div className="section-title text-center">
                         <p>Try from the variety of Cuisines available</p>
@@ -229,9 +237,8 @@ const mapStateToProps = (state)=> {
 
 const mapDispatchToProps = (dispatch)=> {
     return {
-        setUserEmail(evt){
-            dispatch({type: "setUserId", emailId: evt});
-        }
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
     }
 }
 export default  connect(mapStateToProps, mapDispatchToProps) (LoginDashBoard);

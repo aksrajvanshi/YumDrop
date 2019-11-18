@@ -11,6 +11,13 @@ const mapStateToProps = (state)=>{
     }
 }
 
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+
 function handleToken(token){
     console.log(token)
 }
@@ -40,6 +47,14 @@ class MySettingsPage extends Component{
         this.props.history.push('/paymentSystemForUsers')
     }
 
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
+    }
+
+    forwardToMyCart = () => {
+        this.props.history.push('/MyCart')
+    }
 
     forwardToSettingsAddresses = () => {
         this.props.history.push('/UserSettingsPageAddresses')
@@ -141,10 +156,9 @@ class MySettingsPage extends Component{
 
     render() {
         let trying = this.state.data;
-        console.log(trying);
-        console.log(this.state.trying);
-        console.log(this.state.userName);
-        console.log("hey trying to run this");
+        if(this.props.userEmailId === null) {
+            this.props.history.push('/')
+        }
         return (
             <div>
                 <header>
@@ -176,13 +190,15 @@ class MySettingsPage extends Component{
                                     <li className="nav-item">
                                         <a className="nav-link"   onClick={this.settingsPage} ><span>Settings</span></a>
                                     </li>
+                                    <li>
+                                        <a className="nav-link" onClick={this.signOut}> Sign Out </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </nav>
 
                 </header>
-                <p>{this.props.userEmailId}</p>
                 <div className="container mt-5">
                     <div className="row">
                         <div className="col-lg-4 pb-5">
@@ -209,10 +225,22 @@ class MySettingsPage extends Component{
                                             </div>
 
                                         </div>
-                                    </a><a className="list-group-item active" href="#"><i
-                                    className="fe-icon-user text-muted" onClick={this.settingsPage}></i>Profile Settings</a><a
-                                    className="list-group-item" href="#" onClick={this.forwardToSettingsAddresses}><i className="fe-icon-map-pin text-muted"></i>Addresses</a>
-
+                                    </a>
+                                    <a className="list-group-item" href="#" onClick={this.settingsPage}>
+                                        <i className="fe-icon-user text-muted"></i>Profile Settings
+                                    </a>
+                                    <a className="list-group-item" href="#" onClick={this.forwardToSettingsAddresses}>
+                                        <i className="fe-icon-map-pin text-muted"></i>Addresses
+                                    </a>
+                                    <a className="list-group-item active" href="#" onClick={this.forwardToMyCart}>
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div><i className="fe-icon-heart mr-1 text-muted"></i>
+                                                <div className="d-inline-block font-weight-medium text-uppercase">My
+                                                    Cart
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </nav>
                             </div>
                         </div>
@@ -275,4 +303,4 @@ class MySettingsPage extends Component{
 
 }
 
-export default connect(mapStateToProps) (MySettingsPage);
+export default connect(mapStateToProps, mapDispatchToProps) (MySettingsPage);

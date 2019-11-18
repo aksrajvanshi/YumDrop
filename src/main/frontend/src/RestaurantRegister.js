@@ -113,9 +113,6 @@ class App extends Component {
 
             }
         ).then(res => {
-
-            
-            console.log(res.status)
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToErrorPage();
@@ -182,12 +179,17 @@ class App extends Component {
 
 
     closeAllOptionsOfSelectionForm = () => {
+        this.goBackToHomePage();
         this.setState({
             userRegister: false,
             restaurantRegister: false,
             registerSelect: false,
             deliveryAgentRegister: false
         });
+    }
+
+    goBackToHomePage = () => {
+        this.props.history.push("/")
     }
 
     handleRestaurantOtpChange = (event) => {

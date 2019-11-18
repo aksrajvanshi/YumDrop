@@ -45,6 +45,7 @@ const initialState = {
     latitude: null,
     longitude: null,
     userId: null, //doubles as a User's Email address or a restaurant's Id
+    accountType: null, //identifies if account is user, restaurant, or delivery
 }
 
 const reducer = (state=initialState, action) => {
@@ -54,14 +55,17 @@ const reducer = (state=initialState, action) => {
         state.longitude = action.newLongitude;
     }
     else if (action.type === "setUserId"){
-        console.log(action.userId);
         state.userId = action.userId;
+        state.accountType = action.accountType;
+    }
+    else if (action.type === "signOut") {
+        state.userId = null;
+        state.accountType = null;
     }
 
 
     return state;
 }
-
 
 const store = createStore(reducer)
 
@@ -70,7 +74,7 @@ const routing = (
     <Provider store={store}>
         <Router>
             <div>
-                <Route exact path="/App" component={App} />
+                <Route exact path="/" component={App} />
                 <Route exact path="/ErrorPageForRestaurantRegistration" component={ErrorPageForRestaurantRegistration}/>
                 <Route exact path="/Home" component={Home}/>
                 <Route exact path="/LoginPage" component={LoginPage} />
@@ -79,7 +83,7 @@ const routing = (
                 <Route exact path="/LoginDashBoard" component={LoginDashBoard}/>
                 <Route exact path="/OTPpage" component={OTPpage}/>
                 <Route exact path="/paymentSystemForUsers" component={paymentSystemForUsers}/>
-                <Route exact path="/" component={MyCart}/>
+                <Route exact path="/MyCart" component={MyCart}/>
                 <Route exact path="/DeliveryAgentOTPpage" component={DeliveryAgentOTPpage}/>
                 <Route exact path="/errorPageForRegistration" component={errorPageForRegistration} />
                 <Route exact path="/MySettingsPage" component={MySettingsPage}/>

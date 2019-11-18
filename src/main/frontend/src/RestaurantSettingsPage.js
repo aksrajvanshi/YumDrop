@@ -15,6 +15,11 @@ class RestaurantSettingsPage extends Component {
         this.props.history.push('/MyCurrentLocation');
     }
 
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
+    }
+
     goBackToRestaurantDashboard = () => {
         this.props.history.push('/RestaurantDashboard');
 }
@@ -62,6 +67,9 @@ class RestaurantSettingsPage extends Component {
         })
     }
     render() {
+        if(this.props.restaurantId === null) {
+            this.props.history.push('/')
+        }
         return(
 
             <div>
@@ -92,14 +100,15 @@ class RestaurantSettingsPage extends Component {
                                     >My Settings</a>
 
                                     </li>
-
+                                    <li>
+                                        <a className="nav-link" onClick={this.signOut}>Sign Out</a>
+                                    </li>
 
                                 </ul>
                             </div>
                         </div>
                     </nav>
                 </header>
-                <p>{this.props.restaurantId}</p>
                 <div className="container mt-5">
                     <div className="row">
                         <div className="col-lg-4 pb-5">
@@ -193,4 +202,11 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps) (RestaurantSettingsPage);
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (RestaurantSettingsPage);

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withGoogleMap, GoogleMap, withScriptjs, InfoWindow, Marker } from "react-google-maps";
+import {connect} from 'react-redux';
 import Geocode from "react-geocode";
+import {withRouter} from 'react-router-dom';
 
 
 Geocode.setApiKey("AIzaSyDg4eNu1SvJEk9t7kzG5CKbTjh_lb8dt_M");
@@ -13,7 +15,7 @@ class Map extends React.Component{
         super( props );
         this.state = {
             address: '',
-            userEmailId: "maithreyi.prabhu95@gmail.com",
+            userEmailId: this.props.userEmail,
             mapPosition: {
                 lat: this.props.center.lat,
                 lng: this.props.center.lng
@@ -24,11 +26,17 @@ class Map extends React.Component{
             }
         }
     }
-    forwardToHomePage = () => {
-        this.props.history.push('/LoginDashBoard');
+    goBackToLoginDashboard = () => {
+        if(this.props.accountType === "user") {
+            this.props.history.push('/LoginDashboard')
+        }
+        else if(this.props.accountType === "restaurant") {
+            this.props.history.push('/RestaurantDashboard')
+        }
     }
 
     submitAddress = () => { debugger;
+    let currentComponent = this;
         fetch('/saveUserAddress', {
             method: 'POST',
             headers: {
@@ -39,18 +47,12 @@ class Map extends React.Component{
                 userEmail: this.state.userEmailId
             }),
         }).then(res => {
-
-            alert("Entered");
-            alert(res.status);
             if (res.status !== 200) {
-
                 alert("Hey going to Error page");
             }else {
                 alert("Successfully added address");
-                this.forwardToHomePage();
+                this.goBackToLoginDashboard();
             }
-
-
         })
 
     }
@@ -245,4 +247,12 @@ class Map extends React.Component{
         return( map )
     }
 }
-export default Map
+
+const mapStateToProps = (state) => {
+    return {
+        userEmail: state.userId,
+        accountType: state.accountType,
+    }
+};
+
+export default withRouter(connect(mapStateToProps) (Map));
