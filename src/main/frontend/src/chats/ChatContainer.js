@@ -10,7 +10,7 @@ class ChatContainer extends React.Component{
         super(props);
         this.state = {
             chats: [],
-            activeChat: null
+            activeChat: "community"
         }
     }
 
@@ -80,8 +80,7 @@ class ChatContainer extends React.Component{
                     activeChat={this.state.activeChat}
                     setActiveChat={this.setActiveChat}/>
                     <div className="chat-room-container">
-                        {
-                            this.state.activeChat !== null ? (
+                        { (
                                 <div className="chat-room">
                                     <ChatHeading
                                         name={this.state.activeChat.name}
@@ -105,10 +104,7 @@ class ChatContainer extends React.Component{
                                         }
                                     />
                                 </div>
-                            ) :
-                                <div className="chat-room choose">
-                                    <h3></h3>
-                                </div>
+                            )
                         }
                     </div>
             </div>
