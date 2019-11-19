@@ -23,9 +23,6 @@ export default class MessageInput extends Component {
 
 	}
 
-	componentWillUnmount() {
-	  this.stopCheckingTyping()
-	}
 
 
 
@@ -45,7 +42,7 @@ export default class MessageInput extends Component {
 						className = "form-control"
 						value = { message }
 						autoComplete = {'off'}
-						placeholder = "Type something interesting"
+						placeholder = "Please Provide your issue here"
 
 						onChange = {
 							({target})=>{
@@ -54,7 +51,6 @@ export default class MessageInput extends Component {
 						}
 						/>
 					<button
-						disabled = { message.length < 1 }
 						type = "submit"
 						className = "send"
 

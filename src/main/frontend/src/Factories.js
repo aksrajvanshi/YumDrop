@@ -8,7 +8,6 @@ const createUser = ({name = ""} = {})=>(
 	}
 )
 
-
 const createMessage = ({message = "", sender = ""} = { })=>(
 		{
 			id:uuidv4(),
@@ -19,8 +18,7 @@ const createMessage = ({message = "", sender = ""} = { })=>(
 
 	)
 
-
-const createChat = ({messages = [], name = "Community", users = []} = {})=>(
+const createChat = ({messages = [], name = "Support", users = []} = {})=>(
 	{
 		id:uuidv4(),
 		name,
@@ -29,7 +27,6 @@ const createChat = ({messages = [], name = "Community", users = []} = {})=>(
 		typingUsers:[]
 	}
 )
-
 
 const getTime = (date)=>{
 	return `${date.getHours()}:${("0"+date.getMinutes()).slice(-2)}`
