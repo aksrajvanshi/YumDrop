@@ -10,7 +10,9 @@ class LoginDashBoard extends Component{
 
     state = {
         userEmailId : this.props.userEmailId,
-        data: [{"restaurantAddress": "restaurantAddress"}]
+        searchResults: [{"restaurantAddress": "restaurantAddress"}],
+        userAddress: "800 N Union St, Bloomington, IN 47408, USA",
+        searchQuery: "",
 
     }
 
@@ -27,33 +29,54 @@ class LoginDashBoard extends Component{
         }).then(res => {
             return res.json();
         }).then(res=>{
-                let x = [];
-                console.log(x);
-                for (let i=0; i<res.length;i++){
-                    x[i] = JSON.stringify(res[i].restaurantDetails);
-                    console.log(x[i])
-                }
-                 alert("Entered");
-                 alert(res.status);
-                 console.log(res.length)
-                 console.log(res[0].restaurantDetails)
-            console.log(this.state.data)
+            let x = [];
+            for (let i=0; i<res.length;i++){
+                x[i] = res[i].restaurantDetails;
+            }
             currentComponent.setState({
-                data: x
+                searchResults: x
             })
             console.log(this.state.data)
-
-
-                if (res.status !== 200) {
+            if (res.status !== 200) {
 
                 alert("Hey going to Error page");
             }else {
                 alert("Hey going to Login Dashboard page");
-        }
+            }
 
 
-    })
+        })
 
+    }
+
+    getSearchResults = () => {
+        let currentComponent = this;
+        fetch('/searchRestaurantByLocationFromUserDashboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userAddress: this.state.userAddress,
+                restaurantSearchKeyword: this.state.searchQuery,
+                userEmail: this.state.userEmailId
+            }),
+        }).then(res => {
+            return res.json();
+        }).then(res=>{
+            let x = [];
+            for (let i=0; i<res.length;i++){
+                x[i] = res[i].restaurantDetails;
+            }
+            currentComponent.setState({
+                searchResults: x
+            })
+            console.log(this.state.searchResults)
+        })
+    }
+
+    handleSearchChange = (event) => {
+        this.setState({searchQuery: event.target.value})
     }
 
     forwardToSettingsPage = () => {
@@ -71,7 +94,6 @@ class LoginDashBoard extends Component{
 
     render() {
         const {data} = this.state
-        console.log(this.state.data)
         return (
             <div>
                 <header>
@@ -97,13 +119,44 @@ class LoginDashBoard extends Component{
                         </div>
                     </nav>
                 </header>
+                <div>
+                    <div className="col-md-4">
+                        <div className="md-form">
+                            <input type="text"
+                                   placeholder="Search for food, cuisines, restaurants here.."
+                                   className="form-control validate" onChange={(event) => this.handleSearchChange(event)}/>
 
-                {data.map((item, index) => {
-                    return(
-                        <div key={index}>{item}</div>
+                        </div>
+                    </div>
+                    <div className="col-md-1" >
+                        <div className="md-form">
+                            <button className="btn btn-primary btn-md" onClick={this.getSearchResults}><span id="SearchBar">Search</span></button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <section className="about-area pt-80">
+                        <div className="container">
+                            {this.state.searchResults.map((item, index) => {
+                                return(
+                                    <div className="row menu_style1">
+                                        <div className="col-xl-12 mb-60">
+                                            <div className="single_menu_list" id="containerForRestaurantDisplay" key={index}>
+                                                <div>
+                                                    <div className="menu_content">
+                                                        <h4>{item.restaurantName}</h4>
+                                                        <h5>{item.restaurantAddress}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            )}
+                        </div>
+                    </section>
+                </div>
 
-                    )}
-                )}
 
                 <div className="container mt-5">
                     <div className="section-title text-center">

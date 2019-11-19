@@ -2,12 +2,19 @@ import React, { Component } from "react";
 
 import LoginPage from "./LoginPage";
 import "bootstrap/dist/css/bootstrap.min.css";
+import './LoginDashBoardCSS.css';
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
-import './index.css'
+import {connect} from 'react-redux';
+import Geocode from "react-geocode";
+import './index.css';
 
 class App extends Component {
     state = {
-
+        address: "800 N Union St, Bloomington, IN 47408, USA",
+        latitude: "",
+        longitude: "",
+        searchResults: [],
+        searchQuery: "",
     };
 
     forwardToLoginForm = () => {
@@ -21,6 +28,36 @@ class App extends Component {
     forwardToRegisterForm = () => {
         this.props.history.push('/RegisterForm')
     }
+
+    getSearchResults = () => {
+        let currentComponent = this;
+        fetch('/searchRestaurantByLocationFromPublicPage', {
+            method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            body:JSON.stringify({
+                userAddress: this.state.address,
+                restaurantSearchKeyword: this.state.searchQuery
+            }),
+        }).then(res => {
+            return res.json();
+        }).then(res=>{
+            let x = [];
+            for (let i=0; i<res.length;i++){
+                x[i] = res[i].restaurantDetails;
+            }
+            currentComponent.setState({
+                searchResults: x
+            })
+            console.log(this.state.searchResults)
+        })
+    }
+
+    handleSearchChange = (event) => {
+        this.setState({searchQuery: event.target.value})
+    }
+
 
     render() {
         return (
@@ -125,13 +162,13 @@ class App extends Component {
                                         <div className="md-form">
                                             <input type="text"
                                                    placeholder="Search for food, cuisines, restaurants here.."
-                                                   className="form-control validate"/>
+                                                   className="form-control validate" onChange={(event) => this.handleSearchChange(event)}/>
 
                                         </div>
                                     </div>
                                     <div className="col-md-1" >
                                         <div className="md-form">
-                                            <button className="btn btn-primary btn-md"><span id="SearchBar">Search</span></button>
+                                            <button className="btn btn-primary btn-md" onClick={this.getSearchResults}><span id="SearchBar">Search</span></button>
                                         </div>
                                     </div>
                                 </div>
@@ -140,6 +177,28 @@ class App extends Component {
                     </div>
                 </div>
                 <br/><br/><br/><br/>
+                <div>
+                    <section className="about-area pt-80">
+                        <div className="container">
+                            {this.state.searchResults.map((item, index) => {
+                                return(
+                                    <div className="row menu_style1">
+                                        <div className="col-xl-12 mb-60">
+                                            <div className="single_menu_list" id="containerForRestaurantDisplay" key={index}>
+                                                <div>
+                                                    <div className="menu_content">
+                                                        <h4>{item.restaurantName}</h4>
+                                                        <h5>{item.restaurantAddress}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            )}
+                        </div>
+                    </section>
+                </div>
                 <div className="how-section1">
                     <div className="row">
                         <div className="col-md-6 how-img">
@@ -191,4 +250,21 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = (state)=>{
+    return {
+        latitude: state.latitude,
+        longitude: state.longitude
+    }
+}
+
+
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setLocation(evt){
+            dispatch({type: "setLocation", newLatitude: evt.latitude, newLongitude: evt.longitude});
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (App);
