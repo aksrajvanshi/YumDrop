@@ -1,9 +1,11 @@
 package com.app.yumdrop.ServiceImplementation;
 
+import com.app.yumdrop.Entity.Users;
 import com.app.yumdrop.Entity.UsersAddress;
 import com.app.yumdrop.Messages.ErrorMessage;
 import com.app.yumdrop.Messages.SuccessMessage;
 import com.app.yumdrop.Repository.UsersAddressRepository;
+import com.app.yumdrop.Repository.UsersRepository;
 import com.app.yumdrop.Service.SaveUserAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,9 @@ import java.util.Date;
 
 @Service
 public class SaveUserAddressServiceImpl implements SaveUserAddressService {
+
+    @Autowired
+    UsersRepository usersRepository;
 
     @Autowired
     UsersAddressRepository usersAddressRepository;
@@ -27,6 +32,10 @@ public class SaveUserAddressServiceImpl implements SaveUserAddressService {
             return new ResponseEntity<>(emptyAddress, HttpStatus.BAD_REQUEST);
         }
 
+        Users userDetails = usersRepository.findByuserEmail(usersAddress.getUserEmail());
+
+        userDetails.setUserAddress(usersAddress.getUserAddress());
+        usersRepository.save(userDetails);
         UsersAddress isUserAddressSaved = usersAddressRepository.save(usersAddress);
 
         if(isUserAddressSaved != null){

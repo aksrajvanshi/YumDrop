@@ -5,7 +5,6 @@ import LoginPage from "./LoginPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import './LoginDashBoardCSS.css';
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
-import {connect} from 'react-redux';
 import Geocode from "react-geocode";
 import './index.css';
 

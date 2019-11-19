@@ -38,10 +38,7 @@ class LoginDashBoard extends Component{
             })
             console.log(this.state.data)
             if (res.status !== 200) {
-
-                alert("Hey going to Error page");
             }else {
-                alert("Hey going to Login Dashboard page");
             }
 
 
