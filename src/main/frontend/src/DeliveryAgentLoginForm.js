@@ -147,6 +147,7 @@ class App extends Component {
 
 
     closeAllOptionsOfSelectionForm= () => {
+        this.goBackToHomePage();
         this.setState({ userLoginOption: false, loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOptionSelected: false, forgotPasswordSelect: false, emailSelectForgotPassword: false  });
     }
 
@@ -167,23 +168,21 @@ class App extends Component {
         });
     };
 
+    goBackToHomePage = () => {
+        this.props.history.push("/")
+    }
+
     render() {
         const responseFacebook = (response) => {
-            console.log(response);
             this.state.facebookUserAccessToken = response.accessToken;
             this.state.facebookUserId = response.userID;
-            console.log("User ID", this.state.facebookUserId);
-            console.log("Access Token ",this.state.facebookUserAccessToken);
             let api = 'https://graph.facebook.com/v2.8/' + this.state.facebookUserId +
                 '?fields=name,email&access_token=' + this.state.facebookUserAccessToken;
             fetch(api)
                 .then((response) => response.json())
                 .then( (responseData) => {
-                    console.log(responseData)
                     this.state.facebookUserEmail = responseData.email;
                     this.state.facebookUserName  = responseData.name;
-                    console.log("Inside fetch api");
-                    console.log(responseData.email);
                 }).then( (res) => {
 
                 fetch('/facebookUserLogin',
@@ -232,7 +231,7 @@ class App extends Component {
                 <script src="//code.jquery.com/jquery-1.11.1.min.js"/>
                 <nav className=" navbar navbar-expand-lg navbar-dark ">
                     <div className="container">
-                        <a className="navbar-brand " href="#">YumDrop</a>
+                        <a className="navbar-brand " href="#" onClick={this.goBackToHomePage}>YumDrop</a>
                         <div className="collapse navbar-collapse" id="navBarLinks">
                             <ul className="navbar-nav mr-auto">
                                 <li className="nav-item">

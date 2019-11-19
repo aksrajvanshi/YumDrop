@@ -3,12 +3,21 @@ import {connect} from "react-redux";
 
 const mapStateToProps = (state)=>{
     return {
-        restaurantPrimaryEmailId: state.restaurantPrimaryEmailId
+        restaurantId: state.userId
     }
 };
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+
 class RestaurantDashboard extends Component{
     state = {
-        Name: "",
+        Name: "Restaurant 1",
+        restaurantPrimaryEmailId: "Restaurant 1",
         data: [
             {itemName: "first dish",itemDescription: "First item ",itemCost: "4$",itemAvailability: "Available"},
             {itemName: "first dish",itemDescription: "First item ",itemCost: "4$",itemAvailability: "Available"},
@@ -17,15 +26,40 @@ class RestaurantDashboard extends Component{
             {itemName: "first dish",itemDescription: "First item ",itemCost: "4$",itemAvailability: "Available"},
         ]
     }
-    componentDidMount () {
-        fetch('/getRestaurantMenuDetails')
-            .then(res => res.json()
-            ).then(res => {
-            this.setState({data: res})
-        })}
+    componentWillMount() {
+        let currentComponent = this;
+        fetch('/getAllRestaurants',{
+            method: 'POST',
+            redirect: 'follow',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                restaurantId: this.props.restaurantId,})})
+            .then(res => {
+                return res.json()
+            }).then(res => {
+                let x = JSON.stringify(res)
+                return x;
+            }).then(response => {
+                currentComponent.setState({
+                    data: response
+                })
+            })
+        }
+
+
+
+
 
     forwardToAddingAnItem = () => {
         this.props.history.push("/RestaurantAddMenuForm");
+    }
+
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
     }
 
     forwardToRestaurantSettingsPage = () => {
@@ -36,7 +70,9 @@ class RestaurantDashboard extends Component{
         this.props.history.push("/RestaurantDashboard");
     }
     render() {
-
+        if(this.props.restaurantId === null) {
+            this.props.history.push('/')
+        }
         return(
             <div>
                 <header>
@@ -63,6 +99,9 @@ class RestaurantDashboard extends Component{
                                         <a className="nav-link" onClick={this.forwardToRestaurantSettingsPage}><i
                                             className="fa fa-fw fa-user"></i>My Settings</a>
                                     </li>
+                                    <li>
+                                        <a className="nav-link" onClick={this.signOut}>Sign Out</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -84,7 +123,6 @@ class RestaurantDashboard extends Component{
                     </div>
                 </div>
                 <br/><br/><br/>
-
 
                 <div className="container">
                     <div className="row">
@@ -114,7 +152,7 @@ class RestaurantDashboard extends Component{
 
                                                     </td>
                                                     <td className="col-md-5"><h5>{d.itemDescription}</h5>
-                                                        <span>Vegetarian</span><br/><span><strong>{d.itemCuisine}</strong></span></td>
+                                                        </td>
                                                     <td className="col-md-4 text-center"><strong>{d.itemCost}</strong></td>
                                                     <td className="col-md-4 text-center"><strong>{d.itemAvailability}</strong></td>
                                                     <td className="col-md-8">
@@ -142,8 +180,9 @@ class RestaurantDashboard extends Component{
                     </div>
                 </div>
             </div>
+
         )
     }
 }
 
-export default (RestaurantDashboard);
+export default connect(mapStateToProps, mapDispatchToProps) (RestaurantDashboard);

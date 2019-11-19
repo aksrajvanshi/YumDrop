@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux';
 import './MySettingsPage.css';
 
 class UserSettingsPageAddresses extends Component{
@@ -19,6 +20,15 @@ class UserSettingsPageAddresses extends Component{
         this.props.history.push('/MyCurrentRestaurantLocation');
     }
 
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
+    }
+
+    forwardToRestaurantDashboard = () => {
+        this.props.history.push('/RestaurantDashboard');
+    }
+
     forwardToAddAddress = () => {
         this.props.history.push('/MyCurrentRestaurantLocation');
     }
@@ -31,18 +41,32 @@ class UserSettingsPageAddresses extends Component{
 
 
     componentDidMount () {
-        fetch('/getRestaurantDetails')
-            .then(res => res.json()
-            ).then(data => {
-            this.setState({restaurantCity: data.restaurantCity, restaurantArea: data.restaurantArea, restaurantAddress: data.restaurantAddress, restaurantState: data.restaurantState})
-        })}
+    let currentComponent = this;
+    fetch('/getRestaurantDataForDashboard', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body:JSON.stringify({
+        restaurantId: currentComponent.props.restaurantId
+        }),
+        }).then(function(response) {
+           return response.json();
+        }).then(function(data) {
+             const userName = data.userName;
+            currentComponent.setState({
+        restaurantName: data.restaurantName,
+        restaurantAddress: data.restaurantAddress
+    });
+})
+}
 
 
     render() {
         let trying = this.state.data;
-        console.log(trying);
-        console.log(this.state.trying);
-        console.log("hey trying to run this");
+        if(this.props.restaurantId === null) {
+            this.props.history.push('/')
+        }
         return (
             <div>
                 <header>
@@ -60,7 +84,7 @@ class UserSettingsPageAddresses extends Component{
 
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
-                            <a className="navbar-brand " href="#">YumDrop</a>
+                            <a className="navbar-brand " href="#" onClick={this.forwardToRestaurantDashboard}>YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
                                     <li className="upper-links dropdown"><a className="links" onClick={this.returnToLoginDahboard}
@@ -70,6 +94,9 @@ class UserSettingsPageAddresses extends Component{
                                             >My Account</a></li>
                                             <li className="profile-li"><a>My Orders</a></li>
                                         </ul>
+                                    </li>
+                                    <li>
+                                        <a className="nav-link" onClick={this.signOut}>Sign Out</a>
                                     </li>
                                     <li>
                                         <div className="cart largenav col-sm-2">
@@ -82,7 +109,6 @@ class UserSettingsPageAddresses extends Component{
                         </div>
                     </nav>
                 </header>
-
                <div className="container mt-5">
                 <div className="row">
                     <div className="col-lg-4 pb-5">
@@ -104,13 +130,13 @@ class UserSettingsPageAddresses extends Component{
                                     <div className="d-flex justify-content-between align-items-center">
 
                                     </div>
-                                </a><a className="list-group-item " href="#"><i
-                                className="fe-icon-user text-muted" onClick={this.goBacktToMyRestaurantSettings}></i>Profile Settings</a><a
-                                className="list-group-item active" href="#" active><i className="fe-icon-map-pin text-muted"></i>Addresses</a>
-                                <a className="list-group-item" href="#">
+                                </a><a className="list-group-item " href="#" onClick={this.goBacktToMyRestaurantSettings}><i
+                                className="fe-icon-user text-muted" ></i>Profile Settings</a><a
+                                className="list-group-item active" href="#"><i className="fe-icon-map-pin text-muted"></i>Addresses</a>
+                                <a className="list-group-item" href="#" onClick={this.forwardToResetPassword}>
                                     <div className="d-flex justify-content-between align-items-center">
                                         <div><i className="fe-icon-heart mr-1 text-muted"></i>
-                                            <div className="d-inline-block font-weight-medium text-uppercase" onClick={this.forwardToResetPassword}>Reset Password
+                                            <div className="d-inline-block font-weight-medium text-uppercase">Reset Password
                                             </div>
                                         </div>
 
@@ -124,41 +150,25 @@ class UserSettingsPageAddresses extends Component{
                         <form className="row">
                             <div className="col-md-6">
                                 <div className="form-group">
-                                    <label htmlFor="account-fn">Address</label>
+                                    <label htmlFor="account-fn">Name</label>
                                     <input className="form-control" type="text" id="account-fn"
-                                           placeholder={this.state.userAddress}/>
+                                           placeholder={this.state.restaurantName}/>
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="form-group">
-                                    <label htmlFor="account-ln">City</label>
-                                    <input className="form-control" type="text" id="account-ln" placeholder={this.state.userCity}
+                                    <label htmlFor="account-ln">Address</label>
+                                    <input className="form-control" type="text" id="account-ln" placeholder={this.state.restaurantAddress}
                                            required=""/>
                                 </div>
                             </div>
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label htmlFor="account-email">Area</label>
-                                    <input className="form-control" type="email" id="account-email" placeholder={this.state.userArea}
-                                           disabled=""/>
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label htmlFor="account-phone">State</label>
-                                    <input className="form-control" type="text" id="account-phone" placeholder={this.state.userState}
-                                           required=""/>
-                                </div>
-                            </div>
+
+
 
                             <div className="col-12">
                                 <hr className="mt-2 mb-3"/>
                                 <div className="d-flex flex-wrap justify-content-between align-items-center">
-                                    <div className="custom-control custom-checkbox d-block">
-                                        <input className="custom-control-input" type="checkbox"
-                                               id="subscribe_me" checked=""/>
 
-                                    </div>
                                     <button onClick={this.forwardToAddAddress} className="btn btn-style-1 btn-primary" type="button" data-toast=""
                                             data-toast-position="topRight" data-toast-type="success"
                                             data-toast-icon="fe-icon-check-circle" data-toast-title="Success!"
@@ -176,4 +186,17 @@ class UserSettingsPageAddresses extends Component{
 
 }
 
-export default UserSettingsPageAddresses;
+const mapStateToProps = (state) => {
+    return {
+        restaurantId: state.userId
+    }
+};
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (UserSettingsPageAddresses);
