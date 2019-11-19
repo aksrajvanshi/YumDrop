@@ -113,9 +113,6 @@ class App extends Component {
 
             }
         ).then(res => {
-
-            
-            console.log(res.status)
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToErrorPage();
@@ -182,12 +179,17 @@ class App extends Component {
 
 
     closeAllOptionsOfSelectionForm = () => {
+        this.goBackToHomePage();
         this.setState({
             userRegister: false,
             restaurantRegister: false,
             registerSelect: false,
             deliveryAgentRegister: false
         });
+    }
+
+    goBackToHomePage = () => {
+        this.props.history.push("/")
     }
 
     handleRestaurantOtpChange = (event) => {
@@ -233,9 +235,7 @@ class App extends Component {
                                         <a className="nav-link" onClick={this.forwardToLoginForm}><i
                                             className="fa fa-fw fa-user"/>Login</a>
                                     </li>
-                                    <li className="nav-item" id="SignUpID">
-                                        <a className="nav-link" onClick={this.forwardToRegisterForm}>Sign Up</a>
-                                    </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -391,33 +391,17 @@ class App extends Component {
                                         <div className="form-group">
                                             <input value={this.state.restaurantPrimaryEmailId}
                                                    onChange={this.handleRestaurantPrimaryEmailId} type="text"
-                                                   className="form-control" placeholder="Primary Email ID"
+                                                   className="form-control" placeholder="Email ID"
                                                    title="Please enter a valid email address"
                                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                                                   required="required"/>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="text" value={this.state.restaurantSecondaryEmailID}
-                                                   onChange={this.handleRestaurantSecondaryEmailID} className="form-control"
-                                                   id="userPassword"
-                                                   placeholder="Secondary Email ID"
-                                                   pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                                    required="required"/>
                                         </div>
                                         <div className="form-group">
                                             <input type="text" value={this.state.restaurantPrimaryPhoneNumber}
                                                    onChange={this.handleRestaurantPrimaryPhoneNumber}
                                                    id="userConfirmPassword"
-                                                   className="form-control" placeholder="Primary Phone Number"
+                                                   className="form-control" placeholder="Phone Number"
                                                    title="Primary Phone Number"
-                                                   pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                                   required="required"/>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="text" value={this.state.restaurantSecondaryPhoneNumber}
-                                                   onChange={this.handlerestaurantSecondaryPhoneNumber}
-                                                   id="userConfirmPassword"
-                                                   className="form-control" placeholder="Secondary Phone Number"
                                                    pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                                    required="required"/>
                                         </div>

@@ -8,6 +8,22 @@ import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import Recaptcha from 'react-recaptcha';
 
+
+const mapStateToProps = (state)=>{
+    return {
+        emailId: state.userId,
+        accountType: state.accountType,
+    }
+}
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail(evt){
+            dispatch({type: "setUserId", userId: evt, accountType: "user"});
+        }
+    }
+}
+
 class App extends Component {
     state = {
         loginSelect: true,
@@ -15,15 +31,16 @@ class App extends Component {
         restaurantLoginOption: false,
         deliveryAgentLoginOption: false,
         closeAllOptionsOfSelectionForm: false,
-        userName: "",
+        emailId: "",
         userPassword: "",
         userPhoneNumber: "",
-        userEmail: "",
         userTemporaryPassword: "",
         redirect: false,
         forgotPasswordSelect: false,
         emailSelectForgotPassword: false,
-        isReCaptchaVerified: false
+        isReCaptchaVerified: false,
+        responseMessageForLogin: [],
+        errorSelect: false
 
     };
 
@@ -47,31 +64,26 @@ class App extends Component {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                user_name: this.state.userName,
+                user_name: this.state.emailId,
                 userPassword: this.state.userPassword
             }),
         }).then(res => {
-
-
-            if (res.status !== 200) {
-                this.setState({redirect: true, userRegister: false});
-                this.forwardToLoginErrorPage();
-            }else {
+            if (res.status === 200){
                 if(this.state.isReCaptchaVerified) {
-                    this.setState({redirect: true, userRegister: false});
+                    this.props.setUserEmail(this.state.emailId);
                     this.forwardToLoginDashboard();
-                    this.props.setUser(this.state.userName);
-                }
-                else {
-                    this.setState({redirect: true, userRegister: false});
-                    this.forwardToLoginErrorPage();
-                }
+            }}
+            else{
+                return res.json();
             }
+        }).then(data => {
+                    this.setState({
+                        responseMessageForLogin: data, errorSelect: true, userLoginOption: false, loginSelect: false
+                    })
+                })
+        }
 
 
-        })
-
-    }
 
     passwordChange  = () => { debugger;
         fetch('/setNewUserPassword', {
@@ -80,13 +92,11 @@ class App extends Component {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: this.state.userEmail,
+                userEmail: this.state.emailId,
                 temporaryPassword: this.state.userTemporaryPassword,
                 newPassword: this.state.userPassword
             }),
         }).then(res => {
-
-           
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
@@ -108,7 +118,7 @@ class App extends Component {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: this.state.userEmail
+                userEmail: this.state.emailId
             }),
         }).then(res => {
 
@@ -167,6 +177,7 @@ class App extends Component {
     }
 
     closeAllOptionsOfSelectionForm= () => {
+        this.goBackToHomePage();
         this.setState({ userLoginOption: false, loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOption: false, forgotPasswordSelect: false, emailSelectForgotPassword: false  });
     }
 
@@ -179,7 +190,7 @@ class App extends Component {
 
     handleUserNameChange =  (event) => {
         this.setState({
-            userName: event.target.value,
+            emailId: event.target.value,
         });
     };
     handleUserPasswordChange =  (event) => {
@@ -190,32 +201,38 @@ class App extends Component {
 
     handleUserEmailIDChange =  (event) => {
         this.setState({
-            userEmail: event.target.value,
+            emailId: event.target.value,
         });
     };
 
-    goBackToHomePAge = () => {
+    goBackToHomePage = () => {
         this.props.history.push("/")
+    }
+
+    callHandlers = (event) => {
+        this.handleUserNameChange(event);
+        this.props.setUserEmail(event);
     }
 
 
     render() {
+        if (this.props.accountType === "user") {
+            this.props.history.push("/LoginDashboard");
+        }
+        else if (this.props.accountType === "restaurant") {
+            this.props.history.push("/RestaurantDashboard")
+        }
+
         const responseFacebook = (response) => {
-            console.log(response);
             this.state.facebookUserAccessToken = response.accessToken;
             this.state.facebookUserId = response.userID;
-            console.log("User ID", this.state.facebookUserId);
-            console.log("Access Token ",this.state.facebookUserAccessToken);
             let api = 'https://graph.facebook.com/v2.8/' + this.state.facebookUserId +
                 '?fields=name,email&access_token=' + this.state.facebookUserAccessToken;
             fetch(api)
                 .then((response) => response.json())
                 .then( (responseData) => {
-                    console.log(responseData)
                     this.state.facebookUserEmail = responseData.email;
                     this.state.facebookUserName  = responseData.name;
-                    console.log("Inside fetch api");
-                    console.log(responseData.email);
                 }).then(res => {
                 fetch('/facebookUserLogin',
                     {
@@ -230,21 +247,15 @@ class App extends Component {
                                 fbUserID: this.state.facebookUserId,
                                 fbUserAccessToken: this.state.facebookUserAccessToken,
                                 fbUserName: this.state.facebookUserName
-
                             }
                         )
-
                     }
                 ).then(res => {
-
-
                     if (res.status !== 200) {
                         this.forwardToErrorPage();
                     }else {
                         this.forwardToLoginDashboard();
                     }
-
-
                 })
             })};
 
@@ -284,6 +295,7 @@ class App extends Component {
                     </div>
                 </nav>
             </header>
+            {this.state.userEmail}
             <div className="view rgba-black-light">
                 <br/><br/><br/>
                 <div className="">
@@ -395,8 +407,8 @@ class App extends Component {
                                     </div>
                                     <div className="or-seperator"><i>or</i></div>
                                     <div className="form-group">
-                                        <input value={this.state.userName}
-                                               onChange={this.handleUserNameChange} type="text"
+                                        <input value={this.state.emailId}
+                                               onChange={this.callHandlers} type="text"
                                                className="form-control" placeholder="Username"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
@@ -425,6 +437,31 @@ class App extends Component {
                                         </button>
                                     </div>
 
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </Modal>
+            <Modal
+                show={this.state.errorSelect}
+                animation={false}
+                id="modal"
+            >
+                <div className="container">
+                    <div className="row">
+                        <div className="main">
+                            <div className="login-form">
+                                <form>
+                                    <h2 className="text-center">{this.state.responseMessageForLogin}</h2>
+
+                                    <div className="form-group">
+                                        <button onClick={this.goBackToHomePage} type="submit"
+                                                className="btn btn-primary btn-lg btn-block login-btn">Go to Home
+                                        </button>
+                                    </div>
                                 </form>
 
                             </div>
@@ -608,18 +645,6 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = (state)=>{
-    return {
-        userEmailId: state.emailId
-    }
-}
 
-const mapDispatchToProps = (dispatch)=> {
-    return {
-        setUser(evt){
-            dispatch({type: "setEmailId", newEmailId: evt});
-        }
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps,mapDispatchToProps)(App);

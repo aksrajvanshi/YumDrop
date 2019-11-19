@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {connect} from "react-redux";
 
 import LoginPage from "./LoginPage";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -60,6 +61,12 @@ class App extends Component {
 
 
     render() {
+        if (this.props.accountType === "user") {
+            this.props.history.push("/LoginDashboard");
+        }
+        else if (this.props.accountType === "restaurant") {
+            this.props.history.push("/RestaurantDashboard")
+        }
         return (
             <div className="App">
                 <header>
@@ -163,7 +170,6 @@ class App extends Component {
                                             <input type="text"
                                                    placeholder="Search for food, cuisines, restaurants here.."
                                                    className="form-control validate" onChange={(event) => this.handleSearchChange(event)}/>
-
                                         </div>
                                     </div>
                                     <div className="col-md-1" >
@@ -250,21 +256,10 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state) => {
     return {
-        latitude: state.latitude,
-        longitude: state.longitude
+        accountType: state.accountType
     }
 }
 
-
-
-const mapDispatchToProps = (dispatch)=> {
-    return {
-        setLocation(evt){
-            dispatch({type: "setLocation", newLatitude: evt.latitude, newLongitude: evt.longitude});
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps) (App);
+export default connect(mapStateToProps) (App);

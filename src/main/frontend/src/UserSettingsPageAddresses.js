@@ -1,11 +1,12 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux';
 import './MySettingsPage.css';
 
 class UserSettingsPageAddresses extends Component{
     state = {
         data: [],
         userName: "",
-        userEmailId:  "",
+        userEmailId:  this.props.userEmail,
         userPhoneNumber: "",
         userState: "",
         userCity: "",
@@ -23,19 +24,52 @@ class UserSettingsPageAddresses extends Component{
         this.props.history.push('/MyCurrentLocation');
     }
 
-    componentDidMount () {
-        fetch('/getUserDetails')
-            .then(res => res.json()
-            ).then(data => {
-            this.setState({userCity: data.userCity, userArea: data.userArea, userAddress: data.userAddress, userState: data.userState})
-        })}
+    forwardToMyCart = () => {
+        this.props.history.push('/MyCart')
+    }
+
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
+    }
+
+    forwardToSettingsPage = () => {
+        this.props.history.push('/MySettingsPage')
+    }
+
+    goBackToLoginDashboard = () => {
+        this.props.history.push('/LoginDashboard')
+    }
+
+    componentDidMount() {
+        let currentComponent = this;
+        fetch('/getUserDataForDashboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userEmail: currentComponent.state.userEmailId
+            }),
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            const userAddress = data.userAddress;
+            currentComponent.setState({
+                userAddress: data.userAddress,
+                userName: data.userName
+            });
+        })
+    }
+
+
 
 
     render() {
         let trying = this.state.data;
-        console.log(trying);
-        console.log(this.state.trying);
-        console.log("hey trying to run this");
+        if(this.props.userEmail === null) {
+            this.props.history.push('/')
+        }
         return (
             <div>
                 <header>
@@ -57,18 +91,20 @@ class UserSettingsPageAddresses extends Component{
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
                                     <li className="nav-item">
-                                        <a className="nav-link"><i
+                                        <a className="nav-link" onClick={this.forwardToMyCart}><i
                                             className="fa fa-fw fa-user"/>My Cart</a>
                                     </li>
                                     <li className="nav-item" id="SignUpID">
                                         <a className="nav-link" onClick={this.forwardToSettingsPage}>My Settings</a>
+                                    </li>
+                                    <li>
+                                        <a className="nav-link" onClick={this.signOut}>Sign Out </a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </nav>
                 </header>
-
                 <div className="container mt-5">
                     <div className="row">
                         <div className="col-lg-4 pb-5">
@@ -95,10 +131,10 @@ class UserSettingsPageAddresses extends Component{
                                             </div>
 
                                         </div>
-                                    </a><a className="list-group-item " href="#"><i
-                                    className="fe-icon-user text-muted"></i>Profile Settings</a><a
+                                    </a><a className="list-group-item " href="#" onClick={this.forwardToSettingsPage}>
+                                    <i className="fe-icon-user text-muted"></i>Profile Settings</a><a
                                     className="list-group-item active" href="#" active><i className="fe-icon-map-pin text-muted"></i>Addresses</a>
-                                    <a className="list-group-item" href="#">
+                                    <a className="list-group-item" href="#" onClick={this.forwardToMyCart}>
                                         <div className="d-flex justify-content-between align-items-center">
                                             <div><i className="fe-icon-heart mr-1 text-muted"></i>
                                                 <div className="d-inline-block font-weight-medium text-uppercase">My
@@ -116,29 +152,17 @@ class UserSettingsPageAddresses extends Component{
                             <form className="row">
                                 <div className="col-md-6">
                                     <div className="form-group">
-                                        <label htmlFor="account-fn">Address</label>
+                                        <label htmlFor="account-fn">Full Name</label>
                                         <input className="form-control" type="text" id="account-fn"
-                                               placeholder={this.state.userAddress}/>
+                                               placeholder={this.state.userName}/>
                                     </div>
                                 </div>
+
+
                                 <div className="col-md-6">
                                     <div className="form-group">
-                                        <label htmlFor="account-ln">City</label>
-                                        <input className="form-control" type="text" id="account-ln" placeholder={this.state.userCity}
-                                               required=""/>
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="form-group">
-                                        <label htmlFor="account-email">Area</label>
-                                        <input className="form-control" type="email" id="account-email" placeholder={this.state.userArea}
-                                               disabled=""/>
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="form-group">
-                                        <label htmlFor="account-phone">State</label>
-                                        <input className="form-control" type="text" id="account-phone" placeholder={this.state.userState}
+                                        <label htmlFor="account-phone">Address</label>
+                                        <input className="form-control" type="text" id="account-phone" placeholder={this.state.userAddress}
                                                required=""/>
                                     </div>
                                 </div>
@@ -168,4 +192,17 @@ class UserSettingsPageAddresses extends Component{
 
 }
 
-export default UserSettingsPageAddresses;
+const mapStateToProps = (state) => {
+    return {
+        userEmail: state.userId
+    }
+};
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (UserSettingsPageAddresses);

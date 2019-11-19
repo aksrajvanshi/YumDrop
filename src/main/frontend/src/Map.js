@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withGoogleMap, GoogleMap, withScriptjs, InfoWindow, Marker } from "react-google-maps";
+import {connect} from 'react-redux';
 import Geocode from "react-geocode";
+import {withRouter} from 'react-router-dom';
 
 
 Geocode.setApiKey("AIzaSyDg4eNu1SvJEk9t7kzG5CKbTjh_lb8dt_M");
@@ -13,10 +15,7 @@ class Map extends React.Component{
         super( props );
         this.state = {
             address: '',
-            city: '',
-            area: '',
-            state: '',
-            userEmailId: "",
+            userEmailId: this.props.userEmail,
             mapPosition: {
                 lat: this.props.center.lat,
                 lng: this.props.center.lng
@@ -27,34 +26,55 @@ class Map extends React.Component{
             }
         }
     }
+    goBackToLoginDashboard = () => {
+        if(this.props.accountType === "user") {
+            this.props.history.push('/LoginDashboard')
+        }
+        else if(this.props.accountType === "restaurant") {
+            this.props.history.push('/RestaurantDashboard')
+        }
+    }
 
     submitAddress = () => { debugger;
-        fetch('/userLocation', {
+    let currentComponent = this;
+    if (this.props.accountType === "user"){
+        fetch('/saveUserAddress', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
                 userAddress: this.state.address,
-                userCity: this.state.city,
-                userArea: this.state.area,
-                userState: this.state.area,
-                userEmailId: this.state.userEmailId
+                userEmail: this.state.userEmailId
             }),
         }).then(res => {
-
-            alert("Entered");
-            alert(res.status);
             if (res.status !== 200) {
-
                 alert("Hey going to Error page");
             }else {
-                alert("Hey going to Login Dashboard page");
+                alert("Successfully added address");
+                this.goBackToLoginDashboard();
             }
-
-
         })
 
+    }else{
+        fetch('/saveRestaurantAddress', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                restaurantId: this.state.userEmailId,
+                restaurantAddress: this.state.address
+            }),
+        }).then(res => {
+            if (res.status !== 200) {
+                alert("Hey going to Error page");
+            }else {
+                alert("Successfully added address");
+                this.goBackToLoginDashboard();
+            }
+        })
+    }
     }
 
     componentDidMount() {
@@ -222,18 +242,6 @@ class Map extends React.Component{
             map = <div>
                 <div>
                     <div className="form-group">
-                        <label htmlFor="">City</label>
-                        <input type="text" name="city" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.city }/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="">Area</label>
-                        <input type="text" name="area" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.area }/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="">State</label>
-                        <input type="text" name="state" className="form-control" onChange={ this.onChange }  readOnly="readOnly" value={ this.state.state }/>
-                    </div>
-                    <div className="form-group">
                         <label htmlFor="">Address</label>
                         <input type="text" name="address" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.address }/>
                     </div>
@@ -259,4 +267,12 @@ class Map extends React.Component{
         return( map )
     }
 }
-export default Map
+
+const mapStateToProps = (state) => {
+    return {
+        userEmail: state.userId,
+        accountType: state.accountType,
+    }
+};
+
+export default withRouter(connect(mapStateToProps) (Map));
