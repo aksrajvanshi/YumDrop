@@ -3,18 +3,58 @@ import './LoginDashBoardCSS.css';
 import {connect} from "react-redux";
 
 class LoginDashBoard extends Component{
+    constructor(props) {
+        super(props);
+
+    }
 
     state = {
-        userEmailId : "this.props.userEmailId"
+        userEmailId : this.props.userEmailId,
+        data: [{"restaurantAddress": "restaurantAddress"}]
+
     }
 
     componentDidMount () {
-        fetch('/getUserDetails')
-            .then(res => res.json()
-            ).then(data => {
-            this.setState({restaurantName : data.restaurantName , restaurantImgUrl: data.restaurantImgUrl, restaurantDescription: data.restaurantDescription, restaurantAverageCost: data.restaurantAverageCost, restaurantCuisine: data.restaurantCuisine},
-            )
-        })}
+        let currentComponent = this
+        fetch('/getAllRestaurants',{
+            method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userEmailId: this.state.userEmailId
+            }),
+        }).then(res => {
+            return res.json();
+        }).then(res=>{
+                let x = [];
+                console.log(x);
+                for (let i=0; i<res.length;i++){
+                    x[i] = JSON.stringify(res[i].restaurantDetails);
+                    console.log(x[i])
+                }
+                 alert("Entered");
+                 alert(res.status);
+                 console.log(res.length)
+                 console.log(res[0].restaurantDetails)
+            console.log(this.state.data)
+            currentComponent.setState({
+                data: x
+            })
+            console.log(this.state.data)
+
+
+                if (res.status !== 200) {
+
+                alert("Hey going to Error page");
+            }else {
+                alert("Hey going to Login Dashboard page");
+        }
+
+
+    })
+
+    }
 
     forwardToSettingsPage = () => {
         this.props.history.push('/MySettingsPage');
@@ -30,6 +70,8 @@ class LoginDashBoard extends Component{
     }
 
     render() {
+        const {data} = this.state
+        console.log(this.state.data)
         return (
             <div>
                 <header>
@@ -55,6 +97,13 @@ class LoginDashBoard extends Component{
                         </div>
                     </nav>
                 </header>
+
+                {data.map((item, index) => {
+                    return(
+                        <div key={index}>{item}</div>
+
+                    )}
+                )}
 
                 <div className="container mt-5">
                     <div className="section-title text-center">
