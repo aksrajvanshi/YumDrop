@@ -23,8 +23,9 @@ class LoginFormChat extends Component{
         if(isUser){
             this.setError("User name exists")
         }
-        else{
+        else{this.setError("")
             this.props.setUser(user)
+
         }
     }
     handleChange = (e) => {

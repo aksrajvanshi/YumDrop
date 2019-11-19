@@ -10,7 +10,7 @@ class ChatContainer extends React.Component{
         super(props);
         this.state = {
             chats: [],
-            activeChat: "community"
+            activeChat: {"name":"active community","typingUsers":"x","messages":{"message":"Maithreyi", "name":"community", "id":"abc12", "sender":"mai"}}
         }
     }
 

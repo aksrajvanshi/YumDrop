@@ -1,15 +1,13 @@
-import React, { Component } from "react";
-import Layout from './components/Layout';
-import "./chatFeature.css";
-class chatFeature extends Component{
+import React, { Component } from 'react';
+import Layout from './components/Layout'
+import './index.css';
 
-    render() {
-
-        return (
-            <div >
-               <Layout title="Chat"/>
-            </div>
-        );
-    }
+class ChatFeature extends Component {
+  render() {
+    return (
+        <Layout />
+    );
+  }
 }
-export default chatFeature
+
+export default ChatFeature;

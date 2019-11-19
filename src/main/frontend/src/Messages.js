@@ -2,37 +2,15 @@ import React from 'react';
 
 class Messages extends React.Component{
     render() {
-        const { messages, user, typingUsers} = this.props
+        const { messages, user, typingUsers} = this.props;
         return(
-            <div ref='container' className="thread-container">
-            <div className="thread">
-                {
-                    messages.map( (mes) => {
-                        return (
-                            <div
-                                key={mes.id}
-                                className={`message-container ${mes.sender === user.name && 'right'}`}>
-                                <div className="time">{mes.time}</div>
-                                <div className="data">
-                                    <div className="message">{mes.message}</div>
-                                    <div className="name">{mes.sender}</div>
-                                </div>
-                            </div>
-                        )
-                    })
+            <div ref='container'
+            className="thread-container">
+                {console.log(messages)}
+                {console.log(messages.id)}
+                {console.log(messages.sender)}
 
-                }
-                {
-                    typingUsers.map((name) => {
-                        return (
-                            <div key={name} className="typing-user">
-                                {`${name} is typing`}
-                            </div>
-                        )
-                    })
-                }
-
-            </div></div>
+            </div>
         )
     }
 }
