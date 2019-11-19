@@ -37,6 +37,7 @@ class Map extends React.Component{
 
     submitAddress = () => { debugger;
     let currentComponent = this;
+    if (this.props.accountType === "user"){
         fetch('/saveUserAddress', {
             method: 'POST',
             headers: {
@@ -55,6 +56,25 @@ class Map extends React.Component{
             }
         })
 
+    }else{
+        fetch('/saveRestaurantAddress', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                restaurantId: this.state.userEmailId,
+                restaurantAddress: this.state.address
+            }),
+        }).then(res => {
+            if (res.status !== 200) {
+                alert("Hey going to Error page");
+            }else {
+                alert("Successfully added address");
+                this.goBackToLoginDashboard();
+            }
+        })
+    }
     }
 
     componentDidMount() {
