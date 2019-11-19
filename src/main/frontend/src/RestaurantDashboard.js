@@ -26,13 +26,32 @@ class RestaurantDashboard extends Component{
             {itemName: "first dish",itemDescription: "First item ",itemCost: "4$",itemAvailability: "Available"},
         ]
     }
-    componentDidMount () {
-        fetch('/getRestaurantDataForDashboard')
-            .then(res => res.json()
-            ).then(res => {
-                console.log(res)
-            this.setState({data: res.data})
-        })}
+    componentWillMount() {
+        let currentComponent = this;
+        fetch('/getAllRestaurants',{
+            method: 'POST',
+            redirect: 'follow',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                restaurantId: this.props.restaurantId,})})
+            .then(res => {
+                return res.json()
+            }).then(res => {
+                let x = JSON.stringify(res)
+                return x;
+            }).then(response => {
+                currentComponent.setState({
+                    data: response
+                })
+            })
+        }
+
+
+
+
 
     forwardToAddingAnItem = () => {
         this.props.history.push("/RestaurantAddMenuForm");
