@@ -16,23 +16,16 @@ class MessagesInput extends React.Component{
     sendMessage = () => {
         this.props.sendMessage(this.state.message)
     }
-    sendTyping = () => {
 
-    }
     render() {
         const {message} = this.props
         return(
             <div className="message-input">
-               <form
-                   onSubmit={this.handleSubmit}
-                   className="message-form">
-                   <input id="message"
-                          ref={"messageinput"}
-                          type="text"
+               <form onSubmit={this.handleSubmit} className="message-form">
+                   <input id="message"  ref={"messageinput"}         type="text"
                           className="form-control"
                           value={message}
                           placeholder="Please provide your issue"
-                          onKeyUp={e => {e.keyCode !==13 && this.sendTyping()}}
                           onChange={
                               ({target})=>{
                                   this.setState({message: target.value})

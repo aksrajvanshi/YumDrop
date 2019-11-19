@@ -27,36 +27,7 @@ export default class MessageInput extends Component {
 	  this.stopCheckingTyping()
 	}
 
-	sendTyping = ()=>{
-		this.lastUpdateTime = Date.now()
-		if(!this.state.isTyping){
-			this.setState({isTyping:true})
-			this.props.sendTyping(true)
-			this.startCheckingTyping()
-		}
-	}
 
-	/*
-	*	startCheckingTyping
-	*	Start an interval that checks if the user is typing.
-	*/
-	startCheckingTyping = ()=>{
-		console.log("Typing");
-		this.typingInterval = setInterval(()=>{
-			if((Date.now() - this.lastUpdateTime) > 300){
-				this.setState({isTyping:false})
-				this.stopCheckingTyping()
-			}
-		}, 300)
-	}
-
-	stopCheckingTyping = ()=>{
-		console.log("Stop Typing");
-		if(this.typingInterval){
-			clearInterval(this.typingInterval)
-			this.props.sendTyping(false)
-		}
-	}
 
 
 	render() {
@@ -75,7 +46,7 @@ export default class MessageInput extends Component {
 						value = { message }
 						autoComplete = {'off'}
 						placeholder = "Type something interesting"
-						onKeyUp = { e => { e.keyCode !== 13 && this.sendTyping() } }
+
 						onChange = {
 							({target})=>{
 								this.setState({message:target.value})

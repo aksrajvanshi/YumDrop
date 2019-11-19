@@ -4,24 +4,11 @@ export default class Messages extends Component {
 	constructor(props) {
 	  super(props);
 		
-		this.scrollDown = this.scrollDown.bind(this)
+
 	}
 
-	scrollDown(){
-		const { container } = this.refs
-		container.scrollTop = container.scrollHeight
-	}
-
-	componentDidMount() {
-		this.scrollDown()
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-		this.scrollDown()
-	}
-	
 	render() {
-		const { messages, user, typingUsers } = this.props
+		const { messages, user } = this.props
 		return (
 			<div ref='container'
 				className="thread-container">
@@ -43,15 +30,7 @@ export default class Messages extends Component {
 								)
 						})
 					}
-					{
-						typingUsers.map((name)=>{
-							return (
-								<div key={name} className="typing-user">
-									{`${name} is typing . . .`}
-								</div>
-							)
-						})
-					}
+
 				</div>
 
 
