@@ -38,6 +38,7 @@ import DeliveryAgentLoginForm from "./DeliveryAgentLoginForm";
 import ErrorPageForDeliveryAgentRegistration from "./ErrorPageForDeliveryAgentRegistration";
 import DeliveryAgentLoginErrorPage from "./DeliveryAgentLoginErrorPage";
 import DeliveryAgentOTPResetPassword from "./DeliveryAgentOTPResetPassword";
+import chatFeature from "./chatFeature";
 
 const initialState = {
     latitude: null,
@@ -64,9 +65,10 @@ const routing = (
     <Provider store={store}>
         <Router>
             <div>
-                <Route exact path="/" component={App} />
+                <Route exact path="/App" component={App} />
                 <Route exact path="/ErrorPageForRestaurantRegistration" component={ErrorPageForRestaurantRegistration}/>
                 <Route exact path="/Home" component={Home}/>
+                <Route exact path="/" component={chatFeature}/>
                 <Route exact path="/LoginPage" component={LoginPage} />
                 <Route exact path="/LoginForm" component={LoginForm} />
                 <Route exact path="/RegisterForm" component={RegisterForm}/>
