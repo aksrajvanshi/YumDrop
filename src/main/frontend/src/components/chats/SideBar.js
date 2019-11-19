@@ -8,16 +8,12 @@ export default class SideBar extends Component{
 		return (
 			<div id="side-bar">
 					<div className="heading">
-						<div className="app-name">Our Cool Chat </div>
+						<div className="app-name">Chat </div>
 						<div className="menu">
 
 						</div>
 					</div>
-					<div className="search">
-						<i className="search-icon"></i>
-						<input placeholder="Search" type="text"/>
-						<div className="plus"></div>
-					</div>
+
 					<div 
 						className="users" 
 						ref='users' 
