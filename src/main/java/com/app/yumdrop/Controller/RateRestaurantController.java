@@ -1,6 +1,6 @@
 package com.app.yumdrop.Controller;
 
-import com.app.yumdrop.Entity.UserRestaurantRatings;
+import com.app.yumdrop.FormEntity.RestaurantRating;
 import com.app.yumdrop.Service.RateRestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,8 +18,8 @@ public class RateRestaurantController {
     RateRestaurantService rateRestaurantService;
 
     @RequestMapping(value = "/rateRestaurant", method = RequestMethod.POST)
-    public ResponseEntity<?> rateRestaurantByUser(@RequestBody UserRestaurantRatings userRestaurantRatings) {
-        return rateRestaurantService.addRestaurantRating(userRestaurantRatings);
+    public ResponseEntity<?> rateRestaurantByUser(@RequestBody RestaurantRating restaurantRating) {
+        return rateRestaurantService.addRestaurantRating(restaurantRating);
     }
 
 }

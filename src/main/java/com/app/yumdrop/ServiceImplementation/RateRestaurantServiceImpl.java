@@ -1,11 +1,12 @@
 package com.app.yumdrop.ServiceImplementation;
 
 import com.app.yumdrop.Entity.*;
+import com.app.yumdrop.FormEntity.RestaurantRating;
 import com.app.yumdrop.Messages.ErrorMessage;
 import com.app.yumdrop.Messages.SuccessMessage;
+import com.app.yumdrop.Repository.RestaurantCountPerRatingRepository;
 import com.app.yumdrop.Repository.RestaurantRatingsRepository;
 import com.app.yumdrop.Repository.RestaurantRepository;
-import com.app.yumdrop.Repository.UserRestaurantRatingsRepository;
 import com.app.yumdrop.Repository.UsersRepository;
 import com.app.yumdrop.Service.RateRestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,51 +24,48 @@ public class RateRestaurantServiceImpl implements RateRestaurantService {
     RestaurantRatingsRepository restaurantRatingsRepository;
 
     @Autowired
-    UserRestaurantRatingsRepository userRestaurantRatingsRepository;
-
-    @Autowired
-    UsersRepository usersRepository;
-
-    @Autowired
     RestaurantRepository restaurantRepository;
 
-    @Override
-    public ResponseEntity<?> addRestaurantRating(UserRestaurantRatings userRestaurantRatings) {
+    @Autowired
+    RestaurantCountPerRatingRepository restaurantCountPerRatingRepository;
 
-        Users userInDb = usersRepository.findByuserEmail(userRestaurantRatings.getUserEmail());
-        Restaurant restaurantInDb = restaurantRepository.findByrestaurantId(userRestaurantRatings.getRestaurantId());
-        if (userInDb == null || restaurantInDb == null) {
+    @Override
+    public ResponseEntity<?> addRestaurantRating(RestaurantRating restaurantRating) {
+
+        Restaurant restaurantInDb = restaurantRepository.findByrestaurantId(restaurantRating.getRestaurantId());
+        if (restaurantInDb == null) {
             ErrorMessage userNotExist = new ErrorMessage(new Date(), "Invalid request",
                     "");
             return new ResponseEntity<>(userNotExist, HttpStatus.UNAUTHORIZED);
         }
 
-        Optional<UserRestaurantRatings> hasUserRatedRestaurant = userRestaurantRatingsRepository.findById(
-                new UserRestaurantRatingsId(userRestaurantRatings.getUserEmail(), userRestaurantRatings.getRestaurantId()));
-
         RestaurantRatings currentRestaurantRating = restaurantRatingsRepository.findByrestaurantId(
-                userRestaurantRatings.getRestaurantId());
+                restaurantRating.getRestaurantId());
 
-        if (hasUserRatedRestaurant != null && !hasUserRatedRestaurant.isPresent()) {
-            UserRestaurantRatings userRatings = null;
+        if (currentRestaurantRating != null) {
             RestaurantRatings updatedRestaurantRatings = null;
 
             if (currentRestaurantRating != null) {
-                userRatings = userRestaurantRatingsRepository.save(userRestaurantRatings);
-                double overallRating = currentRestaurantRating.getOverallRating();
+
+                int overallRating = currentRestaurantRating.getOverallRating();
                 int numUsers = currentRestaurantRating.getNumberOfUsers();
 
-                overallRating += userRestaurantRatings.getRestaurantRating();
+                overallRating += restaurantRating.getRestaurantRating();
                 numUsers += 1;
                 updatedRestaurantRatings = restaurantRatingsRepository.save(
                         new RestaurantRatings(currentRestaurantRating.getRestaurantId(), overallRating, numUsers));
-            } else {
-                userRatings = userRestaurantRatingsRepository.save(userRestaurantRatings);
-                updatedRestaurantRatings = restaurantRatingsRepository.save(
-                        new RestaurantRatings(userRestaurantRatings.getRestaurantId(), userRestaurantRatings.getRestaurantRating(), 1));
+
+                Optional<RestaurantCountPerRating> restaurantCountforCurrentRating = restaurantCountPerRatingRepository.findById(
+                        new RestaurantCountPerRatingId(restaurantRating.getRestaurantId(), restaurantRating.getRestaurantRating()));
+
+                if(restaurantCountforCurrentRating.isPresent()) {
+                    int countForCurrentRating = restaurantCountforCurrentRating.get().getRatingCount();
+                    countForCurrentRating++;
+                    restaurantCountPerRatingRepository.save(new RestaurantCountPerRating(restaurantRating.getRestaurantId(), restaurantRating.getRestaurantRating(), countForCurrentRating));
+                }
             }
 
-            if (userRatings != null && updatedRestaurantRatings != null) {
+            if (updatedRestaurantRatings != null) {
                 SuccessMessage successfulRatingsSaved = new SuccessMessage(new Date(), "Ratings saved!");
                 return new ResponseEntity<>(successfulRatingsSaved, HttpStatus.OK);
             } else {

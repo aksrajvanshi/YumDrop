@@ -17,7 +17,7 @@ public class RestaurantRatings {
 
     @NotNull
     @Column(name = "overall_rating", nullable = false)
-    private double overallRating;
+    private int overallRating;
 
     @NotNull
     @Column(name = "number_of_users", nullable = false)
@@ -37,7 +37,7 @@ public class RestaurantRatings {
                 '}';
     }
 
-    public RestaurantRatings(@NotNull String restaurantId, @NotNull double overallRating, @NotNull int numberOfUsers) {
+    public RestaurantRatings(@NotNull String restaurantId, @NotNull int overallRating, @NotNull int numberOfUsers) {
         this.restaurantId = restaurantId;
         this.overallRating = overallRating;
         this.numberOfUsers = numberOfUsers;
@@ -51,11 +51,11 @@ public class RestaurantRatings {
         this.restaurantId = restaurantId;
     }
 
-    public double getOverallRating() {
+    public int getOverallRating() {
         return overallRating;
     }
 
-    public void setOverallRating(double overallRating) {
+    public void setOverallRating(int overallRating) {
         this.overallRating = overallRating;
     }
 

@@ -1,11 +1,13 @@
 package com.app.yumdrop.ServiceImplementation;
 
 import com.app.yumdrop.Entity.Restaurant;
+import com.app.yumdrop.Entity.RestaurantCountPerRating;
 import com.app.yumdrop.Entity.RestaurantManager;
 import com.app.yumdrop.Entity.RestaurantRatings;
 import com.app.yumdrop.FormEntity.RestaurantRegisterForm;
 import com.app.yumdrop.Messages.ErrorMessage;
 import com.app.yumdrop.Messages.SuccessMessage;
+import com.app.yumdrop.Repository.RestaurantCountPerRatingRepository;
 import com.app.yumdrop.Repository.RestaurantManagerRepository;
 import com.app.yumdrop.Repository.RestaurantRatingsRepository;
 import com.app.yumdrop.Repository.RestaurantRepository;
@@ -35,6 +37,9 @@ public class RestaurantRegistrationServiceImpl implements RestaurantRegistration
     @Autowired
     RestaurantRatingsRepository restaurantRatingsRepository;
 
+    @Autowired
+    RestaurantCountPerRatingRepository restaurantCountPerRatingRepository;
+
     @Value("${sendgrid.api.key}")
     String sendGridAPIKey;
 
@@ -54,8 +59,12 @@ public class RestaurantRegistrationServiceImpl implements RestaurantRegistration
                         "");
                 return new ResponseEntity<>(restaurantNotRegistered, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
-                // create restaurant ratings record for new restaurants.
-                restaurantRatingsRepository.save(new RestaurantRatings(restaurantRegisterForm.getRestaurantId(), 0.0, 0));
+                restaurantCountPerRatingRepository.save(new RestaurantCountPerRating(restaurantRegisterForm.getRestaurantId(), 1, 0));
+                restaurantCountPerRatingRepository.save(new RestaurantCountPerRating(restaurantRegisterForm.getRestaurantId(), 2, 0));
+                restaurantCountPerRatingRepository.save(new RestaurantCountPerRating(restaurantRegisterForm.getRestaurantId(), 3, 0));
+                restaurantCountPerRatingRepository.save(new RestaurantCountPerRating(restaurantRegisterForm.getRestaurantId(), 4, 0));
+                restaurantCountPerRatingRepository.save(new RestaurantCountPerRating(restaurantRegisterForm.getRestaurantId(), 5, 0));
+                restaurantRatingsRepository.save(new RestaurantRatings(restaurantRegisterForm.getRestaurantId(), 0, 0));
                 SuccessMessage restaurantRegisteredSuccessfully = new SuccessMessage(new Date(), "Restaurant is registered successfully");
                 return new ResponseEntity<>(restaurantRegisteredSuccessfully, HttpStatus.OK);
             }
