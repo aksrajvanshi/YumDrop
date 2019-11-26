@@ -13,12 +13,13 @@ class LoginDashBoard extends Component{
         userEmailId : this.props.userEmailId,
         searchResults: [{"restaurantAddress": "restaurantAddress"}],
         userAddress: "800 N Union St, Bloomington, IN 47408, USA",
-        searchQuery: ""
+        searchQuery: "",
+        restaurantId: ""
     }
 
     componentDidMount () {
         let currentComponent = this
-        fetch('/getAllRestaurants',{
+        fetch('/getAllRecommendationsForUser',{
             method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',

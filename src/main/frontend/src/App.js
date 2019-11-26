@@ -249,6 +249,18 @@ class App extends Component {
                                  className="rounded-circle img-fluid" alt=""/>
                         </div>
                     </div>
+
+                    <div className="row">
+                        <div className="col-md-6 how-img">
+                            <img src="https://icon-library.net/images/order-status-icon/order-status-icon-9.jpg"
+                                 className="rounded-circle img-fluid" alt=""/>
+                        </div>
+                        <div className="col-md-6">
+                            <h4>Schedule food delivery</h4>
+
+                            <h4 className="subheading">YumDrop Scheduled for those who not only love a great meal but also want the assurance that it will reach their tables on time</h4>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
