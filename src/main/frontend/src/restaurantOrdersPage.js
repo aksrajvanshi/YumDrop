@@ -87,7 +87,7 @@ class restaurantOrdersPage extends Component{
                                 <ul className="navbar-nav mr-auto">
                                     <li className="nav-item" >
                                         <a className="nav-link" onClick={this.forwardToRestaurantSettingsPage}><i
-                                            className="fa fa-fw fa-user"></i>Settings</a>
+                                            className="fa fa-fw"></i>Settings</a>
                                     </li>
                                     <li>
                                         <a className="nav-link" onClick={this.signOut}>Logout</a>
