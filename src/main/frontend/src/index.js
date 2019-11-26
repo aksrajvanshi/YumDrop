@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import Trying from "./Trying";
 import LoginPage from "./LoginPage";
+import restaurantOrdersPage from './restaurantOrdersPage';
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import AddItemToMenu from "./AddItemToMenu";
@@ -84,6 +85,7 @@ const routing = (
                 <Route exact path="/OTPpage" component={OTPpage}/>
                 <Route exact path="/paymentSystemForUsers" component={paymentSystemForUsers}/>
                 <Route exact path="/MyCart" component={MyCart}/>
+                <Route exact path="/restaurantOrdersPage" component={restaurantOrdersPage}/>
                 <Route exact path="/DeliveryAgentOTPpage" component={DeliveryAgentOTPpage}/>
                 <Route exact path="/errorPageForRegistration" component={errorPageForRegistration} />
                 <Route exact path="/MySettingsPage" component={MySettingsPage}/>

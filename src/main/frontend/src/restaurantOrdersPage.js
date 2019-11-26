@@ -14,15 +14,14 @@ const mapDispatchToProps = (dispatch)=> {
     }
 }
 
-class RestaurantDashboard extends Component{
+class restaurantOrdersPage extends Component{
     state = {
         Name: "Restaurant 1",
-        restaurantPrimaryEmailId: "Restaurant 1",
-        restaurantDishResults: []
+        restaurantOrderDetails: []
     }
-    componentWillMount() {
+    componentDidMount() {
         let currentComponent = this;
-        fetch('/trying', {
+        fetch('/getOrdersMadeForRestaurant', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -38,54 +37,18 @@ class RestaurantDashboard extends Component{
             console.log(res.length)
             let x = [];
             for (let i=0; i<res.length;i++){
-                x[i] = res[i].DishDetails;
+                x[i] = res[i].restaurantOrderDetails;
             }
             currentComponent.setState({
-                restaurantDishResults: x
+                restaurantOrderDetails: x
             })
-            console.log(this.state.restaurantDishResults);
+            console.log(this.state.restaurantOrderDetails);
         })
-    }
-
-    updateDishDisplay() {
-        let currentComponent = this;
-        fetch('/trying', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body:JSON.stringify({
-                restaurantId: this.props.restaurantId
-            }),
-        }).then(res => {
-            return res.json();
-        }).then(res=>{
-            console.log("Response received")
-            console.log(res)
-            console.log(res.length)
-            let x = [];
-            for (let i=0; i<res.length;i++){
-                x[i] = res[i].DishDetails;
-            }
-            currentComponent.setState({
-                restaurantDishResults: x
-            })
-            console.log(this.state.restaurantDishResults);
-        })
-    }
-
-
-    forwardToAddingAnItem = () => {
-        this.props.history.push("/RestaurantAddMenuForm");
     }
 
     signOut = () => {
         this.props.signOut();
         this.props.history.push('/');
-    }
-
-    forwardToOrdersPage = () => {
-        this.props.history.push('/restaurantOrdersPage')
     }
 
     forwardToRestaurantSettingsPage = () => {
@@ -96,29 +59,6 @@ class RestaurantDashboard extends Component{
         this.props.history.push("/RestaurantDashboard");
     }
 
-    editItem = (dishName) => {
-        console.log("Inside this edit method")
-        console.log(dishName)
-    }
-
-    deleteItem = (dishName) => {
-        fetch('/deleteDish', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body:JSON.stringify({
-                restaurantId: this.props.restaurantId,
-                dishName: dishName,
-            }),
-        }).then(res=>{
-            console.log(res.status)
-            if (res.status === 200){
-                console.log("Updating")
-                this.updateDishDisplay();
-            }
-        })
-    }
     render() {
         if(this.props.restaurantId === null) {
             this.props.history.push('/')
@@ -152,9 +92,6 @@ class RestaurantDashboard extends Component{
                                     <li>
                                         <a className="nav-link" onClick={this.signOut}>Logout</a>
                                     </li>
-                                    <li>
-                                        <a className="nav-link" onClick={this.forwardToOrdersPage}>Orders</a>
-                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -163,52 +100,36 @@ class RestaurantDashboard extends Component{
 
                 <br/><br/><br/>
 
+
                 <div className="container">
                     <div className="row">
                         <div className="col-md-10">
                             <div className="panel panel-default">
-                                <div className="panel-heading"><strong>Menu</strong></div>
+                                <div className="panel-heading"><strong>Order Details</strong></div>
                                 <div className="panel-body">
                                     <table className="table table-striped">
                                         <thead>
                                         <tr>
-                                            <th>Item Name</th>
-                                            <th>Item Description</th>
-                                            <th className="text-center">Cost</th>
-                                            <th className="text-center">Availablity</th>
-                                            <th className="text-center">Edit item</th>
-                                            <th className="text-center">Delete item</th>
+                                            <th>Customer Name</th>
+                                            <th>Items ordered</th>
                                         </tr>
                                         </thead>
                                         <tbody>
 
-                                        {this.state.restaurantDishResults.map((item, index) =>{
+                                        {this.state.restaurantOrderDetails.map((item, index) =>{
                                             return (
                                                 <tr>
                                                     <td className="col-md-6">
-                                                        <h4><a href="#" key={index}>{item.dishName}</a></h4>
+                                                        <h4><a href="#" key={index}>{item.customerName}</a></h4>
 
                                                     </td>
-                                                    <td className="col-md-5"><h5>{item.dishDescription}</h5>
-                                                        </td>
-                                                    <td className="col-md-4 text-center"><strong>{item.dishPrice}</strong></td>
-                                                    <td className="col-md-4 text-center"><strong>{item.dishAvailable}</strong></td>
-                                                    <td className="col-md-8">
-                                                        <button className="edit btn btn-success" title="Edit" data-toggle="tooltip"><i
-                                                            className="material-icons" onClick={this.editItem(item.dishName)}></i></button>
-                                                    </td>
-                                                    <td className="col-md-8">
-                                                        <button className="delete btn btn-danger" title="Delete" data-toggle="tooltip"><i
-                                                            className="material-icons" onClick={this.deleteItem(item.dishName)}></i></button>
+                                                    <td className="col-md-5"><h5>{item.itemOrdered}</h5>
                                                     </td>
                                                 </tr>
                                             )
                                         })}
                                         <br/><br/>
-                                        <div className="col-md-12 offset-12">
-                                            <button className="btn btn-success" onClick={this.forwardToAddingAnItem}>Add an item</button>
 
-                                        </div>
                                         </tbody>
                                     </table>
 
@@ -217,10 +138,11 @@ class RestaurantDashboard extends Component{
                         </div>
                     </div>
                 </div>
-            </div>
 
+
+            </div>
         )
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (RestaurantDashboard);
+export default restaurantOrdersPage
