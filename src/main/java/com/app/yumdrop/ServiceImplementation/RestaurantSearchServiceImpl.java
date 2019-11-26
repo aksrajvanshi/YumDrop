@@ -2,13 +2,10 @@ package com.app.yumdrop.ServiceImplementation;
 
 import com.app.yumdrop.Entity.Restaurant;
 import com.app.yumdrop.Entity.RestaurantRatings;
-import com.app.yumdrop.Entity.UserRestaurantRatings;
-import com.app.yumdrop.Entity.UserRestaurantRatingsId;
 import com.app.yumdrop.FormEntity.RestaurantSearchResults;
 import com.app.yumdrop.Messages.SuccessMessage;
 import com.app.yumdrop.Repository.RestaurantRatingsRepository;
 import com.app.yumdrop.Repository.RestaurantRepository;
-import com.app.yumdrop.Repository.UserRestaurantRatingsRepository;
 import com.app.yumdrop.Service.DistanceBetweenAddressesCalculatorService;
 import com.app.yumdrop.Service.RestaurantSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +20,6 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
 
     @Autowired
     RestaurantRepository restaurantRepository;
-
-    @Autowired
-    UserRestaurantRatingsRepository userRestaurantRatingsRepository;
 
     @Autowired
     RestaurantRatingsRepository restaurantRatingsRepository;
@@ -77,9 +71,6 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
             res.setRestaurantDetails(currentRestaurant);
             RestaurantRatings currentRestaurantRatings = restaurantRatingsRepository.findByrestaurantId(currentRestaurant.getRestaurantId());
             res.setRestaurantRatings(currentRestaurantRatings);
-            Optional<UserRestaurantRatings> userRatingForRestaurant = userRestaurantRatingsRepository.findById(new UserRestaurantRatingsId(userEmail, currentRestaurant.getRestaurantId()));
-            if (userRatingForRestaurant.isPresent())
-                res.setUserRestaurantRatings(userRatingForRestaurant.get());
 
             distanceBetweenAddressesCalculatorService.calculateDistance(userAddress, res);
             restaurantResultsWithDetails.add(res);

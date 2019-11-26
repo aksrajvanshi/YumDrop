@@ -7,13 +7,11 @@ import com.app.yumdrop.Messages.SuccessMessage;
 import com.app.yumdrop.Repository.UsersRepository;
 import com.app.yumdrop.Service.UserRegistrationService;
 import com.app.yumdrop.Utils.PasswordUtils;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.Date;
 
 @Service

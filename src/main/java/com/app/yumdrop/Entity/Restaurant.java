@@ -1,10 +1,10 @@
 package com.app.yumdrop.Entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-
 
 @Entity
 @Table(name = "restaurant_main")
@@ -30,6 +30,9 @@ public class Restaurant extends CreateAndUpdateTimeModel {
     @Column(name = "restaurant_address", nullable = false)
     private String restaurantAddress;
 
+    @Column(name = "restaurant_image_url", nullable = false)
+    private String restaurantImageUrl;
+
     public Restaurant() {
     }
 
@@ -47,6 +50,23 @@ public class Restaurant extends CreateAndUpdateTimeModel {
         this.restaurantName = restaurantName;
         this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
         this.primaryPhoneNumber = primaryPhoneNumber;
+    }
+
+    public Restaurant(String restaurantId, @NotNull String restaurantName, @NotNull String restaurantPrimaryEmailId, @NotNull String primaryPhoneNumber, String restaurantAddress, String restaurantImageUrl) {
+        this.restaurantId = restaurantId;
+        this.restaurantName = restaurantName;
+        this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
+        this.primaryPhoneNumber = primaryPhoneNumber;
+        this.restaurantAddress = restaurantAddress;
+        this.restaurantImageUrl = restaurantImageUrl;
+    }
+
+    public String getRestaurantImageUrl() {
+        return restaurantImageUrl;
+    }
+
+    public void setRestaurantImageUrl(String restaurantImageUrl) {
+        this.restaurantImageUrl = restaurantImageUrl;
     }
 
     public String getRestaurantId() {

@@ -1,7 +1,5 @@
 package com.app.yumdrop.FormEntity;
 
-import javax.persistence.Id;
-
 public class RestaurantManagerLogin {
 
     public String restaurantId;
