@@ -1,17 +1,13 @@
 package com.app.yumdrop.Controller;
 
-import com.app.yumdrop.Repository.UsersOtpRepository;
-import com.app.yumdrop.Repository.UsersRepository;
-
 import com.app.yumdrop.Entity.DeliveryAgentOtp;
-import com.app.yumdrop.FormEntity.DeliveryAgentRegisterForm;
 import com.app.yumdrop.FormEntity.DeliveryAgentDetails;
+import com.app.yumdrop.FormEntity.DeliveryAgentRegisterForm;
 import com.app.yumdrop.Repository.DeliveryAgentOtpRepository;
 import com.app.yumdrop.Repository.DeliveryAgentRepository;
-
+import com.app.yumdrop.Service.DeliveryAgentRegistrationService;
 import com.app.yumdrop.Service.SmsTwoFactorService;
 import com.app.yumdrop.Service.UserRegistrationService;
-import com.app.yumdrop.Service.DeliveryAgentRegistrationService;
 import com.app.yumdrop.Utils.OtpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -45,8 +41,6 @@ public class DeliveryAgentRegistrationController {
     private DeliveryAgentOtpRepository deliveryAgentOtpRepository;
 
 
-
-
     @RequestMapping(value = "/deliveryAgentRegistration", method = RequestMethod.POST)
     public ResponseEntity<?> deliveryAgentRegistration(@RequestBody DeliveryAgentDetails deliveryAgentDetails) {
 
@@ -54,12 +48,11 @@ public class DeliveryAgentRegistrationController {
         int otpNumber = rnd.nextInt(999999);
         boolean isSmsSent = smsTwoFactorService.send2FaCodeAsEmailDeliveryAgent(deliveryAgentDetails.getDeliveryAgent_email(), String.format("%06d", otpNumber));
 
-        if(isSmsSent)
+        if (isSmsSent)
             return ResponseEntity.status(HttpStatus.OK).build();
         else
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
-
 
 
     @RequestMapping(value = "/verifyOTPandRegisterDeliveryAgent", method = RequestMethod.POST)
