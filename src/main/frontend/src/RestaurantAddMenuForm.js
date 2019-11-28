@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./RestaurantAddMenuForm.css";
 import {connect} from "react-redux";
+import ConvertImage from "react-convert-image";
+import imageDataURI from "image-data-uri";
+
 
 
 const mapStateToProps = (state)=>{
@@ -8,6 +11,10 @@ const mapStateToProps = (state)=>{
         restaurantId: state.userId
     }
 };
+
+
+
+
 
 class RestaurantAddMenuForm extends Component{
     state  = {
@@ -19,9 +26,15 @@ class RestaurantAddMenuForm extends Component{
         restaurantPrimaryEmailId: "",
         restaurantId: "",
         errorSelect: false,
-        data: []
+        data: [],
+        restaurantDishImage: ""
 
 
+    }
+
+
+    handleRestautantDishImage= (url) => {
+        this.getDataUri(url)
     }
 
     handleRestaurantDishAvailability= (event) => {
@@ -55,6 +68,32 @@ class RestaurantAddMenuForm extends Component{
 
     goToRestaurantDashboard = () => {
         this.props.history.push('/RestaurantDashboard')
+    }
+
+
+
+    getDataUri(url, callback) {
+        let image = new Image();
+
+        image.onload = function () {
+            let canvas = document.createElement('canvas');
+            canvas.width = this.naturalWidth;
+            canvas.height = this.naturalHeight;
+
+            canvas.getContext('2d').drawImage(this, 0, 0);
+
+            callback(canvas.toDataURL(url));
+            this.setState({
+                restaurantDishImage:  callback(canvas.toDataURL(url))
+            })
+            console.log(this.state.restaurantDishImage)
+        };
+
+        image.src = url;
+        console.log(image.src);
+        console.log(url)
+        let canvas = document.createElement('canvas');
+        console.log(canvas.toDataURL('C:\\Users\\maith\\Pictures\\display3.jpg'));
     }
 
 
@@ -138,7 +177,6 @@ class RestaurantAddMenuForm extends Component{
                         </div>
                     </nav>
                 </header>
-                {this.props.restaurantId}
                 <section class=" py-5">
                     <div className="container">
                         <div className="row ">
@@ -165,6 +203,18 @@ class RestaurantAddMenuForm extends Component{
                                                    value={this.state.restaurantDishPrice} onChange={this.handleRestaurantDishPrice}       placeholder="Dish Price"/>
                                         </div>
                                     </div>
+
+
+
+                                    <div className="form-row">
+                                        <div className="form-group col-md-6">
+                                            <input id="Full Name" name="myImage"  placeholder="Dish URL"
+                                                   value={this.state.restaurantDishImage} onChange={this.handleRestautantDishImage}    className="form-control" type="file"/>
+
+                                        </div>
+                                    </div>
+
+
                                     <div className="form-row">
 
 

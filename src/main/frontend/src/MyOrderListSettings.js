@@ -34,7 +34,7 @@ class UserSettingsPageAddresses extends Component{
     render() {
         let trying = this.state.data;
         console.log(trying);
-        console.log(this.state.trying);
+
         console.log("hey trying to run this");
         return (
             <div>

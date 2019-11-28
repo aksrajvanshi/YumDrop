@@ -5,6 +5,7 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "email-validator": "^2.0.4",
+    "image-data-uri": "^2.0.1",
     "json-fetch": "^8.0.0",
     "material-ui": "latest",
     "nodemon": "^2.0.1",
@@ -12,6 +13,7 @@
     "react": "^16.10.1",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-chat-window": "^1.2.1",
+    "react-convert-image": "^0.5.0",
     "react-country-region-selector": "^1.4.5",
     "react-dom": "^16.10.1",
     "react-google-login": "^5.0.7",
