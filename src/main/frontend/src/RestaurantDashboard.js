@@ -19,11 +19,7 @@ class RestaurantDashboard extends Component{
         Name: "Restaurant 1",
         restaurantPrimaryEmailId: "Restaurant 1",
         data: [
-            {itemName: "first dish",itemDescription: "First item ",itemCost: "4$",itemAvailability: "Available"},
-            {itemName: "first dish",itemDescription: "First item ",itemCost: "4$",itemAvailability: "Available"},
-            {itemName: "first dish",itemDescription: "First item ",itemCost: "4$",itemAvailability: "Available"},
-            {itemName: "first dish",itemDescription: "First item ",itemCost: "4$",itemAvailability: "Available"},
-            {itemName: "first dish",itemDescription: "First item ",itemCost: "4$",itemAvailability: "Available"},
+
         ]
     }
     componentWillMount() {

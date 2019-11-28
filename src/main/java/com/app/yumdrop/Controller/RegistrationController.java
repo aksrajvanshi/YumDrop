@@ -114,5 +114,66 @@ public class RegistrationController {
 
     }
 
+    @RequestMapping(value = "/getCurrentActiveOrderForUser", method = RequestMethod.POST)
+    public ResponseEntity<?> getCurrentActiveOrderForUser(@RequestBody RestaurantDetails restaurantDetails) {
 
+        return new ResponseEntity<>("[\n" +
+                "    {\n" +
+                "        \"DishDetails\": {\n" +
+                "            \"restaurantId\": \"abc123\",\n" +
+                "            \"dishName\": \"Maithreyi Manur Narasimha Prabhu\",\n" +
+                "            \"dishDescription\": \"maithreyi.prabhu795@gmail.com\",\n" +
+                "            \"dishPrice\": \"6786291600\",\n" +
+                "            \"dishAvailability\": \"340 S Walnut St #4, Bloomington, IN 47401\"\n" +
+                "        }\n" +
+                "    },\n" +
+                "    {\n" +
+                "       \"DishDetails\": {\n" +
+                "            \"restaurantId\": \"abc123\",\n" +
+                "            \"dishName\": \"Maithreyi Manur Narasimha Prabhu\",\n" +
+                "            \"dishDescription\": \"maithreyi.prabhu795@gmail.com\",\n" +
+                "            \"dishPrice\": \"6786291600\",\n" +
+                "            \"dishAvailability\": \"340 S Walnut St #4, Bloomington, IN 47401\"\n" +
+                "        }\n" +
+                "    }\n" +
+                "]", HttpStatus.OK);
+
+
+    }
+
+
+    @RequestMapping(value = "/getCurrentActiveOrderRestaurantDetails", method = RequestMethod.POST)
+    public ResponseEntity<?> getCurrentActiveOrderRestaurantDetails(@RequestBody RestaurantDetails restaurantDetails) {
+
+        return new ResponseEntity<>("{ " +
+                "restaurantName:" + "maithreyi"+"}"
+                , HttpStatus.BAD_REQUEST);
+
+
+    }
+
+
+    @RequestMapping(value = "/chatWithRestaurantOnly", method = RequestMethod.POST)
+    public ResponseEntity<?> chatWithRestaurantOnly(@RequestBody RestaurantDetails restaurantDetails) {
+        System.out.println("chat with restaurant only");
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+
+    }
+
+
+    @RequestMapping(value = "/chatWithDeliveryAgentOnly", method = RequestMethod.POST)
+    public ResponseEntity<?> chatWithDeliveryAgentOnly(@RequestBody RestaurantDetails restaurantDetails) {
+        System.out.println("chat with dev only");
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+
+    }
+    @RequestMapping(value = "/chatWithRestaurantAndDeliveryAgent", method = RequestMethod.POST)
+    public ResponseEntity<?> chatWithReschatWithRestaurantAndDeliveryAgent(@RequestBody RestaurantDetails restaurantDetails) {
+        System.out.println("chat with restaurant n del only");
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+
+    }
 }

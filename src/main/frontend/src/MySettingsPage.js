@@ -57,6 +57,10 @@ class MySettingsPage extends Component{
         this.props.history.push('/MyCart')
     }
 
+    goToActiveOrdersPage = () => {
+        this.props.history.push('/ActiveOrders')
+    }
+
     componentDidMount() {
         let currentComponent = this;
         fetch('/getUserDataForDashboard', {
@@ -78,6 +82,10 @@ class MySettingsPage extends Component{
             });
         })
         }
+
+    goToChatFeature = () => {
+        this.props.history.push('/chatFeature')
+    }
 
 
     render() {
@@ -152,7 +160,10 @@ class MySettingsPage extends Component{
 
                                         </div>
                                     </a><a className="list-group-item active" href="#"><i
-                                    className="fe-icon-user text-muted" onClick={this.goBackToProfileSettingsPage}></i>Profile Settings</a><a
+                                    className="fe-icon-user text-muted" onClick={this.goBackToProfileSettingsPage}></i>Profile Settings</a>
+                                    <a className="list-group-item " onClick={this.goToActiveOrdersPage} ><i
+                                        className="fe-icon-user text-muted" onClick={this.goToActiveOrdersPage}></i>Active Orders</a>
+                                    <a
                                     className="list-group-item" href="#" onClick={this.forwardToSettingsAddresses}><i className="fe-icon-map-pin text-muted"></i>Addresses</a>
                                     <a className="list-group-item" href="#" onClick={this.forwardToMyCart}>
                                         <div className="d-flex justify-content-between align-items-center">
