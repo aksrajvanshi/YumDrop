@@ -7,6 +7,7 @@ import com.app.yumdrop.FormEntity.RestaurantDetails;
 import com.app.yumdrop.FormEntity.RestaurantRegisterForm;
 import com.app.yumdrop.FormEntity.UserRegisterForm;
 import com.app.yumdrop.FormEntity.UsersDetails;
+import com.app.yumdrop.Messages.ErrorMessage;
 import com.app.yumdrop.Repository.*;
 import com.app.yumdrop.Service.DeliveryAgentRegistrationService;
 import com.app.yumdrop.Service.RestaurantRegistrationService;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.Date;
 import java.util.Random;
 
 @ComponentScan
@@ -76,8 +78,8 @@ public class RegistrationController {
         Random rnd = new Random();
         int otpNumber = rnd.nextInt(999999);
         System.out.println("Sending OTP to user " + otpNumber);
-        boolean isMailSentToPrimaryManager = smsTwoFactorService.send2FaCodeAsEmailToRestaurant(restaurantDetails.getRestaurantPrimaryEmailId(), restaurantDetails.getRestaurantId(), String.format("%06d", otpNumber));
-        if (isMailSentToPrimaryManager)
+        boolean isMailSentToManager = smsTwoFactorService.send2FaCodeAsEmailToRestaurant(restaurantDetails.getRestaurantPrimaryEmailId(), restaurantDetails.getRestaurantId(), String.format("%06d", otpNumber));
+        if (isMailSentToManager)
             return ResponseEntity.status(HttpStatus.OK).build();
         else
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -94,7 +96,9 @@ public class RegistrationController {
             restaurantOtpRepository.deleteById(restaurantOtpRecord.getRestaurantID());
             return restaurantRegistrationService.registerRestaurant(restaurantRegisterForm);
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            ErrorMessage otpNotMatching = new ErrorMessage(new Date(), "OTP didn't match!",
+                    "");
+            return new ResponseEntity<>(otpNotMatching, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -109,7 +113,9 @@ public class RegistrationController {
             usersOtpRepository.deleteById(userRegisterForm.getUser_email());
             return userRegistrationService.registerUser(userRegisterForm);
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            ErrorMessage otpNotMatching = new ErrorMessage(new Date(), "OTP didn't match!",
+                    "");
+            return new ResponseEntity<>(otpNotMatching, HttpStatus.BAD_REQUEST);
         }
 
     }
