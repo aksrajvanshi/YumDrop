@@ -41,6 +41,11 @@ public class RestaurantMenuItem {
     public RestaurantMenuItem() {
     }
 
+    public RestaurantMenuItem(@NotNull String restaurantId, @NotNull String dishName) {
+        this.restaurantId = restaurantId;
+        this.dishName = dishName;
+    }
+
     public RestaurantMenuItem(String restaurantId, String dishName, String dishDescription, double dishPrice) {
         this.restaurantId = restaurantId;
         this.dishName = dishName;

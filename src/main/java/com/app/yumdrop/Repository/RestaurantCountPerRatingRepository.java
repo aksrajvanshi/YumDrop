@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface RestaurantCountPerRatingRepository extends CrudRepository<RestaurantCountPerRating, RestaurantCountPerRatingId> {
 
+    List<RestaurantCountPerRating> findByrestaurantId(String restaurantId);
 }

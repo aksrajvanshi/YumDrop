@@ -12,4 +12,6 @@ public interface RestaurantSearchService {
 
     ResponseEntity<?> getRestaurantResultsByRatings(String userAddress);
 
+    ResponseEntity<?> getSingleRestaurantDetail(String restaurantId);
+
 }
