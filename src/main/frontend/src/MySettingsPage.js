@@ -6,14 +6,21 @@ import './LoginDashBoardCSS.css';
 
 const mapStateToProps = (state)=>{
     return {
-        userEmailId: state.emailId
+        userEmailId: state.userId
+    }
+}
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
     }
 }
 
 
 class MySettingsPage extends Component{
     state = {
-        data: [],
+        dataReceived: [],
         userName: "",
         userEmailId:  "",
         userPhoneNumber: ""
@@ -33,23 +40,51 @@ class MySettingsPage extends Component{
         this.props.history.push('/MySettingsPage')
     }
 
+    goBackToProfileSettingsPage = () => {
+        this.props.history.push('/MySettingsPage')
+    }
+
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
+    }
+
     goBackToLoginDashboard = () => {
         this.props.history.push('/LoginDashboard')
     }
 
-    componentDidMount () {
-        fetch('/getUserDetails')
-            .then(res => res.json()
-            ).then(data => {
-            this.setState({userName: data.userName, userEmailId: data.userEmailId, userPhoneNumber: data.userPhoneNumber})
-        })}
+    forwardToMyCart = () => {
+        this.props.history.push('/MyCart')
+    }
+
+    componentDidMount() {
+        let currentComponent = this;
+        fetch('/getUserDataForDashboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userEmail: currentComponent.props.userEmailId
+            }),
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            const userName = data.userName;
+            currentComponent.setState({
+                userName: data.userName,
+                userEmailId: data.userEmail,
+                userPhoneNumber: data.userPhoneNumber
+            });
+        })
+        }
 
 
     render() {
         let trying = this.state.data;
-        console.log(trying);
-        console.log(this.state.trying);
-        console.log("hey trying to run this");
+        if(this.props.userEmailId === null) {
+            this.props.history.push('/')
+        }
         return (
             <div>
                 <header>
@@ -75,11 +110,14 @@ class MySettingsPage extends Component{
                                             className="fa fa-fw fa-user" onClick={this.goBackToLoginDashboard}/>Home</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link"><i
+                                        <a className="nav-link" onClick={this.forwardToMyCart}><i
                                             className="fa fa-fw fa-user"/>Cart</a>
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link"   onClick={this.settingsPage} ><span>Settings</span></a>
+                                    </li>
+                                    <li>
+                                        <a className="nav-link" onClick={this.signOut}>Sign Out</a>
                                     </li>
                                 </ul>
                             </div>
@@ -107,19 +145,19 @@ class MySettingsPage extends Component{
                                     <a className="list-group-item" href="#">
                                         <div className="d-flex justify-content-between align-items-center">
                                             <div><i className="fe-icon-shopping-bag mr-1 text-muted"></i>
-                                                <div className="d-inline-block font-weight-medium text-uppercase">Orders
+                                                <div className="d-inline-block font-weight-medium text-uppercase" >Orders
                                                     List
                                                 </div>
                                             </div>
 
                                         </div>
                                     </a><a className="list-group-item active" href="#"><i
-                                    className="fe-icon-user text-muted"></i>Profile Settings</a><a
+                                    className="fe-icon-user text-muted" onClick={this.goBackToProfileSettingsPage}></i>Profile Settings</a><a
                                     className="list-group-item" href="#" onClick={this.forwardToSettingsAddresses}><i className="fe-icon-map-pin text-muted"></i>Addresses</a>
-                                    <a className="list-group-item" href="#">
+                                    <a className="list-group-item" href="#" onClick={this.forwardToMyCart}>
                                         <div className="d-flex justify-content-between align-items-center">
                                             <div><i className="fe-icon-heart mr-1 text-muted"></i>
-                                                <div className="d-inline-block font-weight-medium text-uppercase">My
+                                                <div className="d-inline-block font-weight-medium text-uppercase" >My
                                                     Cart
                                                 </div>
                                             </div>
@@ -139,13 +177,7 @@ class MySettingsPage extends Component{
                                                placeholder={this.state.userName}/>
                                     </div>
                                 </div>
-                                <div className="col-md-6">
-                                    <div className="form-group">
-                                        <label htmlFor="account-ln">Last Name</label>
-                                        <input className="form-control" type="text" id="account-ln" placeholder={this.state.userName}
-                                               required=""/>
-                                    </div>
-                                </div>
+
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="account-email">E-mail Address</label>
@@ -169,10 +201,7 @@ class MySettingsPage extends Component{
                                                    id="subscribe_me" checked=""/>
 
                                         </div>
-                                        <button className="btn btn-style-1 btn-primary" type="button" data-toast=""
-                                                data-toast-position="topRight" data-toast-type="success"
-                                                data-toast-icon="fe-icon-check-circle" data-toast-title="Success!"
-                                                data-toast-message="Your profile updated successfuly.">Update
+                                        <button className="btn btn-style-1 btn-primary" type="button" >Update
                                             Profile
                                         </button>
                                     </div>
@@ -187,4 +216,4 @@ class MySettingsPage extends Component{
 
 }
 
-export default connect(mapStateToProps) (MySettingsPage);
+export default connect(mapStateToProps, mapDispatchToProps) (MySettingsPage);

@@ -1,19 +1,32 @@
 import React, { Component } from "react";
 import "./RestaurantAddMenuForm.css";
+import {connect} from "react-redux";
+
+
+const mapStateToProps = (state)=>{
+    return {
+        restaurantId: state.userId
+    }
+};
+
 class RestaurantAddMenuForm extends Component{
     state  = {
         restaurantDishDescription: "",
         restaurantDishName: "",
-        restaurantDishPrice: "",
+        restaurantDishPrice: 0.0,
         restaurantDishCuisine: "",
-        restaurantDishAvailability: ""
+        restaurantDishAvailability: "",
+        restaurantPrimaryEmailId: "",
+        restaurantId: "",
+        errorSelect: false,
+        data: []
 
 
     }
 
     handleRestaurantDishAvailability= (event) => {
         this.setState({
-            restaurantDishAvailability: event.target.value,
+            restaurantDishAvailability: "1",
         })};
 
     handleRestaurantDishCuisine= (event) => {
@@ -40,10 +53,16 @@ class RestaurantAddMenuForm extends Component{
         });
     };
 
+    goToRestaurantDashboard = () => {
+        this.props.history.push('/RestaurantDashboard')
+    }
 
-    restaurantAddDish() {debugger;
-        let obj = {}
-        fetch('/restaurantAddDish',
+
+    restaurantAddDish= () => {debugger;
+        console.log(this.state.restaurantId);
+        console.log(this.props.restaurantId);
+        console.log(this.state.userId);
+        fetch('/addDishToRestaurantMenu',
             {
                 method: 'POST',
                 redirect: 'follow',
@@ -52,21 +71,31 @@ class RestaurantAddMenuForm extends Component{
                     'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify({
-                        restaurantDishDescription: this.state.restaurantDishDescription,
-                        restaurantDishName: this.state.restaurantDishName,
-                        restaurantDishPrice: this.state.restaurantDishPrice,
+                        restaurantId: this.props.restaurantId,
+                        dishAvailable: true,
+                        dishDescription: this.state.restaurantDishDescription,
+                        dishName: this.state.restaurantDishName,
+                        dishPrice: this.state.restaurantDishPrice,
                     }
                 )
 
             }
         ).then(res => {
+            return res.json();
+        })
+            .then(res => {
 
-
+            console.log("response got")
+                console.log(res);
             if (res.status !== 200) {
-                this.forwardToErrorInAddingItem();
+                this.setState({
+                    errorSelect: true,
+                    data: res.data
+                })
 
             }else {
-                this.forwwardToSuccessInAddingItem();
+                console.log("Inside this")
+              this.goToRestaurantDashboard();
             }
 
 
@@ -109,7 +138,7 @@ class RestaurantAddMenuForm extends Component{
                         </div>
                     </nav>
                 </header>
-
+                {this.props.restaurantId}
                 <section class=" py-5">
                     <div className="container">
                         <div className="row ">
@@ -137,26 +166,16 @@ class RestaurantAddMenuForm extends Component{
                                         </div>
                                     </div>
                                     <div className="form-row">
-                                        <div className="form-group col-md-6">
-                                            <input placeholder="Dish Cuisine" value={this.state.restaurantDishCuisine} onChange={this.handleRestaurantDishCuisine}
-                                                   className="form-control" required="required" type="text"/>
-                                        </div>
-                                        <div className="form-group col-md-6">
 
-                                            <select id="inputState" className="form-control" value={this.state.restaurantDishAvailability} onChange={this.handleRestaurantDishAvailability}>
-                                                <option selected>Choose ...</option>
-                                                <option> Available</option>
-                                                <option> Not Available</option>
-                                            </select>
-                                        </div>
+
                                         <div className="form-group col-md-12">
-                                            <textarea value={this.state.restaurantDishDescription} value={this.handleRestaurantDishDescription} id="comment" name="comment" cols="40" rows="5" placeholder="Description of dish"
+                                            <textarea value={this.state.restaurantDishDescription} onChange={this.handleRestaurantDishDescription} id="comment" name="comment" cols="40" rows="5" placeholder="Description of dish"
                                                       className="form-control"></textarea>
                                         </div>
                                     </div>
 
                                     <div className="form-row">
-                                        <button type="button" className="btn btn-danger" onClick={this.restaurantAddDish}>Save</button>
+                                        <button type="button" className="btn btn-danger" onClick={this.restaurantAddDish}>Add</button>
                                     </div>
                                 </form>
                             </div>
@@ -169,4 +188,4 @@ class RestaurantAddMenuForm extends Component{
 
 }
 
-export default RestaurantAddMenuForm;
+export default connect(mapStateToProps) (RestaurantAddMenuForm);

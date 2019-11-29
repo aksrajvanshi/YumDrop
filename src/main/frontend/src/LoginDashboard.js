@@ -2,34 +2,103 @@ import React, { Component } from "react";
 import './LoginDashBoardCSS.css';
 import {connect} from "react-redux";
 
+
 class LoginDashBoard extends Component{
+    constructor(props) {
+        super(props);
+
+    }
 
     state = {
-        userEmailId : "this.props.userEmailId"
+        userEmailId : this.props.userEmailId,
+        searchResults: [{"restaurantAddress": "restaurantAddress"}],
+        userAddress: "800 N Union St, Bloomington, IN 47408, USA",
+        searchQuery: ""
     }
 
     componentDidMount () {
-        fetch('/getUserDetails')
-            .then(res => res.json()
-            ).then(data => {
-            this.setState({restaurantName : data.restaurantName , restaurantImgUrl: data.restaurantImgUrl, restaurantDescription: data.restaurantDescription, restaurantAverageCost: data.restaurantAverageCost, restaurantCuisine: data.restaurantCuisine},
-            )
-        })}
+        let currentComponent = this
+        fetch('/getAllRestaurants',{
+            method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userEmailId: this.state.userEmailId
+            }),
+        }).then(res => {
+            return res.json();
+        }).then(res=>{
+            let x = [];
+            for (let i=0; i<res.length;i++){
+                x[i] = res[i].restaurantDetails;
+            }
+            currentComponent.setState({
+                searchResults: x
+            })
+            console.log(this.state.data)
+            if (res.status !== 200) {
+            }else {
+            }
+
+
+        })
+
+    }
+
+    getSearchResults = () => {
+        let currentComponent = this;
+        fetch('/searchRestaurantByLocationFromUserDashboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userAddress: this.state.userAddress,
+                restaurantSearchKeyword: this.state.searchQuery,
+                userEmail: this.state.userEmailId
+            }),
+        }).then(res => {
+            return res.json();
+        }).then(res=>{
+            let x = [];
+            for (let i=0; i<res.length;i++){
+                x[i] = res[i].restaurantDetails;
+            }
+            currentComponent.setState({
+                searchResults: x
+            })
+            console.log(this.state.searchResults)
+        })
+    }
+
+    handleSearchChange = (event) => {
+        this.setState({searchQuery: event.target.value})
+    }
 
     forwardToSettingsPage = () => {
         this.props.history.push('/MySettingsPage');
     }
 
+    forwardToMyCart = () => {
+        this.props.history.push('/MyCart')
+    }
+
     onClick= (event) => {
-        this.props.setUser(this.state.userName);
         this.forwardToSettingsPage();
     }
 
-    goBackToLoginDashboard = () => {
-        this.props.history.push('/goBackToLoginDashboard');
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
     }
 
     render() {
+
+        if(this.props.emailId === null) {
+            this.props.history.push('/')
+        }
+      
         return (
             <div>
                 <header>
@@ -39,22 +108,63 @@ class LoginDashBoard extends Component{
 
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
-                            <a className="navbar-brand " href="#" onClick={this.goBackToLoginDashboard}>YumDrop</a>
+                            <a className="navbar-brand " href="#">YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
 
                                     <li className="nav-item">
-                                        <a className="nav-link"><i
+                                        <a className="nav-link" onClick={this.forwardToMyCart}><i
                                             className="fa fa-fw fa-user"/>Cart</a>
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link"  onClick={this.onClick} ><span>Settings</span></a>
+                                    </li>
+                                    <li>
+                                        <a className="nav-link" onClick={this.signOut}>Sign Out</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </nav>
                 </header>
+
+                <div>
+                    <div className="col-md-4">
+                        <div className="md-form">
+                            <input type="text"
+                                   placeholder="Search for food, cuisines, restaurants here.."
+                                   className="form-control validate" onChange={(event) => this.handleSearchChange(event)}/>
+
+                        </div>
+                    </div>
+                    <div className="col-md-1" >
+                        <div className="md-form">
+                            <button className="btn btn-primary btn-md" onClick={this.getSearchResults}><span id="SearchBar">Search</span></button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <section className="about-area pt-80">
+                        <div className="container">
+                            {this.state.searchResults.map((item, index) => {
+                                return(
+                                    <div className="row menu_style1">
+                                        <div className="col-xl-12 mb-60">
+                                            <div className="single_menu_list" id="containerForRestaurantDisplay" key={index}>
+                                                <div>
+                                                    <div className="menu_content">
+                                                        <h4>{item.restaurantName}</h4>
+                                                        <h5>{item.restaurantAddress}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            )}
+                        </div>
+                    </section>
+                </div>
 
                 <div className="container mt-5">
                     <div className="section-title text-center">
@@ -221,15 +331,14 @@ class LoginDashBoard extends Component{
 }
 const mapStateToProps = (state)=> {
     return {
-        userEmailId: state.emailId
+        emailId: state.userId
     }
 }
 
 const mapDispatchToProps = (dispatch)=> {
     return {
-        setUser(evt){
-            dispatch({type: "setEmailId", newEmailId: evt});
-        }
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
     }
 }
 export default  connect(mapStateToProps, mapDispatchToProps) (LoginDashBoard);

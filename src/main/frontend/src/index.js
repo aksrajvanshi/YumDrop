@@ -36,21 +36,33 @@ import RestaurantResetpassword from "./RestaurantResetpassword";
 import DeliveryAgentRegistration from "./DeliveryAgentRegistration";
 import DeliveryAgentLoginForm from "./DeliveryAgentLoginForm";
 import ErrorPageForDeliveryAgentRegistration from "./ErrorPageForDeliveryAgentRegistration";
+import DeliveryAgentLoginErrorPage from "./DeliveryAgentLoginErrorPage";
+import DeliveryAgentOTPResetPassword from "./DeliveryAgentOTPResetPassword";
+import MyCart from "./MyCart";
+import paymentSystemForUsers from "./paymentSystemForUsers";
 
 const initialState = {
     latitude: null,
     longitude: null,
-    emailId: null
+    userId: null, //doubles as a User's Email address or a restaurant's Id
+    accountType: null, //identifies if account is user, restaurant, or delivery
 }
 
 const reducer = (state=initialState, action) => {
 
     if(action.type==="setLocation"){
-        return {latitude: action.newLatitude, longitude: action.newLongitude}
+        state.latitude = action.newLatitude;
+        state.longitude = action.newLongitude;
     }
-    else if (action.type === "setEmailId"){
-        return {emailId: action.newEmailId}
+    else if (action.type === "setUserId"){
+        state.userId = action.userId;
+        state.accountType = action.accountType;
     }
+    else if (action.type === "signOut") {
+        state.userId = null;
+        state.accountType = null;
+    }
+
 
     return state;
 }
@@ -70,6 +82,8 @@ const routing = (
                 <Route exact path="/RegisterForm" component={RegisterForm}/>
                 <Route exact path="/LoginDashBoard" component={LoginDashBoard}/>
                 <Route exact path="/OTPpage" component={OTPpage}/>
+                <Route exact path="/paymentSystemForUsers" component={paymentSystemForUsers}/>
+                <Route exact path="/MyCart" component={MyCart}/>
                 <Route exact path="/DeliveryAgentOTPpage" component={DeliveryAgentOTPpage}/>
                 <Route exact path="/errorPageForRegistration" component={errorPageForRegistration} />
                 <Route exact path="/MySettingsPage" component={MySettingsPage}/>
@@ -94,6 +108,8 @@ const routing = (
                 <Route exact path="/MyCurrentRestaurantLocation" component={MyCurrentRestaurantLocation} />
                 <Route exact path="/ErrorPageForDeliveryAgentRegistration" component={ErrorPageForDeliveryAgentRegistration}/>
                 <Route exact path="/DeliveryAgentLoginForm" component={DeliveryAgentLoginForm}/>
+                <Route exact path="/DeliveryAgentLoginErrorPage" component={DeliveryAgentLoginErrorPage}/>
+                <Route exact path="/DeliveryAgentOTPResetPassword" component={DeliveryAgentOTPResetPassword}/>
             </div>
         </Router>
     </Provider>

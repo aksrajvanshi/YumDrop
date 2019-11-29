@@ -2,19 +2,19 @@ package com.app.yumdrop.FormEntity;
 
 public class DeliveryAgentForgotPasswordForm {
 
-    private String daEmail;
+    private String deliveryAgentEmail;
     private String temporaryPassword;
     private String newPassword;
 
     public DeliveryAgentForgotPasswordForm() {
     }
 
-    public DeliveryAgentForgotPasswordForm(String daEmail) {
-        this.daEmail = daEmail;
+    public DeliveryAgentForgotPasswordForm(String deliveryAgentEmail) {
+        this.deliveryAgentEmail = deliveryAgentEmail;
     }
 
-    public DeliveryAgentForgotPasswordForm(String daEmail, String temporaryPassword, String newPassword) {
-        this.daEmail = daEmail;
+    public DeliveryAgentForgotPasswordForm(String deliveryAgentEmail, String temporaryPassword, String newPassword) {
+        this.deliveryAgentEmail = deliveryAgentEmail;
         this.temporaryPassword = temporaryPassword;
         this.newPassword = newPassword;
     }
@@ -23,18 +23,18 @@ public class DeliveryAgentForgotPasswordForm {
     @Override
     public String toString() {
         return "DeliveryAgentForgotPasswordForm{" +
-                "daEmail='" + daEmail + '\'' +
+                "daEmail='" + deliveryAgentEmail + '\'' +
                 ", temporaryPassword='" + temporaryPassword + '\'' +
                 ", newPassword='" + newPassword + '\'' +
                 '}';
     }
 
-    public String getDAEmail() {
-        return daEmail;
+    public String getDeliveryAgentEmail() {
+        return deliveryAgentEmail;
     }
 
-    public void setDAEmail(String daEmail) {
-        this.daEmail = daEmail;
+    public void setDeliveryAgentEmail(String daEmail) {
+        this.deliveryAgentEmail = deliveryAgentEmail;
     }
 
     public String getTemporaryPassword() {

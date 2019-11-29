@@ -10,7 +10,8 @@ import Recaptcha from 'react-recaptcha';
 
 const mapStateToProps = (state)=>{
     return {
-        restaurantPrimaryEmailId: state.restaurantPrimaryEmailId
+        restaurantId: state.userId,
+        accountType: state.accountType,
     }
 }
 
@@ -19,7 +20,7 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch)=> {
     return {
         setRestaurant(evt){
-            dispatch({type: "setRestaurantEmailId", restaurantPrimaryEmailId: evt.restaurantPrimaryEmailId});
+            dispatch({type: "setUserId", userId: evt, accountType: "restaurant"});
         }
     }
 }
@@ -49,6 +50,7 @@ class App extends Component {
         }
     }
 
+
     login = () => { debugger;
         fetch('/restaurantLogin', {
             method: 'POST',
@@ -60,13 +62,17 @@ class App extends Component {
                 restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId
             }),
         }).then(res => {
-            console.log(res)
-            console.long(res.status)
+            this.props.setRestaurant(this.state.restaurantId);
+            this.forwardToLoginDashboard();
             if (res.status !== 200) {
-                this.forwardToLoginErrorPage();
+                if(this.state.isReCaptchaVerified) {
+                    this.props.setRestaurant(this.state.restaurantId);
+                    this.setState({restaurantRegister: false});
+                    this.forwardToLoginDashboard();
+                }
             }else {
                 if(this.state.isReCaptchaVerified) {
-                    this.props.setRestaurant({restaurantEmailId: this.state.restaurantPrimaryEmailId})
+                    this.props.setRestaurant(this.state.restaurantId);
                     this.setState({restaurantRegister: false});
                     this.forwardToLoginDashboard();
                 }
@@ -165,6 +171,7 @@ class App extends Component {
     }
 
     closeAllOptionsOfSelectionForm= () => {
+        this.goBackToHomePage();
         this.setState({ userLoginOption: false, loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOption: false, forgotPasswordSelect: false, emailSelectForgotPassword: false  });
     }
 
@@ -198,6 +205,12 @@ class App extends Component {
 
 
     render() {
+        if (this.props.accountType === "user") {
+            this.props.history.push("/LoginDashboard");
+        }
+        else if (this.props.accountType === "restaurant") {
+            this.props.history.push("/RestaurantDashboard")
+        }
 
         return( <div className="App">
             <header>
@@ -233,6 +246,7 @@ class App extends Component {
                     </div>
                 </nav>
             </header>
+            <p>{this.props.restaurantId}</p>
             <div className="view rgba-black-light">
                 <br/><br/><br/>
                 <div className="">

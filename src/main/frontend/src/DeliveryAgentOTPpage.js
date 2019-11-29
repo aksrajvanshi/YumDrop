@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import LoginPage from "./LoginPage";
+import DeliveryAgentLoginForm from "./DeliveryAgentLoginForm";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {connect} from 'react-redux';
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
@@ -17,6 +18,7 @@ class App extends Component {
         userPassword: "",
         userRegister: false,
         restaurantRegister: false,
+        deliveryAgentRegister: false,
         userPhoneNumber: "",
         userEmailID: "",
         registerSelect: true,
@@ -30,16 +32,7 @@ class App extends Component {
         restaurantSecondaryPhoneNumber: "",
         restaurantPassword: "",
         restaurantConfirmPassword: "",
-        redirect: false,
-
-        daRegister: false,
-        daEmail:"",
-        daName:"",
-        daPhonenum:"",
-        daPassword:"",
-        daConfirmPassword:"",
-        daOtp: "",
-        daOtpVal: false
+        redirect: false
     };
 
     forwardToLoginForm = () => {
@@ -50,10 +43,7 @@ class App extends Component {
         this.props.history.push('/LoginDashBoard');
 
     }
-    forwardToDeliveryAgentOTPpage = () => {
-        this.props.history.push('/LoginDashBoard');
 
-    }
     forwardToErrorPage = () => {
         this.props.history.push('/errorPageForRegistration');
     }
@@ -82,11 +72,11 @@ class App extends Component {
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToErrorPage();
-                alert("Hey going to login page");
+
             }else {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToOTPpage();
-                alert("Hey going to otp page");
+
             }
 
 
@@ -94,42 +84,9 @@ class App extends Component {
 
     }
 
-    validateGivenOtpDA() {
-        debugger;
-        let obj = {}
-        fetch('/deliveryAgentRegistration',
-            {
-                method: 'POST',
-                redirect: 'follow',
-                headers: {
-                    "Content-Type": "application/json",
-                    'Access-Control-Allow-Origin': '*'
-                },
-                body: JSON.stringify({
-                        da_name: this.state.daName,
-                    }
-                )
-
-            }
-        ).then(res => {
 
 
-            if (res.status !== 200) {
-                this.setState({redirect: true, daRegister: false});
-                this.forwardToErrorPage();
-                alert("Hey going to login page");
-            }else {
-                this.setState({redirect: true, daRegister: false});
-                this.forwardToDeliveryAgentOTPpage();
-                alert("Hey going to otp page");
-            }
-
-
-        })
-
-    }
-
-    handleDeliveryAgentNameChange = (event) => {
+    handleUserNameChange = (event) => {
         this.setState({
             userFullName: event.target.value,
         });
@@ -142,7 +99,7 @@ class App extends Component {
             userRegister: false,
             registerSelect: true,
             restaurantRegister: false,
-            daRegister: false
+            deliveryAgentRegister: false
         });
     };
 
@@ -152,7 +109,7 @@ class App extends Component {
             userRegister: false,
             restaurantRegister: false,
             registerSelect: false,
-            daRegister: false
+            deliveryAgentRegister: false
         });
     }
 
@@ -162,19 +119,12 @@ class App extends Component {
             userRegister: true,
             registerSelect: false,
             restaurantRegister: false,
-            daRegister: false
+            deliveryAgentRegister: false
         });
     };
 
 
-    daRegister = () => {
-        this.setState({
-            userRegister: false,
-            registerSelect: false,
-            restaurantRegister: false,
-            daRegister: true
-        });
-    };
+
 
     render()
     {
@@ -232,10 +182,10 @@ class App extends Component {
                         <div className="row">
                             <div className="main">
                                 <div className="login-form">
-                                    <form onSubmit={this.validateGivenOtpDA.bind(this)}>
+                                    <form onSubmit={this.validateGivenOtp.bind(this)}>
                                         <h2 className="text-center">Please provide your 6 digit OTP</h2>
                                         <div className="form-group">
-                                            <input value={this.state.daName}
+                                            <input value={this.state.userFullName}
                                                    onChange={this.handleUserNameChange} type="text"
                                                    className="form-control" placeholder="Provide OTP"
                                                    pattern="[0-9]"
@@ -243,7 +193,7 @@ class App extends Component {
                                         </div>
 
                                         <div className="form-group">
-                                            <button onClick={this.validateGivenOtpDA.bind(this)} type="submit"
+                                            <button onClick={this.validateGivenOtp.bind(this)} type="submit"
                                                     className="btn btn-primary btn-lg btn-block login-btn">Sign Up
                                             </button>
                                         </div>

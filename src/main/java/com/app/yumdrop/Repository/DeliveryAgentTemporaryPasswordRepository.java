@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface DeliveryAgentTemporaryPasswordRepository extends CrudRepository<DeliveryAgentTemporaryPassword, String> {
 
-    DeliveryAgentTemporaryPassword findBydaEmail(String daEmail);
+    DeliveryAgentTemporaryPassword findByDeliveryAgentEmail(String deliveryAgentEmail);
 }

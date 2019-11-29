@@ -5,5 +5,5 @@ public interface SmsTwoFactorService {
 
     boolean send2FaCodeAsEmailToRestaurant(String email,  String restaurantId, String twoFactorCode);
 
-    boolean send2FaCodeAsEmailDA(String email, String twoFactorCode);
+    boolean send2FaCodeAsEmailDeliveryAgent(String email, String twoFactorCode);
 }

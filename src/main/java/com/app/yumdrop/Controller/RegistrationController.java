@@ -3,15 +3,16 @@ package com.app.yumdrop.Controller;
 import com.app.yumdrop.Entity.Restaurant;
 import com.app.yumdrop.Entity.RestaurantOtp;
 import com.app.yumdrop.Entity.UsersOtp;
-import com.app.yumdrop.FormEntity.*;
+import com.app.yumdrop.FormEntity.RestaurantDetails;
+import com.app.yumdrop.FormEntity.RestaurantRegisterForm;
+import com.app.yumdrop.FormEntity.UserRegisterForm;
+import com.app.yumdrop.FormEntity.UsersDetails;
+import com.app.yumdrop.Messages.ErrorMessage;
 import com.app.yumdrop.Repository.*;
-
-import com.app.yumdrop.Entity.DeliveryAgentOtp;
-
+import com.app.yumdrop.Service.DeliveryAgentRegistrationService;
 import com.app.yumdrop.Service.RestaurantRegistrationService;
 import com.app.yumdrop.Service.SmsTwoFactorService;
 import com.app.yumdrop.Service.UserRegistrationService;
-import com.app.yumdrop.Service.DeliveryAgentRegistrationService;
 import com.app.yumdrop.Utils.OtpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.Date;
 import java.util.Random;
 
 @ComponentScan
@@ -36,27 +38,20 @@ public class RegistrationController {
 
     @Autowired
     SmsTwoFactorService smsTwoFactorService;
-
-    @Autowired
-    private UsersRepository userRepository;
-
-    @Autowired
-    private UsersOtpRepository usersOtpRepository;
-
-    @Autowired
-    private DeliveryAgentRepository deliveryAgentRepository;
-
-    @Autowired
-    private DeliveryAgentOtpRepository deliveryAgentOtpRepository;
-
     @Autowired
     RestaurantRegistrationService restaurantRegistrationService;
-
     @Autowired
     RestaurantRepository restaurantRepository;
-
     @Autowired
     RestaurantOtpRepository restaurantOtpRepository;
+    @Autowired
+    private UsersRepository userRepository;
+    @Autowired
+    private UsersOtpRepository usersOtpRepository;
+    @Autowired
+    private DeliveryAgentRepository deliveryAgentRepository;
+    @Autowired
+    private DeliveryAgentOtpRepository deliveryAgentOtpRepository;
 
     @RequestMapping(value = "/userRegistration", method = RequestMethod.POST)
     public ResponseEntity<?> userRegistration(@RequestBody UsersDetails usersDetails) {
@@ -65,8 +60,8 @@ public class RegistrationController {
         Random rnd = new Random();
         int otpNumber = rnd.nextInt(999999);
         System.out.println("Sending OTP to user " + otpNumber);
-        boolean isSmsSent = smsTwoFactorService.send2FaCodeAsEmail(usersDetails.getUser_email(), String.format("%06d", otpNumber));
-        if(isSmsSent)
+        boolean isMailSentToUser = smsTwoFactorService.send2FaCodeAsEmail(usersDetails.getUser_email(), String.format("%06d", otpNumber));
+        if (isMailSentToUser)
             return ResponseEntity.status(HttpStatus.OK).build();
         else
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -76,15 +71,15 @@ public class RegistrationController {
     public ResponseEntity<?> restaurantRegistration(@RequestBody RestaurantDetails restaurantDetails) {
 
         Restaurant isRestaurantExisting = restaurantRepository.findByrestaurantId(restaurantDetails.getRestaurantId());
-        if(isRestaurantExisting != null){
+        if (isRestaurantExisting != null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
         Random rnd = new Random();
         int otpNumber = rnd.nextInt(999999);
         System.out.println("Sending OTP to user " + otpNumber);
-        boolean isSmsSent = smsTwoFactorService.send2FaCodeAsEmailToRestaurant(restaurantDetails.getRestaurantPrimaryEmailId(), restaurantDetails.getRestaurantId(), String.format("%06d", otpNumber));
-        if(isSmsSent)
+        boolean isMailSentToManager = smsTwoFactorService.send2FaCodeAsEmailToRestaurant(restaurantDetails.getRestaurantPrimaryEmailId(), restaurantDetails.getRestaurantId(), String.format("%06d", otpNumber));
+        if (isMailSentToManager)
             return ResponseEntity.status(HttpStatus.OK).build();
         else
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -94,35 +89,19 @@ public class RegistrationController {
     @RequestMapping(value = "/verifyOTPandRegisterRestaurant", method = RequestMethod.POST)
     public ResponseEntity<?> verifyOTPandRegisterRestaurant(@RequestBody RestaurantRegisterForm restaurantRegisterForm) {
 
-        System.out.println(" Entered verify OTP method! ");
         RestaurantOtp restaurantOtpRecord = restaurantOtpRepository.findByrestaurantID(restaurantRegisterForm.getRestaurantId());
-        System.out.println(restaurantOtpRecord.getRestaurantID() + " -- " + restaurantOtpRecord.getRestaurantPrimaryEmail()
-        + " -- " + restaurantRegisterForm.getRestaurantOtp());
         boolean checkOtpMatch = OtpUtils.checkIfOtpMatches(restaurantRegisterForm.getRestaurantOtp().trim(), restaurantOtpRecord.getRestaurantOtp());
-        System.out.println("Did OTP match? " + checkOtpMatch);
+
         if (checkOtpMatch) {
             restaurantOtpRepository.deleteById(restaurantOtpRecord.getRestaurantID());
             return restaurantRegistrationService.registerRestaurant(restaurantRegisterForm);
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } else {
+            ErrorMessage otpNotMatching = new ErrorMessage(new Date(), "OTP didn't match!",
+                    "");
+            return new ResponseEntity<>(otpNotMatching, HttpStatus.BAD_REQUEST);
         }
     }
 
-
-    @RequestMapping(value = "/deliveryAgentRegistration", method = RequestMethod.POST)
-    public ResponseEntity<?> deliveryAgentRegistration(@RequestBody DeliveryAgentDetails deliveryAgentDetails) {
-
-        System.out.println(deliveryAgentDetails.getDA_email() + " -- " + deliveryAgentDetails.getDA_phonenum());
-        Random rnd = new Random();
-        int otpNumber = rnd.nextInt(999999);
-        boolean isSmsSent = smsTwoFactorService.send2FaCodeAsEmailDA(deliveryAgentDetails.getDA_email(), String.format("%06d", otpNumber));
-
-        if(isSmsSent)
-            return ResponseEntity.status(HttpStatus.OK).build();
-        else
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    }
 
     @RequestMapping(value = "/verifyOTPandRegisterUser", method = RequestMethod.POST)
     public ResponseEntity<?> verifyOTPandRegisterUser(@RequestBody UserRegisterForm userRegisterForm) {
@@ -134,24 +113,12 @@ public class RegistrationController {
             usersOtpRepository.deleteById(userRegisterForm.getUser_email());
             return userRegistrationService.registerUser(userRegisterForm);
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            ErrorMessage otpNotMatching = new ErrorMessage(new Date(), "OTP didn't match!",
+                    "");
+            return new ResponseEntity<>(otpNotMatching, HttpStatus.BAD_REQUEST);
         }
 
     }
 
-    @RequestMapping(value = "/verifyOTPandRegisterDA", method = RequestMethod.POST)
-    public ResponseEntity<?> verifyOTPandRegisterDA(@RequestBody DeliveryAgentRegisterForm daRegisterForm) {
-
-        DeliveryAgentOtp daOtp = deliveryAgentOtpRepository.findBydaEmail(daRegisterForm.getDA_email());
-        boolean checkOtpMatch = OtpUtils.checkIfDAOtpMatches(daRegisterForm.getDA_otp().trim(), daOtp.daOtp);
-
-        if (checkOtpMatch) {
-            deliveryAgentOtpRepository.deleteById(daRegisterForm.getDA_email());
-            return deliveryAgentRegistrationService.registerDeliveryAgent(daRegisterForm);
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-
-    }
 
 }
