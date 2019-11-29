@@ -1,5 +1,6 @@
 package com.app.yumdrop.Controller;
 
+import com.app.yumdrop.Entity.Restaurant;
 import com.app.yumdrop.FormEntity.RestaurantSearchRequest;
 import com.app.yumdrop.Service.RestaurantSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,11 @@ public class SearchRestaurantController {
     public ResponseEntity<?> getAllRestaurants(@RequestBody RestaurantSearchRequest restaurantSearchRequest) {
         return restaurantSearchService.getAllRestaurantDetails(restaurantSearchRequest.getUserAddress());
     }
+
+    @RequestMapping(value = "/getRestaurantDataForUserView", method = RequestMethod.POST)
+    public ResponseEntity<?> getSingleRestaurantDetail(@RequestBody Restaurant restaurantDetailRequest) {
+        return restaurantSearchService.getSingleRestaurantDetail(restaurantDetailRequest.getRestaurantId());
+    }
+
 
 }

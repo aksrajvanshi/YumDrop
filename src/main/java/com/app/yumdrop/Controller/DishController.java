@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @ComponentScan
 @Controller
-public class AddDishToRestaurantController {
+public class DishController {
 
     @Autowired
     RestaurantMenuItemRepository restaurantMenuItemRepository;
@@ -47,4 +47,12 @@ public class AddDishToRestaurantController {
         return new ResponseEntity<>(dishNotAddedToDb, HttpStatus.BAD_REQUEST);
 
     }
+
+    @RequestMapping(value = "/deleteDish", method = RequestMethod.POST)
+    public ResponseEntity<?> deleteDishFromRestaurantMenu(@RequestBody RestaurantMenuItem restaurantMenuItem) {
+        restaurantMenuItemRepository.deleteById(new RestaurantMenuItemId(restaurantMenuItem.getRestaurantId(), restaurantMenuItem.getDishName()));
+        SuccessMessage successfulDishDelete = new SuccessMessage(new Date(), "Dish was deleted successfully from Restaurant Menu");
+        return new ResponseEntity<>(successfulDishDelete, HttpStatus.OK);
+    }
+
 }

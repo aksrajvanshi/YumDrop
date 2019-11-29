@@ -150,6 +150,19 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
         });
 
         return new ResponseEntity<>(restaurantResultsWithDetails, HttpStatus.OK);
+    }
 
+    @Override
+    public ResponseEntity<?> getSingleRestaurantDetail(String restaurantId) {
+        Restaurant restaurantDetail = restaurantRepository.findByrestaurantId(restaurantId);
+        RestaurantSearchResults restaurantSearchResults = new RestaurantSearchResults();
+
+        restaurantSearchResults.setRestaurantDetails(restaurantDetail);
+        RestaurantRatings currentRestaurantRatings = restaurantRatingsRepository.findByrestaurantId(restaurantDetail.getRestaurantId());
+        restaurantSearchResults.setRestaurantRatings(currentRestaurantRatings);
+        List<RestaurantCountPerRating> restaurantCountPerRatings = restaurantCountPerRatingRepository.findByrestaurantId(restaurantDetail.getRestaurantId());
+        restaurantSearchResults.setRestaurantCountPerRatingList(restaurantCountPerRatings);
+
+        return new ResponseEntity<>(restaurantSearchResults, HttpStatus.OK);
     }
 }
