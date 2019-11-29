@@ -1,6 +1,5 @@
 package com.app.yumdrop.Controller;
 
-import com.app.yumdrop.Entity.RestaurantMenuItem;
 import com.app.yumdrop.Entity.UserCart;
 import com.app.yumdrop.Messages.ErrorMessage;
 import com.app.yumdrop.Messages.SuccessMessage;
@@ -28,11 +27,10 @@ public class FoodCartAndOrderController {
     public ResponseEntity<?> addDishToUserCart(@RequestBody UserCart userCartItem) {
         UserCart cartItemSaved = userCartRepository.save(userCartItem);
 
-        if(cartItemSaved != null) {
+        if (cartItemSaved != null) {
             SuccessMessage itemAddedToCart = new SuccessMessage(new Date(), "Item is added to your cart");
             return new ResponseEntity<>(itemAddedToCart, HttpStatus.OK);
-        }
-        else{
+        } else {
             ErrorMessage itemNotAddedToCart = new ErrorMessage(new Date(), "Could not add item to cart, please try again",
                     "");
             return new ResponseEntity<>(itemNotAddedToCart, HttpStatus.INTERNAL_SERVER_ERROR);
