@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Date;
+import java.util.List;
 
 @ComponentScan
 @Controller
@@ -37,5 +38,13 @@ public class FoodCartAndOrderController {
             return new ResponseEntity<>(itemNotAddedToCart, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @RequestMapping(value = "/getUserDataForMyCart", method = RequestMethod.POST)
+    public ResponseEntity<?> getUserDataForCart(@RequestBody UserCart userCartItem) {
+        List<UserCart> userCartItems = userCartRepository.findByuserEmail(userCartItem.getUserEmail());
+        return new ResponseEntity<>(userCartItems, HttpStatus.OK);
+    }
+
 
 }

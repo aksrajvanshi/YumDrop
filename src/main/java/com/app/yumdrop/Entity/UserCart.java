@@ -27,6 +27,10 @@ public class UserCart {
     public UserCart() {
     }
 
+    public UserCart(@Email(message = "user email should be a valid email") String userEmail) {
+        this.userEmail = userEmail;
+    }
+
     public UserCart(@Email(message = "user email should be a valid email") String userEmail, String dishName, int dishQuantity) {
         this.userEmail = userEmail;
         this.dishName = dishName;
