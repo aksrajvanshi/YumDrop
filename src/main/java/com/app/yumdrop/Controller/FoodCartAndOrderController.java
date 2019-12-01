@@ -1,9 +1,11 @@
 package com.app.yumdrop.Controller;
 
 import com.app.yumdrop.Entity.UserCart;
+import com.app.yumdrop.Entity.UserOrder;
 import com.app.yumdrop.Messages.ErrorMessage;
 import com.app.yumdrop.Messages.SuccessMessage;
 import com.app.yumdrop.Repository.UserCartRepository;
+import com.app.yumdrop.Service.FoodOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,9 @@ public class FoodCartAndOrderController {
     @Autowired
     UserCartRepository userCartRepository;
 
+    @Autowired
+    FoodOrderService foodOrderService;
+
     @RequestMapping(value = "/addDishToUserCart", method = RequestMethod.POST)
     public ResponseEntity<?> addDishToUserCart(@RequestBody UserCart userCartItem) {
         UserCart cartItemSaved = userCartRepository.save(userCartItem);
@@ -37,11 +42,15 @@ public class FoodCartAndOrderController {
         }
     }
 
-
     @RequestMapping(value = "/getUserDataForMyCart", method = RequestMethod.POST)
     public ResponseEntity<?> getUserDataForCart(@RequestBody UserCart userCartItem) {
         List<UserCart> userCartItems = userCartRepository.findByuserEmail(userCartItem.getUserEmail());
         return new ResponseEntity<>(userCartItems, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/makeUserOrder", method = RequestMethod.POST)
+    public ResponseEntity<?> createUserOrder(@RequestBody UserOrder userOrderDetails) {
+        return foodOrderService.createFoodOrder(userOrderDetails);
     }
 
 
