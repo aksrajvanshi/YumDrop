@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import './LoginDashBoardCSS.css';
 import './DeliveryAgentDashboardCSS.css';
+import './DeliveryAgentMaps';
 
 class DeliveryAgentDashboard extends Component{
 
@@ -10,6 +11,10 @@ class DeliveryAgentDashboard extends Component{
 
     forwardToSettingsPage = () => {
         this.props.history.push('/MySettingsPage');
+    }
+
+    forwardToDeliveryAgentMaps = () => {
+        this.props.history.push("/DeliveryAgentMaps")
     }
 
     render() {
@@ -59,7 +64,8 @@ class DeliveryAgentDashboard extends Component{
                                 <div>Deliver at </div>
                                 <p>700 N Woodlawn Ave, Bloomington, IN 47408</p>
                                 <br/>
-
+                                <button onClick={this.forwardToDeliveryAgentMaps} className="btn btn-style-1 btn-primary" type="button">Show Path
+                                </button>
                             </div>
                         </div>
 

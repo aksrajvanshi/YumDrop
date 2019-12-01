@@ -103,7 +103,7 @@ class App extends Component {
     }
 
     forwardToDeliveryAgentLoginErrorPage = () => {
-        this.props.history.push("/deliveryAgentLoginErrorPAge")
+        this.props.history.push("/DeliveryAgentLoginErrorPage")
     }
 
     forwardToSuccessfullyChangedPasswordPage = () => {
