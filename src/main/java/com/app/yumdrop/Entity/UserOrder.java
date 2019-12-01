@@ -32,6 +32,10 @@ public class UserOrder extends CreateAndUpdateTimeModel {
     public UserOrder() {
     }
 
+    public UserOrder(@Email(message = "user email should be a valid email") String userEmail) {
+        this.userEmail = userEmail;
+    }
+
     public UserOrder(Long orderId, @Email(message = "user email should be a valid email") String userEmail, @NotNull String restaurantId, int orderStatus, String orderContents) {
         this.orderId = orderId;
         this.userEmail = userEmail;

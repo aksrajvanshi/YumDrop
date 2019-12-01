@@ -1,18 +1,18 @@
 package com.app.yumdrop.Utils;
 
-public enum OrderStatus {
+public enum OrderStatusUtil {
     ORDERED(1),
     OUT_FOR_DELIVERY(2),
     DELIVERED(3);
 
     private int value;
 
-    OrderStatus(int value) {
+    OrderStatusUtil(int value) {
         this.value = value;
     }
 
-    public static OrderStatus getOrderStatus(int orderIndex) {
-        for (OrderStatus l : OrderStatus.values()) {
+    public static OrderStatusUtil getOrderStatus(int orderIndex) {
+        for (OrderStatusUtil l : OrderStatusUtil.values()) {
             if (l.value == orderIndex)
                 return l;
         }
