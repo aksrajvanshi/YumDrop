@@ -105,7 +105,26 @@ class RestaurantDashboard extends Component{
             })})
             .then(res => {
                 console.log(res.status)
-                return res.json()
+                if (res.status === 200){
+                    fetch('/getAllRestaurantDishes',{
+                        method: 'POST',
+                        redirect: 'follow',
+                        headers: {
+                            "Content-Type": "application/json",
+                            'Access-Control-Allow-Origin': '*'
+                        },
+                        body: JSON.stringify({
+                            restaurantId: this.props.restaurantId,})})
+                        .then(res => {
+                            console.log(res)
+                            return res.json()
+                        }).then(response => {
+                        currentComponent.setState({
+                            data: response
+                        })
+                        console.log(response)})
+                    console.log(this.state.data)
+                }
             })
 
     }
@@ -122,9 +141,7 @@ class RestaurantDashboard extends Component{
                         </td>
                         <td>{d.dishPrice}</td>
                         <td className="td-actions">
-                            <a  className="btn btn-small btn-primary">
-                                <i className="btn-icon-only icon-ok"></i>
-                            </a>
+
 
                             <a className="btn btn-small">
                                 <i className="btn-icon-only icon-remove" onClick={this.handleClick.bind(this, d)} ></i>
