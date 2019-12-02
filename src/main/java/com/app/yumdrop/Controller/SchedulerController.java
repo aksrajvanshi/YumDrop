@@ -11,8 +11,9 @@ public class SchedulerController {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 10000)
     public void reportCurrentTime() {
         System.out.println("Time : "+ dateFormat.format(new Date()));
+
     }
 }
