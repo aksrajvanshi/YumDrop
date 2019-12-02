@@ -46,6 +46,7 @@ import chatFeature from "./chatFeature";
 import userChatStartButton from "./userChatStartButton";
 import ActiveOrders from "./ActiveOrders";
 import RestaurantActiveOrders from "./RestaurantActiveOrders";
+import dishesForUserView from "./dishesForUserView";
 
 const initialState = {
     latitude: null,
@@ -89,6 +90,7 @@ const routing = (
                 <Route exact path="/tryingForRoutes" component={tryingForRoutes}/>
                 <Route exact path="/LoginDashBoard" component={LoginDashBoard}/>
                 <Route exact path="/OTPpage" component={OTPpage}/>
+                <Route exact path="/dishesForUserView" component={dishesForUserView}/>
                 <Route exact path="/ActiveOrders" component={ActiveOrders}/>
                 <Route exact path="/paymentSystemForUsers" component={paymentSystemForUsers}/>
                 <Route exact path="/MyCart" component={MyCart}/>

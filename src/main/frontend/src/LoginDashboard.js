@@ -25,7 +25,7 @@ class LoginDashBoard extends Component{
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmailId: "maithreyi.prabhu95@gmail.com"
+                userEmailId: this.props.userEmailId
             }),
         }).then(res => {
             return res.json();
@@ -43,6 +43,12 @@ class LoginDashBoard extends Component{
 
     }
 
+    handleClick(item) {
+        console.log(item);
+
+        this.forwardToMyCart();
+    }
+
 
 
     handleSearchChange = (event) => {
@@ -54,7 +60,7 @@ class LoginDashBoard extends Component{
     }
 
     forwardToMyCart = () => {
-        this.props.history.push('/MyCart')
+        this.props.history.push('/dishesForUserView')
     }
 
     onClick= (event) => {
@@ -74,16 +80,16 @@ class LoginDashBoard extends Component{
         {
             return(
 
-                <div className="row menu_style1">
+                <div className="row menu_style1" key={itemName}>
                     <div className="col-md-4">
                         <div className="single_menu_list">
                             <img
                                 src={d.restaurantImageURL}
-                                alt=""/>
+                                alt="" onClick={this.handleClick.bind(this, d)} />
                             <div className="menu_content">
-                                <h4>{d.restaurantName} <span>{d.averagePrice}</span></h4>
-                                <p>{d.tags}</p>
-                                <p>{d.restaurantAddress}</p>
+                                <h4 onClick={this.handleClick.bind(this, d)} >{d.restaurantName} <span>{d.averagePrice}</span></h4>
+                                <p onClick={this.handleClick.bind(this, d)} >{d.tags}</p>
+                                <p onClick={this.handleClick.bind(this, d)} >{d.restaurantAddress}</p>
                             </div>
 
                         </div>
