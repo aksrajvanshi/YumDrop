@@ -13,30 +13,27 @@ class LoginDashBoard extends Component{
         userEmailId : this.props.userEmailId,
         searchResults: [{"restaurantAddress": "restaurantAddress"}],
         userAddress: "800 N Union St, Bloomington, IN 47408, USA",
-        searchQuery: ""
+        searchQuery: "",
+        recommendedRestaurants: []
     }
 
     componentDidMount () {
         let currentComponent = this
-        fetch('/getAllRestaurants',{
+        fetch('/getAllReccommendedRestaurants',{
             method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmailId: this.state.userEmailId
+                userEmailId: "maithreyi.prabhu95@gmail.com"
             }),
         }).then(res => {
             return res.json();
         }).then(res=>{
-            let x = [];
-            for (let i=0; i<res.length;i++){
-                x[i] = res[i].restaurantDetails;
-            }
             currentComponent.setState({
-                searchResults: x
+                recommendedRestaurants: res
             })
-            console.log(this.state.data)
+            console.log(this.state.recommendedRestaurants)
             if (res.status !== 200) {
             }else {
             }
@@ -46,31 +43,7 @@ class LoginDashBoard extends Component{
 
     }
 
-    getSearchResults = () => {
-        let currentComponent = this;
-        fetch('/searchRestaurantByLocationFromUserDashboard', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body:JSON.stringify({
-                userAddress: this.state.userAddress,
-                restaurantSearchKeyword: this.state.searchQuery,
-                userEmail: this.state.userEmailId
-            }),
-        }).then(res => {
-            return res.json();
-        }).then(res=>{
-            let x = [];
-            for (let i=0; i<res.length;i++){
-                x[i] = res[i].restaurantDetails;
-            }
-            currentComponent.setState({
-                searchResults: x
-            })
-            console.log(this.state.searchResults)
-        })
-    }
+
 
     handleSearchChange = (event) => {
         this.setState({searchQuery: event.target.value})
@@ -95,15 +68,40 @@ class LoginDashBoard extends Component{
 
     render() {
 
-        if(this.props.emailId === null) {
-            this.props.history.push('/')
-        }
+
+
+        let mapForRecommendedRestaurants = this.state.recommendedRestaurants.map((d,itemName)=>
+        {
+            return(
+
+                <div className="row menu_style1">
+                    <div className="col-md-4">
+                        <div className="single_menu_list">
+                            <img
+                                src={d.restaurantImageURL}
+                                alt=""/>
+                            <div className="menu_content">
+                                <h4>{d.restaurantName} <span>{d.averagePrice}</span></h4>
+                                <p>{d.tags}</p>
+                                <p>{d.restaurantAddress}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            )
+        })
       
         return (
             <div>
                 <header>
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
@@ -120,7 +118,7 @@ class LoginDashBoard extends Component{
                                         <a className="nav-link"  onClick={this.onClick} ><span>Settings</span></a>
                                     </li>
                                     <li>
-                                        <a className="nav-link" onClick={this.signOut}>Sign Out</a>
+                                        <a className="nav-link" onClick={this.signOut}>Logout</a>
                                     </li>
                                 </ul>
                             </div>
@@ -128,49 +126,8 @@ class LoginDashBoard extends Component{
                     </nav>
                 </header>
 
-                <div>
-                    <div className="col-md-4">
-                        <div className="md-form">
-                            <input type="text"
-                                   placeholder="Search for food, cuisines, restaurants here.."
-                                   className="form-control validate" onChange={(event) => this.handleSearchChange(event)}/>
-
-                        </div>
-                    </div>
-                    <div className="col-md-1" >
-                        <div className="md-form">
-                            <button className="btn btn-primary btn-md" onClick={this.getSearchResults}><span id="SearchBar">Search</span></button>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <section className="about-area pt-80">
-                        <div className="container">
-                            {this.state.searchResults.map((item, index) => {
-                                return(
-                                    <div className="row menu_style1">
-                                        <div className="col-xl-12 mb-60">
-                                            <div className="single_menu_list" id="containerForRestaurantDisplay" key={index}>
-                                                <div>
-                                                    <div className="menu_content">
-                                                        <h4>{item.restaurantName}</h4>
-                                                        <h5>{item.restaurantAddress}</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            )}
-                        </div>
-                    </section>
-                </div>
 
                 <div className="container mt-5">
-                    <div className="section-title text-center">
-                        <p>Try from the variety of Cuisines available</p>
-                        <h4>Cuisines</h4>
-                    </div>
 
                     <div className="row">
                         <div className="col-sm-2">
@@ -216,111 +173,38 @@ class LoginDashBoard extends Component{
 
                 <br/>
 
+                <br/>
+                <br/>
+
 <br/>
 <br/>
 
-
-
-                        <div>
-                            <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,900"
-                                  rel="stylesheet"/>
-                            <link href="https://fonts.googleapis.com/css?family=Oleo+Script" rel="stylesheet"/>
-
-                            <section className="about-area pt-80">
-                                <div className="container" >
-                                    <div className="row">
-                                        <div className="col-xl-12 mb-60">
-                                            <div className="section-title text-center">
-                                                <p>Popular Restaurants Near You</p>
-                                                <h4>Restaurants</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row menu_style1">
-                                        <div className="col-md-4">
-                                            <div className="single_menu_list">
-                                                <img
-                                                    src="https://www.culinaryhill.com/wp-content/uploads/2017/09/Chipotle-Steak-Recipe-Culinary-Hill-2.jpg"
-                                                    alt=""/>
-                                                <div className="menu_content">
-                                                    <h4>Chipotle <span>$8</span></h4>
-                                                    <p>Burritos, Tacos, Salads, Bowls, Chips</p>
-                                                    <h5>Mexican, Vegetarian, Vegan, Non-Vegetarian</h5>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div className="col-md-4">
-                                            <div className="single_menu_list">
-                                                <img
-                                                    src="https://assets.grab.com/wp-content/uploads/sites/4/2019/03/18143157/grabfood-singapore-delivery-dominos-700x700.jpg"
-                                                    alt=""/>
-                                                    <div className="menu_content">
-                                                        <h4>Dominos <span>Avg %15</span></h4>
-                                                        <p>Domino for pizza, sides, sandwiches, pasta, crusts, topping, breads, desserts, salads, dressings, sauce, and dipping cups!</p>
-                                                        <h5>Italian, Vegetarian, Non-Vegetarian</h5>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-4">
-                                            <div className="single_menu_list" >
-                                                <img
-                                                    src="https://pbs.twimg.com/profile_images/692830789365403649/Iw_yGrfl_400x400.jpg"
-                                                    alt=""/>
-                                                    <div className="menu_content">
-                                                        <h4>Fazoli<span>$5</span></h4>
-                                                        <p>Snacks, Breadsticks, pizza, spaghetti, pasta, sandwiches, submarines, salads</p>
-                                                        <h5>Italian, Vegetarian, Vegan, Non-Vegetarian</h5>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-4">
-                                            <div className="single_menu_list" id="containerForRestaurantDisplay">
-                                                <img
-                                                    src="https://www.mcdonalds.com/is/image/content/dam/usa/nfl/nutrition/items/regular/desktop/h-mcdonalds-Quarter-Pounder-with-Cheese-Extra-Value-Meals.jpg"
-                                                    alt=""/>
-                                                    <div className="menu_content">
-                                                        <h4>McDonald's<span>$5</span></h4>
-                                                        <p>Nuggets, Burgers, Beverages, Coffee, Salads, Burritos</p>
-                                                        <h5>American, Non-Vegetarian</h5>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-4">
-                                            <div className="single_menu_list" id="containerForRestaurantDisplay">
-                                                <img
-                                                    src="https://img.grouponcdn.com/deal/oQL9HWSYQo9PQxYG2mBC/YH-2048x1229/v1/sc600x600.jpg"
-                                                    alt=""/>
-                                                    <div className="menu_content">
-                                                        <h4>Indian Palace<span>$15</span></h4>
-                                                        <p>North Indian, Rice, Breads, Curries</p>
-                                                        <h5>Indian, Vegetarian, Vegan, Non-Vegetarian</h5>
-                                                    </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="col-md-4">
-                                            <div className="single_menu_list" id="containerForRestaurantDisplay">
-                                                <img
-                                                    src="http://infinityflamesoft.com/html/restarunt-preview/assets/img/menu/menu-3.jpg"
-                                                    alt=""/>
-                                                    <div className="menu_content">
-                                                        <h4>Kha Thai<span>$15</span></h4>
-                                                        <p>Soups, Appetizers, Rice, Salads, Grill</p>
-                                                        <h5>Thai, Vegetarian, Vegan, Non-Vegetarian</h5>
-                                                    </div>
-                                            </div>
-                                        </div>
-
-                                        <br/><br/><br/><br/><br/>
-
-
-                                    </div></div>
-                                <br/><br/><br/><br/><br/>
-                            </section>
-                            <br/><br/><br/><br/><br/>
-                            <a href="#"></a>
+                <div>
+                    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,900"
+                          rel="stylesheet"/>
+                    <link href="https://fonts.googleapis.com/css?family=Oleo+Script" rel="stylesheet"/>
+                    <div className="row">
+                        <div className="col-xl-12 mb-60">
+                            <div className="section-title text-center">
+                                <h4>Popular Restaurants Near You</h4>
+                            </div>
                         </div>
+                    </div>
+                    <section className="about-area pt-80">
+                        <div className="container" >
+
+                            {mapForRecommendedRestaurants}
+                                <br/><br/><br/><br/><br/>
+
+
+                            </div>
+                        <br/><br/><br/><br/><br/>
+                    </section>
+                    <br/><br/><br/><br/><br/>
+                    <a href="#"></a>
+                </div>
+
+
 
 
             </div>

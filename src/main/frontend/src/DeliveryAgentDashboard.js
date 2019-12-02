@@ -30,7 +30,8 @@ class DeliveryAgentDashboard extends Component{
         userName: "",
         userAddress: "",
         noOrders: false,
-        chatRequest: false
+        chatRequest: false,
+        ActiveOrder: false
     }
     componentWillMount() {
         let currentComponent = this;
@@ -54,12 +55,13 @@ class DeliveryAgentDashboard extends Component{
             }).then(res => {
             let x = JSON.stringify(res)
             return x;
-        }).then(response => {
+        }).then(res => {
             currentComponent.setState({
                 restaurantName: res.restaurantName,
                 restaurantAddress: res.restaurantAddress,
                 userName: res.userName,
-                userAddress: res.userAddress
+                userAddress: res.userAddress,
+                ActiveOrder: true
             })
         }).then(res=>{
             fetch('/checkForChatReuqestForDeliveryAgentFromUser',{
@@ -89,21 +91,15 @@ class DeliveryAgentDashboard extends Component{
 
 
 
-    forwardToAddingAnItem = () => {
-        this.props.history.push("/RestaurantAddMenuForm");
-    }
 
     signOut = () => {
         this.props.signOut();
         this.props.history.push('/');
     }
 
-    forwardToRestaurantSettingsPage = () => {
-        this.props.history.push("/RestaurantSettingsPage");
-    }
 
     forwardToLogiDashboard = () => {
-        this.props.history.push("/RestaurantDashboard");
+        this.props.history.push("/DeliveryAgentDashboard");
     }
     render() {
         if(this.props.restaurantId === null) {
@@ -164,7 +160,7 @@ class DeliveryAgentDashboard extends Component{
                     <div className="row">
                         <div className="col-md-10">
                             <div className="panel panel-default">
-                                <div className="panel-heading"><strong>Menu</strong></div>
+                                <div className="panel-heading"><strong>Active Order</strong></div>
                                 <div className="panel-body">
                                     <table className="table table-striped">
                                         <thead>
@@ -215,6 +211,31 @@ class DeliveryAgentDashboard extends Component{
                         </div>
                     </div>
                 </div>
+
+                <Modal
+                    show={this.state.ActiveOrder}
+                    animation={false}
+                    id="modal"
+                >
+                    <div className="container">
+                        <div className="row">
+                            <div className="main">
+                                <div className="login-form">
+                                    <form>
+                                        <h2 className="text-center">A new Order has been assigned to you</h2>
+                                        <div className="form-group">
+                                            <button onClick={this.signOut} type="submit"
+                                                    className="btn btn-primary btn-lg btn-block login-btn">Please start navigation
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </Modal>
 
 
                 <Modal

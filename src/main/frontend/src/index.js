@@ -9,6 +9,7 @@ import RegisterForm from "./RegisterForm";
 import AddItemToMenu from "./AddItemToMenu";
 import { Route, BrowserRouter as Router} from 'react-router-dom';
 import LoginDashBoard from "./LoginDashboard";
+import tryingForRoutes from "./tryingForRoutes"
 import OTPpage from "./OTPpage";
 import errorPageForRegistration from "./errorPageForRegistration";
 import MySettingsPage from "./MySettingsPage";
@@ -85,6 +86,7 @@ const routing = (
                 <Route exact path="/LoginPage" component={LoginPage} />
                 <Route exact path="/LoginForm" component={LoginForm} />
                 <Route exact path="/RegisterForm" component={RegisterForm}/>
+                <Route exact path="/tryingForRoutes" component={tryingForRoutes}/>
                 <Route exact path="/LoginDashBoard" component={LoginDashBoard}/>
                 <Route exact path="/OTPpage" component={OTPpage}/>
                 <Route exact path="/ActiveOrders" component={ActiveOrders}/>

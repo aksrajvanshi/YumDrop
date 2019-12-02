@@ -33,7 +33,8 @@
     "redux": "^4.0.4",
     "socket.io": "^2.3.0",
     "url": "^0.11.0",
-    "validator": "^11.1.0"
+    "validator": "^11.1.0",
+    "recompose": "latest"
   },
   "scripts": {
     "start": "concurrently 'npm run react' 'npm run server'",
