@@ -13,6 +13,10 @@ public class RestaurantDetails {
 
         }
 
+    public RestaurantDetails(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+
     public RestaurantDetails(String restaurantId, String restaurantPrimaryEmailId) {
         this.restaurantId = restaurantId;
         this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
