@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import Calendar from 'react-calendar';
 import TimePicker from 'react-time-picker';
 import StripeCheckout from "react-stripe-checkout";
+import StarRatingComponent from 'react-star-rating-component';
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -15,9 +16,38 @@ class MyCart extends React.Component {
         dishesForUserDisplay: [],
         scheduleDelivery: false,
         startDate: new Date(),
-        time: '10:00'
+        time: '10:00',
+        rating: 0,
+        provideRatings: false
 
     }
+
+    onStarClick(nextValue, prevValue, name) {
+        let currentComponent = this;
+        console.log(nextValue)
+        fetch('/rateRestaurant',{
+            method: 'POST',
+            redirect: 'follow',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                userEmail: this.props.userEmailId,
+                restaurantId: "abc12",
+                restaurantRating: nextValue
+            })})
+            .then(res => {
+                console.log(res)
+                if (res.status === 200){
+                    this.forwardToLoginDashboard('/LoginDashboard')
+                }
+
+            })
+
+
+    }
+
 
     onChange = date => this.setState({ date })
     handleChange = date => {
@@ -128,10 +158,62 @@ class MyCart extends React.Component {
                     console.log(this.state.data)
                 })
             }
+    sendCardDetailsForPayment = () => {
+        fetch('/payForUserCart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userEmail: this.props.userEmailId,
+                email: this.state.email,
+                brand: this.state.brand,
+                country: this.state.country,
+                cvc_check: this.state.cvc_check,
+                exp_month: this.state.exp_month,
+                funding: this.state.funding,
+                last4: this.state.last4
+            }),
+        }).then(res => {
+            if (res.status===200){
+                this.setState({
+                    provideRatings: true
+                });
+            }
+            else{
+                alert("Invalid Card details");
+            }
+        })
+
+    }
+
+    handleTokenAPI = (token) => {
+        console.log("Insdie this");
+        console.log(token.email);
+        console.log("Later");
+        console.log(token.card.brand);
+        console.log(token.card.country);
+        console.log(token.card.cvc_check);
+        console.log(token.card.exp_month);
+        console.log(token.card.exp_year);
+        console.log(token.card.funding);
+        console.log(token.card.last4);
+        this.setState({
+            email: token.email,
+            brand: token.card.brand,
+            country: token.country,
+            cvc_check: token.card.cvc_check,
+            exp_month: token.card.exp_month,
+            funding: token.card.funding,
+            last4: token.card.last4
+        })
+        console.log("End")
+        this.sendCardDetailsForPayment();
+    }
 
 
     render() {
-
+        const { rating } = this.state;
 
         let mapDishesForUserView = this.state.dishesForUserDisplay.map((d,itemName)=>
         {
@@ -287,6 +369,37 @@ class MyCart extends React.Component {
                     </div>
 
                 </Modal>
+
+                <Modal
+                    show={this.state.provideRatings}
+                    onHide={this.closeAllOptionsOfSelectionForm}
+                    animation={false}
+                    centered id="modal"
+                >
+                    <div className="container">
+                        <div className="row">
+                            <div className="main">
+                                <div className="login-form">
+                                    <div>
+                                        <div>
+                                            <h2>Rating from state: {rating}</h2>
+                                            <StarRatingComponent
+                                                name="rate your food"
+                                                starCount={5}
+                                                value={rating}
+                                                onStarClick={this.onStarClick.bind(this)}
+                                            />
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </Modal>
+
 
             </div>
         )

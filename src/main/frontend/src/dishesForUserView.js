@@ -51,7 +51,7 @@ class dishesForUserView extends React.Component{
     handleClick(item) {
         console.log(item);
         let currentComponent = this;
-        fetch('/addItemToMyCart',{
+        fetch('/addDishToUserCart',{
             method: 'POST',
             redirect: 'follow',
             headers: {
@@ -61,7 +61,10 @@ class dishesForUserView extends React.Component{
             body: JSON.stringify({
                 userEmailId: this.props.userEmailId,
                 dishName: item.dishName,
-                restaurantId: "abc12",})})
+                restaurantId: "abc12",
+                dishPrice : item.dishPrice,
+                dishQuantity : item.dishQuantity
+            })})
             .then(res => {
                 console.log(res)
                 return res.json()
@@ -84,7 +87,7 @@ class dishesForUserView extends React.Component{
 
                         <div className="col-md-8 col-sm-8 col-xs-8">
                             <a href="#" className="btn btn-success btn-product"><span
-                                className="glyphicon glyphicon-shopping-cart"></span> Add 2 Cart</a>
+                                className="glyphicon glyphicon-shopping-cart" onClick={this.handleClick.bind(this, d)}></span> Add to Cart</a>
                         </div>
                     </td>
                 </tr>

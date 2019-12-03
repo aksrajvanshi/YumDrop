@@ -4,6 +4,7 @@ import './DeliveryAgentDashboardCSS.css';
 import connect from "react-redux/lib/connect/connect";
 import {Modal} from "react-bootstrap";
 
+
 const mapStateToProps = (state)=>{
     return {
         deliveryAgentEmailId: state.userId
@@ -35,6 +36,7 @@ class DeliveryAgentDashboard extends Component{
     }
     componentWillMount() {
         let currentComponent = this;
+
         fetch('/getActiveDeliveryOrderForDeliveryAgent',{
             method: 'POST',
             redirect: 'follow',
@@ -96,6 +98,8 @@ class DeliveryAgentDashboard extends Component{
 
 
 
+
+
     signOut = () => {
         this.props.signOut();
         this.props.history.push('/');
@@ -118,13 +122,15 @@ class DeliveryAgentDashboard extends Component{
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+                    <script src="http://maps.google.com/maps/api/js?key=AIzaSyCTauVKI3dyYkyA3a7Xq9xUZ3LxXBFZzKE"></script>
+                    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
                     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans"/>
                     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
                     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
                     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
                     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
@@ -296,5 +302,6 @@ class DeliveryAgentDashboard extends Component{
         )
     }
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps) (DeliveryAgentDashboard);
