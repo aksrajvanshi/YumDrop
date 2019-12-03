@@ -37,8 +37,10 @@ public class FoodOrderServiceImpl implements FoodOrderService {
         }
 
         String orderContents = "";
+        Double orderPrice = 0.0;
         for (int i = 0; i < cartContents.size(); i++) {
             orderContents += cartContents.get(i).getDishName() + "," + cartContents.get(i).getDishQuantity() + ";";
+            orderPrice += cartContents.get(i).getDishQuantity() * cartContents.get(i).getDishPrice();
         }
         String finalOrderContents = "";
         finalOrderContents = orderContents.substring(0, orderContents.length() - 1);
@@ -47,7 +49,7 @@ public class FoodOrderServiceImpl implements FoodOrderService {
         UserOrderId userOrderId = new UserOrderId(userOrderDetails.getUserEmail(), userOrderDetails.getRestaurantId());
         Long orderId = userOrderRepository.getNextSeriesId();
         UserOrder userOrderToPlace = new UserOrder
-                (userOrderId, userOrderDetails.getOrderStatus(), finalOrderContents, orderId);
+                (userOrderId, userOrderDetails.getOrderStatus(), finalOrderContents, orderId, orderPrice);
         UserOrder savedUserOrder = userOrderRepository.save(userOrderToPlace);
         userCartRepository.deleteByuserEmail(userOrderDetails.getUserEmail());
 

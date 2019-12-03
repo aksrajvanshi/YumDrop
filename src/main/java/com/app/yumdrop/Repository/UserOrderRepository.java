@@ -17,4 +17,6 @@ public interface UserOrderRepository extends CrudRepository<UserOrder, UserOrder
 
     List<UserOrder> findByrestaurantId(String restaurantId);
 
+    UserOrder findByorderId(Long orderId);
+
 }

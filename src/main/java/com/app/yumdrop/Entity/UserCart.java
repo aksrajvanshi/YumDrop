@@ -14,14 +14,22 @@ public class UserCart {
     @Email(message = "user email should be a valid email")
     private String userEmail;
 
-    @Id
+
     @NotNull
+    @Column(name = "dish_name", nullable = false)
     private String dishName;
 
+    @NotNull
+    @Column(name = "dish_quantity", nullable = false)
     private int dishQuantity;
+
+    @NotNull
+    @Column(name = "dish_price", nullable = false)
+    private Double dishPrice;
 
     @Id
     @NotNull
+    @Column(name = "restaurant_id", nullable = false)
     private String restaurantId;
 
     public UserCart() {
@@ -44,14 +52,31 @@ public class UserCart {
         this.restaurantId = restaurantId;
     }
 
+    public UserCart(@Email(message = "user email should be a valid email") String userEmail, @NotNull String dishName, @NotNull int dishQuantity, @NotNull Double dishPrice, @NotNull String restaurantId) {
+        this.userEmail = userEmail;
+        this.dishName = dishName;
+        this.dishQuantity = dishQuantity;
+        this.dishPrice = dishPrice;
+        this.restaurantId = restaurantId;
+    }
+
     @Override
     public String toString() {
         return "UserCart{" +
                 "userEmail='" + userEmail + '\'' +
                 ", dishName='" + dishName + '\'' +
-                ", dishQuantity='" + dishQuantity + '\'' +
+                ", dishQuantity=" + dishQuantity +
+                ", dishPrice=" + dishPrice +
                 ", restaurantId='" + restaurantId + '\'' +
                 '}';
+    }
+
+    public Double getDishPrice() {
+        return dishPrice;
+    }
+
+    public void setDishPrice(Double dishPrice) {
+        this.dishPrice = dishPrice;
     }
 
     public String getUserEmail() {

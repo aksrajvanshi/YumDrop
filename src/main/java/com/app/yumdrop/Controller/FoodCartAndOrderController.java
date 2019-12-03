@@ -33,6 +33,11 @@ public class FoodCartAndOrderController {
     @Autowired
     UserOrderRepository userOrderRepository;
 
+    /**
+     * Adding an item to user cart table
+     * @param userCartItem
+     * @return
+     */
     @RequestMapping(value = "/addDishToUserCart", method = RequestMethod.POST)
     public ResponseEntity<?> addDishToUserCart(@RequestBody UserCart userCartItem) {
         UserCart cartItemSaved = userCartRepository.save(userCartItem);
@@ -67,6 +72,13 @@ public class FoodCartAndOrderController {
         return foodOrderService.getCurrentRestaurantOrders(restaurantDetails);
     }
 
+    @RequestMapping(value = "/changeOrderStatusFromRestaurant", method = RequestMethod.POST)
+    public ResponseEntity<?> changeOrderStatusFromRestaurant(@RequestBody UserOrder orderDetails) {
 
+        UserOrder orderInDb = userOrderRepository.findByorderId(orderDetails.getOrderId());
+        orderInDb.setOrderStatus(orderDetails.getOrderStatus());
+        userOrderRepository.save(orderInDb);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
 }

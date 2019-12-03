@@ -29,11 +29,21 @@ public class UserOrder extends CreateAndUpdateTimeModel {
     @Column(name = "order_contents", nullable = false)
     private String orderContents;
 
+    @Column(name = "order_price", nullable = false)
+    private Double orderPrice;
+
     public UserOrder() {
     }
 
     public UserOrder(@Email(message = "user email should be a valid email") String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public UserOrder(Long orderId, @Email(message = "user email should be a valid email") String userEmail, @NotNull String restaurantId, String orderContents) {
+        this.orderId = orderId;
+        this.userEmail = userEmail;
+        this.restaurantId = restaurantId;
+        this.orderContents = orderContents;
     }
 
     public UserOrder(Long orderId, @Email(message = "user email should be a valid email") String userEmail, @NotNull String restaurantId, int orderStatus, String orderContents) {
@@ -50,6 +60,23 @@ public class UserOrder extends CreateAndUpdateTimeModel {
         this.restaurantId = userOrderId.getRestaurantId();
         this.orderStatus = orderStatus;
         this.orderContents = orderContents;
+    }
+
+    public UserOrder(UserOrderId userOrderId, int orderStatus, String orderContents, Long orderId, Double orderPrice) {
+        this.orderId = orderId;
+        this.userEmail = userOrderId.getUserEmail();
+        this.restaurantId = userOrderId.getRestaurantId();
+        this.orderStatus = orderStatus;
+        this.orderContents = orderContents;
+        this.orderPrice = orderPrice;
+    }
+
+    public Double getOrderPrice() {
+        return orderPrice;
+    }
+
+    public void setOrderPrice(Double orderPrice) {
+        this.orderPrice = orderPrice;
     }
 
     public Long getOrderId() {
