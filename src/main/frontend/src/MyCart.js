@@ -103,6 +103,8 @@ class MyCart extends React.Component {
             },
             body: JSON.stringify({
                 userEmail: this.props.userEmailId,
+                time: this.state.time,
+                dateForScheduling: this.state.startDate
 
             })})
             .then(res => {
