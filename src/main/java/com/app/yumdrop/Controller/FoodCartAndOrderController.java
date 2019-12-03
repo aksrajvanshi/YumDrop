@@ -52,32 +52,70 @@ public class FoodCartAndOrderController {
         }
     }
 
+    /**
+     * load user cart data for user.
+     * @param userCartItem
+     * @return
+     */
     @RequestMapping(value = "/getUserDataForMyCart", method = RequestMethod.POST)
     public ResponseEntity<?> getUserDataForCart(@RequestBody UserCart userCartItem) {
         List<UserCart> userCartItems = userCartRepository.findByuserEmail(userCartItem.getUserEmail());
         return new ResponseEntity<>(userCartItems, HttpStatus.OK);
     }
 
+    /**
+     * create an order for the user
+     * @param userOrderDetails
+     * @return
+     */
     @RequestMapping(value = "/makeUserOrder", method = RequestMethod.POST)
     public ResponseEntity<?> createUserOrder(@RequestBody UserOrder userOrderDetails) {
         return foodOrderService.createFoodOrder(userOrderDetails);
     }
+
+    /**
+     * get current active orders for a user
+     * @param userOrderDetails
+     * @return
+     */
     @RequestMapping(value = "/getCurrentActiveOrderForUser", method = RequestMethod.POST)
     public ResponseEntity<?> getCurrentOrdersForUser(@RequestBody UserOrder userOrderDetails) {
         return foodOrderService.getCurrentUserOrders(userOrderDetails);
     }
 
+    /**
+     * get current active orders for a restaurant
+     * @param restaurantDetails
+     * @return
+     */
     @RequestMapping(value = "/getCurrentActiveOrderForRestaurant", method = RequestMethod.POST)
     public ResponseEntity<?> getCurrentOrdersForRestaurant(@RequestBody RestaurantDetails restaurantDetails) {
         return foodOrderService.getCurrentRestaurantOrders(restaurantDetails);
     }
 
+    /**
+     * restaurant notifying that food order is ready
+     * @param orderDetails
+     * @return
+     */
     @RequestMapping(value = "/changeOrderStatusFromRestaurant", method = RequestMethod.POST)
     public ResponseEntity<?> changeOrderStatusFromRestaurant(@RequestBody UserOrder orderDetails) {
 
         UserOrder orderInDb = userOrderRepository.findByorderId(orderDetails.getOrderId());
         orderInDb.setOrderStatus(orderDetails.getOrderStatus());
         userOrderRepository.save(orderInDb);
+        // TODO find nearest free delivery agent guy to assign order to!
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    /**
+     * delivery agent notifying that food order is ready
+     * @param orderDetails
+     * @return
+     */
+    @RequestMapping(value = "/changeOrderStatusFromDeliveryAgent", method = RequestMethod.POST)
+    public ResponseEntity<?> changeOrderStatusFromDeliveryAgent(@RequestBody UserOrder orderDetails) {
+
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

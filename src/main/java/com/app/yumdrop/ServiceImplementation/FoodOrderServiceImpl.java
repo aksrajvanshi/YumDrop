@@ -85,6 +85,7 @@ public class FoodOrderServiceImpl implements FoodOrderService {
         List<UserOrder> getAllRestaurantOrders = userOrderRepository.findByrestaurantId(restaurantDetail.getRestaurantId());
         List<Integer> indexToRemove = new ArrayList<>();
         for (int i = 0; i < getAllRestaurantOrders.size(); i++) {
+            // remove orders that are already delivered
             if (getAllRestaurantOrders.get(i).getOrderStatus() == 3) {
                 indexToRemove.add(i);
             }
