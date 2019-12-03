@@ -12,7 +12,9 @@ class RestaurantActiveOrders extends React.Component{
     state = {
         userName: "",
         restaurantDishResults: [],
-        chatReqest: true
+        chatReqest: false,
+        activeOrdersForRestaurantDisplay: [],
+        errorSelect: false
     }
 
     goToChatFeature = () => {
@@ -36,43 +38,12 @@ class RestaurantActiveOrders extends React.Component{
                 })
             }
             return res.json();
-        }).then(res=>{
-            console.log("Second Response received")
-            console.log(res)
-            console.log(res.length)
-            let x = [];
-            for (let i=0; i<res.length;i++){
-                x[i] = res[i].DishDetails;
-            }
+        }).then(response => {
             currentComponent.setState({
-                restaurantDishResults: x
+                activeOrdersForRestaurantDisplay: response
             })
-            console.log(this.state.restaurantDishResults);
-        }).then( res => {
-        console.log(this.state.restaurantDishResults)
-            console.log("Inside the fetch second one")
-        fetch('/getCurrentActiveOrderUserDetails', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body:JSON.stringify({
-                restaurantId: this.props.restaurantId,
-            }),
-        }).then(res => {
-            console.log("Inside the fetch third one")
-            if (res.status === 200){
-                this.setState({
-                    userName: res.userName
-                })
-                console.log(this.state.restaurantName)
-            }
-            else{
-                console.log("Cant Chat")
-            }
-        })
-
-    }).then(res => {
+            console.log(response)})
+        .then(res => {
         console.log("fourth one")
         fetch('/checkForUserChatRequest', {
             method: 'POST',
@@ -95,6 +66,35 @@ class RestaurantActiveOrders extends React.Component{
     }
 
     render(){
+
+        let mapactiveOrdersForRestaurantDisplay = this.state.activeOrdersForRestaurantDisplay.map((d,itemName)=>
+        {
+            return(
+
+                <tr key={itemName}>
+                    <td><img src="http://placehold.it/100x100" alt="..."
+                             className="img-responsive"/></td>
+                    <td>{d.userEmail}</td>
+                    <td>{d.orderId}
+                    </td>
+                    <td>{d.dishNames}</td>
+                    <td>{d.totalPrice}</td>
+                    <td>{d.OrderStatus}</td>
+                    <td className="td-actions">
+
+                        <div className="col-md-8 col-sm-8 col-xs-8">
+                            <a href="#" className="btn btn-success btn-product"><span
+                                className="glyphicon btn-success"></span>Order completed?</a>
+                        </div>
+                    </td>
+                </tr>
+
+
+
+
+
+            )
+        })
     return (
         <div>
             <header>
@@ -175,41 +175,39 @@ class RestaurantActiveOrders extends React.Component{
 
             </Modal>
 
-            <br/>
-            <br/>
-            <div className="container">
+            <br/><br/><br/>
 
-                <table className="table">
+            <div className="span7">
+                <div className="widget stacked widget-table action-table">
+                    <div className="widget-header">
+                        <i className="icon-th-list"></i>
+                        <h3>Customer Details and Order Details</h3>
+                    </div>
+                    <div className="widget-content">
 
-                    <thead>
-                    <caption id="tableCaption" className="text-uppercase"><strong><h4>{this.state.userName}</h4></strong></caption>
-                    <tr>
-
-                        <th>Item Name</th>
-                        <th>Cost</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    {this.state.restaurantDishResults.map((item, index) =>{
-                        return (
+                        <table className="table table-striped table-bordered">
+                            <thead>
                             <tr>
-
-                                <td>
-                                    <h4><a href="#" key={index}>{item.dishName}</a></h4>
-                                </td>
-
-                                <td ><strong>{item.dishPrice}</strong></td>
-
+                                <th>Customer Name</th>
+                                <th>Order Id</th>
+                                <th>Dishes</th>
+                                <th>Order status</th>
+                                <th className="td-actions"></th>
                             </tr>
-                        )
-                    })}
-                    <br/>
+                            </thead>
+                            <tbody>
+                            {mapactiveOrdersForRestaurantDisplay}
+                            </tbody>
+                            <tfoot>
+                            <td></td>
+                            <td></td>
 
+                            </tfoot>
+                        </table>
 
-                    </tbody>
-                </table>
+                    </div>
+
+                </div>
             </div>
         </div>)
     }

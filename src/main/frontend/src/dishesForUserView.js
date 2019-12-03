@@ -72,29 +72,24 @@ class dishesForUserView extends React.Component{
         let mapDishesForUserView = this.state.dishesForUserDisplay.map((d,itemName)=>
         {
             return(
-                <tr>
-                    <td data-th="Product" key={itemName}>
-                        <div className="row">
-                            <div className="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..."
-                                                                     className="img-responsive"/></div>
 
-                        </div>
+                <tr key={itemName}>
+                    <td><img src="http://placehold.it/100x100" alt="..."
+                             className="img-responsive"/></td>
+                    <td>{d.dishName}</td>
+                    <td>{d.dishDescription}
                     </td>
-                    <td><div className="col-sm-10">
-                        <h4 className="nomargin">{d.dishName}</h4>
+                    <td>{d.dishPrice}</td>
+                    <td className="td-actions">
 
-                    </div></td>
-                    <td> <div className="col-sm-10"> <p>{d.dishDescription}</p></div></td>
-                    <td data-th="Price">{d.dishPrice}</td>
-
-
-                    <td className="actions" data-th="">
                         <div className="col-md-8 col-sm-8 col-xs-8">
                             <a href="#" className="btn btn-success btn-product"><span
-                                className="glyphicon glyphicon-shopping-cart" onClick={this.handleClick.bind(this, d)}></span> Add to Cart</a>
+                                className="glyphicon glyphicon-shopping-cart"></span> Add 2 Cart</a>
                         </div>
                     </td>
                 </tr>
+
+
 
 
 
@@ -143,41 +138,54 @@ class dishesForUserView extends React.Component{
                 <br/>
                 <br/>
                 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
-                <div className="container">
-                    <table id="cart" className="table table-hover table-condensed">
-                        <thead>
-                        <tr>
-                            <th id="dishDisplayTable">Dish Image</th>
-                            <th id="dishDisplayTable" >Dish Name</th>
-                            <th id="dishDisplayTable" > Dish description </th>
-                            <th id="dishDisplayTable">Dish Price</th>
-                            <th id="dishDisplayTable">Add to Cart</th>
-                            <th id="dishDisplayTable"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {mapDishesForUserView}
-                        </tbody>
-                        <tfoot>
+                <div className="span7">
+                    <div className="widget stacked widget-table action-table">
+                        <div className="widget-header">
+                            <i className="icon-th-list"></i>
+                            <h3>Dishes</h3>
+                        </div>
+                        <div className="widget-content">
 
-                        <tr>
-                            <tr className="visible-xs">
-                                <td className="text-center"><strong></strong></td>
+                            <table className="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Dish Image</th>
+                                    <th>Dish Name</th>
+                                    <th>Dish Description</th>
+                                    <th>Dish Price</th>
+                                    <th id="dishDisplayTable">Add to Cart</th>
+                                    <th className="td-actions"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {mapDishesForUserView}
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <tr className="visible-xs">
+                                        <td className="text-center"><strong></strong></td>
 
-                            </tr>
-                        </tr>
-                            <tr>
-                                <td><a href="#" className="btn btn-warning"><i
-                                    className="fa fa-angle-left"></i>Home Page</a></td>
+                                    </tr>
+                                </tr>
+                                <tr>
+                                    <td><a href="#" className="btn btn-warning"><i
+                                        className="fa fa-angle-left"></i>Home Page</a></td>
 
-                            <td colSpan="2" className="hidden-xs"></td>
-                            <td><a
-                                className="btn btn-success btn-block" onClick={this.forwardToMyCart}>My Cart <i className="fa fa-angle-right"></i></a>
-                            </td>
-                        </tr>
-                        </tfoot>
-                    </table>
+                                    <td colSpan="2" className="hidden-xs"></td>
+                                    <td><a
+                                        className="btn btn-success btn-block" onClick={this.forwardToMyCart}>My Cart <i className="fa fa-angle-right"></i></a>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+
+                    </div>
                 </div>
+
+
+
 
             </div>
         )
