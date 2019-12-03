@@ -120,6 +120,16 @@ class RestaurantAddMenuForm extends Component{
 
             }
         ).then(res => {
+            if (res.status !== 200) {
+                this.setState({
+                    errorSelect: true,
+                    data: res.data
+                })
+
+            }else {
+                console.log("Inside this")
+                this.goToRestaurantDashboard();
+            }
             return res.json();
         })
             .then(res => {

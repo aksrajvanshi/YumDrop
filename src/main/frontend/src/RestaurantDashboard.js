@@ -136,6 +136,9 @@ class RestaurantDashboard extends Component{
         let mapFunction = this.state.data.map((d,itemName) =>{
                 return (
                     <tr key={itemName}>
+                        <td><img
+                            src="https://cdn1.iconfinder.com/data/icons/dishes-glyph/128/yumminky-yumminky-cooking-dishes-44-512.png" height="20%" width="20%"
+                            alt=""  /></td>
                         <td>{d.dishName}</td>
                         <td>{d.dishDescription}
                         </td>
@@ -201,7 +204,7 @@ class RestaurantDashboard extends Component{
                             <table className="table table-striped table-bordered">
                                 <thead>
                                 <tr>
-
+                                    <th>Dish Image</th>
                                     <th>Dish Name</th>
                                     <th>Dish Description</th>
                                     <th>Dish Price</th>
@@ -211,6 +214,13 @@ class RestaurantDashboard extends Component{
                                 <tbody>
                                 {mapFunction}
                                 </tbody>
+                            <tfoot>
+                            <td></td>
+                            <td></td>
+                           <td> <a
+                                className="btn btn-success btn-block" onClick={this.forwardToAddingAnItem}>Add item <i className="fa fa-angle-right"></i></a>
+                           </td>
+                            </tfoot>
                             </table>
 
                         </div>

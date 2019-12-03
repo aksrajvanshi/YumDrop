@@ -15,6 +15,9 @@
     "react-chat-window": "^1.2.1",
     "react-convert-image": "^0.5.0",
     "react-country-region-selector": "^1.4.5",
+    "react-datepicker": "^2.10.1",
+    "react-datetime": "^2.16.3",
+    "react-datetime-picker": "^2.8.0",
     "react-dom": "^16.10.1",
     "react-google-login": "^5.0.7",
     "react-google-maps": "^9.4.5",
@@ -30,11 +33,13 @@
     "react-stripe-checkout": "^2.6.3",
     "react-telephone-input": "^4.73.4",
     "reactstrap": "^8.0.1",
+    "recompose": "latest",
     "redux": "^4.0.4",
     "socket.io": "^2.3.0",
     "url": "^0.11.0",
     "validator": "^11.1.0",
-    "recompose": "latest"
+    "react-calendar": "latest",
+    "react-time-picker": "latest"
   },
   "scripts": {
     "start": "concurrently 'npm run react' 'npm run server'",

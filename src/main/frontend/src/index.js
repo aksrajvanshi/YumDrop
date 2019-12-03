@@ -47,6 +47,7 @@ import userChatStartButton from "./userChatStartButton";
 import ActiveOrders from "./ActiveOrders";
 import RestaurantActiveOrders from "./RestaurantActiveOrders";
 import dishesForUserView from "./dishesForUserView";
+import tryStripeCheckout from "./tryStripeCheckout";
 
 const initialState = {
     latitude: null,
@@ -84,6 +85,7 @@ const routing = (
                 <Route exact path="/" component={App} />
                 <Route exact path="/ErrorPageForRestaurantRegistration" component={ErrorPageForRestaurantRegistration}/>
                 <Route exact path="/Home" component={Home}/>
+                <Route exact path="/tryStripeCheckout" component={tryStripeCheckout}/>
                 <Route exact path="/LoginPage" component={LoginPage} />
                 <Route exact path="/LoginForm" component={LoginForm} />
                 <Route exact path="/RegisterForm" component={RegisterForm}/>

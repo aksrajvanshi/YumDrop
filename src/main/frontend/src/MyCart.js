@@ -1,173 +1,120 @@
-import React, { Component } from "react";
-import './MySettingsPage.css';
-import {connect} from "react-redux";
-import './LoginDashBoardCSS.css';
-import StripeCheckout from "react-stripe-checkout";
+import React from "react"
+import {Modal} from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import Calendar from 'react-calendar';
+import TimePicker from 'react-time-picker';
 
-function handleToken(token){
-    console.log(token)
-}
-const mapStateToProps = (state)=>{
-    return {
-        userEmailId: state.userId
-    }
-}
+import "react-datepicker/dist/react-datepicker.css";
 
-const mapDispatchToProps = (dispatch)=> {
-    return {
-        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
-        signOut: () => dispatch({type: "signOut"})
-    }
-}
 
-class MyCart extends React.Component{
+class MyCart extends React.Component {
     state = {
+        totalPrice: 1,
+        restaurantName: "mai",
         dishesForUserDisplay: [],
-        dataReceived: [],
-        userName: "",
-        userEmailId:  "",
-        userPhoneNumber: "",
-        email: "",
-        brand: "",
-        country: "",
-        cvc_check: "",
-        exp_month: "",
-        funding: "",
-        last4: ""
+        scheduleDelivery: false,
+        startDate: new Date(),
+        time: '10:00'
+
     }
+
+    onChange = date => this.setState({ date })
+    handleChange = date => {
+        this.setState({
+            startDate: date
+        });
+    };
+
+    onChangetime = time => this.setState({ time })
+
+
 
 
     componentWillMount() {
 
-            let currentComponent = this;
-            fetch('/getUserDataForMyCart',{
-                method: 'POST',
-                redirect: 'follow',
-                headers: {
-                    "Content-Type": "application/json",
-                    'Access-Control-Allow-Origin': '*'
-                },
-                body: JSON.stringify({
-                    userEmail: this.props.userEmailId,})})
-                .then(res => {
-                    console.log(res)
-                    return res.json()
-                }).then(response => {
-                currentComponent.setState({
-                    dishesForUserDisplay: response
-                })
-                console.log(response)})
-            console.log(this.state.data)
-
-
-    }
-    forwardToSettingsPage = () => {
-        this.props.history.push('/MySettingsPage');
-    }
-
-    forwardToMyCart = () => {
-        this.props.history.push('/MyCart')
-    }
-
-    onClick= (event) => {
-        this.forwardToSettingsPage();
-    }
-
-    signOut = () => {
-        this.props.signOut();
-        this.props.history.push('/');
-    }
-
-    returnToLoginDahboard = () => {
-        this.props.history.push('/errorPageForRegistration');
-    }
-    forwardToMyCurrentLocation = () => {
-        this.props.history.push('/MyCurrentLocation');
-    }
-
-    forwardToPaymentPage = () => {
-        this.props.history.push('/paymentSystemForUsers')
-    }
-
-
-    forwardToSettingsAddresses = () => {
-        this.props.history.push('/UserSettingsPageAddresses')
-    }
-
-    settingsPage = () => {
-        this.props.history.push('/MySettingsPage')
-    }
-
-    goBackToLoginDashboard = () => {
-        this.props.history.push('/LoginDashboard')
-    }
-
-    c
-
-    forwardToMyOrdersPage = () => {
-        this.props.history.push('/MyOderListSettings')
-    }
-
-    handleTokenAPI = (token) => {
-        console.log("Insdie this");
-        console.log(token.email);
-        console.log("Later");
-        console.log(token.card.brand);
-        console.log(token.card.country);
-        console.log(token.card.cvc_check);
-        console.log(token.card.exp_month);
-        console.log(token.card.exp_year);
-        console.log(token.card.funding);
-        console.log(token.card.last4);
-        this.setState({
-            email: token.email,
-            brand: token.card.brand,
-            country: token.country,
-            cvc_check: token.card.cvc_check,
-            exp_month: token.card.exp_month,
-            funding: token.card.funding,
-            last4: token.card.last4
-        })
-        console.log("End")
-        this.sendCardDetailsForPayment();
-    }
-
-    sendCardDetailsForPayment = () => {
-        fetch('/payForUserCart', {
+        let currentComponent = this;
+        fetch('/getUserDataForMyCart',{
             method: 'POST',
+            redirect: 'follow',
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
             },
-            body:JSON.stringify({
-                userEmail: this.props.userEmailId,
-                email: this.state.email,
-                brand: this.state.brand,
-                country: this.state.country,
-                cvc_check: this.state.cvc_check,
-                exp_month: this.state.exp_month,
-                funding: this.state.funding,
-                last4: this.state.last4
-            }),
-        }).then(res => {
-            if (res.status===200){
-                this.forwardToMyOrdersPage();
-            }
-            else{
-                alert("Invalid Card details");
-            }
-        })
+            body: JSON.stringify({
+                userEmail: "maithreyi.prabhu95@gmail.com",})})
+            .then(res => {
+                console.log(res)
+                return res.json()
+            }).then(response => {
+            currentComponent.setState({
+                dishesForUserDisplay: response
+            })
+            console.log(response)})
+        console.log(currentComponent.state.data)
 
     }
+
+    handleChangeOfScheduleDelivery  = (
+
+    ) => {
+        this.setState({
+            scheduleDelivery: true,
+        });
+    };
+
+    handleClick(item) {
+        console.log(item);
+
+
+
+        let currentComponent = this;
+        fetch('/deleteDishFromCart',{
+            method: 'POST',
+            redirect: 'follow',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                userEmail: this.props.userEmailId,
+                dishName: item.dishName
+            })})
+            .then(res => {
+                console.log(res.status)
+                if (res.status === 200){
+                    fetch('/getUserDataForMyCart',{
+                        method: 'POST',
+                        redirect: 'follow',
+                        headers: {
+                            "Content-Type": "application/json",
+                            'Access-Control-Allow-Origin': '*'
+                        },
+                        body: JSON.stringify({
+                            userEmail: this.props.userEmailId,})})
+                        .then(res => {
+                            console.log(res)
+                            return res.json()
+                        }).then(response => {
+                        currentComponent.setState({
+                            dishesForUserDisplay: response
+                        })
+                        console.log(response)})
+                }
+                    console.log(this.state.data)
+                })
+            }
 
 
     render() {
+
+
         let mapDishesForUserView = this.state.dishesForUserDisplay.map((d,itemName)=>
         {
             return(
                 <tr>
                     <td data-th="Product" key={itemName}>
                         <div className="row">
-                            <div className="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..."
+                            <div className="col-sm-2 hidden-xs"><img src="https://cdn1.iconfinder.com/data/icons/dishes-glyph/128/yumminky-yumminky-cooking-dishes-44-512.png" alt="..."
                                                                      className="img-responsive"/></div>
 
                         </div>
@@ -176,19 +123,21 @@ class MyCart extends React.Component{
                         <h4 className="nomargin">{d.dishName}</h4>
 
                     </div></td>
-
                     <td data-th="Price">{d.dishPrice}</td>
 
 
-
+                    <td className="actions" data-th="">
+                        <div className="col-md-8 col-sm-8 col-xs-8">
+                            <a href="#" className="btn btn-success btn-product"><span
+                                className="glyphicon btn-danger icon-remove" onClick={this.handleClick.bind(this, d)}></span> Delete item</a>
+                        </div>
+                    </td>
                 </tr>
 
 
 
             )
         })
-
-
         return(
             <div>
                 <header>
@@ -240,7 +189,7 @@ class MyCart extends React.Component{
                             <th id="dishDisplayTable" >Dish Name</th>
 
                             <th id="dishDisplayTable">Dish Price</th>
-
+                            <th id="dishDisplayTable">Delete Item</th>
                             <th id="dishDisplayTable"></th>
                         </tr>
                         </thead>
@@ -259,31 +208,52 @@ class MyCart extends React.Component{
                             <td><a href="#" className="btn btn-warning"><i
                                 className="fa fa-angle-left"></i>Home Page</a></td>
 
-                            <td colSpan="2" className="hidden-xs">Clear Cart</td>
-                            <div className="container">
-                                <div className="rounded-circle">
-
-                                    <StripeCheckout stripeKey="pk_live_qksmj6ho2DblvlfR5PNKgzea00zC51Ydfw"
-                                                    amount={this.state.totalPrice}
-                                                    token={this.handleTokenAPI}
-                                                    name={this.state.restaurantName}
-
-
-                                    />
-                                </div>
-                            </div>
+                            <td><a
+                                className="btn btn-success btn-block" value = { this.state.scheduleDelivery}onClick={this.handleChangeOfScheduleDelivery} >Schedule This order <i className="fa fa-angle-right"></i></a>
+                            </td>
+                            <td><a
+                               className="btn btn-success btn-block" >Place Order <i className="fa fa-angle-right"></i></a>
+                            </td>
                         </tr>
                         </tfoot>
                     </table>
                 </div>
+                <Modal
+                    show={this.state.scheduleDelivery}
+                    onHide={this.closeAllOptionsOfSelectionForm}
+                    animation={false}
+                    centered id="modal"
+                >
+                    <div className="container">
+                        <div className="row">
+                            <div className="main">
+                                <div className="login-form">
+                                    <div>
+
+                                        <Calendar
+                                        onChange={this.onChange}
+                                        value={this.state.date}
+                                    />
+
+                                    <br/>
+                                    <br/>
+                                    <br/>
+
+                                        <TimePicker
+                                            onChange={this.onChangetime}
+                                            value={this.state.time}
+                                        />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </Modal>
 
             </div>
         )
     }
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(MyCart);
-
-
-
-
+export default MyCart

@@ -21,7 +21,7 @@ class LoginDashBoard extends Component{
         let currentComponent = this
         fetch('/getAllReccommendedRestaurants',{
             method: 'POST',
-                headers: {
+            headers: {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
@@ -84,7 +84,7 @@ class LoginDashBoard extends Component{
                     <div className="col-md-4">
                         <div className="single_menu_list">
                             <img
-                                src={d.restaurantImageURL}
+                                src={d.restaurantImageURL} height="50%" width="50%"
                                 alt="" onClick={this.handleClick.bind(this, d)} />
                             <div className="menu_content">
                                 <h4 onClick={this.handleClick.bind(this, d)} >{d.restaurantName} <span>{d.averagePrice}</span></h4>
@@ -99,7 +99,7 @@ class LoginDashBoard extends Component{
 
             )
         })
-      
+
         return (
             <div>
                 <header>
@@ -140,37 +140,37 @@ class LoginDashBoard extends Component{
                             <h5>Indian</h5>
                             <img
                                 src="https://st2.depositphotos.com/2885805/10593/v/450/depositphotos_105938884-stock-illustration-indian-food-composition.jpg"
-                                alt="Rounded Image" height="80%" width="80%" className="rounded img-fluid"/>
+                                alt="Rounded Image" height="50%" width="50%" className="rounded img-fluid"/>
                         </div>
                         <div className="col-sm-2">
                             <h5>Mexican</h5>
                             <img
                                 src="https://cdn4.iconfinder.com/data/icons/mexican-icons-2/206/Tacos-512.png"
-                                alt="Rounded Image" height="70%" width="70%" className="rounded img-fluid"/>
+                                alt="Rounded Image" height="40%" width="40%" className="rounded img-fluid"/>
                         </div>
                         <div className="col-sm-2">
                             <h5>Italian</h5>
                             <img
                                 src="https://icons-for-free.com/iconfiles/png/512/food+food+italian+food+junk+food+pizza+icon-1320168016349880751.png"
-                                alt="Rounded Image" height="70%" width="70%" className="rounded img-fluid"/>
+                                alt="Rounded Image" height="40%" width="40%" className="rounded img-fluid"/>
                         </div>
                         <div className="col-sm-2">
                             <h5>American</h5>
                             <img
                                 src="https://c8.alamy.com/comp/H797BY/hamburger-traditional-american-fast-food-icon-over-white-background-H797BY.jpg"
-                                alt="Rounded Image" height="70%" width="70%" className="rounded img-fluid"/>
+                                alt="Rounded Image" height="40%" width="40%" className="rounded img-fluid"/>
                         </div>
                         <div className="col-sm-2">
                             <h5>Thai</h5>
                             <img
                                 src="https://image.flaticon.com/icons/png/512/644/644758.png"
-                                alt="Rounded Image" height="70%" width="70%" className="rounded img-fluid"/>
+                                alt="Rounded Image" height="40%" width="40%" className="rounded img-fluid"/>
                         </div>
                         <div className="col-sm-2" >
                             <h5>Barbecue</h5>
                             <img
                                 src="https://cdn3.iconfinder.com/data/icons/food-3-11/128/food_Barbecue-Bbq-Skewer-Kabob-Hot-512.png"
-                                height="70%" width="70%" className="rounded img-fluid"/>
+                                height="40%" width="40%" className="rounded img-fluid"/>
                         </div>
 
                     </div>
@@ -182,15 +182,15 @@ class LoginDashBoard extends Component{
                 <br/>
                 <br/>
 
-<br/>
-<br/>
+                <br/>
+                <br/>
 
                 <div>
                     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,900"
                           rel="stylesheet"/>
                     <link href="https://fonts.googleapis.com/css?family=Oleo+Script" rel="stylesheet"/>
                     <div className="row">
-                        <div className="col-xl-12 mb-60">
+                        <div className="col-xl-8 mb-60">
                             <div className="section-title text-center">
                                 <h4>Popular Restaurants Near You</h4>
                             </div>
@@ -200,10 +200,10 @@ class LoginDashBoard extends Component{
                         <div className="container" >
 
                             {mapForRecommendedRestaurants}
-                                <br/><br/><br/><br/><br/>
+                            <br/><br/><br/><br/><br/>
 
 
-                            </div>
+                        </div>
                         <br/><br/><br/><br/><br/>
                     </section>
                     <br/><br/><br/><br/><br/>

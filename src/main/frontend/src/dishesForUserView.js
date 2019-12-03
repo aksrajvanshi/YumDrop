@@ -1,4 +1,5 @@
 import React from "react";
+import {connect} from "react-redux";
 
 
 class dishesForUserView extends React.Component{
@@ -171,7 +172,6 @@ class dishesForUserView extends React.Component{
 
                             <td colSpan="2" className="hidden-xs"></td>
                             <td><a
-                                href="https://www.paypal.com/webapps/shoppingcart?mfid=1546373779156_cb91e3a2b2dc7&flowlogging_id=cb91e3a2b2dc7#/checkout/shoppingCart"
                                 className="btn btn-success btn-block" onClick={this.forwardToMyCart}>My Cart <i className="fa fa-angle-right"></i></a>
                             </td>
                         </tr>
@@ -184,4 +184,17 @@ class dishesForUserView extends React.Component{
     }
 }
 
-export default dishesForUserView;
+const mapStateToProps = (state)=> {
+    return {
+        emailId: state.userId
+    }
+}
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(dishesForUserView);
