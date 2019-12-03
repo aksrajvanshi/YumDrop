@@ -63,6 +63,30 @@ class MyCart extends React.Component {
         });
     };
 
+    submitSchedulingOfOrder(){
+        fetch('/scheduleOrderForUser',{
+            method: 'POST',
+            redirect: 'follow',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                userEmail: this.props.userEmailId,
+
+            })})
+            .then(res => {
+                console.log(res.status)
+                if (res.status === 200){
+                   this.setState({
+                       scheduleDelivery: false,
+                   })
+                }
+                console.log(this.state.data)
+            })
+    }
+
+
     handleClick(item) {
         console.log(item);
 
@@ -208,6 +232,7 @@ class MyCart extends React.Component {
                         <tr>
                             <td><a href="#" className="btn btn-warning"><i
                                 className="fa fa-angle-left"></i>Home Page</a></td>
+                            <td></td>
 
                             <td><a
                                 className="btn btn-success btn-block" value = { this.state.scheduleDelivery}onClick={this.handleChangeOfScheduleDelivery} >Schedule This order <i className="fa fa-angle-right"></i></a>
@@ -254,6 +279,9 @@ class MyCart extends React.Component {
                                     </div>
 
                                 </div>
+                                <td><a
+                                    className="btn btn-success btn-block" onClick={this.submitSchedulingOfOrder} >Schedule This order <i className="fa fa-angle-right"></i></a>
+                                </td>
                             </div>
                         </div>
                     </div>
