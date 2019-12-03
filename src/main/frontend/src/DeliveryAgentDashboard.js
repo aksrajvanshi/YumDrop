@@ -89,6 +89,10 @@ class DeliveryAgentDashboard extends Component{
         this.props.history.push('/chatFeature')
  }
 
+    forwardToDeliveryAgentSettingsPage = () => {
+        this.props.history.push('/DeliveryAgentSettingsPage')
+    }
+
 
 
 
@@ -128,11 +132,11 @@ class DeliveryAgentDashboard extends Component{
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
                                     <li className="nav-item" >
-                                        <a className="nav-link" onClick={this.forwardToRestaurantSettingsPage}><i
-                                            className="fa fa-fw fa-user"></i>My Settings</a>
+                                        <a className="nav-link" onClick={this.forwardToDeliveryAgentSettingsPage}><i
+                                            className="fa fa-fw fa-user"></i>Settings</a>
                                     </li>
                                     <li>
-                                        <a className="nav-link" onClick={this.signOut}>Sign Out</a>
+                                        <a className="nav-link" onClick={this.signOut}>Logout</a>
                                     </li>
                                 </ul>
                             </div>
