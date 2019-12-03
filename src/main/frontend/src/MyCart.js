@@ -3,6 +3,7 @@ import {Modal} from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import Calendar from 'react-calendar';
 import TimePicker from 'react-time-picker';
+import StripeCheckout from "react-stripe-checkout";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -211,12 +212,19 @@ class MyCart extends React.Component {
                             <td><a
                                 className="btn btn-success btn-block" value = { this.state.scheduleDelivery}onClick={this.handleChangeOfScheduleDelivery} >Schedule This order <i className="fa fa-angle-right"></i></a>
                             </td>
-                            <td><a
-                               className="btn btn-success btn-block" >Place Order <i className="fa fa-angle-right"></i></a>
+                            <td> <StripeCheckout stripeKey="pk_live_qksmj6ho2DblvlfR5PNKgzea00zC51Ydfw"
+                                                                                       amount={this.state.totalPrice}
+                                                                                       token={this.handleTokenAPI}
+                                                                                       name={this.state.restaurantName}
+
+
+                            />
                             </td>
                         </tr>
                         </tfoot>
                     </table>
+
+
                 </div>
                 <Modal
                     show={this.state.scheduleDelivery}
