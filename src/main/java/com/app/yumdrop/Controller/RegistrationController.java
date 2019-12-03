@@ -7,6 +7,7 @@ import com.app.yumdrop.FormEntity.RestaurantDetails;
 import com.app.yumdrop.FormEntity.RestaurantRegisterForm;
 import com.app.yumdrop.FormEntity.UserRegisterForm;
 import com.app.yumdrop.FormEntity.UsersDetails;
+import com.app.yumdrop.Messages.ErrorMessage;
 import com.app.yumdrop.Repository.*;
 import com.app.yumdrop.Service.DeliveryAgentRegistrationService;
 import com.app.yumdrop.Service.RestaurantRegistrationService;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.Date;
 import java.util.Random;
 
 @ComponentScan
@@ -76,8 +78,8 @@ public class RegistrationController {
         Random rnd = new Random();
         int otpNumber = rnd.nextInt(999999);
         System.out.println("Sending OTP to user " + otpNumber);
-        boolean isMailSentToPrimaryManager = smsTwoFactorService.send2FaCodeAsEmailToRestaurant(restaurantDetails.getRestaurantPrimaryEmailId(), restaurantDetails.getRestaurantId(), String.format("%06d", otpNumber));
-        if (isMailSentToPrimaryManager)
+        boolean isMailSentToManager = smsTwoFactorService.send2FaCodeAsEmailToRestaurant(restaurantDetails.getRestaurantPrimaryEmailId(), restaurantDetails.getRestaurantId(), String.format("%06d", otpNumber));
+        if (isMailSentToManager)
             return ResponseEntity.status(HttpStatus.OK).build();
         else
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -94,7 +96,9 @@ public class RegistrationController {
             restaurantOtpRepository.deleteById(restaurantOtpRecord.getRestaurantID());
             return restaurantRegistrationService.registerRestaurant(restaurantRegisterForm);
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            ErrorMessage otpNotMatching = new ErrorMessage(new Date(), "OTP didn't match!",
+                    "");
+            return new ResponseEntity<>(otpNotMatching, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -109,71 +113,43 @@ public class RegistrationController {
             usersOtpRepository.deleteById(userRegisterForm.getUser_email());
             return userRegistrationService.registerUser(userRegisterForm);
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            ErrorMessage otpNotMatching = new ErrorMessage(new Date(), "OTP didn't match!",
+                    "");
+            return new ResponseEntity<>(otpNotMatching, HttpStatus.BAD_REQUEST);
         }
 
     }
 
-    @RequestMapping(value = "/getCurrentActiveOrderForUser", method = RequestMethod.POST)
-    public ResponseEntity<?> getCurrentActiveOrderForUser(@RequestBody RestaurantDetails restaurantDetails) {
+    @RequestMapping(value = "/getAllReccommendedRestaurants", method = RequestMethod.POST)
+    public ResponseEntity<?> getAllReccommendedRestaurants() {
+
 
         return new ResponseEntity<>("[\n" +
                 "    {\n" +
-                "        \"DishDetails\": {\n" +
-                "            \"restaurantId\": \"abc123\",\n" +
-                "            \"dishName\": \"Maithreyi Manur Narasimha Prabhu\",\n" +
-                "            \"dishDescription\": \"maithreyi.prabhu795@gmail.com\",\n" +
-                "            \"dishPrice\": \"6786291600\",\n" +
-                "            \"dishAvailability\": \"340 S Walnut St #4, Bloomington, IN 47401\"\n" +
-                "        }\n" +
+                "        \"restaurantName\": \"Indian Palace\",\n" +
+
+                "        \"averagePrice\": \"15$\",\n" +
+                "        \"restaurantId\": \"second dish\",\n" +
+                "        \"restaurantImageURL\": \"https://cdn.vox-cdn.com/thumbor/zBEzySds-coOKCa7Ymm2H56gr6A=/0x0:3500x2336/1200x800/filters:focal(1470x888:2030x1448)/cdn.vox-cdn.com/uploads/chorus_image/image/58037473/L_Omaha-1-2.0.0.jpg\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "       \"DishDetails\": {\n" +
-                "            \"restaurantId\": \"abc123\",\n" +
-                "            \"dishName\": \"Maithreyi Manur Narasimha Prabhu\",\n" +
-                "            \"dishDescription\": \"maithreyi.prabhu795@gmail.com\",\n" +
-                "            \"dishPrice\": \"6786291600\",\n" +
-                "            \"dishAvailability\": \"340 S Walnut St #4, Bloomington, IN 47401\"\n" +
-                "        }\n" +
+                "        \"restaurantName\": \"Qdoba\",\n" +
+                "        \"restaurantId\": \"second dish\",\n" +
+                "        \"averagePrice\": \"8$\",\n" +
+                "        \"restaurantImageURL\": \"https://cdn.vox-cdn.com/thumbor/zBEzySds-coOKCa7Ymm2H56gr6A=/0x0:3500x2336/1200x800/filters:focal(1470x888:2030x1448)/cdn.vox-cdn.com/uploads/chorus_image/image/58037473/L_Omaha-1-2.0.0.jpg\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"restaurantName\": \"TacoBell\",\n" +
+                "        \"restaurantId\": \"second dish\",\n" +
+                "        \"averagePrice\": \"6$\",\n" +
+                "        \"restaurantImageURL\": \"https://upload.wikimedia.org/wikipedia/en/thumb/b/b3/Taco_Bell_2016.svg/1200px-Taco_Bell_2016.svg.png\"\n" +
                 "    }\n" +
+
+
                 "]", HttpStatus.OK);
 
 
     }
 
 
-    @RequestMapping(value = "/getCurrentActiveOrderRestaurantDetails", method = RequestMethod.POST)
-    public ResponseEntity<?> getCurrentActiveOrderRestaurantDetails(@RequestBody RestaurantDetails restaurantDetails) {
-
-        return new ResponseEntity<>("{ " +
-                "restaurantName:" + "maithreyi"+"}"
-                , HttpStatus.BAD_REQUEST);
-
-
-    }
-
-
-    @RequestMapping(value = "/chatWithRestaurantOnly", method = RequestMethod.POST)
-    public ResponseEntity<?> chatWithRestaurantOnly(@RequestBody RestaurantDetails restaurantDetails) {
-        System.out.println("chat with restaurant only");
-        return ResponseEntity.status(HttpStatus.OK).build();
-
-
-    }
-
-
-    @RequestMapping(value = "/chatWithDeliveryAgentOnly", method = RequestMethod.POST)
-    public ResponseEntity<?> chatWithDeliveryAgentOnly(@RequestBody RestaurantDetails restaurantDetails) {
-        System.out.println("chat with dev only");
-        return ResponseEntity.status(HttpStatus.OK).build();
-
-
-    }
-    @RequestMapping(value = "/chatWithRestaurantAndDeliveryAgent", method = RequestMethod.POST)
-    public ResponseEntity<?> chatWithReschatWithRestaurantAndDeliveryAgent(@RequestBody RestaurantDetails restaurantDetails) {
-        System.out.println("chat with restaurant n del only");
-        return ResponseEntity.status(HttpStatus.OK).build();
-
-
-    }
 }
