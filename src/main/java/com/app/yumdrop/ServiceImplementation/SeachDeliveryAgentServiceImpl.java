@@ -86,6 +86,10 @@ public class SeachDeliveryAgentServiceImpl implements SearchDeliveryAgentService
         List<DeliveryAgentActiveOrders> deliveryAgentActiveOrders = new ArrayList<>();
         for(int i=0; i < activeDeliveryOrders.size(); i++){
 
+            if(activeDeliveryOrders.get(i).getOrderStatus() != 2){
+                continue;
+            }
+
             Restaurant restaurantDetail = restaurantRepository.findByrestaurantId(activeDeliveryOrders.get(i).getRestaurantId());
             Users userDetail = usersRepository.findByuserEmail(activeDeliveryOrders.get(i).getUserEmail());
             DeliveryAgentActiveOrders activeOrder = new DeliveryAgentActiveOrders(
