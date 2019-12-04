@@ -50,7 +50,7 @@ public class FoodCartAndOrderController {
      * @param userCartItem
      * @return
      */
-    @RequestMapping(value = "/addDishToUserCart", method = RequestMethod.POST)
+    @RequestMapping(value = "/addItemToMyCart ", method = RequestMethod.POST)
     public ResponseEntity<?> addDishToUserCart(@RequestBody UserCart userCartItem) {
         UserCart cartItemSaved = userCartRepository.save(userCartItem);
 
