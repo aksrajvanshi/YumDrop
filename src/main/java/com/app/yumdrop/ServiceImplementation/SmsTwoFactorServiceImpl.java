@@ -29,10 +29,6 @@ public class SmsTwoFactorServiceImpl implements SmsTwoFactorService {
     @Autowired
     RestaurantOtpRepository restaurantOtpRepository;
 
-    @Value("${sendgrid.api.key}")
-    String sendGridAPIKey;
-
-
     public boolean send2FaCodeAsEmail(String userEmail, String twoFactorCode) {
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -58,7 +54,6 @@ public class SmsTwoFactorServiceImpl implements SmsTwoFactorService {
                 "Please enter this code to complete registration with Yumdrop");
 
         javaMailSender.send(simpleMailMessage);
-
         restaurantOtpRepository.save(new RestaurantOtp(restaurantId, restaurantPrimaryEmail, PasswordUtils.convertPasswordToHash(twoFactorCode)));
         return true;
     }
@@ -72,7 +67,6 @@ public class SmsTwoFactorServiceImpl implements SmsTwoFactorService {
                 "Please enter this code to complete registration with Yumdrop");
 
         javaMailSender.send(simpleMailMessage);
-
         deliveryAgentOtpRepository.save(new DeliveryAgentOtp(daEmail, PasswordUtils.convertPasswordToHash(twoFactorCode)));
         return true;
     }
