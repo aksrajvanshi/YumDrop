@@ -28,7 +28,7 @@ public class DeliveryAgentRegistrationServiceImpl implements DeliveryAgentRegist
         }
 
         DeliveryAgent daToRegister = new DeliveryAgent(deliveryAgentDataForm.getDeliveryAgent_email(), deliveryAgentDataForm.getDeliveryAgent_name(),
-                deliveryAgentDataForm.getDeliveryAgent_phonenum(), PasswordUtils.convertPasswordToHash(deliveryAgentDataForm.getDeliveryAgent_password()), null, "SYSTEM", "SYSTEM", 0);
+                deliveryAgentDataForm.getDeliveryAgent_phonenum(), PasswordUtils.convertPasswordToHash(deliveryAgentDataForm.getDeliveryAgent_password()), null, "SYSTEM", "SYSTEM");
 
         DeliveryAgent registeredDeliveryAgent = deliveryAgentRepository.save(daToRegister);
         return ResponseEntity.ok().body(registeredDeliveryAgent);

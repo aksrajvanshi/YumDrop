@@ -41,10 +41,11 @@ public class DeliveryAgent extends CreateAndUpdateTimeModel{
     @Column(name = "da_address", nullable = false)
     private String deliveryAgentAddress;
 
-    @Column(name = "da_isbusy", nullable = false)
-    private int deliveryAgentBusy;
-
     public DeliveryAgent(){
+    }
+
+    public DeliveryAgent(@Email(message = "delivery agent email should be a valid email") String deliveryAgentEmail) {
+        this.deliveryAgentEmail = deliveryAgentEmail;
     }
 
     public DeliveryAgent(@Email(message = "delivery agent email should be a valid email") String deliveryAgentEmail, @NotNull String deliveryAgentPassword) {
@@ -60,17 +61,6 @@ public class DeliveryAgent extends CreateAndUpdateTimeModel{
         this.lastUpdatedUser = lastUpdatedUser;
         this.lastCreatedUser = lastCreatedUser;
         this.deliveryAgentAddress = deliveryAgentAddress;
-    }
-
-    public DeliveryAgent(@Email(message = "delivery agent email should be a valid email") String deliveryAgentEmail, @NotNull String deliveryAgentName, @NotNull String deliveryAgentPhoneNumber, @NotNull String deliveryAgentPassword, @NotNull String lastUpdatedUser, @NotNull String lastCreatedUser, String deliveryAgentAddress, int deliveryAgentBusy) {
-        this.deliveryAgentEmail = deliveryAgentEmail;
-        this.deliveryAgentName = deliveryAgentName;
-        this.deliveryAgentPhoneNumber = deliveryAgentPhoneNumber;
-        this.deliveryAgentPassword = deliveryAgentPassword;
-        this.lastUpdatedUser = lastUpdatedUser;
-        this.lastCreatedUser = lastCreatedUser;
-        this.deliveryAgentAddress = deliveryAgentAddress;
-        this.deliveryAgentBusy = deliveryAgentBusy;
     }
 
     @Override
@@ -141,14 +131,6 @@ public class DeliveryAgent extends CreateAndUpdateTimeModel{
 
     public void setDeliveryAgentAddress(String deliveryAgentAddress) {
         this.deliveryAgentAddress = deliveryAgentAddress;
-    }
-
-    public int getDeliveryAgentBusy() {
-        return deliveryAgentBusy;
-    }
-
-    public void setDeliveryAgentBusy(int deliveryAgentBusy) {
-        this.deliveryAgentBusy = deliveryAgentBusy;
     }
 }
 

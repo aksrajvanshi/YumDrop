@@ -1,13 +1,18 @@
 package com.app.yumdrop.Controller;
 
+import com.app.yumdrop.Entity.DeliveryAgent;
 import com.app.yumdrop.Entity.UserCart;
 import com.app.yumdrop.Entity.UserOrder;
+import com.app.yumdrop.Entity.Users;
+import com.app.yumdrop.FormEntity.DeliveryAgentActiveOrders;
 import com.app.yumdrop.FormEntity.RestaurantDetails;
 import com.app.yumdrop.Messages.ErrorMessage;
 import com.app.yumdrop.Messages.SuccessMessage;
 import com.app.yumdrop.Repository.UserCartRepository;
 import com.app.yumdrop.Repository.UserOrderRepository;
+import com.app.yumdrop.Repository.UsersRepository;
 import com.app.yumdrop.Service.FoodOrderService;
+import com.app.yumdrop.Service.SearchDeliveryAgentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +38,12 @@ public class FoodCartAndOrderController {
 
     @Autowired
     UserOrderRepository userOrderRepository;
+
+    @Autowired
+    SearchDeliveryAgentService searchDeliveryAgentService;
+
+    @Autowired
+    UsersRepository usersRepository;
 
     /**
      * Adding an item to user cart table
@@ -103,9 +115,8 @@ public class FoodCartAndOrderController {
 
         UserOrder orderInDb = userOrderRepository.findByorderId(orderDetails.getOrderId());
         orderInDb.setOrderStatus(orderDetails.getOrderStatus());
-        userOrderRepository.save(orderInDb);
-        // TODO find nearest free delivery agent guy to assign order to!
-        return ResponseEntity.status(HttpStatus.OK).build();
+        UserOrder userOrder = userOrderRepository.save(orderInDb);
+        return searchDeliveryAgentService.findNearestDeliveryAgentToTheRestaurant(userOrder);
     }
 
     /**
@@ -115,8 +126,30 @@ public class FoodCartAndOrderController {
      */
     @RequestMapping(value = "/changeOrderStatusFromDeliveryAgent", method = RequestMethod.POST)
     public ResponseEntity<?> changeOrderStatusFromDeliveryAgent(@RequestBody UserOrder orderDetails) {
+        UserOrder orderInDb = userOrderRepository.findByorderId(orderDetails.getOrderId());
+        orderInDb.setOrderStatus(orderDetails.getOrderStatus());
+        UserOrder userOrder = userOrderRepository.save(orderInDb);
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        // change delivery agent location to the delivered address
+        Users userDetail = usersRepository.findByuserEmail(userOrder.getUserEmail());
+        ResponseEntity<?> response = searchDeliveryAgentService.changeDeliveryAgentLocationAfterOrderDelivery(userOrder.getDeliveryAgentAssigned(), userDetail.getUserAddress());
+
+
+        if(response.getStatusCodeValue() == 200){
+            SuccessMessage successfulLoginMessage = new SuccessMessage(new Date(), "Order successfully delivered!");
+            return new ResponseEntity<>(successfulLoginMessage, HttpStatus.OK);
+        }
+
+        ErrorMessage saveAddressUnsuccessful = new ErrorMessage(new Date(), "Error with the system",
+                "");
+        return new ResponseEntity<>(saveAddressUnsuccessful, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @RequestMapping(value = "/getActiveDeliveryOrderForDeliveryAgent", method = RequestMethod.POST)
+    public ResponseEntity<?> changeOrderStatusFromDeliveryAgent(@RequestBody DeliveryAgent deliveryAgentDetail) {
+        List<UserOrder> activeDeliveryOrders = userOrderRepository.findBydeliveryAgentAssigned(deliveryAgentDetail.getDeliveryAgentEmail());
+        return searchDeliveryAgentService.getAllDeliveryAgentActiveOrders(activeDeliveryOrders);
+    }
+
 
 }

@@ -32,6 +32,9 @@ public class UserOrder extends CreateAndUpdateTimeModel {
     @Column(name = "order_price", nullable = false)
     private Double orderPrice;
 
+    @Column(name = "delivery_agent_assigned")
+    private String deliveryAgentAssigned;
+
     public UserOrder() {
     }
 
@@ -69,6 +72,16 @@ public class UserOrder extends CreateAndUpdateTimeModel {
         this.orderStatus = orderStatus;
         this.orderContents = orderContents;
         this.orderPrice = orderPrice;
+    }
+
+    public UserOrder(Long orderId, @Email(message = "user email should be a valid email") String userEmail, @NotNull String restaurantId, int orderStatus, String orderContents, Double orderPrice, String deliveryAgentAssigned) {
+        this.orderId = orderId;
+        this.userEmail = userEmail;
+        this.restaurantId = restaurantId;
+        this.orderStatus = orderStatus;
+        this.orderContents = orderContents;
+        this.orderPrice = orderPrice;
+        this.deliveryAgentAssigned = deliveryAgentAssigned;
     }
 
     public Double getOrderPrice() {
@@ -117,5 +130,13 @@ public class UserOrder extends CreateAndUpdateTimeModel {
 
     public void setOrderContents(String orderContents) {
         this.orderContents = orderContents;
+    }
+
+    public String getDeliveryAgentAssigned() {
+        return deliveryAgentAssigned;
+    }
+
+    public void setDeliveryAgentAssigned(String deliveryAgentAssigned) {
+        this.deliveryAgentAssigned = deliveryAgentAssigned;
     }
 }
