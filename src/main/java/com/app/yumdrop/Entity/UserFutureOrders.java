@@ -34,15 +34,20 @@ public class UserFutureOrders extends CreateAndUpdateTimeModel{
     private String order1Contents;
 
 
+    @Column(name = "order_price")
+    private double price;
+
+
     public UserFutureOrders(){
     }
 
-    public UserFutureOrders(@Email(message = "user email should be a valid email") String userEmail, @NotNull String orderId, @NotNull String futureOrder1Time, @NotNull String restaurant1Id, String order1Contents) {
+    public UserFutureOrders(@Email(message = "user email should be a valid email") String userEmail, @NotNull String orderId, @NotNull String futureOrder1Time, @NotNull String restaurant1Id, String order1Contents, double price) {
         this.userEmail = userEmail;
         this.orderId = orderId;
         this.futureOrder1Time = futureOrder1Time;
         this.restaurant1Id = restaurant1Id;
         this.order1Contents = order1Contents;
+        this.price = price;
     }
 
     @Override
@@ -53,6 +58,7 @@ public class UserFutureOrders extends CreateAndUpdateTimeModel{
                 ", futureOrder1Time='" + futureOrder1Time + '\'' +
                 ", restaurant1Id='" + restaurant1Id + '\'' +
                 ", order1Contents='" + order1Contents + '\'' +
+                ", price='" + price + '\'' +
                 '}';
     }
 
@@ -94,6 +100,14 @@ public class UserFutureOrders extends CreateAndUpdateTimeModel{
 
     public void setOrder1Contents(String order1Contents) {
         this.order1Contents = order1Contents;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
 }

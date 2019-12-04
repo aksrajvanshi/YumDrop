@@ -5,20 +5,22 @@ public class UserFutureOrdersForm {
     public String orderId;
     public String email;
     public String time1;
-    public String time2;
-    public String time3;
+    public String restaurantId;
+    public String orderContents;
+    public double price;
 
     public UserFutureOrdersForm() {
 
     }
 
-    public UserFutureOrdersForm(String orderId, String email, String time1, String time2, String time3) {
+    public UserFutureOrdersForm(String orderId, String email, String time1, String restaurantId, String orderContents, double price) {
 
         this.orderId = orderId;
         this.email = email;
         this.time1 = time1;
-        this.time2 = time2;
-        this.time3 = time3;
+        this.restaurantId = restaurantId;
+        this.orderContents = orderContents;
+        this.price = price;
     }
 
     @Override
@@ -27,8 +29,9 @@ public class UserFutureOrdersForm {
                 "orderId='" + orderId + '\'' +
                 ", email='" + email + '\'' +
                 ", time1='" + time1 + '\'' +
-                ", time2='" + time2 + '\'' +
-                ", time3='" + time3 + '\'' +
+                ", restaurantId='" + restaurantId + '\'' +
+                ", orderContents='" + orderContents + '\'' +
+                ", price='" + price + '\'' +
                 '}';
     }
 
@@ -56,21 +59,28 @@ public class UserFutureOrdersForm {
         this.time1 = time1;
     }
 
-    public String getTime2() {
-        return time2;
+    public String getRestaurantId() {
+        return restaurantId;
     }
 
-    public void setTime2(String time2) {
-        this.time2 = time2;
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
-    public String getTime3() {
-        return time3;
+    public String getOrderContents() {
+        return orderContents;
     }
 
-    public void setTime3(String time3) {
-        this.time3 = time3;
+    public void setOrderContents(String orderContents) {
+        this.orderContents = orderContents;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
 }

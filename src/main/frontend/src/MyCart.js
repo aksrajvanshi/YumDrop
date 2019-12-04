@@ -1,108 +1,186 @@
-import React, { Component } from "react";
-import './MySettingsPage.css';
-import {connect} from "react-redux";
-import './LoginDashBoardCSS.css';
+import React from "react";
+import { Modal } from "react-bootstrap";
+import Calendar from "react-calendar";
+import TimePicker from "react-time-picker";
 import StripeCheckout from "react-stripe-checkout";
+import StarRatingComponent from "react-star-rating-component";
 
+import "react-datepicker/dist/react-datepicker.css";
 
-const mapStateToProps = (state)=>{
-    return {
-        userEmailId: state.userId
-    }
-}
-
-const mapDispatchToProps = (dispatch)=> {
-    return {
-        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
-        signOut: () => dispatch({type: "signOut"})
-    }
-}
-
-function handleToken(token){
-    console.log(token)
-}
-class MySettingsPage extends Component{
+class MyCart extends React.Component {
     state = {
-        dataReceived: [],
-        userName: "",
-        userEmailId:  "",
-        userPhoneNumber: "",
-        email: "",
-        brand: "",
-        country: "",
-        cvc_check: "",
-        exp_month: "",
-        funding: "",
-        last4: ""
+        totalPrice: 1,
+        restaurantName: "mai",
+        dishesForUserDisplay: [],
+        scheduleDelivery: false,
+        startDate: new Date(),
+        time: "10:00",
+        rating: 0,
+        provideRatings: false
+    };
 
-    }
-    returnToLoginDahboard = () => {
-        this.props.history.push('/errorPageForRegistration');
-    }
-    forwardToMyCurrentLocation = () => {
-        this.props.history.push('/MyCurrentLocation');
-    }
-
-    forwardToPaymentPage = () => {
-        this.props.history.push('/paymentSystemForUsers')
-    }
-
-    signOut = () => {
-        this.props.signOut();
-        this.props.history.push('/');
-    }
-
-    forwardToMyCart = () => {
-        this.props.history.push('/MyCart')
-    }
-
-    forwardToSettingsAddresses = () => {
-        this.props.history.push('/UserSettingsPageAddresses')
-    }
-
-    settingsPage = () => {
-        this.props.history.push('/MySettingsPage')
-    }
-
-    goBackToLoginDashboard = () => {
-        this.props.history.push('/LoginDashboard')
-    }
-
-    componentDidMount() {
+    onStarClick(nextValue, prevValue, name) {
         let currentComponent = this;
-        console.log(currentComponent.state.userEmailId);
-        console.log(this.props.userEmailId);
-        console.log(currentComponent.props.userEmailId)
-        fetch('/getUserDataForMyCart', {
-            method: 'POST',
+        console.log(nextValue);
+        fetch("/rateRestaurant", {
+            method: "POST",
+            redirect: "follow",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
             },
-            body:JSON.stringify({
-                userEmail: currentComponent.props.userEmailId
-            }),
-        }).then(function(response) {
-            console.log("returned");
-            console.log(response);
-            return response.json();
-        }).then(function(data) {
-            console.log(data);
-            console.log(data.itemName);
-            const userName = data.userName;
-            console.log("Will mount username", userName);
-            currentComponent.setState({
-                itemName: data.itemName,
-                itemQuantity: data.itemQuantity,
-            });
-            console.log(currentComponent.state.itemQuantity);
+            body: JSON.stringify({
+                userEmail: this.props.userEmailId,
+                restaurantId: "abc12",
+                restaurantRating: nextValue
+            })
+        }).then(res => {
+            console.log(res);
+            if (res.status === 200) {
+                this.forwardToLoginDashboard("/LoginDashboard");
+            }
+        });
+    }
+
+    onChange = date => this.setState({ date });
+    handleChange = date => {
+        this.setState({
+            startDate: date
+        });
+    };
+
+    onChangetime = time => this.setState({ time });
+
+    componentWillMount() {
+        let currentComponent = this;
+        fetch("/getUserDataForMyCart", {
+            method: "POST",
+            redirect: "follow",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            },
+            body: JSON.stringify({
+                userEmail: "maithreyi.prabhu95@gmail.com"
+            })
         })
+            .then(res => {
+                console.log(res);
+                return res.json();
+            })
+            .then(response => {
+                currentComponent.setState({
+                    dishesForUserDisplay: response
+                });
+                console.log(response);
+            });
+        console.log(currentComponent.state.data);
     }
 
-    forwardToMyOrdersPage = () => {
-        this.props.history.push('/MyOderListSettings')
+    handleChangeOfScheduleDelivery = () => {
+        this.setState({
+            scheduleDelivery: true
+        });
+    };
+
+    submitSchedulingOfOrder() {
+        fetch("/scheduleOrderForUser", {
+            method: "POST",
+            redirect: "follow",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            },
+            body: JSON.stringify({
+                userEmail: this.props.userEmailId,
+                time: this.state.time,
+                dateForScheduling: this.state.startDate,
+                totalPrice: this.state.totalPrice,
+                restaurantId: this.state.restaurantName,
+                orderContents: this.state.dishesForUserDisplay
+            })
+        }).then(res => {
+            console.log(res.status);
+            if (res.status === 200) {
+                this.setState({
+                    scheduleDelivery: false
+                });
+            }
+            console.log(this.state.data);
+        });
     }
 
-    handleTokenAPI = (token) => {
+    handleClick(item) {
+        console.log(item);
+
+        let currentComponent = this;
+        fetch("/deleteDishFromCart", {
+            method: "POST",
+            redirect: "follow",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            },
+            body: JSON.stringify({
+                userEmail: this.props.userEmailId,
+                dishName: item.dishName
+            })
+        }).then(res => {
+            console.log(res.status);
+            if (res.status === 200) {
+                fetch("/getUserDataForMyCart", {
+                    method: "POST",
+                    redirect: "follow",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*"
+                    },
+                    body: JSON.stringify({
+                        userEmail: this.props.userEmailId
+                    })
+                })
+                    .then(res => {
+                        console.log(res);
+                        return res.json();
+                    })
+                    .then(response => {
+                        currentComponent.setState({
+                            dishesForUserDisplay: response
+                        });
+                        console.log(response);
+                    });
+            }
+            console.log(this.state.data);
+        });
+    }
+    sendCardDetailsForPayment = () => {
+        fetch("/payForUserCart", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                userEmail: this.props.userEmailId,
+                email: this.state.email,
+                brand: this.state.brand,
+                country: this.state.country,
+                cvc_check: this.state.cvc_check,
+                exp_month: this.state.exp_month,
+                funding: this.state.funding,
+                last4: this.state.last4
+            })
+        }).then(res => {
+            if (res.status === 200) {
+                this.setState({
+                    provideRatings: true
+                });
+            } else {
+                alert("Invalid Card details");
+            }
+        });
+    };
+
+    handleTokenAPI = token => {
         console.log("Insdie this");
         console.log(token.email);
         console.log("Later");
@@ -121,186 +199,240 @@ class MySettingsPage extends Component{
             exp_month: token.card.exp_month,
             funding: token.card.funding,
             last4: token.card.last4
-        })
-        console.log("End")
+        });
+        console.log("End");
         this.sendCardDetailsForPayment();
-    }
-
-    sendCardDetailsForPayment = () => {
-        fetch('/payForUserCart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body:JSON.stringify({
-                userEmail: this.props.userEmailId,
-                email: this.state.email,
-                brand: this.state.brand,
-                country: this.state.country,
-                cvc_check: this.state.cvc_check,
-                exp_month: this.state.exp_month,
-                funding: this.state.funding,
-                last4: this.state.last4
-            }),
-        }).then(res => {
-            if (res.status===200){
-                this.forwardToMyOrdersPage();
-            }
-            else{
-                alert("Invalid Card details");
-            }
-        })
-
-    }
-
+    };
 
     render() {
-        let trying = this.state.data;
-        if(this.props.userEmailId === null) {
-            this.props.history.push('/')
-        }
+        const { rating } = this.state;
+
+        let mapDishesForUserView = this.state.dishesForUserDisplay.map(
+            (d, itemName) => {
+                return (
+                    <tr>
+                        <td data-th="Product" key={itemName}>
+                            <div className="row">
+                                <div className="col-sm-2 hidden-xs">
+                                    <img
+                                        src="https://cdn1.iconfinder.com/data/icons/dishes-glyph/128/yumminky-yumminky-cooking-dishes-44-512.png"
+                                        alt="..."
+                                        className="img-responsive"
+                                    />
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div className="col-sm-10">
+                                <h4 className="nomargin">{d.dishName}</h4>
+                            </div>
+                        </td>
+                        <td data-th="Price">{d.dishPrice}</td>
+
+                        <td className="actions" data-th="">
+                            <div className="col-md-8 col-sm-8 col-xs-8">
+                                <a href="#" className="btn btn-success btn-product">
+                  <span
+                      className="glyphicon btn-danger icon-remove"
+                      onClick={this.handleClick.bind(this, d)}
+                  ></span>{" "}
+                                    Delete item
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                );
+            }
+        );
         return (
             <div>
                 <header>
-                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-                    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
-                    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-                    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <link
+                        href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+                        rel="stylesheet"
+                        id="bootstrap-css"
+                    />
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                    <link
+                        href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+                        rel="stylesheet"
+                        id="bootstrap-css"
+                    />
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                    <link
+                        href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+                        rel="stylesheet"
+                        id="bootstrap-css"
+                    />
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
-                            <a className="navbar-brand " href="#" onClick={this.goBackToLoginDashboard}>YumDrop</a>
+                            <a className="navbar-brand " href="#">
+                                YumDrop
+                            </a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
-
                                     <li className="nav-item">
-                                        <a className="nav-link"><i
-                                            className="fa fa-fw fa-user" onClick={this.goBackToLoginDashboard}/>Home</a>
+                                        <a className="nav-link" onClick={this.forwardToMyCart}>
+                                            <i className="fa fa-fw " />
+                                            Cart
+                                        </a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link"><i
-                                            className="fa fa-fw fa-user"/>Cart</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link"   onClick={this.settingsPage} ><span>Settings</span></a>
+                                        <a className="nav-link" onClick={this.onClick}>
+                                            <span>Settings</span>
+                                        </a>
                                     </li>
                                     <li>
-                                        <a className="nav-link" onClick={this.signOut}> Sign Out </a>
+                                        <a className="nav-link" onClick={this.signOut}>
+                                            Logout
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </nav>
-
                 </header>
-                <div className="container mt-5">
-                    <div className="row">
-                        <div className="col-lg-4 pb-5">
+                <head>
+                    <link
+                        href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
+                        rel="stylesheet"
+                        id="bootstrap-css"
+                    />
+                    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+                </head>
+                <br />
+                <br />
+                <br />
+                <link
+                    href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+                    rel="stylesheet"
+                />
+                <div className="container">
+                    <table id="cart" className="table table-hover table-condensed">
+                        <thead>
+                        <tr>
+                            <th id="dishDisplayTable">Dish Image</th>
+                            <th id="dishDisplayTable">Dish Name</th>
 
-                            <div className="author-card pb-3">
-                                <div className="author-card-cover"
+                            <th id="dishDisplayTable">Dish Price</th>
+                            <th id="dishDisplayTable">Delete Item</th>
+                            <th id="dishDisplayTable"></th>
+                        </tr>
+                        </thead>
+                        <tbody>{mapDishesForUserView}</tbody>
+                        <tfoot>
+                        <tr>
+                            <tr className="visible-xs">
+                                <td className="text-center">
+                                    <strong></strong>
+                                </td>
+                            </tr>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#" className="btn btn-warning">
+                                    <i className="fa fa-angle-left"></i>Home Page
+                                </a>
+                            </td>
+                            <td></td>
+
+                            <td>
+                                <a
+                                    className="btn btn-success btn-block"
+                                    value={this.state.scheduleDelivery}
+                                    onClick={this.handleChangeOfScheduleDelivery}
                                 >
-                                </div>
-                                <div className="author-card-profile">
-                                    <div className="author-card-avatar"><img
-                                        src="https://www.caretechfoundation.org.uk/wp-content/uploads/anonymous-person-221117.jpg" />
-                                    </div>
+                                    Schedule This order <i className="fa fa-angle-right"></i>
+                                </a>
+                            </td>
+                            <td>
+                                {" "}
+                                <StripeCheckout
+                                    stripeKey="pk_live_qksmj6ho2DblvlfR5PNKgzea00zC51Ydfw"
+                                    amount={this.state.totalPrice}
+                                    token={this.handleTokenAPI}
+                                    name={this.state.restaurantName}
+                                />
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <Modal
+                    show={this.state.scheduleDelivery}
+                    onHide={this.closeAllOptionsOfSelectionForm}
+                    animation={false}
+                    centered
+                    id="modal"
+                >
+                    <div className="container">
+                        <div className="row">
+                            <div className="main">
+                                <div className="login-form">
+                                    <div>
+                                        <Calendar
+                                            onChange={this.onChange}
+                                            value={this.state.date}
+                                        />
 
+                                        <br />
+                                        <br />
+                                        <br />
+
+                                        <TimePicker
+                                            onChange={this.onChangetime}
+                                            value={this.state.time}
+                                        />
+                                    </div>
                                 </div>
+                                <td>
+                                    <a
+                                        className="btn btn-success btn-block"
+                                        onClick={this.submitSchedulingOfOrder}
+                                    >
+                                        Schedule This order <i className="fa fa-angle-right"></i>
+                                    </a>
+                                </td>
                             </div>
-                            <div className="wizard">
-                                <nav className="list-group list-group-flush">
-                                    <a className="list-group-item" href="#">
-                                        <div className="d-flex justify-content-between align-items-center">
-                                            <div><i className="fe-icon-shopping-bag mr-1 text-muted"></i>
-                                                <div className="d-inline-block font-weight-medium text-uppercase">Orders
-                                                    List
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </a>
-                                    <a className="list-group-item" href="#" onClick={this.settingsPage}>
-                                        <i className="fe-icon-user text-muted"></i>Profile Settings
-                                    </a>
-                                    <a className="list-group-item" href="#" onClick={this.forwardToSettingsAddresses}>
-                                        <i className="fe-icon-map-pin text-muted"></i>Addresses
-                                    </a>
-                                    <a className="list-group-item active" href="#" onClick={this.forwardToMyCart}>
-                                        <div className="d-flex justify-content-between align-items-center">
-                                            <div><i className="fe-icon-heart mr-1 text-muted"></i>
-                                                <div className="d-inline-block font-weight-medium text-uppercase">My
-                                                    Cart
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </nav>
-                            </div>
-                        </div>
-
-                        <div className="col-lg-8 pb-5">
-                            <form className="row">
-                                <div className="col-md-3">
-                                    <div className="form-group">
-                                        <label htmlFor="account-fn">Item Name</label>
-                                        <input className="form-control" type="text" id="account-fn"
-                                               placeholder={this.state.itemName}/>
-                                    </div>
-                                </div>
-
-                                <div className="col-md-2">
-                                    <div className="form-group">
-                                        <label htmlFor="account-email">Quantity</label>
-                                        <input className="form-control" type="email" id="account-email" placeholder={this.state.userEmailId}
-                                               disabled=""/>
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="form-group" id="RemoveButton">
-                                        <button className="delete btn btn-danger" title="Delete" data-toggle="tooltip"><i
-                                            className="material-icons">Remove</i></button>
-                                    </div>
-                                </div>
-
-                                <div className="col-12">
-                                    <hr className="mt-2 mb-3"/>
-                                    <div className="d-flex flex-wrap justify-content-between align-items-center">
-                                        <div className="custom-control custom-checkbox d-block">
-                                            <input className="custom-control-input" type="checkbox"
-                                                   id="subscribe_me" checked=""/>
-
-                                        </div></div>
-
-
-                                </div>
-                            </form>
-                            <div className="container">
-                                <div className="rounded-circle">
-
-                                    <StripeCheckout stripeKey="pk_live_qksmj6ho2DblvlfR5PNKgzea00zC51Ydfw"
-                                                    amount={this.state.totalPrice}
-                                                    token={this.handleTokenAPI}
-                                                    name={this.state.restaurantName}
-
-
-                                    />
-                                </div>
-                            </div>
-                        </div>
                         </div>
                     </div>
-                </div>
+                </Modal>
 
+                <Modal
+                    show={this.state.provideRatings}
+                    onHide={this.closeAllOptionsOfSelectionForm}
+                    animation={false}
+                    centered
+                    id="modal"
+                >
+                    <div className="container">
+                        <div className="row">
+                            <div className="main">
+                                <div className="login-form">
+                                    <div>
+                                        <div>
+                                            <h2>Rating from state: {rating}</h2>
+                                            <StarRatingComponent
+                                                name="rate your food"
+                                                starCount={5}
+                                                value={rating}
+                                                onStarClick={this.onStarClick.bind(this)}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
+            </div>
         );
     }
-
 }
-
-export default connect(mapStateToProps, mapDispatchToProps) (MySettingsPage);
+export default MyCart;
