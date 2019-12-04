@@ -6,6 +6,13 @@ class DeliveryAgentMaps extends React.Component {
     constructor(props){
         super(props)
     }
+
+    state = {
+        from : '2819 E 3rd St, Bloomington, IN 47401',
+        to : '700 N Woodlawn Ave, Bloomington, IN 47408'
+    };
+
+
     render() {
         const DirectionsComponent = compose(
             withProps({
@@ -20,8 +27,8 @@ class DeliveryAgentMaps extends React.Component {
                 componentDidMount() {
                     const DirectionsService = new google.maps.DirectionsService();
                     DirectionsService.route({
-                        origin: new google.maps.LatLng(39.164855, -86.495422),
-                        destination: new google.maps.LatLng(39.172700, -86.523230),
+                        origin: '2819 E 3rd St, Bloomington, IN 47401',
+                        destination: '700 N Woodlawn Ave, Bloomington, IN 47408',
                         travelMode: google.maps.TravelMode.DRIVING,
                     }, (result, status) => {
                         if (status === google.maps.DirectionsStatus.OK) {
