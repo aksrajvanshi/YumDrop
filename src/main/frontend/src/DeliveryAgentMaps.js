@@ -1,43 +1,52 @@
-import React, { Component } from "react";
-import './LoginDashBoardCSS.css';
-import './DeliveryAgentDashboardCSS.css';
-import './DeliveryAgentDashboard.js';
-import { withGoogleMap, GoogleMap, withScriptjs, InfoWindow, Marker } from "react-google-maps";
-import {connect} from 'react-redux';
-import Geocode from "react-geocode";
-import {withRouter} from 'react-router-dom';
-
-Geocode.setApiKey("AIzaSyCTauVKI3dyYkyA3a7Xq9xUZ3LxXBFZzKE");
-
-Geocode.enableDebug();
-
-class DeliveryAgentMaps extends Component{
-
-    constructor(props) {
-        super(props);
+/*global google*/
+import React from 'react'
+import  { compose, withProps, lifecycle } from 'recompose'
+import {withScriptjs, withGoogleMap, GoogleMap, DirectionsRenderer} from 'react-google-maps'
+class DeliveryAgentMaps extends React.Component {
+    constructor(props){
+        super(props)
     }
-
-
-    render(){
-        return(
-        <div>
-            <header>
-                <script src="http://maps.google.com/maps/api/js?key=AIzaSyCTauVKI3dyYkyA3a7Xq9xUZ3LxXBFZzKE"></script>
-                <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-            </header>
-            <div>
-                <GoogleMap
-
-                    google={this.props.google}
-                    zoom={8}
-                    initialCenter={{ lat: 47.444, lng: -122.176}}
-                >
-                    <Marker position={{lat: 48.00, lng: -122.00}}/>>
-                </GoogleMap>
-            </div>
-        </div>
+    render() {
+        const DirectionsComponent = compose(
+            withProps({
+                googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyCTauVKI3dyYkyA3a7Xq9xUZ3LxXBFZzKE",
+                loadingElement: <div style={{ height: `400px` }} />,
+                containerElement: <div style={{ width: `90%` }} />,
+                mapElement: <div style={{height: `600px`, width: `600px` }}  />,
+            }),
+            withScriptjs,
+            withGoogleMap,
+            lifecycle({
+                componentDidMount() {
+                    const DirectionsService = new google.maps.DirectionsService();
+                    DirectionsService.route({
+                        origin: new google.maps.LatLng(39.164855, -86.495422),
+                        destination: new google.maps.LatLng(39.172700, -86.523230),
+                        travelMode: google.maps.TravelMode.DRIVING,
+                    }, (result, status) => {
+                        if (status === google.maps.DirectionsStatus.OK) {
+                            this.setState({
+                                directions: {...result},
+                                markers: true
+                            })
+                        } else {
+                            console.error(`error fetching directions ${result}`);
+                        }
+                    });
+                }
+            })
+        )(props =>
+            <GoogleMap
+                defaultZoom={16}
+                initialCenter={{lat:39.166559, lng:-86.526801}}
+            >
+                {props.directions && <DirectionsRenderer directions={props.directions} suppressMarkers={props.markers}/>}
+            </GoogleMap>
         );
+        return (
+            <DirectionsComponent
+            />
+        )
     }
-
 }
 export default DeliveryAgentMaps;
