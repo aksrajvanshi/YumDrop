@@ -7,4 +7,6 @@ public interface SearchDeliveryAgentService {
 
     ResponseEntity<?> findNearestDeliveryAgentToTheRestaurant(UserOrder currentOrder);
 
+    ResponseEntity<?> changeDeliveryAgentLocationAfterOrderDelivery(String deliveryAgentEmailAddress, String userAddress);
+
 }

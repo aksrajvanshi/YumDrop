@@ -2,11 +2,13 @@ package com.app.yumdrop.Controller;
 
 import com.app.yumdrop.Entity.UserCart;
 import com.app.yumdrop.Entity.UserOrder;
+import com.app.yumdrop.Entity.Users;
 import com.app.yumdrop.FormEntity.RestaurantDetails;
 import com.app.yumdrop.Messages.ErrorMessage;
 import com.app.yumdrop.Messages.SuccessMessage;
 import com.app.yumdrop.Repository.UserCartRepository;
 import com.app.yumdrop.Repository.UserOrderRepository;
+import com.app.yumdrop.Repository.UsersRepository;
 import com.app.yumdrop.Service.FoodOrderService;
 import com.app.yumdrop.Service.SearchDeliveryAgentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,9 @@ public class FoodCartAndOrderController {
 
     @Autowired
     SearchDeliveryAgentService searchDeliveryAgentService;
+
+    @Autowired
+    UsersRepository usersRepository;
 
     /**
      * Adding an item to user cart table
@@ -118,8 +123,22 @@ public class FoodCartAndOrderController {
      */
     @RequestMapping(value = "/changeOrderStatusFromDeliveryAgent", method = RequestMethod.POST)
     public ResponseEntity<?> changeOrderStatusFromDeliveryAgent(@RequestBody UserOrder orderDetails) {
+        UserOrder orderInDb = userOrderRepository.findByorderId(orderDetails.getOrderId());
+        orderInDb.setOrderStatus(orderDetails.getOrderStatus());
+        UserOrder userOrder = userOrderRepository.save(orderInDb);
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        // change delivery agent location to the delivered address
+        Users userDetail = usersRepository.findByuserEmail(userOrder.getUserEmail());
+        ResponseEntity<?> response = searchDeliveryAgentService.changeDeliveryAgentLocationAfterOrderDelivery(userOrder.getDeliveryAgentAssigned(), userDetail.getUserAddress());
+
+        if(response.getStatusCodeValue() == 200){
+            SuccessMessage successfulLoginMessage = new SuccessMessage(new Date(), "Order successfully delivered!");
+            return new ResponseEntity<>(successfulLoginMessage, HttpStatus.OK);
+        }
+
+        ErrorMessage saveAddressUnsuccessful = new ErrorMessage(new Date(), "Error with the system",
+                "");
+        return new ResponseEntity<>(saveAddressUnsuccessful, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

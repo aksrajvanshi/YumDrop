@@ -45,13 +45,10 @@ public class SeachDeliveryAgentServiceImpl implements SearchDeliveryAgentService
             long distanceBetweenDeliveryAgentAndRestaurant = distanceBetweenAddressesCalculatorService.
                     calculateDistanceBetweenDeliveryAgentAndRestaurant(restaurantDetails.getRestaurantAddress(), deliveryAgentList.get(i).getDeliveryAgentAddress());
 
-            System.out.println(deliveryAgentList.get(i).getDeliveryAgentName() + " is " + distanceBetweenDeliveryAgentAndRestaurant + " meters away from " + restaurantDetails.getRestaurantName() );
-
             if(minDistanceOfDeliveryAgentFromRestaurant > distanceBetweenDeliveryAgentAndRestaurant){
                 minDistanceOfDeliveryAgentFromRestaurant = distanceBetweenDeliveryAgentAndRestaurant;
                 deliveryAgentSelected = i;
             }
-
         }
 
         currentOrder.setDeliveryAgentAssigned(deliveryAgentList.get(deliveryAgentSelected).getDeliveryAgentEmail());
@@ -65,5 +62,14 @@ public class SeachDeliveryAgentServiceImpl implements SearchDeliveryAgentService
         ErrorMessage saveAddressUnsuccessful = new ErrorMessage(new Date(), "Delivery agent could not be assigned to this order!",
                 "");
         return new ResponseEntity<>(saveAddressUnsuccessful, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<?> changeDeliveryAgentLocationAfterOrderDelivery(String deliveryAgentEmailAddress, String userAddress) {
+        DeliveryAgent deliveryAgentDetails = deliveryAgentRepository.findByDeliveryAgentEmail(deliveryAgentEmailAddress);
+        deliveryAgentDetails.setDeliveryAgentAddress(userAddress);
+        DeliveryAgent deliveryAgent = deliveryAgentRepository.save(deliveryAgentDetails);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
