@@ -135,6 +135,7 @@ class LoginDashBoard extends Component{
                     </nav>
                 </header>
                 <button onClick={this.forwardToChatFeature} >Click me for chat</button>
+                <button></button>
 
                 <div className="container mt-5">
 
