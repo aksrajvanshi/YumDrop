@@ -8,22 +8,6 @@ import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import Recaptcha from 'react-recaptcha';
 
-
-const mapStateToProps = (state)=>{
-    return {
-        emailId: state.userId,
-        accountType: state.accountType,
-    }
-}
-
-const mapDispatchToProps = (dispatch)=> {
-    return {
-        setUserEmail(evt){
-            dispatch({type: "setUserId", userId: evt, accountType: "user"});
-        }
-    }
-}
-
 class App extends Component {
     state = {
         loginSelect: true,
@@ -31,16 +15,15 @@ class App extends Component {
         restaurantLoginOption: false,
         deliveryAgentLoginOption: false,
         closeAllOptionsOfSelectionForm: false,
-        emailId: "",
+        userName: "",
         userPassword: "",
         userPhoneNumber: "",
+        userEmail: "",
         userTemporaryPassword: "",
         redirect: false,
         forgotPasswordSelect: false,
         emailSelectForgotPassword: false,
-        isReCaptchaVerified: false,
-        responseMessageForLogin: [],
-        errorSelect: false
+        isReCaptchaVerified: false
 
     };
 
@@ -64,26 +47,31 @@ class App extends Component {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                user_name: this.state.emailId,
+                user_name: this.state.userName,
                 userPassword: this.state.userPassword
             }),
         }).then(res => {
-            if (res.status === 200){
+
+
+            if (res.status !== 200) {
+                this.setState({redirect: true, userRegister: false});
+                this.forwardToLoginErrorPage();
+            }else {
                 if(this.state.isReCaptchaVerified) {
-                    this.props.setUserEmail(this.state.emailId);
+                    this.setState({redirect: true, userRegister: false});
                     this.forwardToLoginDashboard();
-            }}
-            else{
-                return res.json();
+                    this.props.setUser(this.state.userName);
+                }
+                else {
+                    this.setState({redirect: true, userRegister: false});
+                    this.forwardToLoginErrorPage();
+                }
             }
-        }).then(data => {
-                    this.setState({
-                        responseMessageForLogin: data, errorSelect: true, userLoginOption: false, loginSelect: false
-                    })
-                })
-        }
 
 
+        })
+
+    }
 
     passwordChange  = () => { debugger;
         fetch('/setNewUserPassword', {
@@ -92,15 +80,17 @@ class App extends Component {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: this.state.emailId,
+                userEmail: this.state.userEmail,
                 temporaryPassword: this.state.userTemporaryPassword,
                 newPassword: this.state.userPassword
             }),
         }).then(res => {
+
+
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
-               
+
             }else {
                 this.setState({redirect: true, userRegister: false, emailSelectForgotPassword: false, forgotPasswordSelect: true});
                 this.forwardToSuccessfullyChangedPasswordPage();
@@ -118,11 +108,11 @@ class App extends Component {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: this.state.emailId
+                userEmail: this.state.userEmail
             }),
         }).then(res => {
 
-            
+
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
@@ -177,7 +167,6 @@ class App extends Component {
     }
 
     closeAllOptionsOfSelectionForm= () => {
-        this.goBackToHomePage();
         this.setState({ userLoginOption: false, loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOption: false, forgotPasswordSelect: false, emailSelectForgotPassword: false  });
     }
 
@@ -190,7 +179,7 @@ class App extends Component {
 
     handleUserNameChange =  (event) => {
         this.setState({
-            emailId: event.target.value,
+            userName: event.target.value,
         });
     };
     handleUserPasswordChange =  (event) => {
@@ -201,38 +190,32 @@ class App extends Component {
 
     handleUserEmailIDChange =  (event) => {
         this.setState({
-            emailId: event.target.value,
+            userEmail: event.target.value,
         });
     };
 
-    goBackToHomePage = () => {
+    goBackToHomePAge = () => {
         this.props.history.push("/")
-    }
-
-    callHandlers = (event) => {
-        this.handleUserNameChange(event);
-        this.props.setUserEmail(event);
     }
 
 
     render() {
-        if (this.props.accountType === "user") {
-            this.props.history.push("/LoginDashboard");
-        }
-        else if (this.props.accountType === "restaurant") {
-            this.props.history.push("/RestaurantDashboard")
-        }
-
         const responseFacebook = (response) => {
+            console.log(response);
             this.state.facebookUserAccessToken = response.accessToken;
             this.state.facebookUserId = response.userID;
+            console.log("User ID", this.state.facebookUserId);
+            console.log("Access Token ",this.state.facebookUserAccessToken);
             let api = 'https://graph.facebook.com/v2.8/' + this.state.facebookUserId +
                 '?fields=name,email&access_token=' + this.state.facebookUserAccessToken;
             fetch(api)
                 .then((response) => response.json())
                 .then( (responseData) => {
+                    console.log(responseData)
                     this.state.facebookUserEmail = responseData.email;
                     this.state.facebookUserName  = responseData.name;
+                    console.log("Inside fetch api");
+                    console.log(responseData.email);
                 }).then(res => {
                 fetch('/facebookUserLogin',
                     {
@@ -247,15 +230,21 @@ class App extends Component {
                                 fbUserID: this.state.facebookUserId,
                                 fbUserAccessToken: this.state.facebookUserAccessToken,
                                 fbUserName: this.state.facebookUserName
+
                             }
                         )
+
                     }
                 ).then(res => {
+
+
                     if (res.status !== 200) {
                         this.forwardToErrorPage();
                     }else {
                         this.forwardToLoginDashboard();
                     }
+
+
                 })
             })};
 
@@ -268,9 +257,6 @@ class App extends Component {
                 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"/>
                 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-                <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-                <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                 <link rel="stylesheet"
                       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
                 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
@@ -298,21 +284,6 @@ class App extends Component {
                     </div>
                 </nav>
             </header>
-
-            <head>
-                <title>Login Page</title>
-
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-                      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-                      crossOrigin="anonymous"/>
-
-                    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-                          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-                          crossOrigin="anonymous"/>
-
-                        <link rel="stylesheet" type="text/css" href="styles.css"/>
-            </head>
-            {this.state.userEmail}
             <div className="view rgba-black-light">
                 <br/><br/><br/>
                 <div className="">
@@ -408,73 +379,52 @@ class App extends Component {
 
                 <div className="container">
                     <div className="row">
-                        <form className="form-signin mg-btm">
-                            <h3 className="heading-desc">
-                                <button type="button" className="close pull-right" aria-hidden="true">×</button>
-                                Login to Bootsnipp
-                            </h3>
-                            <div className="social-box">
-                                <div className="row mg-btm">
-                                    <div className="col-md-12">
-                                        <a href="#" className="btn btn-primary btn-block">
-                                            <i className="icon-facebook"></i> Login with Facebook
-                                        </a>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <a href="#" className="btn btn-info btn-block">
-                                            <i className="icon-twitter"></i> Login with Twitter
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="main">
-
-                                <input type="text" className="form-control" placeholder="Email" autoFocus/>
-                                    <input type="password" className="form-control" placeholder="Password"/>
-
-                                        Are you a business? <a href=""> Get started here</a>
-                                        <span className="clearfix"></span>
-                            </div>
-                            <div className="login-footer">
-                                <div className="row">
-                                    <div className="col-xs-6 col-md-6">
-                                        <div className="left-section">
-                                            <a href="">Forgot your password?</a>
-                                            <a href="">Sign up now</a>
-                                        </div>
-                                    </div>
-                                    <div className="col-xs-6 col-md-6 pull-right">
-                                        <button type="submit" className="btn btn-large btn-danger pull-right">Login
-                                        </button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-
-            </Modal>
-            <Modal
-                show={this.state.errorSelect}
-                animation={false}
-                id="modal"
-            >
-                <div className="container">
-                    <div className="row">
                         <div className="main">
                             <div className="login-form">
-                                <form>
-                                    <h2 className="text-center">{this.state.responseMessageForLogin}</h2>
-
+                                <form onSubmit={this.login.bind(this)}>
+                                    <h2 className="text-center">User Login</h2>
+                                    <div className="social-btn text-center">
+                                        <FacebookLogin
+                                            appId="1250006828526117"
+                                            callback={responseFacebook}
+                                            render={renderProps => (
+                                                <button className="btn btn-primary btn-block btn-lg" onClick={renderProps.onClick}><i
+                                                    className="fa fa-facebook"></i> Login with <b>Facebook</b> </button>
+                                            )}
+                                        />
+                                    </div>
+                                    <div className="or-seperator"><i>or</i></div>
                                     <div className="form-group">
-                                        <button onClick={this.goBackToHomePage} type="submit"
-                                                className="btn btn-primary btn-lg btn-block login-btn">Go to Home
+                                        <input value={this.state.userName}
+                                               onChange={this.handleUserNameChange} type="text"
+                                               className="form-control" placeholder="Username"
+                                               pattern="[a-z][A-Z]"
+                                               required="required"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <input value={this.state.userPassword}
+                                               onChange={this.handleUserPasswordChange} type="password"
+                                               className="form-control" placeholder="Password"
+                                               pattern="[a-z][A-Z]"
+                                               required="required"/>
+                                    </div>
+                                    <div className="col-md-12 offset-7 form-group">
+                                        <a href="#" onClick={this.handleForgotPasswordChange}>Forgot Password?</a>
+                                    </div>
+                                    <Recaptcha
+                                        sitekey="6LfA28AUAAAAAAdm39FjgIVi38BoyQoLDKTM5EJN"
+                                        render="explicit"
+                                        onloadCallback={this.recaptchaLoaded}
+                                        verifyCallback={this.verifyCallback}
+
+                                    />
+                                    <br/>
+                                    <div className="form-group">
+                                        <button onClick={this.login.bind(this)} type="submit"
+                                                className="btn btn-primary btn-lg btn-block">Login
                                         </button>
                                     </div>
+
                                 </form>
 
                             </div>
@@ -658,6 +608,18 @@ class App extends Component {
     }
 }
 
+const mapStateToProps = (state)=>{
+    return {
+        userEmailId: state.emailId
+    }
+}
 
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUser(evt){
+            dispatch({type: "setEmailId", newEmailId: evt});
+        }
+    }
+}
 
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
