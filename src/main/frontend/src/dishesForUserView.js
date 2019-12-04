@@ -10,6 +10,7 @@ class dishesForUserView extends React.Component{
 
     componentWillMount() {
         let currentComponent = this;
+        console.log(this.props.restaurantId);
         fetch('/getAllRestaurantDishes',{
             method: 'POST',
             redirect: 'follow',
@@ -197,7 +198,8 @@ class dishesForUserView extends React.Component{
 
 const mapStateToProps = (state)=> {
     return {
-        emailId: state.userId
+        emailId: state.userId,
+        restaurantId: state.userSelectedRestaurant
     }
 }
 

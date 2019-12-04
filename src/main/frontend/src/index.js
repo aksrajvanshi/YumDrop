@@ -42,7 +42,6 @@ import DeliveryAgentOTPResetPassword from "./DeliveryAgentOTPResetPassword";
 import MyCart from "./MyCart";
 import paymentSystemForUsers from "./paymentSystemForUsers";
 import restaurantChatStartButton from "./restaurantChatStartButton";
-import chatFeature from "./chatFeature";
 import userChatStartButton from "./userChatStartButton";
 import ActiveOrders from "./ActiveOrders";
 import RestaurantActiveOrders from "./RestaurantActiveOrders";
@@ -54,6 +53,7 @@ const initialState = {
     longitude: null,
     userId: null, //doubles as a User's Email address or a restaurant's Id
     accountType: null, //identifies if account is user, restaurant, or delivery
+    userSelectedRestaurant: "", //id of restaurant the user is viewing
 }
 
 const reducer = (state=initialState, action) => {
@@ -70,7 +70,9 @@ const reducer = (state=initialState, action) => {
         state.userId = null;
         state.accountType = null;
     }
-
+    else if (action.type === "setUserSelectedRestaurant") {
+        state.userSelectedRestaurant = action.newUserSelectedRestaurant;
+    }
 
     return state;
 }
@@ -98,7 +100,6 @@ const routing = (
                 <Route exact path="/MyCart" component={MyCart}/>
                 <Route exact path="/userChatStartButton" component={userChatStartButton}/>
                 <Route exact path="/restaurantChatStartButton" component={restaurantChatStartButton}/>
-                <Route exact path="/chatFeature" component={chatFeature} />
                 <Route exact path="/RestaurantActiveOrders" component={RestaurantActiveOrders}/>
                 <Route exact path="/DeliveryAgentOTPpage" component={DeliveryAgentOTPpage}/>
                 <Route exact path="/errorPageForRegistration" component={errorPageForRegistration} />

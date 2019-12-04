@@ -45,7 +45,7 @@ class LoginDashBoard extends Component{
 
     handleClick(item) {
         console.log(item);
-
+        this.props.setUserSelectedRestaurant(item.restaurantId)
         this.forwardToMyCart();
     }
 
@@ -228,7 +228,8 @@ const mapStateToProps = (state)=> {
 const mapDispatchToProps = (dispatch)=> {
     return {
         setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
-        signOut: () => dispatch({type: "signOut"})
+        signOut: () => dispatch({type: "signOut"}),
+        setUserSelectedRestaurant: (evt) => dispatch({type: "setUserSelectedRestaurant", newUserSelectedRestaurant: evt}),
     }
 }
 export default  connect(mapStateToProps, mapDispatchToProps) (LoginDashBoard);
