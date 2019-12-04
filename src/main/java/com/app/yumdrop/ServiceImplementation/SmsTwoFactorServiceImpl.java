@@ -1,21 +1,18 @@
 package com.app.yumdrop.ServiceImplementation;
 
+import com.app.yumdrop.Entity.DeliveryAgentOtp;
 import com.app.yumdrop.Entity.RestaurantOtp;
 import com.app.yumdrop.Entity.UsersOtp;
+import com.app.yumdrop.Repository.DeliveryAgentOtpRepository;
 import com.app.yumdrop.Repository.RestaurantOtpRepository;
 import com.app.yumdrop.Repository.UsersOtpRepository;
-import com.app.yumdrop.Entity.DeliveryAgentOtp;
-import com.app.yumdrop.Repository.DeliveryAgentOtpRepository;
 import com.app.yumdrop.Service.SmsTwoFactorService;
 import com.app.yumdrop.Utils.PasswordUtils;
-import com.sendgrid.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 
 @Service
 public class SmsTwoFactorServiceImpl implements SmsTwoFactorService {
@@ -25,7 +22,7 @@ public class SmsTwoFactorServiceImpl implements SmsTwoFactorService {
 
     @Autowired
     DeliveryAgentOtpRepository deliveryAgentOtpRepository;
-  
+
     @Autowired
     UsersOtpRepository usersOtpRepository;
 
