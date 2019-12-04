@@ -4,6 +4,7 @@ import com.app.yumdrop.Entity.DeliveryAgent;
 import com.app.yumdrop.Entity.UserCart;
 import com.app.yumdrop.Entity.UserOrder;
 import com.app.yumdrop.Entity.Users;
+import com.app.yumdrop.FormEntity.DeliveryAgentActiveOrders;
 import com.app.yumdrop.FormEntity.RestaurantDetails;
 import com.app.yumdrop.Messages.ErrorMessage;
 import com.app.yumdrop.Messages.SuccessMessage;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -145,7 +147,8 @@ public class FoodCartAndOrderController {
 
     @RequestMapping(value = "/getActiveDeliveryOrderForDeliveryAgent", method = RequestMethod.POST)
     public ResponseEntity<?> changeOrderStatusFromDeliveryAgent(@RequestBody DeliveryAgent deliveryAgentDetail) {
-        return null;
+        List<UserOrder> activeDeliveryOrders = userOrderRepository.findByorderStatusAnddeliveryAgentAssigned(2, deliveryAgentDetail.getDeliveryAgentEmail());
+        return searchDeliveryAgentService.getAllDeliveryAgentActiveOrders(activeDeliveryOrders);
     }
 
 

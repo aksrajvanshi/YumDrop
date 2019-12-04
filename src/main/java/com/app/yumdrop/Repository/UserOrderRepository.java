@@ -19,4 +19,6 @@ public interface UserOrderRepository extends CrudRepository<UserOrder, UserOrder
 
     UserOrder findByorderId(Long orderId);
 
+    List<UserOrder> findByorderStatusAnddeliveryAgentAssigned(int orderStatus, String deliveryAgentAssigned);
+
 }
