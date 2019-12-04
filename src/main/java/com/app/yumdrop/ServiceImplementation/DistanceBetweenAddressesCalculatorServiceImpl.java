@@ -47,4 +47,30 @@ public class DistanceBetweenAddressesCalculatorServiceImpl implements DistanceBe
         restaurantSearchResults.setDistanceFromUserWithMetrics(result.rows[0].elements[0].distance.humanReadable);
 
     }
+
+    @Override
+    public long calculateDistanceBetweenDeliveryAgentAndRestaurant(String restaurantAddress, String deliveryAgentAddress){
+        GeoApiContext context = new GeoApiContext.Builder()
+                .apiKey(googleMapsAPIKey)
+                .build();
+        DistanceMatrixApiRequest req = DistanceMatrixApi.newRequest(context);
+        DistanceMatrix result = null;
+        try {
+            result = req.origins(restaurantAddress)
+                    .destinations(deliveryAgentAddress)
+                    .mode(TravelMode.DRIVING)
+                    .avoid(DirectionsApi.RouteRestriction.TOLLS)
+                    .language("en-US")
+                    .await();
+        } catch (ApiException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result.rows[0].elements[0].distance.inMeters;
+    }
+
 }

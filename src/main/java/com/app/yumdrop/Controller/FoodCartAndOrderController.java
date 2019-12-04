@@ -8,6 +8,7 @@ import com.app.yumdrop.Messages.SuccessMessage;
 import com.app.yumdrop.Repository.UserCartRepository;
 import com.app.yumdrop.Repository.UserOrderRepository;
 import com.app.yumdrop.Service.FoodOrderService;
+import com.app.yumdrop.Service.SearchDeliveryAgentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,9 @@ public class FoodCartAndOrderController {
 
     @Autowired
     UserOrderRepository userOrderRepository;
+
+    @Autowired
+    SearchDeliveryAgentService searchDeliveryAgentService;
 
     /**
      * Adding an item to user cart table
@@ -103,9 +107,8 @@ public class FoodCartAndOrderController {
 
         UserOrder orderInDb = userOrderRepository.findByorderId(orderDetails.getOrderId());
         orderInDb.setOrderStatus(orderDetails.getOrderStatus());
-        userOrderRepository.save(orderInDb);
-        // TODO find nearest free delivery agent guy to assign order to!
-        return ResponseEntity.status(HttpStatus.OK).build();
+        UserOrder userOrder = userOrderRepository.save(orderInDb);
+        return searchDeliveryAgentService.findNearestDeliveryAgentToTheRestaurant(userOrder);
     }
 
     /**
