@@ -15,6 +15,7 @@ import errorPageForRegistration from "./errorPageForRegistration";
 import MySettingsPage from "./MySettingsPage";
 import OTPResetPassword from "./OTPResetPassword";
 import ResetPassword from "./ResetPassword";
+import chatFeature from "./chatFeature";
 import loginErrorPAge from "./loginErrorPAge";
 import SuccessfulRegistration from './SuccessfulRegistration';
 import Home from './Home';
@@ -98,6 +99,7 @@ const routing = (
                 <Route exact path="/ActiveOrders" component={ActiveOrders}/>
                 <Route exact path="/paymentSystemForUsers" component={paymentSystemForUsers}/>
                 <Route exact path="/MyCart" component={MyCart}/>
+                <Route exact path="/chatFeature" component={chatFeature}/>
                 <Route exact path="/userChatStartButton" component={userChatStartButton}/>
                 <Route exact path="/restaurantChatStartButton" component={restaurantChatStartButton}/>
                 <Route exact path="/RestaurantActiveOrders" component={RestaurantActiveOrders}/>

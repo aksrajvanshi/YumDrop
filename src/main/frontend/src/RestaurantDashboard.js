@@ -128,6 +128,10 @@ class RestaurantDashboard extends Component{
             })
 
     }
+
+    forwardToChatFeature = () => {
+        this.props.history.push('/chatFeature')
+    }
     render() {
         if(this.props.restaurantId === null) {
             this.props.history.push('/')
@@ -192,6 +196,8 @@ class RestaurantDashboard extends Component{
 
 
                 <br/><br/><br/>
+                <button onClick={this.forwardToChatFeature} >Click me for chat</button>
+
 
                 <div className="span7">
                     <div className="widget stacked widget-table action-table">

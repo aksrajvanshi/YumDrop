@@ -17,6 +17,9 @@ class LoginDashBoard extends Component{
         recommendedRestaurants: []
     }
 
+    forwardToChatFeature = () => {
+        this.props.history.push('/chatFeature')
+    }
     componentDidMount () {
         let currentComponent = this
         fetch('/getAllReccommendedRestaurants',{
@@ -131,7 +134,7 @@ class LoginDashBoard extends Component{
                         </div>
                     </nav>
                 </header>
-
+                <button onClick={this.forwardToChatFeature} >Click me for chat</button>
 
                 <div className="container mt-5">
 
