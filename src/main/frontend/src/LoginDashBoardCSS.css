@@ -167,3 +167,14 @@ p {
     width: 40%;
 }
 
+#modal{
+    width: 450px;
+    height: 430px;
+}
+
+#containerForLogin{
+    padding-left: 60px;
+    padding-right: 40px;
+    padding-bottom: 20px;
+
+}

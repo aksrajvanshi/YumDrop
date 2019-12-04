@@ -268,6 +268,9 @@ class App extends Component {
                 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"/>
                 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+                <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                 <link rel="stylesheet"
                       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
                 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
@@ -295,6 +298,20 @@ class App extends Component {
                     </div>
                 </nav>
             </header>
+
+            <head>
+                <title>Login Page</title>
+
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+                      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+                      crossOrigin="anonymous"/>
+
+                    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+                          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+                          crossOrigin="anonymous"/>
+
+                        <link rel="stylesheet" type="text/css" href="styles.css"/>
+            </head>
             {this.state.userEmail}
             <div className="view rgba-black-light">
                 <br/><br/><br/>
@@ -391,58 +408,54 @@ class App extends Component {
 
                 <div className="container">
                     <div className="row">
-                        <div className="main">
-                            <div className="login-form">
-                                <form onSubmit={this.login.bind(this)}>
-                                    <h2 className="text-center">User Login</h2>
-                                    <div className="social-btn text-center">
-                                        <FacebookLogin
-                                            appId="1250006828526117"
-                                            callback={responseFacebook}
-                                            render={renderProps => (
-                                                <button className="btn btn-primary btn-block btn-lg" onClick={renderProps.onClick}><i
-                                                    className="fa fa-facebook"></i> Login with <b>Facebook</b> </button>
-                                            )}
-                                        />
+                        <form className="form-signin mg-btm">
+                            <h3 className="heading-desc">
+                                <button type="button" className="close pull-right" aria-hidden="true">×</button>
+                                Login to Bootsnipp
+                            </h3>
+                            <div className="social-box">
+                                <div className="row mg-btm">
+                                    <div className="col-md-12">
+                                        <a href="#" className="btn btn-primary btn-block">
+                                            <i className="icon-facebook"></i> Login with Facebook
+                                        </a>
                                     </div>
-                                    <div className="or-seperator"><i>or</i></div>
-                                    <div className="form-group">
-                                        <input value={this.state.emailId}
-                                               onChange={this.callHandlers} type="text"
-                                               className="form-control" placeholder="Username"
-                                               pattern="[a-z][A-Z]"
-                                               required="required"/>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <a href="#" className="btn btn-info btn-block">
+                                            <i className="icon-twitter"></i> Login with Twitter
+                                        </a>
                                     </div>
-                                    <div className="form-group">
-                                        <input value={this.state.userPassword}
-                                               onChange={this.handleUserPasswordChange} type="password"
-                                               className="form-control" placeholder="Password"
-                                               pattern="[a-z][A-Z]"
-                                               required="required"/>
-                                    </div>
-                                    <div className="col-md-12 offset-7 form-group">
-                                        <a href="#" onClick={this.handleForgotPasswordChange}>Forgot Password?</a>
-                                    </div>
-                                    <Recaptcha
-                                        sitekey="6LfA28AUAAAAAAdm39FjgIVi38BoyQoLDKTM5EJN"
-                                        render="explicit"
-                                        onloadCallback={this.recaptchaLoaded}
-                                        verifyCallback={this.verifyCallback}
+                                </div>
+                            </div>
+                            <div className="main">
 
-                                    />
-                                    <br/>
-                                    <div className="form-group">
-                                        <button onClick={this.login.bind(this)} type="submit"
-                                                className="btn btn-primary btn-lg btn-block">Login
+                                <input type="text" className="form-control" placeholder="Email" autoFocus/>
+                                    <input type="password" className="form-control" placeholder="Password"/>
+
+                                        Are you a business? <a href=""> Get started here</a>
+                                        <span className="clearfix"></span>
+                            </div>
+                            <div className="login-footer">
+                                <div className="row">
+                                    <div className="col-xs-6 col-md-6">
+                                        <div className="left-section">
+                                            <a href="">Forgot your password?</a>
+                                            <a href="">Sign up now</a>
+                                        </div>
+                                    </div>
+                                    <div className="col-xs-6 col-md-6 pull-right">
+                                        <button type="submit" className="btn btn-large btn-danger pull-right">Login
                                         </button>
                                     </div>
-
-                                </form>
+                                </div>
 
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
+
 
             </Modal>
             <Modal

@@ -1,6 +1,5 @@
 import React from "react"
 import {Modal} from "react-bootstrap";
-import DatePicker from "react-datepicker";
 import Calendar from 'react-calendar';
 import TimePicker from 'react-time-picker';
 import StripeCheckout from "react-stripe-checkout";
