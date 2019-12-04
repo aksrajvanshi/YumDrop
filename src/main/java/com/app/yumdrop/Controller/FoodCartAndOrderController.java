@@ -1,5 +1,6 @@
 package com.app.yumdrop.Controller;
 
+import com.app.yumdrop.Entity.DeliveryAgent;
 import com.app.yumdrop.Entity.UserCart;
 import com.app.yumdrop.Entity.UserOrder;
 import com.app.yumdrop.Entity.Users;
@@ -131,6 +132,7 @@ public class FoodCartAndOrderController {
         Users userDetail = usersRepository.findByuserEmail(userOrder.getUserEmail());
         ResponseEntity<?> response = searchDeliveryAgentService.changeDeliveryAgentLocationAfterOrderDelivery(userOrder.getDeliveryAgentAssigned(), userDetail.getUserAddress());
 
+
         if(response.getStatusCodeValue() == 200){
             SuccessMessage successfulLoginMessage = new SuccessMessage(new Date(), "Order successfully delivered!");
             return new ResponseEntity<>(successfulLoginMessage, HttpStatus.OK);
@@ -140,5 +142,11 @@ public class FoodCartAndOrderController {
                 "");
         return new ResponseEntity<>(saveAddressUnsuccessful, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @RequestMapping(value = "/getActiveDeliveryOrderForDeliveryAgent", method = RequestMethod.POST)
+    public ResponseEntity<?> changeOrderStatusFromDeliveryAgent(@RequestBody DeliveryAgent deliveryAgentDetail) {
+        return null;
+    }
+
 
 }
