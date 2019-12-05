@@ -44,6 +44,10 @@ public class DeliveryAgent extends CreateAndUpdateTimeModel{
     public DeliveryAgent(){
     }
 
+    public DeliveryAgent(@Email(message = "delivery agent email should be a valid email") String deliveryAgentEmail) {
+        this.deliveryAgentEmail = deliveryAgentEmail;
+    }
+
     public DeliveryAgent(@Email(message = "delivery agent email should be a valid email") String deliveryAgentEmail, @NotNull String deliveryAgentPassword) {
         this.deliveryAgentEmail = deliveryAgentEmail;
         this.deliveryAgentPassword = deliveryAgentPassword;
