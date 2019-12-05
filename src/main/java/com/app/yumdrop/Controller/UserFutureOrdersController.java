@@ -30,22 +30,24 @@ public class UserFutureOrdersController {
             return scheduleOrderService.scheduleOrder(userFutureOrdersForm);
     }
 
-    @RequestMapping(value = "/UserFutureOrderForm", method = RequestMethod.POST)
-    public ResponseEntity<?> userFutureOrders(@RequestBody UserFutureOrdersForm userFutureOrdersForm) {
-
-        UserFutureOrders order = userFutureOrdersRepository.findByOrderId("3");
-        if (order == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public void runScheduler() {
+        System.out.println(" here 0");
+        int n=3;
+        for(int i=1;i<=n;i++) {
+            System.out.println(" here 4");
+            UserFutureOrders order = userFutureOrdersRepository.findByFutureOrder1Time("2019-12-02 23:55:00+00");
+            System.out.println(" here 5");
+            if(order==null) System.out.println(" Null here 1");
+            System.out.println(" here 6");
+            System.out.println(" Order Details Email "+order.getUserEmail());
+            System.out.println(" here 7");
+            if(order.getFutureOrder1Time().equals("2019-12-02 23:55:00+00")) {
+                System.out.println(" Time match ");
+            }
+            System.out.println(" here 8");
         }
-
-        else if (order.userEmail.equals(userFutureOrdersForm.getEmail())) {
-            System.out.println("user email : "+order.userEmail);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-
     }
+
+
 
 }

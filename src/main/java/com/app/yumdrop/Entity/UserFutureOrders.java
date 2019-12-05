@@ -11,14 +11,16 @@ import javax.validation.constraints.NotNull;
 @Table(name = "future_user_orders")
 public class UserFutureOrders extends CreateAndUpdateTimeModel{
 
-    @Id
-    @Column(name = "user_email", nullable = false)
-    @Email(message = "user email should be a valid email")
-    public String userEmail;
 
     @NotNull
     @Column(name = "order_id", nullable = false)
     private String orderId;
+
+    @Id
+    @Column(name = "user_email", nullable = false)
+    @Email(message = "user email should be a valid email")
+    private String userEmail;
+
 
     @NotNull
     @Column(name = "future_order_1_time", nullable = false)
@@ -52,7 +54,7 @@ public class UserFutureOrders extends CreateAndUpdateTimeModel{
 
     @Override
     public String toString() {
-        return "Delivery_Agent{" +
+        return "User_Future_Orders{" +
                 "orderId='" + orderId + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", futureOrder1Time='" + futureOrder1Time + '\'' +

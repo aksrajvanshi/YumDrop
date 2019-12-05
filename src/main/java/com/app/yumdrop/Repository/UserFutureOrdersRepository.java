@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserFutureOrdersRepository extends CrudRepository<UserFutureOrders, String> {
 
-    UserFutureOrders findByOrderId(String orderId);
+    UserFutureOrders findByFutureOrder1Time(String futureOrder1Time);
 }
