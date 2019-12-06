@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import {connect} from "react-redux";
 
 import LoginPage from "./LoginPage";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -7,15 +6,20 @@ import './LoginDashBoardCSS.css';
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import {connect} from 'react-redux';
 import Geocode from "react-geocode";
+import AutoComplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 import './index.css';
 
+
 class App extends Component {
+
     state = {
-        address: "800 N Union St, Bloomington, IN 47408, USA",
+        address: "",
         latitude: "",
         longitude: "",
         searchResults: [],
         searchQuery: "",
+        autocompleteOptions: []
     };
 
     forwardToLoginForm = () => {
@@ -30,6 +34,11 @@ class App extends Component {
         this.props.history.push('/RegisterForm')
     }
 
+    goToSearchPage = () => {
+        this.props.setSearchQuery(this.state.searchQuery)
+        this.props.history.push('/SearchPage')
+    }
+
     getSearchResults = () => {
         let currentComponent = this;
         fetch('/searchRestaurantByLocationFromPublicPage', {
@@ -41,8 +50,7 @@ class App extends Component {
                 userAddress: this.state.address,
                 restaurantSearchKeyword: this.state.searchQuery
             }),
-        }).then(res => {
-            return res.json();
+        }).then(res => {return res.json();
         }).then(res=>{
             let x = [];
             for (let i=0; i<res.length;i++){
@@ -51,16 +59,50 @@ class App extends Component {
             currentComponent.setState({
                 searchResults: x
             })
-            console.log(this.state.searchResults)
         })
+    }
+
+    handleSearchSelect = (event) => {
+        this.setState({searchQuery: event.target.textContent})
     }
 
     handleSearchChange = (event) => {
         this.setState({searchQuery: event.target.value})
     }
 
+    getAddress = async () => {
+        await navigator.geolocation.getCurrentPosition(
+            position => Geocode.fromLatLng( position.coords.latitude , position.coords.longitude ).then(
+                res => {
+                    return res.results[0].formated_address;
+            }),
+            err => console.log(err)
+        );
+    }
+
+    componentWillMount() {
+        let currentComponent = this;
+        this.getAddress().then( result => {this.setState({address: result});
+        fetch('/getAllRestaurants',{
+            method: 'POST',
+            redirect: 'follow',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                userAddress: this.state.address,})})
+            .then(res => {
+                return res.json()
+            }).then(data => {
+                this.setState({autocompleteOptions: data})
+        })
+    });
+    }
+
 
     render() {
+
         if (this.props.accountType === "user") {
             this.props.history.push("/LoginDashboard");
         }
@@ -167,14 +209,21 @@ class App extends Component {
                                     </div>
                                     <div className="col-md-4">
                                         <div className="md-form">
-                                            <input type="text"
-                                                   placeholder="Search for food, cuisines, restaurants here.."
-                                                   className="form-control validate" onChange={(event) => this.handleSearchChange(event)}/>
+                                            <AutoComplete
+                                                freeSolo
+                                                autoSelect="true"
+                                                onChange={evt => this.handleSearchSelect(evt)}
+                                                options={this.state.autocompleteOptions.map(option => option.restaurantDetails.restaurantName)}
+                                                disableClearable
+                                                renderInput={params => (
+                                                    <TextField {...params} variant="filled" label="Search for food, cuisines, restaurants here.." style={{backgroundColor:"white"}} fullWidth onChange={(evt) => this.handleSearchChange(evt)} />
+                                                )}
+                                            />
                                         </div>
                                     </div>
                                     <div className="col-md-1" >
                                         <div className="md-form">
-                                            <button className="btn btn-primary btn-md" onClick={this.getSearchResults}><span id="SearchBar">Search</span></button>
+                                            <button className="btn btn-primary btn-md" onClick={this.goToSearchPage}><span id="SearchBar">Search</span></button>
                                         </div>
                                     </div>
                                 </div>
@@ -183,28 +232,6 @@ class App extends Component {
                     </div>
                 </div>
                 <br/><br/><br/><br/>
-                <div>
-                    <section className="about-area pt-80">
-                        <div className="container">
-                            {this.state.searchResults.map((item, index) => {
-                                return(
-                                    <div className="row menu_style1">
-                                        <div className="col-xl-12 mb-60">
-                                            <div className="single_menu_list" id="containerForRestaurantDisplay" key={index}>
-                                                <div>
-                                                    <div className="menu_content">
-                                                        <h4>{item.restaurantName}</h4>
-                                                        <h5>{item.restaurantAddress}</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            )}
-                        </div>
-                    </section>
-                </div>
                 <div className="how-section1">
                     <div className="row">
                         <div className="col-md-6 how-img">
@@ -262,4 +289,11 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps) (App);
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setSearchQuery: (evt) => dispatch({type: "setSearchQuery", newSearchQuery: evt}),
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (App);

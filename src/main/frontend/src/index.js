@@ -40,12 +40,15 @@ import DeliveryAgentLoginErrorPage from "./DeliveryAgentLoginErrorPage";
 import DeliveryAgentOTPResetPassword from "./DeliveryAgentOTPResetPassword";
 import MyCart from "./MyCart";
 import paymentSystemForUsers from "./paymentSystemForUsers";
+import SearchPage from "./SearchPage";
+import userSearchPage from "./userSearchPage";
 
 const initialState = {
     latitude: null,
     longitude: null,
     userId: null, //doubles as a User's Email address or a restaurant's Id
     accountType: null, //identifies if account is user, restaurant, or delivery
+    searchQuery: "", //last user inputted search string
 }
 
 const reducer = (state=initialState, action) => {
@@ -59,10 +62,13 @@ const reducer = (state=initialState, action) => {
         state.accountType = action.accountType;
     }
     else if (action.type === "signOut") {
+        console.log("made it!");
         state.userId = null;
         state.accountType = null;
     }
-
+    else if (action.type === "setSearchQuery") {
+        state.searchQuery = action.newSearchQuery;
+    }
 
     return state;
 }
@@ -91,6 +97,7 @@ const routing = (
                 <Route exact path="/ResetPassword" component={ResetPassword}/>
                 <Route exact path="/loginErrorPAge" component={loginErrorPAge} />
                 <Route exact path="/SuccessfulRegistration" component={SuccessfulRegistration} />
+                <Route exaxct path="/SearchPage" component={SearchPage}/>
                 <Route exact path="/MyCurrentLocation" component={MyCurrentLocation}/>
                 <Route exact path="/RestaurantDashboard" component={RestaurantDashboard}/>
                 <Route exact path="/Trying" component={Trying}/>
@@ -110,6 +117,7 @@ const routing = (
                 <Route exact path="/DeliveryAgentLoginForm" component={DeliveryAgentLoginForm}/>
                 <Route exact path="/DeliveryAgentLoginErrorPage" component={DeliveryAgentLoginErrorPage}/>
                 <Route exact path="/DeliveryAgentOTPResetPassword" component={DeliveryAgentOTPResetPassword}/>
+                <Route exact path="/userSearchPage" component={userSearchPage} />
             </div>
         </Router>
     </Provider>

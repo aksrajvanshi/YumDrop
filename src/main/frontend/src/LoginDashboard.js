@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import './LoginDashBoardCSS.css';
 import {connect} from "react-redux";
+import AutoComplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 
 
 class LoginDashBoard extends Component{
@@ -10,43 +12,47 @@ class LoginDashBoard extends Component{
     }
 
     state = {
-        userEmailId : this.props.userEmailId,
-        searchResults: [{"restaurantAddress": "restaurantAddress"}],
-        userAddress: "800 N Union St, Bloomington, IN 47408, USA",
+        userEmailId : this.props.emailId,
+        autocompleteOptions: [],
+        userAddress: "",
         searchQuery: ""
+    }
+
+    getUserAddress = async () => {
+        await fetch('/getUserDataForDashboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userEmail: this.state.userEmailId
+            }),
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            return data.userAddress;
+        })
     }
 
     componentDidMount () {
         let currentComponent = this
+        this.getUserAddress().then( res => { this.setState({userAddress: res});
         fetch('/getAllRestaurants',{
             method: 'POST',
-                headers: {
+            headers: {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmailId: this.state.userEmailId
+                userAddress: this.state.userAddress
             }),
         }).then(res => {
             return res.json();
         }).then(res=>{
-            let x = [];
-            for (let i=0; i<res.length;i++){
-                x[i] = res[i].restaurantDetails;
-            }
             currentComponent.setState({
-                searchResults: x
+                autocompleteOptions: res
             })
-            console.log(this.state.data)
-            if (res.status !== 200) {
-
-                alert("Hey going to Error page");
-            }else {
-                alert("Hey going to Login Dashboard page");
-            }
-
-
         })
-
+        })
     }
 
     getSearchResults = () => {
@@ -61,8 +67,6 @@ class LoginDashBoard extends Component{
                 restaurantSearchKeyword: this.state.searchQuery,
                 userEmail: this.state.userEmailId
             }),
-        }).then(res => {
-            return res.json();
         }).then(res=>{
             let x = [];
             for (let i=0; i<res.length;i++){
@@ -91,9 +95,18 @@ class LoginDashBoard extends Component{
         this.forwardToSettingsPage();
     }
 
+    handleSearchSelect = (event) => {
+        this.setState({searchQuery: event.target.textContent})
+    }
+
     signOut = () => {
         this.props.signOut();
         this.props.history.push('/');
+    }
+
+    goToUserSearchPage = () => {
+        this.props.setSearchQuery(this.state.searchQuery);
+        this.props.history.push('/userSearchPage');
     }
 
     render() {
@@ -134,39 +147,22 @@ class LoginDashBoard extends Component{
                 <div>
                     <div className="col-md-4">
                         <div className="md-form">
-                            <input type="text"
-                                   placeholder="Search for food, cuisines, restaurants here.."
-                                   className="form-control validate" onChange={(event) => this.handleSearchChange(event)}/>
-
+                            <AutoComplete
+                                freeSolo
+                                onChange={evt => this.handleSearchSelect(evt)}
+                                options={this.state.autocompleteOptions.map(option => option.restaurantDetails.restaurantName)}
+                                disableClearable
+                                renderInput={params => (
+                                    <TextField {...params} variant="filled" label="Search for food, cuisines, restaurants here.." style={{backgroundColor:"white"}} fullWidth onChange={evt => this.handleSearchChange(evt)}/>
+                                )}
+                            />
                         </div>
                     </div>
                     <div className="col-md-1" >
                         <div className="md-form">
-                            <button className="btn btn-primary btn-md" onClick={this.getSearchResults}><span id="SearchBar">Search</span></button>
+                            <button className="btn btn-primary btn-md" onClick={this.goToUserSearchPage}><span id="SearchBar">Search</span></button>
                         </div>
                     </div>
-                </div>
-                <div>
-                    <section className="about-area pt-80">
-                        <div className="container">
-                            {this.state.searchResults.map((item, index) => {
-                                return(
-                                    <div className="row menu_style1">
-                                        <div className="col-xl-12 mb-60">
-                                            <div className="single_menu_list" id="containerForRestaurantDisplay" key={index}>
-                                                <div>
-                                                    <div className="menu_content">
-                                                        <h4>{item.restaurantName}</h4>
-                                                        <h5>{item.restaurantAddress}</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            )}
-                        </div>
-                    </section>
                 </div>
 
                 <div className="container mt-5">
@@ -340,6 +336,7 @@ const mapStateToProps = (state)=> {
 
 const mapDispatchToProps = (dispatch)=> {
     return {
+        setSearchQuery: (evt) => dispatch({type: "setSearchQuery", newSearchQuery: evt}),
         setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
         signOut: () => dispatch({type: "signOut"})
     }
