@@ -148,6 +148,7 @@ public class FoodCartAndOrderController {
     @RequestMapping(value = "/getActiveDeliveryOrderForDeliveryAgent", method = RequestMethod.POST)
     public ResponseEntity<?> changeOrderStatusFromDeliveryAgent(@RequestBody DeliveryAgent deliveryAgentDetail) {
         UserOrder activeDeliveryOrders = userOrderRepository.findBydeliveryAgentAssigned(deliveryAgentDetail.getDeliveryAgentEmail());
+        System.out.println(" fetching active orders ");
         return new ResponseEntity<>(searchDeliveryAgentService.getAllDeliveryAgentActiveOrders(activeDeliveryOrders), HttpStatus.OK);
     }
 

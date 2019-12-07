@@ -97,7 +97,7 @@ public class SearchDeliveryAgentServiceImpl implements SearchDeliveryAgentServic
                     restaurantDetail.getRestaurantAddress(), userDetail.getUserAddress());
             deliveryAgentActiveOrders.add(activeOrder);
         }
-
-        return new ResponseEntity<>(deliveryAgentActiveOrders, HttpStatus.OK);
+        System.out.println(" delivery agent order "+deliveryAgentActiveOrders.get(0));
+        return new ResponseEntity<>(deliveryAgentActiveOrders.get(0), HttpStatus.OK);
     }
 }
