@@ -11,6 +11,6 @@ public interface SearchDeliveryAgentService {
 
     ResponseEntity<?> changeDeliveryAgentLocationAfterOrderDelivery(String deliveryAgentEmailAddress, String userAddress);
 
-    ResponseEntity<?> getAllDeliveryAgentActiveOrders(List<UserOrder> activeDeliveryOrders);
+    ResponseEntity<?> getAllDeliveryAgentActiveOrders(UserOrder activeDeliveryOrders);
 
 }

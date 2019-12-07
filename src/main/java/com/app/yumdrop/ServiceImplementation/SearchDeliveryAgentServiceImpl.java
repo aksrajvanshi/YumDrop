@@ -81,19 +81,19 @@ public class SearchDeliveryAgentServiceImpl implements SearchDeliveryAgentServic
     }
 
     @Override
-    public ResponseEntity<?> getAllDeliveryAgentActiveOrders(List<UserOrder> activeDeliveryOrders) {
+    public ResponseEntity<?> getAllDeliveryAgentActiveOrders(UserOrder activeDeliveryOrders) {
 
         List<DeliveryAgentActiveOrders> deliveryAgentActiveOrders = new ArrayList<>();
-        for(int i=0; i < activeDeliveryOrders.size(); i++){
+        for(int i=0; i < 3; i++){
 
-            if(activeDeliveryOrders.get(i).getOrderStatus() != 2){
+            if(activeDeliveryOrders.getOrderStatus() != 2){
                 continue;
             }
 
-            Restaurant restaurantDetail = restaurantRepository.findByrestaurantId(activeDeliveryOrders.get(i).getRestaurantId());
-            Users userDetail = usersRepository.findByuserEmail(activeDeliveryOrders.get(i).getUserEmail());
+            Restaurant restaurantDetail = restaurantRepository.findByrestaurantId(activeDeliveryOrders.getRestaurantId());
+            Users userDetail = usersRepository.findByuserEmail(activeDeliveryOrders.getUserEmail());
             DeliveryAgentActiveOrders activeOrder = new DeliveryAgentActiveOrders(
-                    activeDeliveryOrders.get(i).getOrderId(), restaurantDetail.getRestaurantName(), userDetail.getUserEmail(), userDetail.getUserName(),
+                    activeDeliveryOrders.getOrderId(), restaurantDetail.getRestaurantName(), userDetail.getUserEmail(), userDetail.getUserName(),
                     restaurantDetail.getRestaurantAddress(), userDetail.getUserAddress());
             deliveryAgentActiveOrders.add(activeOrder);
         }
