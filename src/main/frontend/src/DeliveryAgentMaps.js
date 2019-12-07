@@ -2,14 +2,16 @@
 import React from 'react'
 import  { compose, withProps, lifecycle } from 'recompose'
 import {withScriptjs, withGoogleMap, GoogleMap, DirectionsRenderer} from 'react-google-maps'
+import './DeliveryAgentDashboard'
+
 class DeliveryAgentMaps extends React.Component {
     constructor(props){
         super(props)
     }
 
     state = {
-        from : '2819 E 3rd St, Bloomington, IN 47401',
-        to : '700 N Woodlawn Ave, Bloomington, IN 47408'
+        fromA : this.props.from,
+        toB : this.props.to
     };
 
 
@@ -27,7 +29,7 @@ class DeliveryAgentMaps extends React.Component {
                 componentDidMount() {
                     const DirectionsService = new google.maps.DirectionsService();
                     DirectionsService.route({
-                        origin: '2819 E 3rd St, Bloomington, IN 47401',
+                        origin: {this:this.state.fromA}.toString(),
                         destination: '700 N Woodlawn Ave, Bloomington, IN 47408',
                         travelMode: google.maps.TravelMode.DRIVING,
                     }, (result, status) => {

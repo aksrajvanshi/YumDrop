@@ -9,6 +9,47 @@ class DeliveryAgentDashboard extends Component{
         super(props)
     }
 
+    state = {
+        from : 's',
+        to : 's'
+    }
+
+    fetchAddresses = () => { debugger;
+        fetch('/getActiveDeliveryOrderForDeliveryAgent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                restaurantAddress:this.state.from,
+                userAddress:this.state.to
+            }),
+        }).then(res => {
+
+            if (res.status == 200) {
+                this.setState({
+
+                })
+
+
+            }else {
+              alert("ADDRESS FAILED");
+            }
+        })
+    }
+
+    handleFromAddressChange = (event) => {
+        this.setState({
+            from: event.target.value,
+        });
+    };
+
+    handleToAddressChange = (event) => {
+        this.setState({
+            to: event.target.value,
+        });
+    };
+
     forwardToSettingsPage = () => {
         this.props.history.push('/MySettingsPage');
     }
@@ -49,29 +90,29 @@ class DeliveryAgentDashboard extends Component{
                         </div>
                     </nav>
                 </header>
-
-                <div>
-                    <h2>Delivery Orders</h2>
-                </div>
-
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-4 col-md-2">
-                            <div class="productbox">
-                                <img src="https://thekatynews.com/wp-content/uploads/2017/06/mcdonalds-logo.jpg" class="img-responsive"/>
-                                <div class="producttitle">Pickup at </div>
-                                <p class="text-justify">2819 E 3rd St, Bloomington, IN 47401</p>
-                                <div>Deliver at </div>
-                                <p>700 N Woodlawn Ave, Bloomington, IN 47408</p>
-                                <br/>
-                                <button onClick={this.forwardToDeliveryAgentMaps} className="btn btn-style-1 btn-primary" type="button">Show Path
-                                </button>
-                            </div>
-                        </div>
-
-
+                <body>
+                    <div>
+                        <h2>Delivery Orders</h2>
                     </div>
-                </div>
+                    {this.fetchAddresses}
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 col-md-2">
+                                <div class="productbox">
+                                    <img src="https://thekatynews.com/wp-content/uploads/2017/06/mcdonalds-logo.jpg" class="img-responsive"/>
+                                    <div class="producttitle">Pickup at </div>
+                                    <p class="text-justify" onLoad={this.handleFromAddressChange} >{this.state.from}</p>
+                                    <div>Deliver at </div>
+                                    <p onLoad={this.handleToAddressChange} >{this.state.to}</p>
+                                    <br/>
+                                    <button onClick={this.forwardToDeliveryAgentMaps} className="btn btn-style-1 btn-primary" type="button">Show Path
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </body>
             </div>
 
         );

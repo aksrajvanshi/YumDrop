@@ -1,5 +1,7 @@
 package com.app.yumdrop.FormEntity;
 
+import javax.persistence.Id;
+
 public class DeliveryAgentActiveOrders {
 
     Long orderId;
@@ -10,8 +12,8 @@ public class DeliveryAgentActiveOrders {
 
     String userName;
 
+    @Id
     String restaurantAddress;
-
     String userAddress;
 
     public DeliveryAgentActiveOrders(Long orderId, String restaurantName, String userEmail, String userName, String restaurantAddress, String userAddress) {
