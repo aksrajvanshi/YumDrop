@@ -4,13 +4,20 @@ import {connect} from "react-redux";
 
 class dishesForUserView extends React.Component{
     state = {
-        dishesForUserDisplay: []
+        dishesForUserDisplay: [],
+        clicks: 1,
+        show: true,
+
     }
 
 
     componentWillMount() {
         let currentComponent = this;
-        console.log(this.props.restaurantId);
+        console.log("Inside dishes for user view")
+        console.log(currentComponent.props.userEmailId);
+        currentComponent.setState({
+            userEmailId: currentComponent.props.userEmailId
+        })
         fetch('/getAllRestaurantDishes',{
             method: 'POST',
             redirect: 'follow',
@@ -50,9 +57,13 @@ class dishesForUserView extends React.Component{
     }
 
     handleClick(item) {
+        this.ToggleClick();
         console.log(item);
         let currentComponent = this;
-        fetch('/addDishToUserCart',{
+        console.log("Inside this handle click item")
+
+
+        fetch('/addItemToMyCart',{
             method: 'POST',
             redirect: 'follow',
             headers: {
@@ -60,16 +71,27 @@ class dishesForUserView extends React.Component{
                 'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({
-                userEmailId: this.props.userEmailId,
+                userEmail: this.props.userEmailId,
                 dishName: item.dishName,
                 restaurantId: "abc12",
                 dishPrice : item.dishPrice,
-                dishQuantity : item.dishQuantity
+                dishQuantity : 1
             })})
             .then(res => {
                 console.log(res)
                 return res.json()
             })
+    }
+
+    IncrementItem = () => {
+        this.setState({ clicks: this.state.clicks + 1 });
+    }
+    DecreaseItem = () => {
+        this.setState({ clicks: this.state.clicks - 1 });
+    }
+    ToggleClick = () => {
+        if (this.state.show === true){
+            this.setState({ show: !this.state.show }); }
     }
 
     render() {
@@ -80,15 +102,18 @@ class dishesForUserView extends React.Component{
                 <tr key={itemName}>
                     <td><img src="http://placehold.it/100x100" alt="..."
                              className="img-responsive"/></td>
-                    <td>{d.dishName}</td>
+                    <td className="align-content-center">{d.dishName}</td>
                     <td>{d.dishDescription}
                     </td>
-                    <td>{d.dishPrice}</td>
+                    <td>{d.dishPrice}$</td>
                     <td className="td-actions">
 
                         <div className="col-md-8 col-sm-8 col-xs-8">
-                            <a href="#" className="btn btn-success btn-product"><span
-                                className="glyphicon glyphicon-shopping-cart" onClick={this.handleClick.bind(this, d)}></span> Add to Cart</a>
+                            <button onClick={this.handleClick.bind(this, d)}>
+                                    <a href="#" className="btn btn-success btn-product"><span
+                                        className="glyphicon glyphicon-shopping-cart"></span> Add to Cart</a>
+
+                            </button>
                         </div>
                     </td>
                 </tr>

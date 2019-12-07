@@ -22,6 +22,7 @@ class LoginDashBoard extends Component{
     }
     componentDidMount () {
         let currentComponent = this
+        console.log()
         fetch('/getAllReccommendedRestaurants',{
             method: 'POST',
             headers: {
@@ -112,6 +113,10 @@ class LoginDashBoard extends Component{
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
@@ -121,7 +126,8 @@ class LoginDashBoard extends Component{
 
                                     <li className="nav-item">
                                         <a className="nav-link" onClick={this.forwardToMyCart}><i
-                                            className="fa fa-fw fa-user"/>Cart</a>
+                                            className="fa fa-fw fa-user"/><span
+                                            className="glyphicon glyphicon-shopping-cart"></span></a>
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link"  onClick={this.onClick} ><span>Settings</span></a>
@@ -134,8 +140,8 @@ class LoginDashBoard extends Component{
                         </div>
                     </nav>
                 </header>
-                <button onClick={this.forwardToChatFeature} >Click me for chat</button>
-                <button></button>
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css"/>
+
 
                 <div className="container mt-5">
 

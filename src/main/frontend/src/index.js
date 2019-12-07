@@ -30,6 +30,7 @@ import RestaurantLogin from "./RestaurantLogin";
 import successfullyChangedPasswordPage from "./successfullyChangedPasswordPage";
 import UserSettingsPageAddresses from "./UserSettingsPageAddresses";
 import RestaurantDashboard from "./RestaurantDashboard";
+import AppForShoppingCart from "./AppForShoppingCart";
 import RestaurantAddMenuForm from "./RestaurantAddMenuForm";
 import RestaurantSettingsPage from "./RestaurantSettingsPage";
 import restaurantAddressesPage from "./restaurantAddressesPage";
@@ -113,6 +114,7 @@ const routing = (
                 <Route exact path="/MyCurrentLocation" component={MyCurrentLocation}/>
                 <Route exact path="/RestaurantDashboard" component={RestaurantDashboard}/>
                 <Route exact path="/Trying" component={Trying}/>
+                <Route exact path="/AppForShoppingCart" component={AppForShoppingCart}/>
                 <Route exact path="/AddItemToMenu" component={AddItemToMenu}/>
                 <Route exact path="/RestaurantRegister" component={RestaurantRegister} />
                 <Route exact path="/DeliveryAgentDashboard" component={DeliveryAgentDashboard}/>
