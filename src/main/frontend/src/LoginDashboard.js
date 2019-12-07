@@ -10,7 +10,7 @@ class LoginDashBoard extends Component{
     }
 
     state = {
-        userEmailId : this.props.userEmailId,
+        userEmailId : this.props.emailId,
         searchResults: [{"restaurantAddress": "restaurantAddress"}],
         userAddress: "800 N Union St, Bloomington, IN 47408, USA",
         searchQuery: "",
@@ -81,6 +81,7 @@ class LoginDashBoard extends Component{
 
         let mapForRecommendedRestaurants = this.state.recommendedRestaurants.map((d,itemName)=>
         {
+            console.log(d.restaurantId);
             return(
 
                 <div className="row menu_style1" key={itemName}>

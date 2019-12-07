@@ -59,8 +59,8 @@ class App extends Component {
             }else {
                 if(this.state.isReCaptchaVerified) {
                     this.setState({redirect: true, userRegister: false});
-                    this.forwardToLoginDashboard();
                     this.props.setUser(this.state.userName);
+                    this.forwardToLoginDashboard();
                 }
                 else {
                     this.setState({redirect: true, userRegister: false});
@@ -610,14 +610,14 @@ class App extends Component {
 
 const mapStateToProps = (state)=>{
     return {
-        userEmailId: state.emailId
+        userEmailId: state.userId
     }
 }
 
 const mapDispatchToProps = (dispatch)=> {
     return {
         setUser(evt){
-            dispatch({type: "setEmailId", newEmailId: evt});
+            dispatch({type: "setUserId", userId: evt});
         }
     }
 }
