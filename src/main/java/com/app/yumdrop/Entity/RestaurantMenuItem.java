@@ -27,6 +27,9 @@ public class RestaurantMenuItem {
     @Column(name = "dish_available", nullable = false)
     private boolean dishAvailable;
 
+    @Column(name = "dish_photo_url")
+    private boolean dishPhotoUrl;
+
     @Override
     public String toString() {
         return "RestaurantMenuItem{" +
@@ -35,6 +38,7 @@ public class RestaurantMenuItem {
                 ", dishDescription='" + dishDescription + '\'' +
                 ", dishPrice=" + dishPrice +
                 ", dishAvailable=" + dishAvailable +
+                ", dishPhotoUrl=" + dishPhotoUrl +
                 '}';
     }
 
@@ -44,6 +48,12 @@ public class RestaurantMenuItem {
     public RestaurantMenuItem(@NotNull String restaurantId, @NotNull String dishName) {
         this.restaurantId = restaurantId;
         this.dishName = dishName;
+    }
+
+    public RestaurantMenuItem(@NotNull String restaurantId, @NotNull String dishName, boolean dishPhotoUrl) {
+        this.restaurantId = restaurantId;
+        this.dishName = dishName;
+        this.dishPhotoUrl = dishPhotoUrl;
     }
 
     public RestaurantMenuItem(String restaurantId, String dishName, String dishDescription, double dishPrice) {
@@ -60,6 +70,8 @@ public class RestaurantMenuItem {
         this.dishPrice = dishPrice;
         this.dishAvailable = dishAvailable;
     }
+
+
 
     public String getRestaurantId() {
         return restaurantId;
@@ -99,5 +111,13 @@ public class RestaurantMenuItem {
 
     public void setDishAvailable(boolean dishAvailable) {
         this.dishAvailable = dishAvailable;
+    }
+
+    public boolean isDishPhotoUrl() {
+        return dishPhotoUrl;
+    }
+
+    public void setDishPhotoUrl(boolean dishPhotoUrl) {
+        this.dishPhotoUrl = dishPhotoUrl;
     }
 }
