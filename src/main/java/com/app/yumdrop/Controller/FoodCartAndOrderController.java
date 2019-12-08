@@ -147,6 +147,12 @@ public class FoodCartAndOrderController {
 
     @RequestMapping(value = "/getActiveDeliveryOrderForDeliveryAgent", method = RequestMethod.POST)
     public ResponseEntity<?> getActiveOrdersForDeliveryAgent(@RequestBody DeliveryAgent deliveryAgentDetail) {
+        if(deliveryAgentDetail.getDeliveryAgentEmail().length() == 0){
+            ErrorMessage deliveryAgentDoesNotExist = new ErrorMessage(new Date(), "Delivery agent name not given!",
+                    "");
+            return new ResponseEntity<>(deliveryAgentDoesNotExist, HttpStatus.BAD_REQUEST);
+        }
+
         List<UserOrder> activeDeliveryOrders = userOrderRepository.findBydeliveryAgentAssigned(deliveryAgentDetail.getDeliveryAgentEmail());
         return searchDeliveryAgentService.getAllDeliveryAgentActiveOrders(activeDeliveryOrders);
     }
