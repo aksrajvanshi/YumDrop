@@ -339,19 +339,20 @@ class App extends Component {
                 show={this.state.restaurantLoginOption}
                 onHide={this.closeAllOptionsOfSelectionForm}
                 animation={false}
-                centered id="modal"
+                centered id="restaurantLoginModalForm"
             >
-                <div className="container">
+                 <div className="container">
                     <div className="row">
                         <div className="main">
                             <div className="login-form">
                                 <form onSubmit={this.login.bind(this)}>
-                                    <h2 className="text-center">Restaurant Login</h2>
+                                    <h2 className="text-center"><strong>Restaurant Login</strong></h2>
+                                    <div className="or-seperator"><i><b></b></i></div>
                                     <div className="social-btn text-center">
                                     </div>
                                     <div className="form-group">
                                         <input value={this.state.restaurantPrimaryEmailId}
-                                               onChange={this.handleRestaurantEmailIDChange} type="text"
+                                               onChange={this.handleRestaurantEmailIDChange} id="inputuserLoginFormModalContainer" type="text"
                                                className="form-control" placeholder="Email ID"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
@@ -359,14 +360,14 @@ class App extends Component {
                                     <div className="form-group">
                                         <input value={this.state.restaurantId}
                                                onChange={this.handleRestaurantID} type="text"
-                                               className="form-control" placeholder="Restaurant ID"
+                                               className="form-control" placeholder="Restaurant ID" id="inputuserLoginFormModalContainer"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
                                     </div>
 
                                     <div className="form-group">
                                         <input value={this.state.restaurantPassword}
-                                               onChange={this.handleRestaurantPassword} type="password"
+                                               onChange={this.handleRestaurantPassword} type="password" id="inputuserLoginFormModalContainer"
                                                className="form-control" placeholder="Password"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>

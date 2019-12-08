@@ -98,3 +98,10 @@ thead {
     color: #555;
     vertical-align: middle;
 }
+
+#restaurantLoginModalForm{
+    position: fixed;
+    left: 35%;
+    width: 440px;
+
+}

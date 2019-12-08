@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-
+import "./RegisterFormCSS.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 
@@ -401,10 +401,10 @@ class App extends Component {
                     show={this.state.registerSelect}
                     onHide={this.closeAllOptionsOfSelectionForm}
                     animation={false}
-                    centered id="modal"
+                    centered id="modalForRegisterSelect"
                 >
                     <Modal.Header className="modelheader" id="containerModal" center>
-                        <Modal.Title className="modeltitle" id="modeltitle" center>
+                        <Modal.Title className="modeltitle" id="modeltitleForRegister" center>
                             <strong>Select Account</strong>
                         </Modal.Title>
                     </Modal.Header>
@@ -414,23 +414,23 @@ class App extends Component {
                         <div className="row">
                             <div className="main">
                                 <div className="login-form">
-                                    <form>
+                                    <form  id="containerSelectRegisterAccount">
                                         <div className="form-group">
                                             <button  type="submit"
                                                      onClick={this.userRegister}
-                                                     className="btn btn-primary btn-lg btn-block">User
+                                                     id="buttonLoginOption" className="btn btn-outline-secondary btn-lg btn-block">I am a new User
                                             </button>
                                         </div>
 
                                         <div className="form-group">
                                             <button  onClick={this.forwardToRestaurantRegistrationForm}
-                                                     className="btn btn-primary btn-lg btn-block">Restaurant
+                                                     id="buttonLoginOption" className="btn btn-outline-secondary btn-lg btn-block">I am a new Restaurant
                                             </button>
                                         </div>
 
                                         <div className="form-group">
                                             <button  type="submit" onClick={this.forwardToDeliveryAgentRegistration}
-                                                     className="btn btn-primary btn-lg btn-block">Delivery Agent
+                                                     id="buttonLoginOption" className="btn btn-outline-secondary btn-lg btn-block">I am a new Delivery Agent
                                             </button>
                                         </div>
                                     </form>

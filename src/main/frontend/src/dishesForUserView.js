@@ -72,6 +72,11 @@ class dishesForUserView extends React.Component{
             })
     }
 
+    goBackToLoginDashboard = () => {
+        this.props.history.push('/LoginDashboard')
+    }
+
+
     render() {
         let mapDishesForUserView = this.state.dishesForUserDisplay.map((d,itemName)=>
         {
@@ -173,7 +178,7 @@ class dishesForUserView extends React.Component{
                                 </tr>
                                 <tr>
                                     <td><a href="#" className="btn btn-warning"><i
-                                        className="fa fa-angle-left"></i>Home Page</a></td>
+                                        className="fa fa-angle-left" onClick={this.goBackToLoginDashboard}></i>Home Page</a></td>
 
                                     <td colSpan="2" className="hidden-xs"></td>
                                     <td><a

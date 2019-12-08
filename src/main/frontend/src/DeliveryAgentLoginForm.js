@@ -365,24 +365,26 @@ class App extends Component {
                 show={this.state.deliveryAgentLoginOptionSelected}
                 onHide={this.closeAllOptionsOfSelectionForm}
                 animation={false}
-                centered id="modal"
+                centered id="deliveryAgentLoginFormModal"
             >
                 <div className="container">
                     <div className="row">
                         <div className="main">
                             <div className="login-form">
                                 <form onSubmit={this.deliveryAgentLogin.bind(this)}>
-                                    <h2 className="text-center">Delivery Agent Login</h2>
-
+                                    <h2 className="text-center"><strong><b>Delivery Agent Login</b></strong></h2>
+                                    <div className="or-seperator"><i><b></b></i></div>
                                     <div className="form-group">
                                         <input value={this.state.deliveryAgentEmail}
                                                onChange={this.handleDeliveryAgentEmailChange} type="text"
+                                               id="inputuserLoginFormModalContainer"
                                                className="form-control" placeholder="Email"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
                                     </div>
                                     <div className="form-group">
                                         <input value={this.state.deliveryAgentPassword}
+                                               id="inputuserLoginFormModalContainer"
                                                onChange={this.handleDeliveryAgentPasswordChange} type="password"
                                                className="form-control" placeholder="Password"
                                                pattern="[a-z][A-Z]"

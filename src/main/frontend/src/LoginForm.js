@@ -377,21 +377,26 @@ class App extends Component {
                 show={this.state.userLoginOption}
                 onHide={this.closeAllOptionsOfSelectionForm}
                 animation={false}
-                centered id="modal"
+                centered id="userLoginFormModal"
             >
+                <Modal.Header className="modelheader" id="containerModal" center>
+                    <Modal.Title className="modeltitle" id="modeltitle" center>
+                        <strong>Select Account</strong>
 
-                <div className="container">
+                    </Modal.Title>
+                </Modal.Header>
+
+                <div className="container" id="userLoginFormModalContainer">
                     <div className="row">
                         <div className="main">
                             <div className="login-form">
                                 <form onSubmit={this.login.bind(this)}>
-                                    <h2 className="text-center">User Login</h2>
                                     <div className="social-btn text-center">
                                         <FacebookLogin
                                             appId="1250006828526117"
                                             callback={responseFacebook}
                                             render={renderProps => (
-                                                <button className="btn btn-primary btn-block btn-lg" onClick={renderProps.onClick}><i
+                                                <button id="inputuserLoginFormModalContainer" className="btn btn-primary btn-block btn-lg" onClick={renderProps.onClick}><i
                                                     className="fa fa-facebook"></i> Login with <b>Facebook</b> </button>
                                             )}
                                         />
@@ -401,13 +406,13 @@ class App extends Component {
                                         <input value={this.state.userName}
                                                onChange={this.handleUserNameChange} type="text"
                                                className="form-control" placeholder="Username"
-                                               pattern="[a-z][A-Z]"
+                                               pattern="[a-z][A-Z]" id="inputuserLoginFormModalContainer"
                                                required="required"/>
                                     </div>
                                     <div className="form-group">
                                         <input value={this.state.userPassword}
                                                onChange={this.handleUserPasswordChange} type="password"
-                                               className="form-control" placeholder="Password"
+                                               className="form-control" placeholder="Password" id="inputuserLoginFormModalContainer"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
                                     </div>
@@ -440,34 +445,38 @@ class App extends Component {
                 show={this.state.loginSelect}
                 onHide={this.closeAllOptionsOfSelectionForm}
                 animation={false}
-                centered id="modal"
+                centered id="modalLoginSelect"
             >
                 <Modal.Header className="modelheader" id="containerModal" center>
                     <Modal.Title className="modeltitle" id="modeltitle" center>
                         <strong>Select Account</strong>
+
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body id="CheckSelection">
-                    <div className="container" id="containerSelectAccount">
-                        <div className="row">
-                            <div className="main">
-                                <div className="login-form">
+
+                    <div>
+                        <div>
+                            <div>
+
+                                <div id="loginSelectionForm">
                                     <form>
                                         <div className="form-group">
+
                                             <button  type="submit"
-                                                     onClick={this.handelUserLoginOption} className="btn btn-primary btn-lg btn-block">User Login
+                                                     onClick={this.handelUserLoginOption} id="buttonLoginOption" className="btn btn-outline-secondary btn-lg btn-block">I am a User
                                             </button>
                                         </div>
 
                                         <div className="form-group">
                                             <button  type="submit" onClick={this.forwardToRestaurantregister}
-                                                     className="btn btn-primary btn-lg btn-block">Restaurant Login
+                                                     id="buttonLoginOption" className="btn btn-outline-secondary btn-lg btn-block">I am a Restaurant
                                             </button>
                                         </div>
 
                                         <div className="form-group">
                                             <button  type="submit" onClick={this.forwardToDeliveryAgentLoginForm}
-                                                     className="btn btn-primary btn-lg btn-block">Delivery Agent Login
+                                                     id="buttonLoginOption" className="btn btn-outline-secondary btn-lg btn-block">I am a Delivery Agent
                                             </button>
                                         </div>
                                     </form>

@@ -1,0 +1,20 @@
+#modalForRegisterSelect {
+    position: fixed;
+    left: 35%;
+    width: 433px;
+}
+
+#modeltitleForRegister{
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 30px;
+    outline: none;
+    padding-left: 90px;
+}
+
+#buttonRegisterOption{
+
+}
+
+#containerSelectRegisterAccount{
+    padding-left: 50px;
+}
