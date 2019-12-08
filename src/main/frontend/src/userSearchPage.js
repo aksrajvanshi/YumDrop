@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import {connect} from 'react-redux';
 import Slider from '@material-ui/core/Slider'
 import {makeStyles} from '@material-ui/core/styles'
+import './Search.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import './LoginDashBoardCSS.css';
 
@@ -53,24 +54,24 @@ class userSearchPage extends Component {
     }
 
     signOut = () => {
-        console.log('Here!!!')
         this.props.signOut();
         this.props.history.push('/');
     }
 
     getUserAddress = async () => {
+        let currentComponent = this;
         await fetch('/getUserDataForDashboard', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: this.state.userEmailId
+                userEmail: currentComponent.state.userEmailId
             }),
         }).then(function(response) {
             return response.json();
         }).then(function(data) {
-            return data.userAddress;
+            currentComponent.setState({address: data.userAddress}, currentComponent.getAutocompleteOptions)
         })
     }
 
@@ -86,7 +87,9 @@ class userSearchPage extends Component {
             body:JSON.stringify({
                 userAddress: currentComponent.state.address,
                 restaurantSearchKeyword: currentComponent.state.searchQuery,
-                userEmail: this.state.userEmailId
+                userEmail: this.state.userEmailId,
+                minimumRating: this.state.ratingFilter,
+                maximumDistance: this.state.distanceFilter
             }),
         }).then(res => {
             return res.json();
@@ -99,6 +102,27 @@ class userSearchPage extends Component {
         })
     }
 
+    getAutocompleteOptions() {
+        console.log(this.state.address)
+        fetch('/getAllRestaurants', {
+            method: 'POST',
+            redirect: 'follow',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                userAddress: this.state.address,
+            })
+        })
+            .then(res => {
+                return res.json()
+            }).then(data => {
+            this.setState({autocompleteOptions: data});
+            this.getSearchResults();
+        });
+    }
+
     forwardToMyCart = () => {
         this.props.history.push('/MyCart')
     }
@@ -109,23 +133,7 @@ class userSearchPage extends Component {
 
     componentWillMount() {
         let currentComponent = this;
-        this.getUserAddress().then( res => { this.setState({address: res})
-        fetch('/getAllRestaurants',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body:JSON.stringify({
-                userAddress: this.state.address
-            }),
-        }).then(res => {
-            return res.json();
-        }).then(res=>{
-            currentComponent.setState({
-                autocompleteOptions: res
-            });
-            this.getSearchResults();
-        })})
+        this.getUserAddress();
     }
 
     render() {
@@ -177,7 +185,7 @@ class userSearchPage extends Component {
                 </header>
                 <div className="form-row" data-wow-delay="0.4s">
                     <div className="col-md-4">
-                        <div className="md-form">
+                        <div className="md-form" >
                             <Slider
                                 defaultValue={1}
                                 value={this.state.ratingFilter}
@@ -217,7 +225,7 @@ class userSearchPage extends Component {
                     </div>
                     <div className="col-md-1" >
                         <div className="md-form">
-                            <button className="btn btn-primary btn-md" onClick={this.getSearchResults}><span id="SearchBar">Search</span></button>
+                            <button className="btn btn-primary btn-md" id="SearchButton" onClick={this.getSearchResults}><span id="SearchBar">Search</span></button>
                         </div>
                     </div>
                 </div>

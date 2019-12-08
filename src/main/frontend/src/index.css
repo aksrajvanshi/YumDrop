@@ -13,6 +13,10 @@
     padding-bottom: 50px;
 }
 
+#SearchButton {
+    height: 49px;
+}
+
 #SignUpID{
     padding-left: 20px;
 }
@@ -30,8 +34,8 @@
 
 }
 
-#exampleFormControlSelect1{
-    height: 34px;
+#exampleFormControlSelect2{
+    height: 49px;
 }
 
 #buttonSearch{

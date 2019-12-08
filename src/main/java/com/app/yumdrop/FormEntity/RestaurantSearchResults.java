@@ -1,8 +1,10 @@
 package com.app.yumdrop.FormEntity;
 
 import com.app.yumdrop.Entity.Restaurant;
+import com.app.yumdrop.Entity.RestaurantCountPerRating;
 import com.app.yumdrop.Entity.RestaurantRatings;
-import com.app.yumdrop.Entity.UserRestaurantRatings;
+
+import java.util.List;
 
 public class RestaurantSearchResults {
 
@@ -10,7 +12,7 @@ public class RestaurantSearchResults {
 
     RestaurantRatings restaurantRatings;
 
-    UserRestaurantRatings userRestaurantRatings;
+    List<RestaurantCountPerRating> restaurantCountPerRatingList;
 
     long distanceFromUserInMeters;
 
@@ -20,10 +22,17 @@ public class RestaurantSearchResults {
     public RestaurantSearchResults() {
     }
 
-    public RestaurantSearchResults(Restaurant restaurantDetails, RestaurantRatings restaurantRatings, UserRestaurantRatings userRestaurantRatings, long distanceFromUserInMeters, String distanceFromUserWithMetrics) {
+    public RestaurantSearchResults(Restaurant restaurantDetails, RestaurantRatings restaurantRatings, long distanceFromUserInMeters, String distanceFromUserWithMetrics) {
         this.restaurantDetails = restaurantDetails;
         this.restaurantRatings = restaurantRatings;
-        this.userRestaurantRatings = userRestaurantRatings;
+        this.distanceFromUserInMeters = distanceFromUserInMeters;
+        this.distanceFromUserWithMetrics = distanceFromUserWithMetrics;
+    }
+
+    public RestaurantSearchResults(Restaurant restaurantDetails, RestaurantRatings restaurantRatings, List<RestaurantCountPerRating> restaurantCountPerRatingList, long distanceFromUserInMeters, String distanceFromUserWithMetrics) {
+        this.restaurantDetails = restaurantDetails;
+        this.restaurantRatings = restaurantRatings;
+        this.restaurantCountPerRatingList = restaurantCountPerRatingList;
         this.distanceFromUserInMeters = distanceFromUserInMeters;
         this.distanceFromUserWithMetrics = distanceFromUserWithMetrics;
     }
@@ -44,20 +53,20 @@ public class RestaurantSearchResults {
         this.restaurantRatings = restaurantRatings;
     }
 
-    public UserRestaurantRatings getUserRestaurantRatings() {
-        return userRestaurantRatings;
-    }
-
-    public void setUserRestaurantRatings(UserRestaurantRatings userRestaurantRatings) {
-        this.userRestaurantRatings = userRestaurantRatings;
-    }
-
     public long getDistanceFromUserInMeters() {
         return distanceFromUserInMeters;
     }
 
     public void setDistanceFromUserInMeters(long distanceFromUserInMeters) {
         this.distanceFromUserInMeters = distanceFromUserInMeters;
+    }
+
+    public List<RestaurantCountPerRating> getRestaurantCountPerRatingList() {
+        return restaurantCountPerRatingList;
+    }
+
+    public void setRestaurantCountPerRatingList(List<RestaurantCountPerRating> restaurantCountPerRatingList) {
+        this.restaurantCountPerRatingList = restaurantCountPerRatingList;
     }
 
     public String getDistanceFromUserWithMetrics() {

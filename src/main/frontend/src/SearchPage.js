@@ -48,11 +48,11 @@ class SearchPage extends Component {
         this.setState({distanceFilter: val})
     }
 
-    getAddress = async () => {
+    async getAddress() {
         await navigator.geolocation.getCurrentPosition(
             position => Geocode.fromLatLng( position.coords.latitude , position.coords.longitude ).then(
                 res => {
-                    return res.results[0].formated_address;
+                    this.setState({address: res.results[0].formatted_address}, this.getAutocompleteOptions)
                 }),
             err => console.log(err)
         );
@@ -70,10 +70,13 @@ class SearchPage extends Component {
             body:JSON.stringify({
                 userAddress: this.state.address,
                 restaurantSearchKeyword: this.state.searchQuery,
+                minimumRating: this.state.ratingFilter,
+                maximumDistance: this.state.distanceFilter
             }),
         }).then(res => {
             return res.json();
         }).then(res=>{
+            console.log(res);
             let x = [];
             for (let i=0; i<res.length;i++){
                 x[i] = res[i].restaurantDetails;
@@ -82,27 +85,29 @@ class SearchPage extends Component {
         })
     }
 
-    componentWillMount() {
-        let currentComponent = this;
-        this.getAddress().then( result => { this.setState({address: result});
-            fetch('/getAllRestaurants', {
-                method: 'POST',
-                redirect: 'follow',
-                headers: {
-                    "Content-Type": "application/json",
-                    'Access-Control-Allow-Origin': '*'
-                },
-                body: JSON.stringify({
-                    userAddress: this.state.address,
-                })
+    getAutocompleteOptions() {
+        fetch('/getAllRestaurants', {
+            method: 'POST',
+            redirect: 'follow',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                userAddress: this.state.address,
             })
-                .then(res => {
-                    return res.json()
-                }).then(data => {
-                this.setState({autocompleteOptions: data})
-            });
+        })
+            .then(res => {
+                return res.json()
+            }).then(data => {
+            this.setState({autocompleteOptions: data})
             this.getSearchResults();
         });
+    }
+
+    componentWillMount = () => {
+        let currentComponent = this;
+        this.getAddress();
     }
 
     render() {
@@ -156,6 +161,7 @@ class SearchPage extends Component {
                 <div className="form-row" data-wow-delay="0.4s">
                     <div className="col-md-4">
                         <div className="md-form">
+                            <h1>Rating</h1>
                             <Slider
                                 defaultValue={1}
                                 value={this.state.ratingFilter}
@@ -167,6 +173,7 @@ class SearchPage extends Component {
                                 max={5}
                                 valueLabelDisplay="Auto"
                             />
+                            <h1>Distance</h1>
                             <Slider
                                 defaultValue={5}
                                 value={this.state.distanceFilter}
@@ -195,7 +202,7 @@ class SearchPage extends Component {
                     </div>
                     <div className="col-md-1" >
                         <div className="md-form">
-                            <button className="btn btn-primary btn-md" onClick={this.getSearchResults}><span id="SearchBar">Search</span></button>
+                            <button className="btn btn-primary btn-md" id="SearchButton" onClick={this.getSearchResults}><span id="SearchBar">Search</span></button>
                         </div>
                     </div>
                 </div>

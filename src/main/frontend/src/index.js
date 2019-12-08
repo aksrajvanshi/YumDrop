@@ -62,7 +62,6 @@ const reducer = (state=initialState, action) => {
         state.accountType = action.accountType;
     }
     else if (action.type === "signOut") {
-        console.log("made it!");
         state.userId = null;
         state.accountType = null;
     }

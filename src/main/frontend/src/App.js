@@ -2,13 +2,13 @@ import React, { Component } from "react";
 
 import LoginPage from "./LoginPage";
 import "bootstrap/dist/css/bootstrap.min.css";
-import './LoginDashBoardCSS.css';
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import {connect} from 'react-redux';
 import Geocode from "react-geocode";
 import AutoComplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import './index.css';
+import './Search.css';
 
 
 class App extends Component {
@@ -70,20 +70,18 @@ class App extends Component {
         this.setState({searchQuery: event.target.value})
     }
 
-    getAddress = async () => {
+    async getAddress() {
         await navigator.geolocation.getCurrentPosition(
             position => Geocode.fromLatLng( position.coords.latitude , position.coords.longitude ).then(
                 res => {
-                    return res.results[0].formated_address;
-            }),
+                    this.setState({address: res.results[0].formatted_address}, this.getAutocompleteOptions)
+                }),
             err => console.log(err)
         );
     }
 
-    componentWillMount() {
-        let currentComponent = this;
-        this.getAddress().then( result => {this.setState({address: result});
-        fetch('/getAllRestaurants',{
+    getAutocompleteOptions() {
+        fetch('/getAllRestaurants', {
             method: 'POST',
             redirect: 'follow',
             headers: {
@@ -91,13 +89,18 @@ class App extends Component {
                 'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({
-                userAddress: this.state.address,})})
+                userAddress: this.state.address,
+            })
+        })
             .then(res => {
                 return res.json()
             }).then(data => {
-                this.setState({autocompleteOptions: data})
-        })
-    });
+            this.setState({autocompleteOptions: data})
+        });
+    }
+
+    componentWillMount() {
+       this.getAddress();
     }
 
 
@@ -154,7 +157,7 @@ class App extends Component {
                                 <div className="form-row" data-wow-delay="0.4s">
                                     <div className="col-md-5"  id="firstbar">
                                         <div className="md-form">
-                                            <select className="form-control" id="exampleFormControlSelect1">
+                                            <select className="form-control" id="exampleFormControlSelect2">
                                                 <option value="AL">Alabama</option>
                                                 <option value="AK">Alaska</option>
                                                 <option value="AR">Arizona</option>
@@ -209,6 +212,7 @@ class App extends Component {
                                     </div>
                                     <div className="col-md-4">
                                         <div className="md-form">
+                                            <div>
                                             <AutoComplete
                                                 freeSolo
                                                 autoSelect="true"
@@ -216,14 +220,15 @@ class App extends Component {
                                                 options={this.state.autocompleteOptions.map(option => option.restaurantDetails.restaurantName)}
                                                 disableClearable
                                                 renderInput={params => (
-                                                    <TextField {...params} variant="filled" label="Search for food, cuisines, restaurants here.." style={{backgroundColor:"white"}} fullWidth onChange={(evt) => this.handleSearchChange(evt)} />
+                                                    <TextField {...params} id="autocomplete" variant="filled" label="Search for food, cuisines, restaurants here.." style={{backgroundColor:"white"}} fullWidth onChange={(evt) => this.handleSearchChange(evt)} />
                                                 )}
                                             />
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="col-md-1" >
                                         <div className="md-form">
-                                            <button className="btn btn-primary btn-md" onClick={this.goToSearchPage}><span id="SearchBar">Search</span></button>
+                                            <button id="SearchButton" className="btn btn-primary btn-md" onClick={this.goToSearchPage}><span id="SearchBar">Search</span></button>
                                         </div>
                                     </div>
                                 </div>

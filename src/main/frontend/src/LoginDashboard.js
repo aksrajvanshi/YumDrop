@@ -19,40 +19,44 @@ class LoginDashBoard extends Component{
     }
 
     getUserAddress = async () => {
+        let currentComponent = this;
         await fetch('/getUserDataForDashboard', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: this.state.userEmailId
+                userEmail: currentComponent.state.userEmailId
             }),
         }).then(function(response) {
             return response.json();
         }).then(function(data) {
-            return data.userAddress;
+            currentComponent.setState({userAddress: data.userAddress}, currentComponent.getAutocompleteOptions);
         })
     }
 
-    componentDidMount () {
-        let currentComponent = this
-        this.getUserAddress().then( res => { this.setState({userAddress: res});
-        fetch('/getAllRestaurants',{
+    getAutocompleteOptions() {
+        fetch('/getAllRestaurants', {
             method: 'POST',
+            redirect: 'follow',
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
             },
-            body:JSON.stringify({
-                userAddress: this.state.userAddress
-            }),
-        }).then(res => {
-            return res.json();
-        }).then(res=>{
-            currentComponent.setState({
-                autocompleteOptions: res
+            body: JSON.stringify({
+                userAddress: this.state.address,
             })
         })
-        })
+            .then(res => {
+                return res.json()
+            }).then(data => {
+            this.setState({autocompleteOptions: data})
+        });
+    }
+
+    componentDidMount () {
+        let currentComponent = this;
+        this.getUserAddress()
     }
 
     getSearchResults = () => {
@@ -144,24 +148,20 @@ class LoginDashBoard extends Component{
                     </nav>
                 </header>
 
-                <div>
-                    <div className="col-md-4">
-                        <div className="md-form">
+                <div id="searchContainer">
+                    <div id="autocompleteContainer">
                             <AutoComplete
                                 freeSolo
                                 onChange={evt => this.handleSearchSelect(evt)}
                                 options={this.state.autocompleteOptions.map(option => option.restaurantDetails.restaurantName)}
                                 disableClearable
                                 renderInput={params => (
-                                    <TextField {...params} variant="filled" label="Search for food, cuisines, restaurants here.." style={{backgroundColor:"white"}} fullWidth onChange={evt => this.handleSearchChange(evt)}/>
+                                    <TextField {...params} variant="filled" label="Search for food, cuisines, restaurants here.." style={{backgroundColor:"white", width: '100%'}} onChange={evt => this.handleSearchChange(evt)}/>
                                 )}
                             />
-                        </div>
                     </div>
-                    <div className="col-md-1" >
-                        <div className="md-form">
-                            <button className="btn btn-primary btn-md" onClick={this.goToUserSearchPage}><span id="SearchBar">Search</span></button>
-                        </div>
+                    <div id="searchButton2Container">
+                        <button className="btn btn-primary btn-md" id="searchButton2" onClick={this.goToUserSearchPage}><span id="SearchBar">Search</span></button>
                     </div>
                 </div>
 
