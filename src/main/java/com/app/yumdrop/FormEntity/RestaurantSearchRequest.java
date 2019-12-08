@@ -8,6 +8,10 @@ public class RestaurantSearchRequest {
 
     String userEmail;
 
+    Double minimumRating;
+
+    int maximumDistance;
+
     public RestaurantSearchRequest() {
     }
 
@@ -24,6 +28,14 @@ public class RestaurantSearchRequest {
     public RestaurantSearchRequest(String userAddress, String restaurantSearchKeyword) {
         this.userAddress = userAddress;
         this.restaurantSearchKeyword = restaurantSearchKeyword;
+    }
+
+    public RestaurantSearchRequest(String userAddress, String restaurantSearchKeyword, String userEmail, Double minimumRating, int maximumDistance) {
+        this.userAddress = userAddress;
+        this.restaurantSearchKeyword = restaurantSearchKeyword;
+        this.userEmail = userEmail;
+        this.minimumRating = minimumRating;
+        this.maximumDistance = maximumDistance;
     }
 
     public String getUserAddress() {
@@ -48,5 +60,21 @@ public class RestaurantSearchRequest {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public Double getMinimumRating() {
+        return minimumRating;
+    }
+
+    public void setMinimumRating(Double minimumRating) {
+        this.minimumRating = minimumRating;
+    }
+
+    public int getMaximumDistance() {
+        return maximumDistance;
+    }
+
+    public void setMaximumDistance(int maximumDistance) {
+        this.maximumDistance = maximumDistance;
     }
 }

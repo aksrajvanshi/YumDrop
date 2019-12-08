@@ -21,4 +21,6 @@ public interface UserOrderRepository extends CrudRepository<UserOrder, UserOrder
 
     List<UserOrder> findBydeliveryAgentAssigned(String deliveryAgentAssigned);
 
+    List<UserOrder> findAll();
+
 }

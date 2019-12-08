@@ -20,12 +20,14 @@ public class SearchRestaurantController {
 
     @RequestMapping(value = "/searchRestaurantByLocationFromPublicPage", method = RequestMethod.POST)
     public ResponseEntity<?> searchRestaurantByLocation(@RequestBody RestaurantSearchRequest restaurantSearchRequest) {
-        return restaurantSearchService.getRestaurantResultsByLocationFromPublicPage(restaurantSearchRequest.getUserAddress(), restaurantSearchRequest.getRestaurantSearchKeyword());
+        return restaurantSearchService.getRestaurantResultsByLocationFromPublicPage(restaurantSearchRequest.getUserAddress(), restaurantSearchRequest.getRestaurantSearchKeyword(),
+        restaurantSearchRequest.getMinimumRating(), restaurantSearchRequest.getMaximumDistance());
     }
 
     @RequestMapping(value = "/searchRestaurantByLocationFromUserDashboard", method = RequestMethod.POST)
     public ResponseEntity<?> searchRestaurantByLocationFromUserDashboard(@RequestBody RestaurantSearchRequest restaurantSearchRequest) {
-        return restaurantSearchService.getRestaurantResultsByLocationFromDashboard(restaurantSearchRequest.getUserAddress(), restaurantSearchRequest.getUserEmail(), restaurantSearchRequest.getRestaurantSearchKeyword());
+        return restaurantSearchService.getRestaurantResultsByLocationFromDashboard(restaurantSearchRequest.getUserAddress(), restaurantSearchRequest.getUserEmail(), restaurantSearchRequest.getRestaurantSearchKeyword(),
+                restaurantSearchRequest.getMinimumRating(), restaurantSearchRequest.getMaximumDistance());
     }
 
     @RequestMapping(value = "/getAllRestaurants", method = RequestMethod.POST)
