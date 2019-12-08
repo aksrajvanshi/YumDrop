@@ -45,7 +45,7 @@
   "scripts": {
     "start": "concurrently 'npm run react' 'npm run server'",
     "react": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && nohup run react server &",
     "server": "nodemon src/server/index.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
