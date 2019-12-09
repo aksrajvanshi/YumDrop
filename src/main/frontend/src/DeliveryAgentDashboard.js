@@ -9,6 +9,47 @@ class DeliveryAgentDashboard extends Component{
         super(props)
     }
 
+    state = {
+        from : 's',
+        to : 's',
+        restaurant : 's'
+    }
+
+    fetchAddresses = () => { debugger;
+        fetch('/getActiveDeliveryOrderForDeliveryAgent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                deliveryAgentEmail : 'mkammili@iu.edu'
+            }),
+        }).then(res => {
+            console.log(res);
+            alert(res);
+            if (res.status == 200) {
+                alert("success");
+                return res.json();
+            }
+            else alert("error");
+        }).then( data => {
+            console.log(data);
+            this.setState({from: data.restaurantAddress, to: data.userAddress, restaurant: data.restaurantName})
+        })
+    }
+
+    handleFromAddressChange = (event) => {
+        this.setState({
+            from: event.target.value,
+        });
+    };
+
+    handleToAddressChange = (event) => {
+        this.setState({
+            to: event.target.value,
+        });
+    };
+
     forwardToSettingsPage = () => {
         this.props.history.push('/MySettingsPage');
     }
@@ -49,29 +90,30 @@ class DeliveryAgentDashboard extends Component{
                         </div>
                     </nav>
                 </header>
-
+                <body>
                 <div>
                     <h2>Delivery Orders</h2>
                 </div>
-
+                {this.fetchAddresses}
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-2">
                             <div class="productbox">
-                                <img src="https://thekatynews.com/wp-content/uploads/2017/06/mcdonalds-logo.jpg" class="img-responsive"/>
+                                <div className="producttitle">Restaurant Name </div>
+                                <p>{this.state.restaurant}</p>
                                 <div class="producttitle">Pickup at </div>
-                                <p class="text-justify">2819 E 3rd St, Bloomington, IN 47401</p>
-                                <div>Deliver at </div>
-                                <p>700 N Woodlawn Ave, Bloomington, IN 47408</p>
+                                <p>{this.state.from}</p>
+                                <div className="producttitle">Deliver at </div>
+                                <p>{this.state.to}</p>
                                 <br/>
                                 <button onClick={this.forwardToDeliveryAgentMaps} className="btn btn-style-1 btn-primary" type="button">Show Path
                                 </button>
                             </div>
                         </div>
 
-
                     </div>
                 </div>
+                </body>
             </div>
 
         );
