@@ -95,7 +95,7 @@ class RestaurantActiveOrders extends React.Component{
                     }
                     return res.json();
                 }).then(response => {
-                    currentComponent.setState({
+                    this.setState({
                         activeOrdersForRestaurantDisplay: response
                     })
                     console.log(response)})

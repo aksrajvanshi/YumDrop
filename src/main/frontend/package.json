@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "base64-img": "^1.0.4",
     "bootstrap": "^4.3.1",
     "email-validator": "^2.0.4",
     "image-data-uri": "^2.0.1",
@@ -21,6 +22,7 @@
     "react-datetime": "^2.16.3",
     "react-datetime-picker": "^2.8.0",
     "react-dom": "^16.10.1",
+    "react-file-base64": "^1.0.3",
     "react-google-login": "^5.0.7",
     "react-google-maps": "^9.4.5",
     "react-images-upload": "^1.2.7",
