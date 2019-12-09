@@ -37,6 +37,7 @@ class App extends Component {
     goToSearchPage = () => {
         this.props.setSearchQuery(this.state.searchQuery)
         this.props.history.push('/SearchPage')
+        console.log("hi");
     }
 
     getSearchResults = () => {
