@@ -65,6 +65,63 @@ class RestaurantActiveOrders extends React.Component{
         })
     }
 
+    handleClick(item){
+
+        fetch('/changeOrderStatusFromRestaurant', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                restaurantId: this.props.restaurantId,
+                orderId: item.orderId,
+                orderStatus: 2
+            }),
+        }).then(res =>{
+                fetch('/getCurrentActiveOrderForRestaurant', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body:JSON.stringify({
+                        restaurantId: this.props.restaurantId,
+                    }),
+                }).then(res => {
+                    console.log("First response")
+                    if (res.status !== 200){
+                        this.setState({
+                            errorSelect: true
+                        })
+                    }
+                    return res.json();
+                }).then(response => {
+                    currentComponent.setState({
+                        activeOrdersForRestaurantDisplay: response
+                    })
+                    console.log(response)})
+                    .then(res => {
+                        console.log("fourth one")
+                        fetch('/checkForUserChatRequest', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body:JSON.stringify({
+                                restaurantId: this.props.restaurantId,
+                            }),
+                        }).then(res => {
+                            if (res.status === 200){
+                                this.setState({
+                                    chatReqest: true
+                                })
+
+                            }
+
+                        })
+                    })
+            }
+            )}
+
     render(){
 
         let mapactiveOrdersForRestaurantDisplay = this.state.activeOrdersForRestaurantDisplay.map((d,itemName)=>
@@ -72,19 +129,18 @@ class RestaurantActiveOrders extends React.Component{
             return(
 
                 <tr key={itemName}>
-                    <td><img src="http://placehold.it/100x100" alt="..."
-                             className="img-responsive"/></td>
+
                     <td>{d.userEmail}</td>
                     <td>{d.orderId}
                     </td>
                     <td>{d.dishNames}</td>
                     <td>{d.totalPrice}</td>
-                    <td>{d.OrderStatus}</td>
+
                     <td className="td-actions">
 
                         <div className="col-md-8 col-sm-8 col-xs-8">
                             <a href="#" className="btn btn-success btn-product"><span
-                                className="glyphicon btn-success"></span>Order completed?</a>
+                                className="glyphicon btn-success" onClick={this.handleClick.bind(this, d)}></span>Order Prepared</a>
                         </div>
                     </td>
                 </tr>
@@ -177,7 +233,7 @@ class RestaurantActiveOrders extends React.Component{
 
             <br/><br/><br/>
 
-            <div className="span7">
+            <div className="span7" id="restaurantViewOfActiveOrders">
                 <div className="widget stacked widget-table action-table">
                     <div className="widget-header">
                         <i className="icon-th-list"></i>
@@ -192,7 +248,7 @@ class RestaurantActiveOrders extends React.Component{
                                 <th>Order Id</th>
                                 <th>Dishes</th>
                                 <th>Order status</th>
-                                <th className="td-actions"></th>
+
                             </tr>
                             </thead>
                             <tbody>

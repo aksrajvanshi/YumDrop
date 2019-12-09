@@ -6,6 +6,7 @@ import StripeCheckout from "react-stripe-checkout";
 import StarRatingComponent from 'react-star-rating-component';
 
 import "react-datepicker/dist/react-datepicker.css";
+import {connect} from "react-redux";
 
 
 class MyCart extends React.Component {
@@ -17,7 +18,8 @@ class MyCart extends React.Component {
         startDate: new Date(),
         time: '10:00',
         rating: 0,
-        provideRatings: false
+        provideRatings: false,
+        dishQuantity: 0
 
     }
 
@@ -39,12 +41,16 @@ class MyCart extends React.Component {
             .then(res => {
                 console.log(res)
                 if (res.status === 200){
-                    this.forwardToLoginDashboard('/LoginDashboard')
+                    this.forwardToLoginDashboard()
                 }
 
             })
 
 
+    }
+
+    forwardToLoginDashboard = () => {
+        this.props.history.push('/LoginDashboard')
     }
 
 
@@ -118,13 +124,22 @@ class MyCart extends React.Component {
     }
 
 
-    handleClick(item) {
-        console.log(item);
+    handleClick = (e) => {
+        console.log(e);
+        console.log(this.state.dishesForUserDisplay)
 
-
+        const {dishesForUserDisplay} = this.state.dishesForUserDisplay
+        console.log(dishesForUserDisplay)
+        const { id } = e.target;
+        console.log(id)
+        dishesForUserDisplay[id].dishQuantity = dishesForUserDisplay[id].dishQuantity + 1
+        console.log(dishesForUserDisplay[id].dishQuantity);
+        this.setState({
+            dishesForUserDisplay
+        })
 
         let currentComponent = this;
-        fetch('/deleteDishFromCart',{
+        fetch('/addItemToMyCart ',{
             method: 'POST',
             redirect: 'follow',
             headers: {
@@ -133,7 +148,8 @@ class MyCart extends React.Component {
             },
             body: JSON.stringify({
                 userEmail: this.props.userEmailId,
-                dishName: item.dishName
+
+                dishQuantity: this.state.dishesForUserDisplay[id].dishQuantity
             })})
             .then(res => {
                 console.log(res.status)
@@ -160,20 +176,18 @@ class MyCart extends React.Component {
                 })
             }
     sendCardDetailsForPayment = () => {
-        fetch('/payForUserCart', {
+        console.log("Inside send card details")
+        console.log("RestaurantId", this.props.restaurantId)
+        console.log("email Id", this.props.emailId)
+        fetch('/makeUserOrder', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: this.props.userEmailId,
-                email: this.state.email,
-                brand: this.state.brand,
-                country: this.state.country,
-                cvc_check: this.state.cvc_check,
-                exp_month: this.state.exp_month,
-                funding: this.state.funding,
-                last4: this.state.last4
+                userEmail: this.props.emailId,
+                restaurantId: this.props.restaurantId,
+
             }),
         }).then(res => {
             if (res.status===200){
@@ -190,25 +204,9 @@ class MyCart extends React.Component {
 
     handleTokenAPI = (token) => {
         console.log("Insdie this");
-        console.log(token.email);
-        console.log("Later");
-        console.log(token.card.brand);
-        console.log(token.card.country);
-        console.log(token.card.cvc_check);
-        console.log(token.card.exp_month);
-        console.log(token.card.exp_year);
-        console.log(token.card.funding);
-        console.log(token.card.last4);
-        this.setState({
-            email: token.email,
-            brand: token.card.brand,
-            country: token.country,
-            cvc_check: token.card.cvc_check,
-            exp_month: token.card.exp_month,
-            funding: token.card.funding,
-            last4: token.card.last4
-        })
+
         console.log("End")
+        console.log("Ending")
         this.sendCardDetailsForPayment();
     }
 
@@ -236,8 +234,7 @@ class MyCart extends React.Component {
 
                     <td className="actions" data-th="">
                         <div className="col-md-8 col-sm-8 col-xs-8">
-                            <a href="#" className="btn btn-success btn-product"><span
-                                className="glyphicon btn-danger icon-remove" onClick={this.handleClick.bind(this, d)}></span> Delete item</a>
+                             <button id={itemName} key={itemName} value={d.dishQuantity} onClick={this.handleClick} >Add item</button>
                         </div>
                     </td>
                 </tr>
@@ -297,7 +294,7 @@ class MyCart extends React.Component {
                             <th id="dishDisplayTable" >Dish Name</th>
 
                             <th id="dishDisplayTable">Dish Price</th>
-                            <th id="dishDisplayTable">Delete Item</th>
+                            <th id="dishDisplayTable">Quantity</th>
                             <th id="dishDisplayTable"></th>
                         </tr>
                         </thead>
@@ -359,6 +356,8 @@ class MyCart extends React.Component {
                                             onChange={this.onChangetime}
                                             value={this.state.time}
                                         />
+                                        <br/>
+                                        <br/>
                                     </div>
 
                                 </div>
@@ -383,7 +382,7 @@ class MyCart extends React.Component {
                                 <div className="login-form">
                                     <div>
                                         <div>
-                                            <h2>Rating from state: {rating}</h2>
+                                            <h2>Please provide your ratings</h2>
                                             <StarRatingComponent
                                                 name="rate your food"
                                                 starCount={5}
@@ -406,4 +405,18 @@ class MyCart extends React.Component {
         )
     }
 }
-export default MyCart
+
+const mapStateToProps = (state)=> {
+    return {
+        emailId: state.userId,
+        restaurantId: state.userSelectedRestaurant
+    }
+}
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(MyCart);

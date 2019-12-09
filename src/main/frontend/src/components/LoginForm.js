@@ -61,7 +61,7 @@ export default class LoginForm extends Component {
 													   type="text"
 													   value={nickname}
 													   onChange={this.handleChange}
-													   placeholder={this.state.nickname}
+													   placeholder="Maithreyi"
 													/>
 											</div>
 

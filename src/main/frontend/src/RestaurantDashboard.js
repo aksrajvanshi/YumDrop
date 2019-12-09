@@ -195,9 +195,6 @@ class RestaurantDashboard extends Component{
                 </header>
 
 
-                <br/><br/><br/>
-                <button onClick={this.forwardToChatFeature} >Click me for chat</button>
-
 
                 <div className="span7">
                     <div className="widget stacked widget-table action-table">

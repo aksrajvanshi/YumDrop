@@ -51,8 +51,10 @@ class dishesForUserView extends React.Component{
 
     handleClick(item) {
         console.log(item);
-        let currentComponent = this;
-        fetch('/addDishToUserCart',{
+        console.log(this.props.emailId)
+
+        console.log(item.dishPrice)
+        fetch('/addItemToMyCart',{
             method: 'POST',
             redirect: 'follow',
             headers: {
@@ -60,11 +62,11 @@ class dishesForUserView extends React.Component{
                 'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({
-                userEmailId: this.props.userEmailId,
+                userEmail: this.props.emailId,
                 dishName: item.dishName,
                 restaurantId: "abc12",
                 dishPrice : item.dishPrice,
-                dishQuantity : item.dishQuantity
+                dishQuantity : 1
             })})
             .then(res => {
                 console.log(res)
@@ -92,8 +94,8 @@ class dishesForUserView extends React.Component{
                     <td className="td-actions">
 
                         <div className="col-md-8 col-sm-8 col-xs-8">
-                            <a href="#" className="btn btn-success btn-product"><span
-                                className="glyphicon glyphicon-shopping-cart" onClick={this.handleClick.bind(this, d)}></span> Add to Cart</a>
+                            <a href="#" className="btn btn-success btn-product" onClick={this.handleClick.bind(this, d)}><span
+                                className="glyphicon glyphicon-shopping-cart" > Add to Cart</span></a>
                         </div>
                     </td>
                 </tr>
@@ -108,8 +110,8 @@ class dishesForUserView extends React.Component{
             <div>
                 <header>
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-                        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-                        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -140,8 +142,8 @@ class dishesForUserView extends React.Component{
                 </header>
                 <head>
                     <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-                        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-                        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+                    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
                 </head>
                 <br/>
                 <br/>
@@ -163,7 +165,6 @@ class dishesForUserView extends React.Component{
                                     <th>Dish Description</th>
                                     <th>Dish Price</th>
                                     <th id="dishDisplayTable">Add to Cart</th>
-                                    <th className="td-actions"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -181,6 +182,7 @@ class dishesForUserView extends React.Component{
                                         className="fa fa-angle-left" onClick={this.goBackToLoginDashboard}></i>Home Page</a></td>
 
                                     <td colSpan="2" className="hidden-xs"></td>
+                                    <td></td><td></td>
                                     <td><a
                                         className="btn btn-success btn-block" onClick={this.forwardToMyCart}>My Cart <i className="fa fa-angle-right"></i></a>
                                     </td>

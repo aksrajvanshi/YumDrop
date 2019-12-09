@@ -1,0 +1,21 @@
+#activeOrdersTableForUser{
+    width: 90%;
+    padding-left: 10px;
+}
+
+
+#dishImageForActiveOrderUserView{
+    width: 40%;
+}
+
+#dishNameForActiveOrderUserView{
+    width: 20%;
+}
+
+#dishPriceForActiveOrderUserView{
+    width: 10%
+}
+
+#dishDescriptionForUserView{
+    width: 40%;
+}

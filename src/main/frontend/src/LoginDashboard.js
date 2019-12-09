@@ -82,24 +82,18 @@ class LoginDashBoard extends Component{
 
         let mapForRecommendedRestaurants = this.state.recommendedRestaurants.map((d,itemName)=>
         {
-            console.log(d.restaurantId);
-            return(
 
+            return(
                 <div className="row menu_style1" key={itemName}>
                     <div className="col-md-4">
-                        <div className="single_menu_list">
-                            <img
-                                src={d.restaurantImageURL} height="50%" width="50%"
-                                alt="" onClick={this.handleClick.bind(this, d)} />
-                            <div className="menu_content">
-                                <h4 onClick={this.handleClick.bind(this, d)} >{d.restaurantName} <span>{d.averagePrice}</span></h4>
-                                <p onClick={this.handleClick.bind(this, d)} >{d.tags}</p>
-                                <p onClick={this.handleClick.bind(this, d)} >{d.restaurantAddress}</p>
-                            </div>
-
-                        </div>
+                <div className="box">
+                    <img onClick={this.handleClick.bind(this, d)} src={d.restaurantImageURL} />
+                    <div className="overbox">
+                        <div onClick={this.handleClick.bind(this, d)} className="title overtext"> {d.restaurantName}</div>
+                        <div onClick={this.handleClick.bind(this, d)} className="tagline overtext"> {d.restaurantAddress}</div>
                     </div>
                 </div>
+                    </div></div>
 
 
             )
@@ -107,6 +101,11 @@ class LoginDashBoard extends Component{
 
         return (
             <div>
+                <head>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                </head>
                 <header>
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -126,9 +125,10 @@ class LoginDashBoard extends Component{
                                 <ul className="navbar-nav mr-auto">
 
                                     <li className="nav-item">
-                                        <a className="nav-link" onClick={this.forwardToMyCart}><i
-                                            className="fa fa-fw fa-user"/><span
-                                            className="glyphicon glyphicon-shopping-cart"></span></a>
+
+                                        <a onClick={this.forwardToMyCart} >
+                                            <span><strong>Cart</strong></span>
+                                        </a>
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link"  onClick={this.onClick} ><span>Settings</span></a>
@@ -148,40 +148,40 @@ class LoginDashBoard extends Component{
 
                     <div className="row">
                         <div className="col-sm-2">
-                            <h5>Indian</h5>
+                            <h6>Indian</h6>
                             <img
                                 src="https://st2.depositphotos.com/2885805/10593/v/450/depositphotos_105938884-stock-illustration-indian-food-composition.jpg"
-                                alt="Rounded Image" height="50%" width="50%" className="rounded img-fluid"/>
+                                alt="Rounded Image" height="30%" width="30%" className="rounded img-fluid"/>
                         </div>
                         <div className="col-sm-2">
-                            <h5>Mexican</h5>
+                            <h6>Mexican</h6>
                             <img
                                 src="https://cdn4.iconfinder.com/data/icons/mexican-icons-2/206/Tacos-512.png"
-                                alt="Rounded Image" height="40%" width="40%" className="rounded img-fluid"/>
+                                alt="Rounded Image" height="25%" width="25%" className="rounded img-fluid"/>
                         </div>
                         <div className="col-sm-2">
-                            <h5>Italian</h5>
+                            <h6>Italian</h6>
                             <img
                                 src="https://icons-for-free.com/iconfiles/png/512/food+food+italian+food+junk+food+pizza+icon-1320168016349880751.png"
-                                alt="Rounded Image" height="40%" width="40%" className="rounded img-fluid"/>
+                                alt="Rounded Image" height="25%" width="25%" className="rounded img-fluid"/>
                         </div>
                         <div className="col-sm-2">
-                            <h5>American</h5>
+                            <h6>American</h6>
                             <img
                                 src="https://c8.alamy.com/comp/H797BY/hamburger-traditional-american-fast-food-icon-over-white-background-H797BY.jpg"
-                                alt="Rounded Image" height="40%" width="40%" className="rounded img-fluid"/>
+                                alt="Rounded Image" height="25%" width="25%" className="rounded img-fluid"/>
                         </div>
                         <div className="col-sm-2">
-                            <h5>Thai</h5>
+                            <h6>Thai</h6>
                             <img
                                 src="https://image.flaticon.com/icons/png/512/644/644758.png"
-                                alt="Rounded Image" height="40%" width="40%" className="rounded img-fluid"/>
+                                alt="Rounded Image" height="25%" width="25%" className="rounded img-fluid"/>
                         </div>
                         <div className="col-sm-2" >
-                            <h5>Barbecue</h5>
+                            <h6>Barbecue</h6>
                             <img
                                 src="https://cdn3.iconfinder.com/data/icons/food-3-11/128/food_Barbecue-Bbq-Skewer-Kabob-Hot-512.png"
-                                height="40%" width="40%" className="rounded img-fluid"/>
+                                height="25%" width="25%" className="rounded img-fluid"/>
                         </div>
 
                     </div>
@@ -200,26 +200,27 @@ class LoginDashBoard extends Component{
                     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,900"
                           rel="stylesheet"/>
                     <link href="https://fonts.googleapis.com/css?family=Oleo+Script" rel="stylesheet"/>
-                    <div className="row">
+                    <div className="row" id="popularRestaurantNearYou">
                         <div className="col-xl-8 mb-60">
                             <div className="section-title text-center">
                                 <h4>Popular Restaurants Near You</h4>
                             </div>
                         </div>
                     </div>
-                    <section className="about-area pt-80">
-                        <div className="container" >
+                </div>
 
-                            {mapForRecommendedRestaurants}
-                            <br/><br/><br/><br/><br/>
+                <section className="about-area pt-80">
+                    <div className="container" >
+                        <div className="grid-container">
 
-
+                        {mapForRecommendedRestaurants}
                         </div>
                         <br/><br/><br/><br/><br/>
-                    </section>
+
+
+                    </div>
                     <br/><br/><br/><br/><br/>
-                    <a href="#"></a>
-                </div>
+                </section>
 
 
 

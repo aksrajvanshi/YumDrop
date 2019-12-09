@@ -7,6 +7,7 @@ import LoginPage from "./LoginPage";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import AddItemToMenu from "./AddItemToMenu";
+import chatFeatureForRestaurant from "./chatFeatureForRestaurant";
 import { Route, BrowserRouter as Router} from 'react-router-dom';
 import LoginDashBoard from "./LoginDashboard";
 import tryingForRoutes from "./tryingForRoutes"
@@ -42,6 +43,7 @@ import ErrorPageForDeliveryAgentRegistration from "./ErrorPageForDeliveryAgentRe
 import DeliveryAgentLoginErrorPage from "./DeliveryAgentLoginErrorPage";
 import DeliveryAgentOTPResetPassword from "./DeliveryAgentOTPResetPassword";
 import MyCart from "./MyCart";
+import ImagesConversionAndReconverion from "./ImagesConversionAndReconverion";
 import paymentSystemForUsers from "./paymentSystemForUsers";
 import restaurantChatStartButton from "./restaurantChatStartButton";
 import userChatStartButton from "./userChatStartButton";
@@ -114,6 +116,7 @@ const routing = (
                 <Route exact path="/MyCurrentLocation" component={MyCurrentLocation}/>
                 <Route exact path="/RestaurantDashboard" component={RestaurantDashboard}/>
                 <Route exact path="/Trying" component={Trying}/>
+                <Route exact path="/chatFeatureForRestaurant" component={chatFeatureForRestaurant}/>
                 <Route exact path="/AppForShoppingCart" component={AppForShoppingCart}/>
                 <Route exact path="/AddItemToMenu" component={AddItemToMenu}/>
                 <Route exact path="/RestaurantRegister" component={RestaurantRegister} />

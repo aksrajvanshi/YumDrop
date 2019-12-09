@@ -6,6 +6,7 @@
     "bootstrap": "^4.3.1",
     "email-validator": "^2.0.4",
     "image-data-uri": "^2.0.1",
+    "image-to-base64": "^2.0.1",
     "json-fetch": "^8.0.0",
     "material-ui": "latest",
     "nodemon": "^2.0.1",
@@ -22,6 +23,7 @@
     "react-dom": "^16.10.1",
     "react-google-login": "^5.0.7",
     "react-google-maps": "^9.4.5",
+    "react-images-upload": "^1.2.7",
     "react-native": "^0.61.2",
     "react-payment": "^0.1.8",
     "react-places-autocomplete": "^7.2.1",
@@ -66,6 +68,7 @@
     ]
   },
   "devDependencies": {
+    "datauri": "^2.0.0",
     "react-facebook-login": "^4.1.1",
     "react-geocode": "^0.2.0",
     "react-redux": "^7.1.1",

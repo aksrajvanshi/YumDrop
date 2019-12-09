@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch)=> {
 
 class MySettingsPage extends Component{
     state = {
-        dataReceived: [],
+        activeOrderForUserDisplay: [],
         userName: "",
         userEmailId:  "",
         userPhoneNumber: "",
@@ -74,7 +74,7 @@ class MySettingsPage extends Component{
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: currentComponent.props.userEmailId
+                userEmail: "maithreyi.prabhu95@gmail.com"
             }),
         }).then(res => {
             if (res.status === 200){
@@ -94,7 +94,7 @@ class MySettingsPage extends Component{
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: currentComponent.props.userEmailId
+                userEmail: "maithreyi.prabhu95@gmail.com"
             }),
         }).then(res => {
             if (res.status === 200){
@@ -113,7 +113,8 @@ class MySettingsPage extends Component{
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: currentComponent.props.userEmailId
+                userEmail: "maithreyi.prabhu95@gmail.com",
+                restaurantId: "abc12"
             }),
         }).then(res => {
             if (res.status === 200){
@@ -133,7 +134,7 @@ class MySettingsPage extends Component{
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: currentComponent.props.userEmailId
+                userEmail: "maithreyi.prabhu95@gmail.com"
             }),
         }).then(res => {
             if (res.status !== 200){
@@ -142,47 +143,50 @@ class MySettingsPage extends Component{
                 })
             }
             return res.json();
-        }).then(res=>{
-            console.log("Response received")
-            console.log(res)
-            console.log(res.length)
-            let x = [];
-            for (let i=0; i<res.length;i++){
-                x[i] = res[i].DishDetails;
-            }
-            currentComponent.setState({
-                restaurantDishResults: x
-            })
-            console.log(this.state.restaurantDishResults);
-        })
-
-        fetch('/getCurrentActiveOrderRestaurantDetails', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body:JSON.stringify({
-                userEmail: currentComponent.props.userEmailId
-            }),
-        }).then(res => {
-            if (res.status === 200){
-                this.setState({
-                    restaurantName: this.state.restaurantName
+        }).then(response => {
+                console.log("Entereed")
+                for(let i=0; i<response.length;i++){
+                    let beforeSplitting = response[i].orderContents.split(',');
+                    console.log(beforeSplitting)
+                    response[i].ordercontents = beforeSplitting.join(' ');
+                    console.log("after", response[i].ordercontents);
+                    console.log(response[i])
+                    console.log(response[i].createdAt)
+                }
+                currentComponent.setState({
+                    activeOrderForUserDisplay: response
                 })
-                console.log(this.state.restaurantName)
-            }
-            else{
-                console.log("Cant Chat")
-            }
-        })
-    }
+                console.log(response)})
+        }
+
+
+
     goToChatFeature = () => {
         this.props.history.push('/chatFeature')
     }
 
 
     render() {
-        let trying = this.state.data;
+        let mapDishesForUserView = this.state.activeOrderForUserDisplay.map((d,itemName)=>
+        {
+            return(
+
+                <tr key={itemName}>
+                    <td>{d.orderId}</td>
+
+                    <td>{d.orderContents.split(',')}</td>
+                    <td>{d.orderPrice}
+                    </td>
+                    <td>{d.createdAt}</td>
+
+                </tr>
+
+
+
+
+
+            )
+        });
 
         return (
             <div>
@@ -249,70 +253,52 @@ class MySettingsPage extends Component{
 
                 <br/>
                 <br/>
-                <div className="container">
+                <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
+                <div className="span7">
+                    <div className="widget stacked widget-table action-table">
+                        <div className="widget-header">
+                            <i className="icon-th-list"></i>
+                            <h3>Active Order</h3>
+                        </div>
+                        <div className="widget-content" id="activeOrdersTableForUser">
 
-                    <table className="table">
+                            <table className="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th id="dishImageForActiveOrderUserView">Order Id</th>
+                                    <th id="dishNameForActiveOrderUserView">Order Contents</th>
+                                    <th id="dishPriceForActiveOrderUserView">Order Price</th>
+                                    <th id="dishDescriptionForUserView">Created At</th>
 
-                        <thead>
-                        <caption id="tableCaption" className="text-uppercase"><strong><h4>{this.state.restaurantName}</h4></strong></caption>
-                        <tr>
-                            <th>#</th>
-                            <th>Item Name</th>
-                            <th>Cost</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                            {this.state.restaurantDishResults.map((item, index) =>{
-                                return (
-                                    <tr>
-                                        <td>{this.state.id}</td>
+                        {mapDishesForUserView}
 
-                                        <td>
-                                            <h4><a href="#" key={index}>{item.dishName}</a></h4>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+
+                                        <td><a
+                                            className="btn btn-success btn-block" onClick={this.chatWithRestaurant}>chat With Restaurant <i className="fa fa-angle-right"></i></a>
                                         </td>
+                                    <td><a
+                                        className="btn btn-success btn-block" onClick={this.chatWithDeliveryAgent}>chat With Delivery Agent <i className="fa fa-angle-right"></i></a>
+                                    </td>
+                                    <td><a
+                                        className="btn btn-success btn-block" onClick={this.chatWithRestaurantAndDeliveryAgent}>chat With Restaurant And Delivery Agent<i className="fa fa-angle-right"></i></a>
+                                    </td>
 
-                                        <td ><strong>{item.dishPrice}</strong></td>
+                                </tr>
 
-                                    </tr>
-                                )
-                            })}
-<br/>
-                            <div className="col-md-2 ">
-                                <button className="btn btn-success" onClick={this.chatWithRestaurant}>chat With Restaurant</button>
 
-                            </div>
+                                </tfoot>
 
-                            <div className="col-md-2 ">
-                                <button className="btn btn-success" onClick={this.chatWithDeliveryAgent}>chat With Delivery Agent</button>
 
-                            </div>
-
-                            <div className="col-md-4 ">
-                                <button className="btn btn-success" onClick={this.chatWithRestaurantAndDeliveryAgent}>chat With Restaurant And Delivery Agent</button>
-
-                            </div>
-
-                        </tbody>
                     </table>
-                </div>
+                        </div></div></div></div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                </div>
 
         );
     }

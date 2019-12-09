@@ -147,7 +147,7 @@ p {
     padding: 10%;
 }
 .how-section1 h4{
-    color: #ffa500;
+    color: black;
     font-weight: bold;
     font-size: 30px;
 }
@@ -170,6 +170,10 @@ p {
 #modal{
     width: 370px;
     height: 300px;
+}
+
+#popularRestaurantNearYou{
+    padding-left: 150px;
 }
 
 
@@ -248,4 +252,92 @@ p {
     font-weight:bold;
     color:#8a8a8a;
     line-height:15px;
+}
+
+#imageForRestaurantRecommendation{
+    height: 50px;
+    width: 100px;
+}
+.box {
+    cursor: pointer;
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+    width: 350px;
+}
+
+.box img {
+    position: absolute;
+    left: 0;
+    -webkit-transition: all 300ms ease-out;
+    -moz-transition: all 300ms ease-out;
+    -o-transition: all 300ms ease-out;
+    -ms-transition: all 300ms ease-out;
+    transition: all 300ms ease-out;
+}
+
+.box .overbox {
+    background-color: #304562;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    z-index: 100;
+    -webkit-transition: all 300ms ease-out;
+    -moz-transition: all 300ms ease-out;
+    -o-transition: all 300ms ease-out;
+    -ms-transition: all 300ms ease-out;
+    transition: all 300ms ease-out;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    padding: 130px 20px;
+}
+
+.box:hover .overbox { opacity: 1; }
+
+.box .overtext {
+    -webkit-transition: all 300ms ease-out;
+    -moz-transition: all 300ms ease-out;
+    -o-transition: all 300ms ease-out;
+    -ms-transition: all 300ms ease-out;
+    transition: all 300ms ease-out;
+    transform: translateY(40px);
+    -webkit-transform: translateY(40px);
+}
+
+.box .title {
+    font-size: 2.5em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition-delay: 0.1s;
+    transition-duration: 0.2s;
+}
+
+.box:hover .title,
+.box:focus .title {
+    opacity: 1;
+    transform: translateY(0px);
+    -webkit-transform: translateY(0px);
+}
+
+.box .tagline {
+    font-size: 0.8em;
+    opacity: 0;
+    transition-delay: 0.2s;
+    transition-duration: 0.2s;
+}
+
+.box:hover .tagline,
+.box:focus .tagline {
+    opacity: 1;
+    transform: translateX(0px);
+    -webkit-transform: translateX(0px);
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto ;
+    grid-column-gap: 15px;
+    padding: 10px;
 }
