@@ -4,10 +4,11 @@ import './LoginFormCSS.css';
 import './DeliveryAgentLoginFormCSS.css';
 import './DeliveryAgentLoginErrorPage';
 import "bootstrap/dist/css/bootstrap.min.css";
+import {connect} from 'react-redux';
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
-class App extends Component {
+class DeliveryAgentLoginForm extends Component {
     state = {
 
         loginSelect: true,
@@ -42,6 +43,8 @@ class App extends Component {
                 this.forwardToDeliveryAgentLoginErrorPage();
             }else {
                 this.setState({redirect: true, deliveryAgentLoginOptionSelected: false});
+                //console.log(this.state.deliveryAgentEmail);
+                //this.props.setUserId(this.state.deliveryAgentEmail);
                 this.forwardToDeliveryAgentDashboard();
             }
         })
@@ -130,6 +133,7 @@ class App extends Component {
     }
 
     forwardToDeliveryAgentDashboard = () => {
+
         this.props.history.push('/DeliveryAgentDashboard')
     }
 
@@ -457,4 +461,16 @@ class App extends Component {
         </div>);
     }
 }
-export default App;
+/*
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserId(evt) { dispatch({
+            type: "setUserId",
+            userId: evt,
+            accountType: "deliveryAgent"
+        })}
+    }
+}
+export default connect(mapDispatchToProps) (DeliveryAgentLoginForm);
+*/
+export default DeliveryAgentLoginForm;

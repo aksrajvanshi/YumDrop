@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import './LoginDashBoardCSS.css';
 import './DeliveryAgentDashboardCSS.css';
 import './DeliveryAgentMaps';
+import {connect} from "react-redux";
 
 class DeliveryAgentDashboard extends Component{
 
@@ -10,9 +11,10 @@ class DeliveryAgentDashboard extends Component{
     }
 
     state = {
-        from : 's',
-        to : 's',
-        restaurant : 's'
+        from:'',
+        to:'',
+        restaurant : '',
+
     }
 
     fetchAddresses = () => { debugger;
@@ -22,19 +24,13 @@ class DeliveryAgentDashboard extends Component{
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                deliveryAgentEmail : 'mkammili@iu.edu'
+                deliveryAgentEmail : "mkammili@iu.edu"
             }),
         }).then(res => {
-            console.log(res);
-            alert(res);
-            if (res.status == 200) {
-                alert("success");
                 return res.json();
-            }
-            else alert("error");
+                this.props.getAddresses({from: this.state.from, to: this.state.to});
         }).then( data => {
-            console.log(data);
-            this.setState({from: data.restaurantAddress, to: data.userAddress, restaurant: data.restaurantName})
+            this.setState({from: data[0].restaurantAddress, to: data[0].userAddress, restaurant: data[0].restaurantName})
         })
     }
 
@@ -56,6 +52,10 @@ class DeliveryAgentDashboard extends Component{
 
     forwardToDeliveryAgentMaps = () => {
         this.props.history.push("/DeliveryAgentMaps")
+    }
+
+    componentWillMount() {
+        this.fetchAddresses()
     }
 
     render() {
@@ -94,7 +94,6 @@ class DeliveryAgentDashboard extends Component{
                 <div>
                     <h2>Delivery Orders</h2>
                 </div>
-                {this.fetchAddresses}
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-2">
@@ -120,4 +119,17 @@ class DeliveryAgentDashboard extends Component{
     }
 
 }
-export default DeliveryAgentDashboard;
+
+const mapStateToProps = (state) => {
+    return  {
+        userId: state.userId,
+    }
+}
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        getAddresses: (evt) => dispatch({type: "getAddresses", from: evt.from, to:evt.to}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+export default  connect(mapStateToProps, mapDispatchToProps) (DeliveryAgentDashboard);

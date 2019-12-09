@@ -147,6 +147,7 @@ public class FoodCartAndOrderController {
 
     @RequestMapping(value = "/getActiveDeliveryOrderForDeliveryAgent", method = RequestMethod.POST)
     public ResponseEntity<?> getActiveOrdersForDeliveryAgent(@RequestBody DeliveryAgent deliveryAgentDetail) {
+
         if(deliveryAgentDetail.getDeliveryAgentEmail().length() == 0){
             ErrorMessage deliveryAgentDoesNotExist = new ErrorMessage(new Date(), "Delivery agent name not given!",
                     "");

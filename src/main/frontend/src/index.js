@@ -19,7 +19,7 @@ import SuccessfulRegistration from './SuccessfulRegistration';
 import Home from './Home';
 import MyCurrentLocation from "./MyCurrentLocation";
 import {createStore, combineReducers} from 'redux';
-import {Provider} from 'react-redux';
+import {connect, Provider} from 'react-redux';
 import ErrorPageForRestaurantRegistration from "./ErrorPageForRestaurantRegistration";
 import RestaurantRegister from "./RestaurantRegister";
 import DeliveryAgentDashboard from "./DeliveryAgentDashboard";
@@ -47,6 +47,8 @@ const initialState = {
     longitude: null,
     userId: null, //doubles as a User's Email address or a restaurant's Id
     accountType: null, //identifies if account is user, restaurant, or delivery
+    from: null,
+    to: null,
 }
 
 const reducer = (state=initialState, action) => {
@@ -62,6 +64,10 @@ const reducer = (state=initialState, action) => {
     else if (action.type === "signOut") {
         state.userId = null;
         state.accountType = null;
+    }
+    else if(action.type === "getAddresses") {
+        state.from = action.from;
+        state.to = action.to;
     }
 
 
