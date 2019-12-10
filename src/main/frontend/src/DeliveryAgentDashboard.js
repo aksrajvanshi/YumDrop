@@ -15,7 +15,7 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch)=> {
     return {
         setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
-        signOut: () => dispatch({type: "signOut"})
+
     }
 }
 
@@ -45,7 +45,7 @@ class DeliveryAgentDashboard extends Component{
                 'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({
-                deliveryAgentEmailId: this.props.deliveryAgentEmailId
+                deliveryAgentEmailId: "mkammili@iu.edu"
             })})
             .then(res => {
                 if (res.status !== 200){
@@ -74,7 +74,7 @@ class DeliveryAgentDashboard extends Component{
                     'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify({
-                    deliveryAgentEmailId: this.props.deliveryAgentEmailId
+                    deliveryAgentEmailId: "mkammili@iu.edu"
                 })})
                 .then(res => {
                     if (res.status === 200){
@@ -97,13 +97,6 @@ class DeliveryAgentDashboard extends Component{
 
 
 
-
-
-
-    signOut = () => {
-        this.props.signOut();
-        this.props.history.push('/');
-    }
 
 
     forwardToLogiDashboard = () => {
@@ -304,4 +297,4 @@ class DeliveryAgentDashboard extends Component{
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps) (DeliveryAgentDashboard);
+export default (DeliveryAgentDashboard);

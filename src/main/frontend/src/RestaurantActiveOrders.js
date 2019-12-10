@@ -56,7 +56,7 @@ class RestaurantActiveOrders extends React.Component{
         }).then(res => {
             if (res.status === 200){
                 this.setState({
-                    chatReqest: true
+                    chatReqest: false
                 })
 
             }
@@ -112,7 +112,7 @@ class RestaurantActiveOrders extends React.Component{
                         }).then(res => {
                             if (res.status === 200){
                                 this.setState({
-                                    chatReqest: true
+                                    chatReqest: false
                                 })
 
                             }
@@ -134,12 +134,12 @@ class RestaurantActiveOrders extends React.Component{
                     <td>{d.orderId}</td>
                     <td>{d.orderContents}</td>
                     <td>{d.orderPrice}</td>
-
-                    <td className="td-actions">
-                            <a href="#" className="btn btn-success btn-product"><span
-                                className="glyphicon btn-success" onClick={this.handleClick.bind(this, d)}></span>Order Prepared</a>
-
+                    <td className="actions" data-th="">
+                        <div className="col-md-8 col-sm-8 col-xs-8">
+                            <button id={itemName} key={itemName} onClick={this.handleClick.bind(this,d)} >Add item</button>
+                        </div>
                     </td>
+
                 </tr>
             )
         })

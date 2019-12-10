@@ -6,6 +6,7 @@ import './DeliveryAgentLoginErrorPage';
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import {connect} from "react-redux";
 
 class App extends Component {
     state = {
@@ -42,6 +43,7 @@ class App extends Component {
                 this.forwardToDeliveryAgentLoginErrorPage();
             }else {
                 this.setState({redirect: true, deliveryAgentLoginOptionSelected: false});
+                this.props.setUser(this.state.deliveryAgentEmail);
                 this.forwardToDeliveryAgentDashboard();
             }
         })
@@ -173,45 +175,7 @@ class App extends Component {
     }
 
     render() {
-        const responseFacebook = (response) => {
-            this.state.facebookUserAccessToken = response.accessToken;
-            this.state.facebookUserId = response.userID;
-            let api = 'https://graph.facebook.com/v2.8/' + this.state.facebookUserId +
-                '?fields=name,email&access_token=' + this.state.facebookUserAccessToken;
-            fetch(api)
-                .then((response) => response.json())
-                .then( (responseData) => {
-                    this.state.facebookUserEmail = responseData.email;
-                    this.state.facebookUserName  = responseData.name;
-                }).then( (res) => {
 
-                fetch('/facebookUserLogin',
-                    {
-                        method: 'POST',
-                        redirect: 'follow',
-                        headers: {
-                            "Content-Type": "application/json",
-                            'Access-Control-Allow-Origin': '*'
-                        },
-                        body: JSON.stringify({
-                            fbUserEmail: this.state.facebookUserEmail,
-                            fbUserID: this.state.facebookUserId,
-                            fbUserAccessToken: this.state.facebookUserAccessToken,
-                            fbUserName: this.state.facebookUserName
-
-                        })
-                    }
-                ).then(res => {
-
-
-                    if (res.status !== 200) {
-                        this.forwardToDeliveryAgentLoginErrorPage();
-                    }else {
-                        this.forwardToDeliveryAgentDashboard();
-                    }
-                })
-            });
-        }
         return( <div className="App">
             <header>
                 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
@@ -459,4 +423,20 @@ class App extends Component {
         </div>);
     }
 }
-export default App;
+
+
+const mapStateToProps = (state)=>{
+    return {
+        deliveryAgentEmail: state.userId
+    }
+}
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUser(evt){
+            dispatch({type: "setUserId", userId: evt});
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
