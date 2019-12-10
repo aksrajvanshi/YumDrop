@@ -24,8 +24,8 @@ class DeliveryAgentMaps extends React.Component {
                 componentDidMount() {
                     const DirectionsService = new google.maps.DirectionsService();
                     DirectionsService.route({
-                        origin: this.props.from,
-                        destination: this.props.to,
+                        origin: '423 E Kirkwood Ave, Bloomington, IN 47408',
+                        destination: '700 N Woodlawn Ave, Bloomington, IN 47408',
                         travelMode: google.maps.TravelMode.DRIVING,
                     }, (result, status) => {
                         if (status === google.maps.DirectionsStatus.OK) {
