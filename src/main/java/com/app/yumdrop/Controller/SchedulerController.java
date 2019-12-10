@@ -25,8 +25,6 @@ public class SchedulerController {
     @Scheduled(fixedRate = 20000)
     public void reportCurrentTime() {
         System.out.println("Time : "+ dateFormat.format(new Date()));
-        System.out.println(" here 3");
         userFutureOrdersController.runScheduler();
-        System.out.println(" here 2");
     }
 }

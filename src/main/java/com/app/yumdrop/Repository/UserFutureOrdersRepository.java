@@ -10,5 +10,9 @@ import java.util.List;
 public interface UserFutureOrdersRepository extends CrudRepository<UserFutureOrders, String> {
 
     List<UserFutureOrders> findByFutureOrder1TimeBetween(Timestamp start, Timestamp end);
+    void removeByOrderId(String id);
+    void delete(UserFutureOrders userFutureOrders);
+    void deleteByOrderId(String id);
+
 
 }
