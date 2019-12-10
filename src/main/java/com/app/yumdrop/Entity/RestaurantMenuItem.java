@@ -27,6 +27,9 @@ public class RestaurantMenuItem {
     @Column(name = "dish_available", nullable = false)
     private boolean dishAvailable;
 
+    @Column(name = "dish_photo_url")
+    private String dishPhotoUrl;
+
     @Override
     public String toString() {
         return "RestaurantMenuItem{" +
@@ -35,6 +38,7 @@ public class RestaurantMenuItem {
                 ", dishDescription='" + dishDescription + '\'' +
                 ", dishPrice=" + dishPrice +
                 ", dishAvailable=" + dishAvailable +
+                ", dishPhotoUrl=" + dishPhotoUrl +
                 '}';
     }
 
@@ -44,6 +48,12 @@ public class RestaurantMenuItem {
     public RestaurantMenuItem(@NotNull String restaurantId, @NotNull String dishName) {
         this.restaurantId = restaurantId;
         this.dishName = dishName;
+    }
+
+    public RestaurantMenuItem(@NotNull String restaurantId, @NotNull String dishName, String dishPhotoUrl) {
+        this.restaurantId = restaurantId;
+        this.dishName = dishName;
+        this.dishPhotoUrl = dishPhotoUrl;
     }
 
     public RestaurantMenuItem(String restaurantId, String dishName, String dishDescription, double dishPrice) {
@@ -59,6 +69,16 @@ public class RestaurantMenuItem {
         this.dishDescription = dishDescription;
         this.dishPrice = dishPrice;
         this.dishAvailable = dishAvailable;
+    }
+
+
+    public RestaurantMenuItem(@NotNull String restaurantId, @NotNull String dishName, String dishDescription, double dishPrice, boolean dishAvailable, String dishPhotoUrl) {
+        this.restaurantId = restaurantId;
+        this.dishName = dishName;
+        this.dishDescription = dishDescription;
+        this.dishPrice = dishPrice;
+        this.dishAvailable = dishAvailable;
+        this.dishPhotoUrl = dishPhotoUrl;
     }
 
     public String getRestaurantId() {
@@ -99,5 +119,13 @@ public class RestaurantMenuItem {
 
     public void setDishAvailable(boolean dishAvailable) {
         this.dishAvailable = dishAvailable;
+    }
+
+    public String isDishPhotoUrl() {
+        return dishPhotoUrl;
+    }
+
+    public void setDishPhotoUrl(String dishPhotoUrl) {
+        this.dishPhotoUrl = dishPhotoUrl;
     }
 }

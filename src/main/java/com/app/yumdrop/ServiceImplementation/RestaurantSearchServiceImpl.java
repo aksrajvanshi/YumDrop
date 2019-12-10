@@ -33,7 +33,7 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
     RestaurantCountPerRatingRepository restaurantCountPerRatingRepository;
 
     @Override
-    public ResponseEntity<?> getRestaurantResultsByLocationFromPublicPage(String userAddress, String restaurantSearchKeyword) {
+    public ResponseEntity<?> getRestaurantResultsByLocationFromPublicPage(String userAddress, String restaurantSearchKeyword, Double minimumRating, int maximumDistance) {
 
         List<Restaurant> searchedRestaurant = restaurantRepository.findByrestaurantName(restaurantSearchKeyword);
         List<RestaurantSearchResults> restaurantResultsWithDetails = new ArrayList<>(searchedRestaurant.size());
@@ -56,13 +56,22 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
             restaurantResultsWithDetails.add(res);
         }
 
-
         restaurantResultsWithDetails.sort(Comparator.comparing(RestaurantSearchResults::getDistanceFromUserInMeters));
-        return new ResponseEntity<>(restaurantResultsWithDetails, HttpStatus.OK);
+        List<RestaurantSearchResults> finalSearchResults = new ArrayList<>();
+        for(int i=0; i < restaurantResultsWithDetails.size(); i++){
+            RestaurantSearchResults restaurantDetail = restaurantResultsWithDetails.get(i);
+            Double restaurantRating = (1.0) * restaurantDetail.getRestaurantRatings().getOverallRating()/restaurantDetail.getRestaurantRatings().getNumberOfUsers();
+            if(restaurantDetail.getDistanceFromUserInMeters() < (maximumDistance * 1600) && restaurantRating > minimumRating){
+                finalSearchResults.add(restaurantDetail);
+            }
+
+        }
+
+        return new ResponseEntity<>(finalSearchResults, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<?> getRestaurantResultsByLocationFromDashboard(String userAddress, String userEmail, String restaurantSearchKeyword) {
+    public ResponseEntity<?> getRestaurantResultsByLocationFromDashboard(String userAddress, String userEmail, String restaurantSearchKeyword, Double minimumRating, int maximumDistance) {
         List<Restaurant> searchedRestaurant = restaurantRepository.findByrestaurantName(restaurantSearchKeyword);
         List<RestaurantSearchResults> restaurantResultsWithDetails = new ArrayList<>(searchedRestaurant.size());
         if (searchedRestaurant.size() == 0) {
@@ -84,7 +93,17 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
             restaurantResultsWithDetails.add(res);
         }
         restaurantResultsWithDetails.sort(Comparator.comparing(RestaurantSearchResults::getDistanceFromUserInMeters));
-        return new ResponseEntity<>(restaurantResultsWithDetails, HttpStatus.OK);
+        List<RestaurantSearchResults> finalSearchResults = new ArrayList<>();
+        for(int i=0; i < restaurantResultsWithDetails.size(); i++){
+            RestaurantSearchResults restaurantDetail = restaurantResultsWithDetails.get(i);
+            Double restaurantRating = (1.0) * restaurantDetail.getRestaurantRatings().getOverallRating()/restaurantDetail.getRestaurantRatings().getNumberOfUsers();
+            if(restaurantDetail.getDistanceFromUserInMeters() < (maximumDistance * 1600) && restaurantRating > minimumRating){
+                finalSearchResults.add(restaurantDetail);
+            }
+
+        }
+
+        return new ResponseEntity<>(finalSearchResults, HttpStatus.OK);
     }
 
     @Override
