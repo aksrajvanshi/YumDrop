@@ -24,3 +24,17 @@
     width: 20%;
     float: right;
 }
+
+#searchResultContainer {
+    background-color: lightgrey;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+#searchResultAddress {
+    float: left;
+}
+
+#searchResultRating {
+    float: right;
+}

@@ -81,7 +81,7 @@ class SearchPage extends Component {
             for (let i=0; i<res.length;i++){
                 x[i] = res[i].restaurantDetails;
             }
-            this.setState({searchResults: x})
+            this.setState({searchResults: res})
         })
     }
 
@@ -217,12 +217,13 @@ class SearchPage extends Component {
                             {this.state.searchResults.map((item, index) => {
                                 return(
                                     <div className="row menu_style1" onClick={() => this.goToDishesView(item)}>
-                                        <div className="col-xl-12 mb-60">
-                                            <div className="single_menu_list" id="containerForRestaurantDisplay" key={index}>
+                                        <div className="col-xl-12 mb-60" >
+                                            <div className="single_menu_list" key={index}>
                                                 <div>
                                                     <div className="menu_content">
-                                                        <h4>{item.restaurantName}</h4>
-                                                        <h5>{item.restaurantAddress}</h5>
+                                                        <h4>{item.restaurantDetails.restaurantName}</h4>
+                                                        <h5 id="searchResultAddress">{item.restaurantDetails.restaurantAddress}</h5>
+                                                        <h5 id="searchResultRating">Rating: {Math.round((item.restaurantRatings.overallRating / item.restaurantRatings.numberOfUsers) * 100) / 100}</h5>
                                                     </div>
                                                 </div>
                                             </div>
