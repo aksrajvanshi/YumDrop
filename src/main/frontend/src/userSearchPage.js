@@ -75,6 +75,11 @@ class userSearchPage extends Component {
         })
     }
 
+    goToDishesView = (evt) => {
+        this.props.setUserSelectedRestaurant(evt);
+        this.props.history.push('/dishesForUserView')
+    }
+
 
     getSearchResults = () => {
         let currentComponent = this;
@@ -182,10 +187,11 @@ class userSearchPage extends Component {
                             </div>
                         </div>
                     </nav>
-                </header>
+                </header>)
                 <div className="form-row" data-wow-delay="0.4s">
                     <div className="col-md-4">
                         <div className="md-form" >
+                            <p>Rating</p>
                             <Slider
                                 defaultValue={1}
                                 value={this.state.ratingFilter}
@@ -197,6 +203,7 @@ class userSearchPage extends Component {
                                 max={5}
                                 valueLabelDisplay="Auto"
                             />
+                            <p>Distance</p>
                             <Slider
                                 defaultValue={5}
                                 value={this.state.distanceFilter}
@@ -230,12 +237,11 @@ class userSearchPage extends Component {
                     </div>
                 </div>
                 <div>
-                    <p>{this.state.ratingFilter}</p>
                     <section className="about-area pt-80">
                         <div className="container">
                             {this.state.searchResults.map((item, index) => {
                                 return(
-                                    <div className="row menu_style1">
+                                    <div className="row menu_style1" onClick={() => this.goToDishesView(item)}>
                                         <div className="col-xl-12 mb-60">
                                             <div className="single_menu_list" id="containerForRestaurantDisplay" key={index}>
                                                 <div>
@@ -276,6 +282,10 @@ const mapDispatchToProps = (dispatch) => {
                 type: "setSearchResults",
                 newSearchResults: evt
             }),
+        setUserSelectedRestaurant: (evt) => dispatch({
+            type: "setUserSelectedRestaurant",
+            newUserSelectedRestaurant: evt.restaurantEmailId
+        }),
         signOut: () => dispatch({type: "signOut"})
     }
 }

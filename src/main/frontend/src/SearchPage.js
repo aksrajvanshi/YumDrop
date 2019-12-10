@@ -105,6 +105,11 @@ class SearchPage extends Component {
         });
     }
 
+    goToDishesView = (evt) => {
+        this.props.setUserSelectedRestaurant(evt);
+        this.props.history.push('/dishesForUserView')
+    }
+
     componentWillMount = () => {
         let currentComponent = this;
         this.getAddress();
@@ -161,7 +166,7 @@ class SearchPage extends Component {
                 <div className="form-row" data-wow-delay="0.4s">
                     <div className="col-md-4">
                         <div className="md-form">
-                            <h1>Rating</h1>
+                            <p>Rating</p>
                             <Slider
                                 defaultValue={1}
                                 value={this.state.ratingFilter}
@@ -173,7 +178,7 @@ class SearchPage extends Component {
                                 max={5}
                                 valueLabelDisplay="Auto"
                             />
-                            <h1>Distance</h1>
+                            <p>Distance</p>
                             <Slider
                                 defaultValue={5}
                                 value={this.state.distanceFilter}
@@ -207,12 +212,11 @@ class SearchPage extends Component {
                     </div>
                 </div>
                 <div>
-                    <p>{this.state.ratingFilter}</p>
                     <section className="about-area pt-80">
                         <div className="container">
                             {this.state.searchResults.map((item, index) => {
                                 return(
-                                    <div className="row menu_style1">
+                                    <div className="row menu_style1" onClick={() => this.goToDishesView(item)}>
                                         <div className="col-xl-12 mb-60">
                                             <div className="single_menu_list" id="containerForRestaurantDisplay" key={index}>
                                                 <div>
@@ -251,6 +255,10 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({
             type: "setSearchResults",
             newSearchResults: evt
+        }),
+        setUserSelectedRestaurant: (evt) => dispatch({
+            type: "setUserSelectedRestaurant",
+            newUserSelectedRestaurant: evt.restaurantEmailId
         }),
         signOut: () => dispatch({type: "signOut"})
     }

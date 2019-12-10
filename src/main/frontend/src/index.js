@@ -42,6 +42,7 @@ import MyCart from "./MyCart";
 import paymentSystemForUsers from "./paymentSystemForUsers";
 import SearchPage from "./SearchPage";
 import userSearchPage from "./userSearchPage";
+import dishesForUserView from "./dishesForUserView";
 
 const initialState = {
     latitude: null,
@@ -117,6 +118,7 @@ const routing = (
                 <Route exact path="/DeliveryAgentLoginErrorPage" component={DeliveryAgentLoginErrorPage}/>
                 <Route exact path="/DeliveryAgentOTPResetPassword" component={DeliveryAgentOTPResetPassword}/>
                 <Route exact path="/userSearchPage" component={userSearchPage} />
+                <Route exact path="/dishesForUserView" component={dishesForUserView} />
             </div>
         </Router>
     </Provider>
