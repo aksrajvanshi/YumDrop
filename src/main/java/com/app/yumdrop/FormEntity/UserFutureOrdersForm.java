@@ -1,10 +1,12 @@
 package com.app.yumdrop.FormEntity;
 
+import java.sql.Timestamp;
+
 public class UserFutureOrdersForm {
 
     public String orderId;
     public String email;
-    public String time1;
+    public Timestamp time1;
     public String restaurantId;
     public String orderContents;
     public double price;
@@ -13,7 +15,7 @@ public class UserFutureOrdersForm {
 
     }
 
-    public UserFutureOrdersForm(String orderId, String email, String time1, String restaurantId, String orderContents, double price) {
+    public UserFutureOrdersForm(String orderId, String email, Timestamp time1, String restaurantId, String orderContents, double price) {
 
         this.orderId = orderId;
         this.email = email;
@@ -51,11 +53,11 @@ public class UserFutureOrdersForm {
         this.email = email;
     }
 
-    public String getTime1() {
+    public Timestamp getTime1() {
         return time1;
     }
 
-    public void setTime1(String time1) {
+    public void setTime1(Timestamp time1) {
         this.time1 = time1;
     }
 

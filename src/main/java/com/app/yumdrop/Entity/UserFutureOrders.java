@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "future_user_orders")
@@ -24,7 +25,7 @@ public class UserFutureOrders extends CreateAndUpdateTimeModel{
 
     @NotNull
     @Column(name = "future_order_1_time", nullable = false)
-    private String futureOrder1Time;
+    private Timestamp futureOrder1Time;
 
 
     @NotNull
@@ -35,6 +36,11 @@ public class UserFutureOrders extends CreateAndUpdateTimeModel{
     @Column(name = "order_1_contents", nullable = false)
     private String order1Contents;
 
+    @Column(name = "updated_time")
+    private String updatedTime;
+
+    @Column(name = "created_time")
+    private String createdTime;
 
     @Column(name = "order_price")
     private double price;
@@ -43,12 +49,14 @@ public class UserFutureOrders extends CreateAndUpdateTimeModel{
     public UserFutureOrders(){
     }
 
-    public UserFutureOrders(@Email(message = "user email should be a valid email") String userEmail, @NotNull String orderId, @NotNull String futureOrder1Time, @NotNull String restaurant1Id, String order1Contents, double price) {
+    public UserFutureOrders(@Email(message = "user email should be a valid email") String userEmail, @NotNull String orderId, @NotNull Timestamp futureOrder1Time, @NotNull String restaurant1Id, String order1Contents, double price) {
         this.userEmail = userEmail;
         this.orderId = orderId;
         this.futureOrder1Time = futureOrder1Time;
         this.restaurant1Id = restaurant1Id;
         this.order1Contents = order1Contents;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
         this.price = price;
     }
 
@@ -60,6 +68,8 @@ public class UserFutureOrders extends CreateAndUpdateTimeModel{
                 ", futureOrder1Time='" + futureOrder1Time + '\'' +
                 ", restaurant1Id='" + restaurant1Id + '\'' +
                 ", order1Contents='" + order1Contents + '\'' +
+                ", updatedTime='" + updatedTime + '\'' +
+                ", createdTime='" + createdTime + '\'' +
                 ", price='" + price + '\'' +
                 '}';
     }
@@ -80,11 +90,11 @@ public class UserFutureOrders extends CreateAndUpdateTimeModel{
         this.userEmail = userEmail;
     }
 
-    public String getFutureOrder1Time() {
+    public Timestamp getFutureOrder1Time() {
         return futureOrder1Time;
     }
 
-    public void setFutureOrder1Time(String futureOrder1Time) {
+    public void setFutureOrder1Time(Timestamp futureOrder1Time) {
         this.futureOrder1Time = futureOrder1Time;
     }
 
@@ -102,6 +112,22 @@ public class UserFutureOrders extends CreateAndUpdateTimeModel{
 
     public void setOrder1Contents(String order1Contents) {
         this.order1Contents = order1Contents;
+    }
+
+    public String getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(String createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public String getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(String updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     public double getPrice() {
