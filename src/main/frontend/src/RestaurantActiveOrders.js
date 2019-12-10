@@ -18,7 +18,7 @@ class RestaurantActiveOrders extends React.Component{
     }
 
     goToChatFeature = () => {
-        this.props.history.push('/chatFeature')
+        this.props.history.push('/chatFeatureForRestaurant')
     }
     componentWillMount() {
         let currentComponent = this;
@@ -66,7 +66,7 @@ class RestaurantActiveOrders extends React.Component{
     }
 
     handleClick(item){
-
+        console.log("Inside handle click")
         fetch('/changeOrderStatusFromRestaurant', {
             method: 'POST',
             headers: {
@@ -131,24 +131,16 @@ class RestaurantActiveOrders extends React.Component{
                 <tr key={itemName}>
 
                     <td>{d.userEmail}</td>
-                    <td>{d.orderId}
-                    </td>
-                    <td>{d.dishNames}</td>
-                    <td>{d.totalPrice}</td>
+                    <td>{d.orderId}</td>
+                    <td>{d.orderContents}</td>
+                    <td>{d.orderPrice}</td>
 
                     <td className="td-actions">
-
-                        <div className="col-md-8 col-sm-8 col-xs-8">
                             <a href="#" className="btn btn-success btn-product"><span
                                 className="glyphicon btn-success" onClick={this.handleClick.bind(this, d)}></span>Order Prepared</a>
-                        </div>
+
                     </td>
                 </tr>
-
-
-
-
-
             )
         })
     return (
@@ -247,6 +239,7 @@ class RestaurantActiveOrders extends React.Component{
                                 <th>Customer Name</th>
                                 <th>Order Id</th>
                                 <th>Dishes</th>
+                                <th>Total Price</th>
                                 <th>Order status</th>
 
                             </tr>

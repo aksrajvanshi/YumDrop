@@ -66,6 +66,10 @@ class MySettingsPage extends Component{
         this.props.history.push('/ActiveOrders')
     }
 
+    forwardTochatWithRestaurant =() => {
+        this.props.history.push('/chatFeature')
+    }
+
     chatWithRestaurantAndDeliveryAgent = () => {
         let currentComponent = this;
         fetch('/chatWithRestaurantAndDeliveryAgent', {
@@ -107,6 +111,7 @@ class MySettingsPage extends Component{
     }
     chatWithRestaurant = () => {
         let currentComponent = this;
+        console.log("Entered chat with restuarnat")
         fetch('/chatWithRestaurantOnly', {
             method: 'POST',
             headers: {
@@ -118,7 +123,8 @@ class MySettingsPage extends Component{
             }),
         }).then(res => {
             if (res.status === 200){
-                this.chatWithRestaurant();
+                console.log("inside this")
+                this.forwardTochatWithRestaurant();
             }
             else{
                 console.log("Cant Chat")

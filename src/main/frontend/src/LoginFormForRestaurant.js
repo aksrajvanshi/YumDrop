@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { VERIFY_USER } from './Events'
 import {Modal} from "react-bootstrap";
+import {connect} from "react-redux";
 
-export default class LoginForm extends Component {
+ class LoginFormForRestaurant extends Component {
     constructor(props) {
         super(props);
 
@@ -25,6 +26,9 @@ export default class LoginForm extends Component {
 
     handleSubmit = (e)=>{
         e.preventDefault()
+        this.setState({
+            chatForm:false
+        })
         const { socket } = this.props
         const { nickname } = this.state
         socket.emit(VERIFY_USER, nickname, this.setUser)
@@ -55,13 +59,13 @@ export default class LoginForm extends Component {
                                 <div className="main">
                                     <div className="login-form">
                                         <form nSubmit={this.handleSubmit} >
-                                            <h2 className="text-center">Please re-enter your email ID</h2>
+                                            <h2 className="text-center">Do you want to continue to provide chat support to customer?</h2>
                                             <div className="form-group">
                                                 <input ref={(input)=>{ this.textInput = input }}
                                                        type="text"
                                                        value={nickname}
                                                        onChange={this.handleChange}
-                                                       placeholder={this.state.nickname}
+                                                       placeholder={this.props.restaurantId}
                                                 />
                                             </div>
 
@@ -87,3 +91,16 @@ export default class LoginForm extends Component {
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        restaurantId: state.userId,
+    }
+};
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps) (LoginFormForRestaurant)

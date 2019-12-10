@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import LayoutForRestaurant from "./LayoutForRestaurant";
 import './index.css';
+import {connect} from "react-redux";
 
-class ChatFeature extends Component {
+class chatFeatureForRestaurant extends Component {
     render() {
         return (
             <div>
@@ -12,5 +13,16 @@ class ChatFeature extends Component {
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        restaurantId: state.userId,
+    }
+};
 
-export default  (ChatFeature);
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps) (chatFeatureForRestaurant);

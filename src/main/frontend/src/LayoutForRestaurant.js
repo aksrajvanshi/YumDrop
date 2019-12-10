@@ -3,10 +3,11 @@ import io from 'socket.io-client'
 import { USER_CONNECTED, LOGOUT } from './Events'
 import LoginFormForRestaurant from './LoginFormForRestaurant'
 import ChatContainer from './components/chats/ChatContainer'
+import {connect} from "react-redux";
 
 const socketUrl = "http://localhost:3231"
 
-export default class Layout extends Component {
+ class LayoutForRestaurant extends Component {
 
     constructor(props) {
         super(props);
@@ -63,3 +64,16 @@ export default class Layout extends Component {
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        restaurantId: state.userId,
+    }
+};
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps) (LayoutForRestaurant);

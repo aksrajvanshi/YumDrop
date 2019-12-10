@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { VERIFY_USER } from '../Events'
 import {Modal} from "react-bootstrap";
+import {connect} from "react-redux";
 
-export default class LoginForm extends Component {
+class LoginForm extends Component {
 	constructor(props) {
 	  super(props);
 	
@@ -55,19 +56,22 @@ export default class LoginForm extends Component {
 								<div className="main">
 									<div className="login-form">
 										<form nSubmit={this.handleSubmit} >
-											<h2 className="text-center">Please re-enter your email ID</h2>
-											<div className="form-group">
+											<h2 className="text-center">Do you want to start a chat></h2>
+											<h3>Please confirm</h3>
+
+											<h4></h4>
+							 					<div className="form-group">
 												<input ref={(input)=>{ this.textInput = input }}
 													   type="text"
 													   value={nickname}
 													   onChange={this.handleChange}
-													   placeholder="Maithreyi"
+													   placeholder={this.props.userEmailId}
 													/>
 											</div>
 
 											<div className="form-group">
 												<button onSubmit={this.handleSubmit}  type="submit"
-														className="btn btn-primary btn-lg btn-block login-btn">Verify
+														className="btn btn-primary btn-lg btn-block login-btn">Confirm
 												</button>
 											</div>
 										</form>
@@ -87,3 +91,17 @@ export default class LoginForm extends Component {
 		);
 	}
 }
+const mapStateToProps = (state)=>{
+	return {
+		userEmailId: state.userId
+	}
+}
+
+const mapDispatchToProps = (dispatch)=> {
+	return {
+		setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+		signOut: () => dispatch({type: "signOut"})
+	}
+}
+
+export default  connect(mapStateToProps, mapDispatchToProps) (LoginForm)
