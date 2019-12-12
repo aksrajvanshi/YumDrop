@@ -168,7 +168,7 @@ class MySettingsPage extends Component{
                 <tr>
                     <td data-th="Product" key={itemName}>
                         <div className="row">
-                            <div className="col-sm-2 hidden-xs"><img src="https://cdn1.iconfinder.com/data/icons/dishes-glyph/128/yumminky-yumminky-cooking-dishes-44-512.png" alt="..."
+                            <div className="col-sm-2 hidden-xs"><img src="https://www.palmbeachillustrated.com/wp-content/uploads/sites/78/2019/08/Indianspread.jpg" alt="..."
                                                                      className="img-responsive"/></div>
 
                         </div>

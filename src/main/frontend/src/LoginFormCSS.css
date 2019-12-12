@@ -67,6 +67,10 @@
 
 }
 
+#searchBar{
+    padding-left: 125px;
+}
+
 #exampleFormControlSelect1{
     height: 34px;
 }
