@@ -47,9 +47,9 @@
     "socket.io-client": "latest"
   },
   "scripts": {
-    "start": "concurrently 'npm run react' 'npm run server'",
-    "react": "react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build && nohup run react server &",
+    "react": "react-scripts start",
     "server": "nodemon src/server/index.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
