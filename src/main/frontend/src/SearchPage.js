@@ -7,6 +7,7 @@ import Geocode from "react-geocode";
 import {makeStyles} from '@material-ui/core/styles'
 import "bootstrap/dist/css/bootstrap.min.css";
 import './LoginDashBoardCSS.css';
+import StarRatingComponent from 'react-star-rating-component';
 
 
 class SearchPage extends Component {
@@ -117,6 +118,29 @@ class SearchPage extends Component {
 
     render() {
 
+        const mapToSearchResults =  this.state.searchResults.map((item, index) => {
+                return(
+                    <div className="row" onClick={() => this.goToDishesView(item)}>
+                        <div className="col-md-6 how-img">
+                            <img src="https://previews.123rf.com/images/juliasart/juliasart1708/juliasart170800074/83585916-colorful-cafe-isometric-restaurant-building-cartoon-vector-icon-flat-isometric-design-.jpg"
+                                 className="rounded-circle img-fluid" alt=""/>
+                        </div>
+                        <div className="col-md-6">
+                            <h4 >{item.restaurantDetails.restaurantName}</h4>
+                            <h4 className="subheading">{item.restaurantDetails.restaurantAddress}</h4>
+                            <h4> <StarRatingComponent
+                                name="rate your food"
+                                starCount={5}
+                                value={Math.round((item.restaurantRatings.overallRating / item.restaurantRatings.numberOfUsers) * 100) / 100}
+                            /></h4>
+
+                        </div>
+                    </div>
+
+
+                )}
+            )
+
         if (this.props.accountType === "user") {
             this.props.history.push("/LoginDashboard");
         }
@@ -126,6 +150,11 @@ class SearchPage extends Component {
 
         return (
             <div>
+                <head>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+                </head>
                 <header>
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
                           id="bootstrap-css"/>
@@ -163,36 +192,10 @@ class SearchPage extends Component {
                         </div>
                     </nav>
                 </header>
+
                 <div className="form-row" data-wow-delay="0.4s">
-                    <div className="col-md-4">
-                        <div className="md-form">
-                            <p>Rating</p>
-                            <Slider
-                                defaultValue={1}
-                                value={this.state.ratingFilter}
-                                onChange={this.handleRatingFilterChange}
-                                aria-labelledby="discrete-slider"
-                                step={1}
-                                marks
-                                min={1}
-                                max={5}
-                                valueLabelDisplay="Auto"
-                            />
-                            <p>Distance</p>
-                            <Slider
-                                defaultValue={5}
-                                value={this.state.distanceFilter}
-                                onChange={this.handleDistanceFilterChange}
-                                aria-labelledby="discrete-slider"
-                                step={1}
-                                marks
-                                min={1}
-                                max={5}
-                                valueLabelDisplay="Auto"
-                                />
-                        </div>
-                    </div>
-                    <div className="col-md-4">
+
+                    <div className="col-md-4 " id="searchBar">
                         <div className="md-form">
                             <AutoComplete
                                 freeSolo
@@ -211,29 +214,67 @@ class SearchPage extends Component {
                         </div>
                     </div>
                 </div>
-                <div>
-                    <section className="about-area pt-80">
-                        <div className="container">
-                            {this.state.searchResults.map((item, index) => {
-                                return(
-                                    <div className="row menu_style1" onClick={() => this.goToDishesView(item)}>
-                                        <div className="col-xl-12 mb-60" >
-                                            <div className="single_menu_list" key={index}>
-                                                <div>
-                                                    <div className="menu_content">
-                                                        <h4>{item.restaurantDetails.restaurantName}</h4>
-                                                        <h5 id="searchResultAddress">{item.restaurantDetails.restaurantAddress}</h5>
-                                                        <h5 id="searchResultRating">Rating: {Math.round((item.restaurantRatings.overallRating / item.restaurantRatings.numberOfUsers) * 100) / 100}</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                <div className="container">
+
+                    <div className="row grid-divider">
+                        <div className="col-xl-5">
+                            <div className="col-padding">
+                                <h3>Filters</h3>
+                                <div className="col-xl-5">
+                                    <div className="md-form">
+                                        <p>Rating</p>
+                                        <Slider
+                                            defaultValue={1}
+                                            value={this.state.ratingFilter}
+                                            onChange={this.handleRatingFilterChange}
+                                            aria-labelledby="discrete-slider"
+                                            step={1}
+                                            marks
+                                            min={1}
+                                            max={5}
+                                            valueLabelDisplay="Auto"
+                                        />
+                                        <p>Distance</p>
+                                        <Slider
+                                            defaultValue={5}
+                                            value={this.state.distanceFilter}
+                                            onChange={this.handleDistanceFilterChange}
+                                            aria-labelledby="discrete-slider"
+                                            step={1}
+                                            marks
+                                            min={1}
+                                            max={5}
+                                            valueLabelDisplay="Auto"
+                                        />
                                     </div>
-                                )}
-                            )}
+                                </div>
+                            </div>
                         </div>
-                    </section>
+                        <div className="col-xl-5">
+
+                                <h3>Search Results</h3>
+                                <div className="how-section1">
+
+                                    {mapToSearchResults}
+
+                                </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
+
+
+
+
+
+
+
+
+
+
+
             </div>
         )
     }
