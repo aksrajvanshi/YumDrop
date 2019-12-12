@@ -171,11 +171,6 @@ class RestaurantActiveOrders extends React.Component{
                                 >Home</a>
 
                                 </li>
-
-                                <li className="upper-links"><a className="links text-white" onClick={this.goToRestaurantSettingsPage}
-                                >My Settings</a>
-
-                                </li>
                                 <li>
                                     <a className="nav-link" onClick={this.signOut}>Sign Out</a>
                                 </li>
@@ -204,14 +199,14 @@ class RestaurantActiveOrders extends React.Component{
                             <nav className="list-group list-group-flush">
                                 <a className="list-group-item" href="#">
 
-                                </a><a className="list-group-item active" href="#"><i
+                                </a><a className="list-group-item " href="#"><i
                                 className="fe-icon-user text-muted"></i>Restaurant Profile Settings</a>
                                 <a
                                     className="list-group-item" href="#" onClick={this.forwardToAddressPage}><i className="fe-icon-map-pin text-muted"></i>Address</a>
                                 <a
                                     className="list-group-item" href="#" onClick={this.forwardToResetpassword}><i className="fe-icon-map-pin text-muted"></i>Reset Password</a>
                                 <a
-                                    className="list-group-item" href="#" onClick={this.forwardToActiveOrders}><i className="fe-icon-map-pin text-muted"></i>Active Orders</a>
+                                    className="list-group-item active" href="#" onClick={this.forwardToActiveOrders}><i className="fe-icon-map-pin text-muted"></i>Active Orders</a>
 
                             </nav>
                         </div>
