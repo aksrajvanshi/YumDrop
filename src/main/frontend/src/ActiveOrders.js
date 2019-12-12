@@ -221,13 +221,8 @@ class MySettingsPage extends Component{
                                         <a className="nav-link"><i
                                             className="fa fa-fw fa-user" onClick={this.goBackToLoginDashboard}/>Home</a>
                                     </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link"><i
-                                            className="fa fa-fw fa-user"/>Cart</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link"   onClick={this.settingsPage} ><span>Settings</span></a>
-                                    </li>
+
+
                                     <li>
                                         <a className="nav-link" onClick={this.signOut}> Sign Out </a>
                                     </li>
@@ -280,13 +275,13 @@ class MySettingsPage extends Component{
                                             </div>
                                         </div>
                                     </a>
-                                    <a className="list-group-item active" href="#" onClick={this.chatWithRestaurant}>
+                                    <a className="list-group-item " href="#" onClick={this.chatWithRestaurant}>
                                         <i className="fe-icon-map-pin text-muted"></i>chat with restaurant
                                     </a>
-                                    <a className="list-group-item active" href="#" onClick={this.chatWithDeliveryAgent}>
+                                    <a className="list-group-item " href="#" onClick={this.chatWithDeliveryAgent}>
                                         <i className="fe-icon-map-pin text-muted"></i>chat with delivery agent
                                     </a>
-                                    <a className="list-group-item active" href="#" onClick={this.chatWithRestaurantAndDeliveryAgent}>
+                                    <a className="list-group-item " href="#" onClick={this.chatWithRestaurantAndDeliveryAgent}>
                                         <i className="fe-icon-map-pin text-muted"></i>Group chat
                                     </a>
                                 </nav>

@@ -130,14 +130,14 @@ public class RegistrationController {
 
                 "        \"averagePrice\": \"15$\",\n" +
                 "        \"restaurantId\": \"IndianPalace\",\n" +
-                "        \"restaurantAddress\": \"Near main road, Bloomington, Indiana\",\n" +
+                "        \"restaurantAddress\": \"4506 E 3rd St, Bloomington, IN 47401\",\n" +
                 "        \"restaurantImageURL\": \"https://assets3.thrillist.com/v1/image/2793388/size/gn-gift_guide_variable_c.jpg\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "        \"restaurantName\": \"Qdoba\",\n" +
                 "        \"restaurantId\": \"Qdoba\",\n" +
                 "        \"averagePrice\": \"8$\",\n" +
-                "        \"restaurantAddress\": \"Kirkwood, Bloomington, Indiana\",\n" +
+                "        \"restaurantAddress\": \"116 S Indiana Ave Suite 200, Bloomington, IN 47401\",\n" +
                 "        \"restaurantImageURL\": \"https://cdn.vox-cdn.com/thumbor/zBEzySds-coOKCa7Ymm2H56gr6A=/0x0:3500x2336/1200x800/filters:focal(1470x888:2030x1448)/cdn.vox-cdn.com/uploads/chorus_image/image/58037473/L_Omaha-1-2.0.0.jpg\"\n" +
                 "    },\n" +
                 "    {\n" +

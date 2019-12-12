@@ -220,6 +220,8 @@ class RestaurantDashboard extends Component{
                             <tfoot>
                             <td></td>
                             <td></td>
+                            <td></td>
+                            <td></td>
                            <td> <a
                                 className="btn btn-success btn-block" onClick={this.forwardToAddingAnItem}>Add item <i className="fa fa-angle-right"></i></a>
                            </td>
