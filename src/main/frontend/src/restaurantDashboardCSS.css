@@ -9,7 +9,11 @@
 
 
 #Table-For-Restaurant{
-    padding-left: 200px
+    padding-left: 30px
+}
+
+#tableFprRestaraurant{
+    width: 1000px;
 }
 
 .table {

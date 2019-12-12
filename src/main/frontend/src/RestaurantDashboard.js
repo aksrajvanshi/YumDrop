@@ -37,7 +37,7 @@ class RestaurantDashboard extends Component{
                 'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({
-                restaurantId: this.props.restaurantId,})})
+                restaurantId: this.props.restaurantId})})
             .then(res => {
                 console.log(res)
                 return res.json()
@@ -197,21 +197,21 @@ class RestaurantDashboard extends Component{
 
 <div className="container" id="Table-For-Restaurant">
                 <div className="span7" id="Table-For-Restaurant">
-                    <div className="widget stacked widget-table action-table">
-                        <div className="widget-header">
+                    <div className="widget stacked widget-table action-table" id="tableFprRestaraurant">
+                        <div className="widget-header" >
                             <i className="icon-th-list"></i>
                             <h3>Dishes</h3>
                         </div>
                         <div className="widget-content">
 
-                            <table className="table table-striped table-bordered">
+                            <table className="table table-striped table-bordered" id="tableFprRestaraurant">
                                 <thead>
                                 <tr>
                                     <th>Dish Image</th>
                                     <th>Dish Name</th>
                                     <th>Dish Description</th>
                                     <th>Dish Price</th>
-                                    <th className="td-actions"></th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
