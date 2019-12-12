@@ -25,7 +25,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && nohup run react server &",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
