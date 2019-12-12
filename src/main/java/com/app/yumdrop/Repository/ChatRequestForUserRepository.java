@@ -7,4 +7,8 @@ public interface ChatRequestForUserRepository extends CrudRepository<ChatRequest
 
     @Override
     void delete(ChatRequestForUser entity);
+
+    ChatRequestForUser findByrestaurantId(String restaurantId);
+
+    ChatRequestForUser findBydeliveryAgentEmailId(String deliveryAgentEmailId);
 }

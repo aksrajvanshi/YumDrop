@@ -121,7 +121,7 @@ public class RestaurantMenuItem {
         this.dishAvailable = dishAvailable;
     }
 
-    public String isDishPhotoUrl() {
+    public String getDishPhotoUrl() {
         return dishPhotoUrl;
     }
 

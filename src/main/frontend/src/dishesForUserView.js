@@ -44,7 +44,7 @@ class dishesForUserView extends React.Component{
                     'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify({
-                    restaurantId: "abc12",})})
+                    restaurantId: this.props.restaurantId,})})
                 .then(res => {
                     console.log(res)
                     return res.json()
@@ -122,7 +122,7 @@ class dishesForUserView extends React.Component{
                 <tr>
                     <td data-th="Product" key={itemName}>
                         <div className="row">
-                            <div className="col-sm-2 hidden-xs"><img src="https://data.tibettravel.org/assets/images/Tibet-bhutan-tour/indian-food-in-Lhasa.jpg" alt="..."
+                            <div className="col-sm-2 hidden-xs"><img src={d.dishPhotoUrl} alt="..."
                                                                     height="50px" width="50px" className="img-responsive"/></div>
 
                         </div>
@@ -208,15 +208,6 @@ class dishesForUserView extends React.Component{
                             </div>
                             <div className="wizard">
                                 <nav className="list-group list-group-flush">
-                                    <a className="list-group-item" href="#">
-                                        <div className="d-flex justify-content-between align-items-center">
-                                            <div><i className="fe-icon-shopping-bag mr-1 text-muted"></i>
-                                                <div className="d-inline-block font-weight-medium text-uppercase">{this.state.restaurantName}
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </a>
                                     <a className="list-group-item" href="#" onClick={this.settingsPage}>
                                         <i className="fe-icon-user text-muted"></i>{this.props.restaurantId}
                                     </a>

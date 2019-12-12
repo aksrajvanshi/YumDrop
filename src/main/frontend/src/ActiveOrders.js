@@ -7,7 +7,8 @@ import {Modal} from "react-bootstrap";
 
 const mapStateToProps = (state)=>{
     return {
-        userEmailId: state.userId
+        userEmailId: state.userId,
+        restaurantId: state.userSelectedRestaurant
     }
 }
 
@@ -78,7 +79,8 @@ class MySettingsPage extends Component{
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: "maithreyi.prabhu95@gmail.com"
+                userEmail: "maithreyi.prabhu95@gmail.com",
+                restaurantId: this.props.restaurantId
             }),
         }).then(res => {
             if (res.status === 200){
@@ -98,7 +100,7 @@ class MySettingsPage extends Component{
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: "maithreyi.prabhu95@gmail.com"
+                userEmail: "maithreyi.prabhu95@gmail.com",
             }),
         }).then(res => {
             if (res.status === 200){
@@ -111,6 +113,8 @@ class MySettingsPage extends Component{
     }
     chatWithRestaurant = () => {
         let currentComponent = this;
+        console.log("this is inside chat")
+        console.log(this.props.restaurantId)
         console.log("Entered chat with restuarnat")
         fetch('/chatWithRestaurantOnly', {
             method: 'POST',
@@ -119,7 +123,8 @@ class MySettingsPage extends Component{
             },
             body:JSON.stringify({
                 userEmail: "maithreyi.prabhu95@gmail.com",
-                restaurantId: "abc12"
+                restaurantId: this.props.restaurantId,
+                deliveryAgent: 0
             }),
         }).then(res => {
             if (res.status === 200){
@@ -274,13 +279,13 @@ class MySettingsPage extends Component{
                                             </div>
                                         </div>
                                     </a>
-                                    <a className="list-group-item " href="#" onClick={this.chatWithRestaurant}>
+                                    <a className="list-group-item " href="#" onClick={this.goToChatFeature}>
                                         <i className="fe-icon-map-pin text-muted"></i>chat with restaurant
                                     </a>
-                                    <a className="list-group-item " href="#" onClick={this.chatWithDeliveryAgent}>
+                                    <a className="list-group-item " href="#" onClick={this.goToChatFeature}>
                                         <i className="fe-icon-map-pin text-muted"></i>chat with delivery agent
                                     </a>
-                                    <a className="list-group-item " href="#" onClick={this.chatWithRestaurantAndDeliveryAgent}>
+                                    <a className="list-group-item " href="#" onClick={this.goToChatFeature}>
                                         <i className="fe-icon-map-pin text-muted"></i>Group chat
                                     </a>
                                 </nav>

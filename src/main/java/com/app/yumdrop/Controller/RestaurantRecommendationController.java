@@ -15,9 +15,5 @@ public class RestaurantRecommendationController {
     @Autowired
     RestaurantRecommendationService restaurantRecommendationService;
 
-    @RequestMapping(value = "/getAllReccommendedRestaurants", method = RequestMethod.POST)
-    public ResponseEntity<?> getRestaurantRecommendations(@RequestBody Users user) {
-        return restaurantRecommendationService.getRecommendedRestaurants(user.getUserEmail());
-    }
 
 }

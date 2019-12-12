@@ -6,19 +6,7 @@ import {Modal} from "react-bootstrap";
 import './DeliveryAgentMaps';
 
 
-const mapStateToProps = (state)=>{
-    return {
-        deliveryAgentEmailId: state.userId
-    }
-};
 
-
-const mapDispatchToProps = (dispatch)=> {
-    return {
-        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
-
-    }
-}
 
 class DeliveryAgentDashboard extends Component{
 
@@ -32,8 +20,53 @@ class DeliveryAgentDashboard extends Component{
         userAddress: "",
         noOrders: false,
         chatRequest: false,
-        ActiveOrder: false
+        ActiveOrder: false,
+        activeOrdersForRestaurantDisplay: []
     }
+
+    closeAllOptionsOfSelectionForm = () => {
+        this.setState({
+            chatRequest: false,
+            ActiveOrder: false,
+            noOrders: false
+        })
+    }
+
+
+    fetchAddresses = () => { debugger;
+        fetch('/getActiveDeliveryOrderForDeliveryAgent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                deliveryAgentEmail : "mkammili@iu.edu"
+            }),
+        }).then(res => {
+            console.log(res)
+            return res.json();
+
+            console.log(res)
+        }).then( data => {
+            console.log(data)
+            this.setState({from: data[0].restaurantAddress, to: data[0].userAddress, restaurant: data[0].restaurantName})
+        })
+    }
+
+    handleFromAddressChange = (event) => {
+        this.setState({
+            from: event.target.value,
+        });
+    };
+
+    handleToAddressChange = (event) => {
+        this.setState({
+            to: event.target.value,
+        });
+    };
+
+
+
     componentWillMount() {
         let currentComponent = this;
 
@@ -50,44 +83,25 @@ class DeliveryAgentDashboard extends Component{
             .then(res => {
                 if (res.status !== 200){
                     this.setState({
-                        noOrders: true
+                        errorSelect: true
                     })
                 }
-                return res.json()
-            }).then(res => {
-            let x = JSON.stringify(res)
-            return x;
-        }).then(res => {
+                return res.json();
+            }).then(response => {
+            console.log("Entereed")
+
             currentComponent.setState({
-                restaurantName: res.restaurantName,
-                restaurantAddress: res.restaurantAddress,
-                userName: res.userName,
-                userAddress: res.userAddress,
+                activeOrderForUserDisplay: response,
                 ActiveOrder: true
-            })
-        }).then(res=>{
-            fetch('/checkForChatReuqestForDeliveryAgentFromUser',{
-                method: 'POST',
-                redirect: 'follow',
-                headers: {
-                    "Content-Type": "application/json",
-                    'Access-Control-Allow-Origin': '*'
-                },
-                body: JSON.stringify({
-                    deliveryAgentEmailId: "mkammili@iu.edu"
-                })})
-                .then(res => {
-                    if (res.status === 200){
-                        this.setState({
-                            chatRequest: true
-                        })
-                    }
-                    return res.json()
-                })
-        })
+            })})
     }
 
- forwardToChatFeature = () => {
+    handleForwardChat(){
+        this.forwardToChatFeature()
+    }
+
+
+    forwardToChatFeature = () => {
         this.props.history.push('/chatFeature')
  }
 
@@ -102,10 +116,37 @@ class DeliveryAgentDashboard extends Component{
     forwardToLogiDashboard = () => {
         this.props.history.push("/DeliveryAgentDashboard");
     }
+
+    goToPublicPage = () => {
+        this.props.history.push('/')
+    }
+
     render() {
         if(this.props.restaurantId === null) {
             this.props.history.push('/')
         }
+
+        let mapactiveOrdersForRestaurantDisplay = this.state.activeOrdersForRestaurantDisplay.map((d,itemName)=>
+        {
+            return(
+
+                <tr key={itemName}>
+
+
+                    <td>{d.orderId}</td>
+                    <td>{d.restaurantName}</td>
+                    <td>{d.userName}</td>
+                    <td>{d.restaurantAddress}</td>
+                    <td>{d.userAddress}</td>
+                    <td><button className="btn btn-outline-success" onClick={this.handleForwardChat(this,d)}>Chat with customer</button></td>
+
+                </tr>
+            )
+        })
+
+
+
+
         return(
             <div>
                 <header>
@@ -135,7 +176,7 @@ class DeliveryAgentDashboard extends Component{
                                             className="fa fa-fw fa-user"></i>Settings</a>
                                     </li>
                                     <li>
-                                        <a className="nav-link" onClick={this.signOut}>Logout</a>
+                                        <a className="nav-link" onClick={this.goToPublicPage}>Logout</a>
                                     </li>
                                 </ul>
                             </div>
@@ -168,42 +209,21 @@ class DeliveryAgentDashboard extends Component{
                                     <table className="table table-striped">
                                         <thead>
                                         <tr>
-                                            <th>Item Name</th>
-                                            <th>Item Description</th>
-                                            <th className="text-center">Cost</th>
-                                            <th className="text-center">Availablity</th>
-                                            <th className="text-center">Edit item</th>
-                                            <th className="text-center">Delete item</th>
+                                            <th>Order Id</th>
+                                            <th>Restaurant Name</th>
+                                            <th className="text-center">Restaurant Address</th>
+                                            <th className="text-center">User Address</th>
+                                            <th className="text-center">Navigate</th>
+
                                         </tr>
                                         </thead>
                                         <tbody>
 
+                                        {mapactiveOrdersForRestaurantDisplay}
 
-                                        {this.state.data.map(function(d,itemName,itemDescription,itemCost,itemAvailability){
-                                            return (
-                                                <tr>
-                                                    <td className="col-md-6">
-                                                        <h4><a href="#" key={itemName}>{d.itemName}</a></h4>
-
-                                                    </td>
-                                                    <td className="col-md-5"><h5>{d.itemDescription}</h5>
-                                                    </td>
-                                                    <td className="col-md-4 text-center"><strong>{d.itemCost}</strong></td>
-                                                    <td className="col-md-4 text-center"><strong>{d.itemAvailability}</strong></td>
-                                                    <td className="col-md-8">
-                                                        <button className="edit btn btn-success" title="Edit" data-toggle="tooltip"><i
-                                                            className="material-icons"></i></button>
-                                                    </td>
-                                                    <td className="col-md-8">
-                                                        <button className="delete btn btn-danger" title="Delete" data-toggle="tooltip"><i
-                                                            className="material-icons"></i></button>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })}
                                         <br/><br/>
                                         <div className="col-md-12 offset-12">
-                                            <button className="btn btn-success" onClick={this.forwardToAddingAnItem}>Add an item</button>
+                                            <button className="btn btn-success" onClick={this.forwardToDeliveryAgentMaps}>Start Navigation</button>
 
                                         </div>
                                         </tbody>
@@ -227,7 +247,7 @@ class DeliveryAgentDashboard extends Component{
                                     <form>
                                         <h2 className="text-center">A new Order has been assigned to you</h2>
                                         <div className="form-group">
-                                            <button onClick={this.signOut} type="submit"
+                                            <button onClick={this.forwardToDeliveryAgentMaps} type="submit"
                                                     className="btn btn-primary btn-lg btn-block login-btn">Please start navigation
                                             </button>
                                         </div>
@@ -245,6 +265,7 @@ class DeliveryAgentDashboard extends Component{
                     show={this.state.noOrders}
                     animation={false}
                     id="modal"
+                    onHide={this.closeAllOptionsOfSelectionForm}
                 >
                     <div className="container">
                         <div className="row">
@@ -270,6 +291,7 @@ class DeliveryAgentDashboard extends Component{
                     show={this.state.chatRequest}
                     animation={false}
                     id="modal"
+                    onHide={this.closeAllOptionsOfSelectionForm}
                 >
                     <div className="container">
                         <div className="row">

@@ -49,7 +49,7 @@ public class FoodOrderServiceImpl implements FoodOrderService {
         UserOrderId userOrderId = new UserOrderId(userOrderDetails.getUserEmail(), userOrderDetails.getRestaurantId());
         Long orderId = userOrderRepository.getNextSeriesId();
         UserOrder userOrderToPlace = new UserOrder
-                (userOrderId, userOrderDetails.getOrderStatus(), finalOrderContents, orderId, orderPrice);
+                (userOrderId, 1, finalOrderContents, orderId, orderPrice);
         UserOrder savedUserOrder = userOrderRepository.save(userOrderToPlace);
         userCartRepository.deleteByuserEmail(userOrderDetails.getUserEmail());
 

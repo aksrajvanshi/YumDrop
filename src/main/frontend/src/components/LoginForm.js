@@ -57,7 +57,7 @@ class LoginForm extends Component {
 									<div className="login-form">
 										<form nSubmit={this.handleSubmit} >
 											<h2 className="text-center">Do you want to start a chat></h2>
-											<h3>Please confirm</h3>
+											<h2>Please confirm</h2>
 
 											<h4></h4>
 							 					<div className="form-group">

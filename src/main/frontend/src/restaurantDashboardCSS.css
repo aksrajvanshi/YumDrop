@@ -7,6 +7,15 @@
     border-radius: 4px;
 }
 
+
+#Table-For-Restaurant{
+    padding-left: 30px
+}
+
+#tableFprRestaraurant{
+    width: 1000px;
+}
+
 .table {
     width: 100%;
     margin-bottom: 20px;
