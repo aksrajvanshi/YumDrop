@@ -48,7 +48,7 @@
     "validator": "^11.1.0"
   },
   "scripts": {
-    "build": "react-scripts build && nohup npm run server &",
+    "build": "react-scripts build",
     "start": "react-scripts start",
     "react": "react-scripts start",
     "server": "nodemon src/server/index.js",
