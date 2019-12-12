@@ -27,7 +27,7 @@ class dishesForUserView extends React.Component{
                 'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({
-                restaurantId: "abc12",})})
+                restaurantId: this.props.restaurantId,})})
             .then(res => {
                 console.log(res)
                 return res.json()

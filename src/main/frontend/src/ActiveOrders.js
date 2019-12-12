@@ -3,7 +3,6 @@ import './MySettingsPage.css';
 import {connect} from "react-redux";
 import './LoginDashBoardCSS.css';
 import {Modal} from "react-bootstrap";
-import StarRatingComponent from "react-star-rating-component";
 
 
 const mapStateToProps = (state)=>{
