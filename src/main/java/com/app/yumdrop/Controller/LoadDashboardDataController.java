@@ -48,6 +48,7 @@ public class LoadDashboardDataController {
     public ResponseEntity<?> loadDishDataForRestaurant(@RequestBody Restaurant restaurantData) {
 
         List<RestaurantMenuItem> restaurantDishDataForDashboard = restaurantMenuItemRepository.findByrestaurantId(restaurantData.getRestaurantId());
+
         return new ResponseEntity<>(restaurantDishDataForDashboard, HttpStatus.OK);
     }
 

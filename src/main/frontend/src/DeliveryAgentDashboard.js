@@ -6,19 +6,7 @@ import {Modal} from "react-bootstrap";
 import './DeliveryAgentMaps';
 
 
-const mapStateToProps = (state)=>{
-    return {
-        deliveryAgentEmailId: state.userId
-    }
-};
 
-
-const mapDispatchToProps = (dispatch)=> {
-    return {
-        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
-
-    }
-}
 
 class DeliveryAgentDashboard extends Component{
 
@@ -34,6 +22,41 @@ class DeliveryAgentDashboard extends Component{
         chatRequest: false,
         ActiveOrder: false
     }
+
+    fetchAddresses = () => { debugger;
+        fetch('/getActiveDeliveryOrderForDeliveryAgent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                deliveryAgentEmail : "mkammili@iu.edu"
+            }),
+        }).then(res => {
+            console.log(res)
+            return res.json();
+
+            console.log(res)
+        }).then( data => {
+            console.log(data)
+            this.setState({from: data[0].restaurantAddress, to: data[0].userAddress, restaurant: data[0].restaurantName})
+        })
+    }
+
+    handleFromAddressChange = (event) => {
+        this.setState({
+            from: event.target.value,
+        });
+    };
+
+    handleToAddressChange = (event) => {
+        this.setState({
+            to: event.target.value,
+        });
+    };
+
+
+
     componentWillMount() {
         let currentComponent = this;
 
@@ -48,6 +71,7 @@ class DeliveryAgentDashboard extends Component{
                 deliveryAgentEmailId: "mkammili@iu.edu"
             })})
             .then(res => {
+                console.log(res)
                 if (res.status !== 200){
                     this.setState({
                         noOrders: true
@@ -55,9 +79,11 @@ class DeliveryAgentDashboard extends Component{
                 }
                 return res.json()
             }).then(res => {
+                console.log(res)
             let x = JSON.stringify(res)
             return x;
         }).then(res => {
+            console.log(res)
             currentComponent.setState({
                 restaurantName: res.restaurantName,
                 restaurantAddress: res.restaurantAddress,
@@ -66,6 +92,7 @@ class DeliveryAgentDashboard extends Component{
                 ActiveOrder: true
             })
         }).then(res=>{
+            console.log(res)
             fetch('/checkForChatReuqestForDeliveryAgentFromUser',{
                 method: 'POST',
                 redirect: 'follow',
@@ -74,7 +101,7 @@ class DeliveryAgentDashboard extends Component{
                     'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify({
-                    deliveryAgentEmailId: "mkammili@iu.edu"
+                    deliveryAgentEmailId: 1
                 })})
                 .then(res => {
                     if (res.status === 200){
@@ -227,7 +254,7 @@ class DeliveryAgentDashboard extends Component{
                                     <form>
                                         <h2 className="text-center">A new Order has been assigned to you</h2>
                                         <div className="form-group">
-                                            <button onClick={this.signOut} type="submit"
+                                            <button onClick={this.forwardToDeliveryAgentMaps} type="submit"
                                                     className="btn btn-primary btn-lg btn-block login-btn">Please start navigation
                                             </button>
                                         </div>

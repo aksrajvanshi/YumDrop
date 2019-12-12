@@ -7,7 +7,8 @@ import {Modal} from "react-bootstrap";
 
 const mapStateToProps = (state)=>{
     return {
-        userEmailId: state.userId
+        userEmailId: state.userId,
+        restaurantId: state.userSelectedRestaurant
     }
 }
 
@@ -78,7 +79,8 @@ class MySettingsPage extends Component{
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: "maithreyi.prabhu95@gmail.com"
+                userEmail: "maithreyi.prabhu95@gmail.com",
+                restaurantId: this.props.restaurantId
             }),
         }).then(res => {
             if (res.status === 200){
@@ -98,7 +100,7 @@ class MySettingsPage extends Component{
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: "maithreyi.prabhu95@gmail.com"
+                userEmail: "maithreyi.prabhu95@gmail.com",
             }),
         }).then(res => {
             if (res.status === 200){
@@ -119,7 +121,8 @@ class MySettingsPage extends Component{
             },
             body:JSON.stringify({
                 userEmail: "maithreyi.prabhu95@gmail.com",
-                restaurantId: "abc12"
+                restaurantId: this.props.restaurantId,
+                deliveryAgent: 0
             }),
         }).then(res => {
             if (res.status === 200){

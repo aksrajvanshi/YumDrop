@@ -50,10 +50,21 @@ public class FoodCartAndOrderController {
      * @param userCartItem
      * @return
      */
-    @RequestMapping(value = "/addItemToMyCart ", method = RequestMethod.POST)
-    public ResponseEntity<?> addDishToUserCart(@RequestBody UserCart userCartItem) {
-        UserCart cartItemSaved = userCartRepository.save(userCartItem);
 
+
+
+
+    /**
+     * load user cart data for user.
+     * @param userCartItem
+     * @return
+     */
+
+    @RequestMapping(value = "/addItemToMyCart", method = RequestMethod.POST)
+    public ResponseEntity<?> addDishToUserCart(@RequestBody UserCart userCartItem) {
+        System.out.println("Inside the user cart");
+        System.out.println(userCartItem.getDishName()+" "+userCartItem.getRestaurantId());
+        UserCart cartItemSaved = userCartRepository.save(userCartItem);
         if (cartItemSaved != null) {
             SuccessMessage itemAddedToCart = new SuccessMessage(new Date(), "Item is added to your cart");
             return new ResponseEntity<>(itemAddedToCart, HttpStatus.OK);
@@ -64,11 +75,7 @@ public class FoodCartAndOrderController {
         }
     }
 
-    /**
-     * load user cart data for user.
-     * @param userCartItem
-     * @return
-     */
+
     @RequestMapping(value = "/getUserDataForMyCart", method = RequestMethod.POST)
     public ResponseEntity<?> getUserDataForCart(@RequestBody UserCart userCartItem) {
         List<UserCart> userCartItems = userCartRepository.findByuserEmail(userCartItem.getUserEmail());

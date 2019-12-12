@@ -219,66 +219,75 @@ class MyCart extends React.Component {
 
         let mapDishesForUserView = this.state.dishesForUserDisplay.map((d,itemName)=>
         {
-            return(
-                <tr><td data-th="Product" key={itemName}>
-                    <div className="row">
-                        <div className="col-sm-2 hidden-xs"><img src="https://data.tibettravel.org/assets/images/Tibet-bhutan-tour/indian-food-in-Lhasa.jpg" alt="..."
-                                                                 height="50px" width="50px" className="img-responsive"/></div>
 
-                    </div>
-                </td>
+
+
+
+
+
+            return(
+
+                <tr>
+                    <td data-th="Product" key={itemName}>
+                        <div className="row">
+                            <div className="col-sm-2 hidden-xs"><img src="https://data.tibettravel.org/assets/images/Tibet-bhutan-tour/indian-food-in-Lhasa.jpg" alt="..."
+                                                                     height="50px" width="50px" className="img-responsive"/></div>
+
+                        </div>
+                    </td>
                     <td><div className="col-sm-10">
                         <h4 className="nomargin">{d.dishName}</h4>
+
+                    </div></td>
+                    <td><div className="col-sm-10">
+                        <h4 className="nomargin">{d.dishQuantity}</h4>
 
                     </div></td>
                     <td data-th="Price">{d.dishPrice}</td>
 
 
-                    <td className="actions" data-th="">
-                        <div className="col-md-8 col-sm-8 col-xs-8">
-                             <a id={itemName} key={itemName} value={d.dishQuantity} onClick={this.handleClick} >{d.dishQuantity}</a>
-                        </div>
-                    </td>
-                </tr>
 
+                </tr>
 
 
             )
         })
         return(
             <div>
+                <head>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                </head>
                 <header>
-                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-                    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
-                    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-                    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
-                            <a className="navbar-brand " href="#" onClick={this.goBackToLoginDashboard}>YumDrop</a>
+                            <a className="navbar-brand " href="#">YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
 
+
                                     <li className="nav-item">
-                                        <a className="nav-link"><i
-                                            className="fa fa-fw fa-user" onClick={this.goBackToLoginDashboard}/>Home</a>
+                                        <a className="nav-link"  onClick={this.goBackToLoginDashboard} ><span>Home</span></a>
                                     </li>
-
-
                                     <li>
-                                        <a className="nav-link" onClick={this.signOut}> Sign Out </a>
+                                        <a className="nav-link" onClick={this.signOut}>Logout</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </nav>
-
                 </header>
                 <div className="container mt-5">
                     <div className="row">
@@ -297,16 +306,6 @@ class MyCart extends React.Component {
                             </div>
                             <div className="wizard">
                                 <nav className="list-group list-group-flush">
-                                    <a className="list-group-item" href="#">
-                                        <div className="d-flex justify-content-between align-items-center">
-                                            <div><i className="fe-icon-shopping-bag mr-1 text-muted"></i>
-                                                <div className="d-inline-block font-weight-medium text-uppercase">Orders
-                                                    List
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </a>
                                     <a className="list-group-item" href="#" onClick={this.settingsPage}>
                                         <i className="fe-icon-user text-muted"></i>Profile Settings
                                     </a>
@@ -316,8 +315,7 @@ class MyCart extends React.Component {
                                     <a className="list-group-item active" href="#" onClick={this.forwardToMyCart}>
                                         <div className="d-flex justify-content-between align-items-center">
                                             <div><i className="fe-icon-heart mr-1 text-muted"></i>
-                                                <div className="d-inline-block font-weight-medium text-uppercase">My
-                                                    Cart
+                                                <div className="d-inline-block font-weight-medium text-uppercase">My Cart
                                                 </div>
                                             </div>
                                         </div>
@@ -326,44 +324,47 @@ class MyCart extends React.Component {
                             </div>
                         </div>
 
+
+
+
+
                         <div className="col-lg-8 pb-5">
                             <form className="row">
                                 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
                                 <div className="container">
-                    <table id="cart" className="table table-hover table-condensed">
-                        <thead>
-                        <tr>
-                            <th id="dishDisplayTable">Dish Image</th>
-                            <th id="dishDisplayTable" >Dish Name</th>
+                                    <table id="cart" className="table table-hover table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th id="dishDisplayTable">Dish Image</th>
+                                            <th id="dishDisplayTable" >Dish Name</th>
+                                            <th id="dishDisplayTable"> Dish quantity</th>
+                                            <th id="dishDisplayTable">Dish Price</th>
+                                            <th id="dishDisplayTable"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {mapDishesForUserView}
+                                        </tbody>
+                                        <tfoot>
 
-                            <th id="dishDisplayTable">Dish Price</th>
-                            <th id="dishDisplayTable">Quantity</th>
-                            <th id="dishDisplayTable"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {mapDishesForUserView}
-                        </tbody>
-                        <tfoot>
+                                        <tr>
+                                            <tr className="visible-xs">
+                                                <td className="text-center"><strong></strong></td>
 
-                        <tr>
-                            <tr className="visible-xs">
-                                <td className="text-center"><strong></strong></td>
+                                            </tr>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="#" className="btn btn-warning"><i
+                                                className="fa fa-angle-left"></i>Home Page</a></td>
+                                            <td></td>
 
-                            </tr>
-                        </tr>
-                        <tr>
-                            <td><a href="#" className="btn btn-warning"><i
-                                className="fa fa-angle-left"></i>Home Page</a></td>
-                            <td></td>
+                                            <td><a
+                                                className="btn btn-success btn-block" value = { this.state.scheduleDelivery}onClick={this.handleChangeOfScheduleDelivery} >Schedule This order <i className="fa fa-angle-right"></i></a>
+                                            </td>
 
-                            <td><a
-                                className="btn btn-success btn-block" value = { this.state.scheduleDelivery}onClick={this.handleChangeOfScheduleDelivery} >Schedule This order <i className="fa fa-angle-right"></i></a>
-                            </td>
-
-                        </tr>
-                        </tfoot>
-                    </table>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
 
 
                                 </div></form>
@@ -376,6 +377,9 @@ class MyCart extends React.Component {
                             />
                             </td>
                         </div></div></div>
+
+
+
                 <Modal
                     show={this.state.scheduleDelivery}
                     onHide={this.closeAllOptionsOfSelectionForm}

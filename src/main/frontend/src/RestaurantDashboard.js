@@ -195,8 +195,8 @@ class RestaurantDashboard extends Component{
                 </header>
 
 
-
-                <div className="span7">
+<div className="container" id="Table-For-Restaurant">
+                <div className="span7" id="Table-For-Restaurant">
                     <div className="widget stacked widget-table action-table">
                         <div className="widget-header">
                             <i className="icon-th-list"></i>
@@ -232,6 +232,7 @@ class RestaurantDashboard extends Component{
 
                     </div>
                 </div>
+            </div>
             </div>
 
         )
