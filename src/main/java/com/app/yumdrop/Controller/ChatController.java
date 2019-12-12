@@ -25,7 +25,6 @@ public class ChatController {
         if(userChatReq == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
