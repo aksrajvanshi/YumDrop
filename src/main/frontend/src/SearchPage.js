@@ -114,7 +114,6 @@ class SearchPage extends Component {
     componentWillMount = () => {
         let currentComponent = this;
         this.getAddress();
-
     }
 
     render() {
