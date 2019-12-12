@@ -222,6 +222,8 @@ class DeliveryAgentDashboard extends Component{
                                         {mapactiveOrdersForRestaurantDisplay}
 
                                         <br/><br/>
+
+                                        <button className="btn btn-outline-success" onClick={this.forwardToChatFeature}>Chat with customer</button>
                                         <div className="col-md-12 offset-12">
                                             <button className="btn btn-success" onClick={this.forwardToDeliveryAgentMaps}>Start Navigation</button>
 
@@ -239,6 +241,7 @@ class DeliveryAgentDashboard extends Component{
                     show={this.state.ActiveOrder}
                     animation={false}
                     id="modal"
+                    onHide={this.closeAllOptionsOfSelectionForm}
                 >
                     <div className="container">
                         <div className="row">

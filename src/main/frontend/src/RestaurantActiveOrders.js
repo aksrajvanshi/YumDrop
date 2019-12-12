@@ -28,6 +28,7 @@ class RestaurantActiveOrders extends React.Component{
     goToChatFeature = () => {
         this.props.history.push('/chatFeatureForRestaurant')
     }
+
     componentWillMount() {
         let currentComponent = this;
         fetch('/getCurrentActiveOrderForRestaurant', {
@@ -137,9 +138,7 @@ class RestaurantActiveOrders extends React.Component{
         this.props.history.push('/RestaurantDashboard')
     }
 
-    handleForwardChat(){
-        this.goToChatFeature()
-    }
+
 
 
     render(){
@@ -225,7 +224,7 @@ class RestaurantActiveOrders extends React.Component{
                                     className="list-group-item" href="#" onClick={this.forwardToResetpassword}><i className="fe-icon-map-pin text-muted"></i>Reset Password</a>
                                 <a
                                     className="list-group-item active" href="#" onClick={this.forwardToActiveOrders}><i className="fe-icon-map-pin text-muted"></i>Active Orders</a>
-                                <a className="list-group-item active" href="#" onClick={this.goToChatFeature}><i className="fe-icon-map-pin text-muted"></i>Chat with Customer</a>
+                                <a className="list-group-item " href="#" onClick={this.goToChatFeature}><i className="fe-icon-map-pin text-muted"></i>Chat with Customer</a>
 
                             </nav>
                         </div>
