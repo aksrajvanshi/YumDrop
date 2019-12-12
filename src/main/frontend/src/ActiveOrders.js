@@ -113,6 +113,8 @@ class MySettingsPage extends Component{
     }
     chatWithRestaurant = () => {
         let currentComponent = this;
+        console.log("this is inside chat")
+        console.log(this.props.restaurantId)
         console.log("Entered chat with restuarnat")
         fetch('/chatWithRestaurantOnly', {
             method: 'POST',
@@ -277,13 +279,13 @@ class MySettingsPage extends Component{
                                             </div>
                                         </div>
                                     </a>
-                                    <a className="list-group-item " href="#" onClick={this.chatWithRestaurant}>
+                                    <a className="list-group-item " href="#" onClick={this.goToChatFeature}>
                                         <i className="fe-icon-map-pin text-muted"></i>chat with restaurant
                                     </a>
-                                    <a className="list-group-item " href="#" onClick={this.chatWithDeliveryAgent}>
+                                    <a className="list-group-item " href="#" onClick={this.goToChatFeature}>
                                         <i className="fe-icon-map-pin text-muted"></i>chat with delivery agent
                                     </a>
-                                    <a className="list-group-item " href="#" onClick={this.chatWithRestaurantAndDeliveryAgent}>
+                                    <a className="list-group-item " href="#" onClick={this.goToChatFeature}>
                                         <i className="fe-icon-map-pin text-muted"></i>Group chat
                                     </a>
                                 </nav>

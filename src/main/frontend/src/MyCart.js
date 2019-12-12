@@ -201,6 +201,12 @@ class MyCart extends React.Component {
         })
 
     }
+
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
+    }
+
     goBackToLoginDashboard = () => {
         this.props.history.push('/LoginDashboard')
     }

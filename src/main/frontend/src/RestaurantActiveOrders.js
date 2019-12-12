@@ -8,6 +8,14 @@ const mapStateToProps = (state)=>{
         restaurantId: state.userId
     }
 };
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+
 class RestaurantActiveOrders extends React.Component{
     state = {
         userName: "",
@@ -125,10 +133,18 @@ class RestaurantActiveOrders extends React.Component{
     goBackToRestaurantDashboard = () => {
         this.props.history.push('/RestaurantDashboard')
     }
+    returnToLoginDahboard = () => {
+        this.props.history.push('/RestaurantDashboard')
+    }
+
+    handleForwardChat(){
+        this.goToChatFeature()
+    }
+
 
     render(){
 
-        let mapactiveOrdersForRestaurantDisplay = this.state.activeOrdersForRestaurantDisplay.map((d,itemName)=>
+               let mapactiveOrdersForRestaurantDisplay = this.state.activeOrdersForRestaurantDisplay.map((d,itemName)=>
         {
             return(
 
@@ -147,7 +163,9 @@ class RestaurantActiveOrders extends React.Component{
                 </tr>
             )
         })
-    return (
+
+
+        return (
         <div>
             <header>
                 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
@@ -207,6 +225,7 @@ class RestaurantActiveOrders extends React.Component{
                                     className="list-group-item" href="#" onClick={this.forwardToResetpassword}><i className="fe-icon-map-pin text-muted"></i>Reset Password</a>
                                 <a
                                     className="list-group-item active" href="#" onClick={this.forwardToActiveOrders}><i className="fe-icon-map-pin text-muted"></i>Active Orders</a>
+                                <a className="list-group-item active" href="#" onClick={this.goToChatFeature}><i className="fe-icon-map-pin text-muted"></i>Chat with Customer</a>
 
                             </nav>
                         </div>
@@ -232,6 +251,7 @@ class RestaurantActiveOrders extends React.Component{
                                             <th id="dishPriceForActiveOrderUserView">Order Content</th>
                                             <th id="dishDescriptionForUserView">Total price</th>
                                             <th id="dishDescriptionForUserView">Order status</th>
+
 
 
                             </tr>
