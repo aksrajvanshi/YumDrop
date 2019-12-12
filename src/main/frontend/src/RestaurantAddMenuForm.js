@@ -136,7 +136,6 @@ class RestaurantAddMenuForm extends Component{
                 })
 
             }else {
-                console.log("Inside this")
               this.goToRestaurantDashboard();
             }
 

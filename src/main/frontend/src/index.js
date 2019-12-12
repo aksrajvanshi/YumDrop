@@ -51,6 +51,7 @@ import ActiveOrders from "./ActiveOrders";
 import RestaurantActiveOrders from "./RestaurantActiveOrders";
 import dishesForUserView from "./dishesForUserView";
 import tryStripeCheckout from "./tryStripeCheckout";
+import DeliveryAgentMaps from "./DeliveryAgentMaps";
 
 const initialState = {
     latitude: null,
@@ -135,6 +136,8 @@ const routing = (
                 <Route exact path="/DeliveryAgentLoginForm" component={DeliveryAgentLoginForm}/>
                 <Route exact path="/DeliveryAgentLoginErrorPage" component={DeliveryAgentLoginErrorPage}/>
                 <Route exact path="/DeliveryAgentOTPResetPassword" component={DeliveryAgentOTPResetPassword}/>
+                <Route exact path="/DeliveryAgentMaps" component={DeliveryAgentMaps}/>
+
             </div>
         </Router>
     </Provider>

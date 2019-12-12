@@ -3,6 +3,7 @@ import './LoginDashBoardCSS.css';
 import './DeliveryAgentDashboardCSS.css';
 import connect from "react-redux/lib/connect/connect";
 import {Modal} from "react-bootstrap";
+import './DeliveryAgentMaps';
 
 
 const mapStateToProps = (state)=>{
@@ -18,7 +19,6 @@ const mapDispatchToProps = (dispatch)=> {
 
     }
 }
-
 
 class DeliveryAgentDashboard extends Component{
 
@@ -94,11 +94,11 @@ class DeliveryAgentDashboard extends Component{
     forwardToDeliveryAgentSettingsPage = () => {
         this.props.history.push('/DeliveryAgentSettingsPage')
     }
-
-
-
-
-
+    
+    forwardToDeliveryAgentMaps = () => {
+        this.props.history.push("/DeliveryAgentMaps")
+    }
+    
     forwardToLogiDashboard = () => {
         this.props.history.push("/DeliveryAgentDashboard");
     }
