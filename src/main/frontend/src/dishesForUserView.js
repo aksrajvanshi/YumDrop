@@ -1,10 +1,16 @@
 import React from "react";
 import {connect} from "react-redux";
+import StarRatingComponent from "react-star-rating-component";
 
 
 class dishesForUserView extends React.Component{
     state = {
-        dishesForUserDisplay: []
+        dishesForUserDisplay: [],
+        restaurantDetails: [],
+        rating: 3,
+        restaurantName: "",
+        restaurantPrimaryEmailId: "",
+        numberOfUsers: ""
     }
 
 
@@ -28,8 +34,36 @@ class dishesForUserView extends React.Component{
             currentComponent.setState({
                 dishesForUserDisplay: response
             })
-            console.log(response)})
-    }
+            console.log(response)}).then(res => {
+            fetch('/getRestaurantDataForUserView',{
+                method: 'POST',
+                redirect: 'follow',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: JSON.stringify({
+                    restaurantId: "abc12",})})
+                .then(res => {
+                    console.log(res)
+                    return res.json()
+                }).then(response => {
+                currentComponent.setState({
+                    restaurantDetails: response
+                })
+                console.log(currentComponent.state.restaurantDetails)
+                console.log(currentComponent.state.restaurantDetails.restaurantRatings)
+                console.log(currentComponent.state.restaurantDetails.restaurantDetails)
+                console.log(currentComponent.state.restaurantDetails.restaurantName)
+                console.log();
+                currentComponent.setState({
+                    numberOfUsers: currentComponent.state.restaurantDetails.restaurantRatings.numberOfUsers
+                })
+                console.log(currentComponent.state.numberOfUsers)
+                console.log(currentComponent.state.restaurantDetails.restaurantRatings.overallRating)
+                console.log(currentComponent.state.restaurantDetails.restaurantRatings.numberOfUsers)
+        })
+    })}
 
 
     forwardToSettingsPage = () => {
@@ -108,16 +142,22 @@ class dishesForUserView extends React.Component{
         })
         return(
             <div>
-                <header>
+                <head>
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                </head>
+                <header>
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
@@ -125,12 +165,9 @@ class dishesForUserView extends React.Component{
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
 
+
                                     <li className="nav-item">
-                                        <a className="nav-link" onClick={this.forwardToMyCart}><i
-                                            className="fa fa-fw "/>Cart</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link"  onClick={this.onClick} ><span>Settings</span></a>
+                                        <a className="nav-link"  onClick={this.goBackToLoginDashboard} ><span>home</span></a>
                                     </li>
                                     <li>
                                         <a className="nav-link" onClick={this.signOut}>Logout</a>
@@ -140,21 +177,59 @@ class dishesForUserView extends React.Component{
                         </div>
                     </nav>
                 </header>
-                <head>
-                    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-                    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-                </head>
-                <br/>
-                <br/>
-                <br/>
-                <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
-                <div className="span7">
-                    <div className="widget stacked widget-table action-table">
-                        <div className="widget-header">
-                            <i className="icon-th-list"></i>
-                            <h3>Dishes</h3>
+                <div className="container mt-5">
+                    <div className="row">
+                        <div className="col-lg-4 pb-5">
+
+                            <div className="author-card pb-3">
+                                <div className="author-card-cover"
+                                >
+                                </div>
+                                <div className="author-card-profile">
+                                    <div className="author-card-avatar"><img
+                                        src="https://www.caretechfoundation.org.uk/wp-content/uploads/anonymous-person-221117.jpg" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div className="wizard">
+                                <nav className="list-group list-group-flush">
+                                    <a className="list-group-item" href="#">
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div><i className="fe-icon-shopping-bag mr-1 text-muted"></i>
+                                                <div className="d-inline-block font-weight-medium text-uppercase">{this.state.restaurantName}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </a>
+                                    <a className="list-group-item" href="#" onClick={this.settingsPage}>
+                                        <i className="fe-icon-user text-muted"></i>{this.state.restaurantPrimaryEmailId}
+                                    </a>
+                                    <a className="list-group-item" href="#" onClick={this.forwardToSettingsAddresses}>
+                                        <i className="fe-icon-map-pin text-muted"></i><StarRatingComponent
+                                        name="rate your food"
+                                        starCount={5}
+                                        value={this.state.rating}
+                                    />
+                                    </a>
+                                    <a className="list-group-item active" href="#" onClick={this.forwardToMyCart}>
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div><i className="fe-icon-heart mr-1 text-muted"></i>
+                                                <div className="d-inline-block font-weight-medium text-uppercase">No. of ratings: {this.state.numberOfUsers}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </nav>
+                            </div>
                         </div>
+
+                        <div className="col-lg-8 pb-5">
+                            <form className="row">
+                                <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
+                                <div className="container">
+
                         <div className="widget-content">
 
                             <table className="table table-striped table-bordered">
@@ -192,13 +267,11 @@ class dishesForUserView extends React.Component{
 
                         </div>
 
-                    </div>
+                                </div></form></div></div></div>
                 </div>
 
 
 
-
-            </div>
         )
     }
 }

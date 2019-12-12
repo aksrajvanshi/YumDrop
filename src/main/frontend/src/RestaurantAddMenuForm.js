@@ -82,7 +82,8 @@ class RestaurantAddMenuForm extends Component{
 
             canvas.getContext('2d').drawImage(this, 0, 0);
 
-            callback(canvas.toDataURL(url));
+            let dataForConversion  = callback(canvas.toDataURL(url));
+            console.log("Printing data", dataForConversion)
             this.setState({
                 restaurantDishImage:  callback(canvas.toDataURL(url))
             })

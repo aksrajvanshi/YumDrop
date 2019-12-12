@@ -3,6 +3,7 @@ import './MySettingsPage.css';
 import {connect} from "react-redux";
 import './LoginDashBoardCSS.css';
 import {Modal} from "react-bootstrap";
+import StarRatingComponent from "react-star-rating-component";
 
 
 const mapStateToProps = (state)=>{
@@ -162,7 +163,9 @@ class MySettingsPage extends Component{
                 currentComponent.setState({
                     activeOrderForUserDisplay: response
                 })
-                console.log(response)})
+                console.log(response)}).then(res => {
+
+        })
         }
 
 
@@ -197,11 +200,16 @@ class MySettingsPage extends Component{
         return (
             <div>
                 <header>
-
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+                    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
+                    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"/>
-
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
@@ -214,14 +222,14 @@ class MySettingsPage extends Component{
                                             className="fa fa-fw fa-user" onClick={this.goBackToLoginDashboard}/>Home</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" onClick={this.forwardToMyCart}><i
+                                        <a className="nav-link"><i
                                             className="fa fa-fw fa-user"/>Cart</a>
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link"   onClick={this.settingsPage} ><span>Settings</span></a>
                                     </li>
                                     <li>
-                                        <a className="nav-link" onClick={this.signOut}>Sign Out</a>
+                                        <a className="nav-link" onClick={this.signOut}> Sign Out </a>
                                     </li>
                                 </ul>
                             </div>
@@ -229,43 +237,58 @@ class MySettingsPage extends Component{
                     </nav>
 
                 </header>
+                <div className="container mt-5">
+                    <div className="row">
+                        <div className="col-lg-4 pb-5">
 
-
-
-                <Modal
-                    show={this.state.errorSelect}
-                    animation={false}
-                    id="modal"
-                >
-                    <div className="container">
-                        <div className="row">
-                            <div className="main">
-                                <div className="login-form">
-                                    <form>
-                                        <h2 className="text-center">There are no Active Orders</h2>
-                                        <div className="form-group">
-                                            <button onClick={this.goBackToLoginDashboard} type="submit"
-                                                    className="btn btn-primary btn-lg btn-block login-btn">Go to Home
-                                            </button>
-                                        </div>
-                                    </form>
+                            <div className="author-card pb-3">
+                                <div className="author-card-cover"
+                                >
+                                </div>
+                                <div className="author-card-profile">
+                                    <div className="author-card-avatar"><img
+                                        src="https://www.caretechfoundation.org.uk/wp-content/uploads/anonymous-person-221117.jpg" />
+                                    </div>
 
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                            <div className="wizard">
+                                <nav className="list-group list-group-flush">
+                                    <a className="list-group-item" href="#">
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div><i className="fe-icon-shopping-bag mr-1 text-muted"></i>
+                                                <div className="d-inline-block font-weight-medium text-uppercase">{this.state.restaurantName}
+                                                </div>
+                                            </div>
 
-                </Modal>
-
-                <br/>
-                <br/>
-                <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
-                <div className="span7">
-                    <div className="widget stacked widget-table action-table">
-                        <div className="widget-header">
-                            <i className="icon-th-list"></i>
-                            <h3>Active Order</h3>
+                                        </div>
+                                    </a>
+                                    <a className="list-group-item" href="#" onClick={this.settingsPage}>
+                                        <i className="fe-icon-user text-muted"></i>My Settings
+                                    </a>
+                                    <a className="list-group-item" href="#" onClick={this.forwardToSettingsAddresses}>
+                                        <i className="fe-icon-map-pin text-muted"></i>Address
+                                    </a>
+                                    <a className="list-group-item active" href="#" onClick={this.forwardToSettingsAddresses}>
+                                        <i className="fe-icon-map-pin text-muted"></i>Active Orders
+                                    </a>
+                                    <a className="list-group-item " href="#" onClick={this.forwardToMyCart}>
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div><i className="fe-icon-heart mr-1 text-muted"></i>
+                                                <div className="d-inline-block font-weight-medium text-uppercase">My Cart
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </nav>
+                            </div>
                         </div>
+
+                        <div className="col-lg-8 pb-5">
+                            <form className="row">
+                                <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
+                                <div className="container">
+
                         <div className="widget-content" id="activeOrdersTableForUser">
 
                             <table className="table table-striped table-bordered">
@@ -303,7 +326,32 @@ class MySettingsPage extends Component{
 
 
                     </table>
-                        </div></div></div></div>
+                        </div></div>
+                            </form></div></div></div>
+                <Modal
+                                    show={this.state.errorSelect}
+                                    animation={false}
+                                    id="modal"
+                                >
+                                    <div className="container">
+                                        <div className="row">
+                                            <div className="main">
+                                                <div className="login-form">
+                                                    <form>
+                                                        <h2 className="text-center">There are no Active Orders</h2>
+                                                        <div className="form-group">
+                                                            <button onClick={this.goBackToLoginDashboard} type="submit"
+                                                                    className="btn btn-primary btn-lg btn-block login-btn">Go to Home
+                                                            </button>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                </Modal></div>
 
 
         );

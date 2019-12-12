@@ -84,17 +84,26 @@ class LoginDashBoard extends Component{
         {
 
             return(
-                <div className="row menu_style1" key={itemName}>
-                    <div className="col-md-4">
-                <div className="box">
-                    <img onClick={this.handleClick.bind(this, d)} src={d.restaurantImageURL} />
-                    <div className="overbox">
-                        <div onClick={this.handleClick.bind(this, d)} className="title overtext"> {d.restaurantName}</div>
-                        <div onClick={this.handleClick.bind(this, d)} className="tagline overtext"> {d.restaurantAddress}</div>
+                <div className="col-md-4">
+                    <div className="single_menu_list">
+                        <img onClick={this.handleClick.bind(this, d)}
+                            src="https://www.culinaryhill.com/wp-content/uploads/2017/09/Chipotle-Steak-Recipe-Culinary-Hill-2.jpg"
+                            alt=""/>
+                            <br/>
+                            <br/>
+                            <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div className="menu_content">
+                            <h4 onClick={this.handleClick.bind(this, d)}>{d.restaurantName} <span>{d.ratings}</span></h4>
+                            <p onClick={this.handleClick.bind(this, d)}>{d.restaurantAddress}</p>
+                            <h5>Indian, Vegetarian, Vegan, Non-Vegetarian</h5>
+
+                        </div>
+
                     </div>
                 </div>
-                    </div></div>
-
 
             )
         })
@@ -196,31 +205,38 @@ class LoginDashBoard extends Component{
                 <br/>
                 <br/>
 
+
                 <div>
                     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,900"
                           rel="stylesheet"/>
                     <link href="https://fonts.googleapis.com/css?family=Oleo+Script" rel="stylesheet"/>
-                    <div className="row" id="popularRestaurantNearYou">
-                        <div className="col-xl-8 mb-60">
-                            <div className="section-title text-center">
-                                <h4>Popular Restaurants Near You</h4>
+
+                    <section className="about-area pt-80">
+                        <div className="container" >
+                            <div className="row">
+                                <div className="col-xl-12 mb-60" id="headline">
+                                    <div className="section-title text-center">
+                                        <p>Popular Restaurants Near You</p>
+                                        <h4>Restaurants</h4>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </section>
+                    <section className="about-area pt-80">
+                        <div className="container" >
+                            <div className="row">
 
-                <section className="about-area pt-80">
-                    <div className="container" >
-                        <div className="grid-container">
-
-                        {mapForRecommendedRestaurants}
+                            {mapForRecommendedRestaurants}
+                            </div>
                         </div>
-                        <br/><br/><br/><br/><br/>
+
+                    </section>
 
 
-                    </div>
                     <br/><br/><br/><br/><br/>
-                </section>
+                    <a href="#"></a>
+                </div>
 
 
 

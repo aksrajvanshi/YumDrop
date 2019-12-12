@@ -76,13 +76,18 @@ img.rounded {
     margin-bottom: 0px;
     margin-top:50px;
 }
+
+#headline{
+    padding-left: 450px;
+}
 .section-title h4 {
     font-size: 40px;
     text-transform: capitalize;
-    color: #FF5E18;
+    color: black;
     position: relative;
     display: inline-block;
     padding-bottom: 25px;
+    padding-left: 250px;
 }
 .section-title h4::before {
     width: 80px;
