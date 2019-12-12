@@ -114,6 +114,7 @@ class SearchPage extends Component {
     componentWillMount = () => {
         let currentComponent = this;
         this.getAddress();
+
     }
 
     render() {
@@ -215,7 +216,6 @@ class SearchPage extends Component {
                     </div>
                 </div>
                 <div className="container">
-
                     <div className="row grid-divider">
                         <div className="col-xl-5">
                             <div className="col-padding">
