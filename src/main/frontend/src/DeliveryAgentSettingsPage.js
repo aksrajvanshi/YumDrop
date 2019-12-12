@@ -1,41 +1,94 @@
 import React, { Component } from "react";
 import './MySettingsPage.css';
+import {connect} from "react-redux";
+import './LoginDashBoardCSS.css';
 
-class UserSettingsPageAddresses extends Component{
+
+const mapStateToProps = (state)=>{
+    return {
+        userEmailId: state.userId
+    }
+}
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+
+
+class MySettingsPage extends Component{
     state = {
-        data: [],
-        userName: "",
-        userEmailId:  "",
-        userPhoneNumber: "",
-        userState: "",
-        userCity: "",
-        userArea: "",
-        userAddress: ""
+        dataReceived: [],
+        deliveryAgentName: "",
+        deliveryAgentEmailId:  "",
+        deliveryAgentPhoneNumber: ""
     }
-    returnToLoginDahboard = () => {
-        this.props.history.push('/errorPageForRegistration');
-    }
+
     forwardToMyCurrentLocation = () => {
         this.props.history.push('/MyCurrentLocation');
     }
 
-    forwardToAddAddress = () => {
-        this.props.history.push('/MyCurrentLocation');
+    forwardToSettingsAddresses = () => {
+        this.props.history.push('/deliveryAgentSettingsPageAddresses')
     }
 
-    componentDidMount () {
-        fetch('/getUserDetails')
-            .then(res => res.json()
-            ).then(data => {
-            this.setState({userCity: data.userCity, userArea: data.userArea, userAddress: data.userAddress, userState: data.userState})
-        })}
+    settingsPage = () => {
+        this.props.history.push('/deliveryAgentSettingsPage')
+    }
+
+    goBackToProfileSettingsPage = () => {
+        this.props.history.push('/deliveryAgentSettingsPage')
+    }
+
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
+    }
+
+    goBackToLoginDashboard = () => {
+        this.props.history.push('/DeliveryAgentDashboard')
+    }
+
+
+
+    goToActiveOrdersPage = () => {
+        this.props.history.push('/DeliveryAgentDashboard')
+    }
+
+    componentDidMount() {
+        let currentComponent = this;
+        fetch('/getDeliveryAgentDetails', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                deliveryAgentEmailId: currentComponent.props.deliveryAgentEmailId
+            }),
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+
+            currentComponent.setState({
+                deliveryAgentName: data.deliveryAgentName,
+                deliveryAgentEmailId: data.deliveryAgentEmailId,
+                deliveryAgentPhoneNumber: data.deliveryAgentPhoneNumber
+            });
+        })
+    }
+
+    goToChatFeature = () => {
+        this.props.history.push('/chatFeature')
+    }
 
 
     render() {
         let trying = this.state.data;
-        console.log(trying);
-
-        console.log("hey trying to run this");
+        if(this.props.userEmailId === null) {
+            this.props.history.push('/')
+        }
         return (
             <div>
                 <header>
@@ -50,25 +103,32 @@ class UserSettingsPageAddresses extends Component{
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
                             <a className="navbar-brand " href="#" onClick={this.goBackToLoginDashboard}>YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
+
                                     <li className="nav-item">
                                         <a className="nav-link"><i
-                                            className="fa fa-fw fa-user"/>My Cart</a>
+                                            className="fa fa-fw fa-user" onClick={this.goBackToLoginDashboard}/>Home</a>
                                     </li>
-                                    <li className="nav-item" id="SignUpID">
-                                        <a className="nav-link" onClick={this.forwardToSettingsPage}>My Settings</a>
+                                    <li className="nav-item">
+                                        <a className="nav-link" onClick={this.forwardToMyCart}><i
+                                            className="fa fa-fw fa-user"/>Cart</a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link"   onClick={this.settingsPage} ><span>Settings</span></a>
+                                    </li>
+                                    <li>
+                                        <a className="nav-link" onClick={this.signOut}>Sign Out</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </nav>
-                </header>
 
+                </header>
                 <div className="container mt-5">
                     <div className="row">
                         <div className="col-lg-4 pb-5">
@@ -89,21 +149,22 @@ class UserSettingsPageAddresses extends Component{
                                     <a className="list-group-item" href="#">
                                         <div className="d-flex justify-content-between align-items-center">
                                             <div><i className="fe-icon-shopping-bag mr-1 text-muted"></i>
-                                                <div className="d-inline-block font-weight-medium text-uppercase">Orders
+                                                <div className="d-inline-block font-weight-medium text-uppercase" >Orders
                                                     List
                                                 </div>
                                             </div>
 
                                         </div>
-                                    </a><a className="list-group-item " href="#"><i
-                                    className="fe-icon-user text-muted"></i>Profile Settings</a><a
-                                    className="list-group-item active" href="#" active><i className="fe-icon-map-pin text-muted"></i>Addresses</a>
-                                    <a className="list-group-item" href="#">
+                                    </a><a className="list-group-item active" href="#"><i
+                                    className="fe-icon-user text-muted" onClick={this.goBackToProfileSettingsPage}></i>Profile Settings</a>
+                                    <a className="list-group-item " onClick={this.goToActiveOrdersPage} ><i
+                                        className="fe-icon-user text-muted" onClick={this.goToActiveOrdersPage}></i>Active Orders</a>
+                                    <a
+                                        className="list-group-item" href="#" onClick={this.forwardToSettingsAddresses}><i className="fe-icon-map-pin text-muted"></i>Addresses</a>
+                                    <a className="list-group-item" href="#" onClick={this.forwardToMyCart}>
                                         <div className="d-flex justify-content-between align-items-center">
                                             <div><i className="fe-icon-heart mr-1 text-muted"></i>
-                                                <div className="d-inline-block font-weight-medium text-uppercase">My
-                                                    Cart
-                                                </div>
+
                                             </div>
 
                                         </div>
@@ -116,29 +177,23 @@ class UserSettingsPageAddresses extends Component{
                             <form className="row">
                                 <div className="col-md-6">
                                     <div className="form-group">
-                                        <label htmlFor="account-fn">Address</label>
+                                        <label htmlFor="account-fn">First Name</label>
                                         <input className="form-control" type="text" id="account-fn"
-                                               placeholder={this.state.userAddress}/>
+                                               placeholder={this.state.deliveryAgentName}/>
                                     </div>
                                 </div>
+
                                 <div className="col-md-6">
                                     <div className="form-group">
-                                        <label htmlFor="account-ln">City</label>
-                                        <input className="form-control" type="text" id="account-ln" placeholder={this.state.userCity}
-                                               required=""/>
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="form-group">
-                                        <label htmlFor="account-email">Area</label>
-                                        <input className="form-control" type="email" id="account-email" placeholder={this.state.userArea}
+                                        <label htmlFor="account-email">E-mail Address</label>
+                                        <input className="form-control" type="email" id="account-email" placeholder={this.state.deliveryAgentEmailId}
                                                disabled=""/>
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
-                                        <label htmlFor="account-phone">State</label>
-                                        <input className="form-control" type="text" id="account-phone" placeholder={this.state.userState}
+                                        <label htmlFor="account-phone">Phone Number</label>
+                                        <input className="form-control" type="text" id="account-phone" placeholder={this.state.deliveryAgentPhoneNumber}
                                                required=""/>
                                     </div>
                                 </div>
@@ -151,10 +206,8 @@ class UserSettingsPageAddresses extends Component{
                                                    id="subscribe_me" checked=""/>
 
                                         </div>
-                                        <button onClick={this.forwardToAddAddress} className="btn btn-style-1 btn-primary" type="button" data-toast=""
-                                                data-toast-position="topRight" data-toast-type="success"
-                                                data-toast-icon="fe-icon-check-circle" data-toast-title="Success!"
-                                                data-toast-message="Your profile updated successfuly.">Add Address
+                                        <button className="btn btn-style-1 btn-primary" type="button" >Update
+                                            Profile
                                         </button>
                                     </div>
                                 </div>
@@ -168,4 +221,4 @@ class UserSettingsPageAddresses extends Component{
 
 }
 
-export default UserSettingsPageAddresses;
+export default connect(mapStateToProps, mapDispatchToProps) (MySettingsPage);

@@ -9,27 +9,8 @@
     width: 350px;
 }
 
-#UserID:hover, #RestaurantId:hover, #DeliveryId:hover{
-    border: 1px solid #06D85F;
-    background:  darkslategrey;
-    padding-right: 5px;
 
-    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .7), 0 0 0 5px #f5f7f8;
-}
 
-#UserID, #RestaurantId, #DeliveryId {
-    color: black;
-    padding-left: 25px;
-    margin: 10px;
-    margin-top: 12px;
-    margin-left: 18px;
-    width: 290px;
-    height: 35px;
-    border: 0.5px solid #c7d0d2;
-    border-radius: 20px/50px;
-    background-color: transparent;
-    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8
-}
 
 #img1{
     background-image: url(https://wallpapercave.com/wp/wp1929358.jpg);
@@ -186,6 +167,7 @@ h3 {
 #modal {
     position: fixed;
     left: 35%;
+    width: 440px;
 }
 
 #modal2 {
@@ -297,6 +279,113 @@ h3 {
 }
 .login-form form a:hover {
     text-decoration: underline;
+}
+
+.form-signin {
+    max-width: 400px;
+    display:block;
+    background-color: #f7f7f7;
+    -moz-box-shadow: 0 0 3px 3px #888;
+    -webkit-box-shadow: 0 0 3px 3px #888;
+    box-shadow: 0 0 3px 3px #888;
+    border-radius:2px;
+}
+.main{
+    padding: 38px;
+}
+.social-box{
+    margin: 0 auto;
+    padding: 38px;
+    border-bottom:1px #ccc solid;
+}
+
+#buttonLoginOption{
+    border: 2px solid gray;
+    width: 250px;
+    color: black;
+
+}
+
+#loginSelectionForm{
+    padding-left: 80px;
+}
+.social-box a{
+    font-weight:bold;
+    font-size:18px;
+    padding:8px;
+}
+.social-box a i{
+    font-weight:bold;
+    font-size:20px;
+}
+.heading-desc{
+    font-size:20px;
+    font-weight:bold;
+    padding:38px 38px 0px 38px;
+
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+.form-signin .checkbox {
+    font-weight: normal;
+}
+.form-signin .form-control {
+    position: relative;
+    font-size: 16px;
+    height: 20px;
+    padding: 20px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+.form-signin input[type="text"] {
+    margin-bottom: 10px;
+    border-radius: 5px;
+
+}
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+.login-footer{
+    background:#f0f0f0;
+    margin: 0 auto;
+    border-top: 1px solid #dadada;
+    padding:20px;
+}
+.login-footer .left-section a{
+    font-weight:bold;
+    color:#8a8a8a;
+    line-height:19px;
+}
+.mg-btm{
+    margin-bottom:20px;
+}
+
+#modalLoginSelect{
+    position: fixed;
+    left: 35%;
+    width: 470px;
+    height: 400px;
+}
+
+#userLoginFormModal{
+    position: fixed;
+    left: 35%;
+    width: 436px;
+    height: 400px;
+}
+
+#inputuserLoginFormModalContainer{
+    height: 40px;
+    border-radius: 5px;
+    border-bottom-color: black;
+
 }
 
 

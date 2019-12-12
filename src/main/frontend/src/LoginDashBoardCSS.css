@@ -44,7 +44,12 @@
     line-height: 1.5em;
     margin-bottom: 30px;
 }
-
+.container h1 {
+    font-size: 1.125rem;
+    font-weight: 300;
+    line-height: 1.5em;
+    margin-bottom: 30px;
+}
 
 
 img.rounded {
@@ -71,13 +76,18 @@ img.rounded {
     margin-bottom: 0px;
     margin-top:50px;
 }
+
+#headline{
+    padding-left: 400px;
+}
 .section-title h4 {
     font-size: 40px;
     text-transform: capitalize;
-    color: #FF5E18;
+    color: black;
     position: relative;
     display: inline-block;
     padding-bottom: 25px;
+    padding-left: 60px;
 }
 .section-title h4::before {
     width: 80px;
@@ -137,3 +147,202 @@ p {
     padding-top: 20px;
 }
 
+.how-section1{
+    margin-top:-15%;
+    padding: 10%;
+}
+.how-section1 h4{
+    color: black;
+    font-weight: bold;
+    font-size: 30px;
+}
+.how-section1 .subheading{
+    color: #3931af;
+    font-size: 20px;
+}
+.how-section1 .row
+{
+    margin-top: 10%;
+}
+.how-img
+{
+    text-align: center;
+}
+.how-img img{
+    width: 40%;
+}
+
+#modal{
+    width: 370px;
+    height: 300px;
+}
+
+#popularRestaurantNearYou{
+    padding-left: 150px;
+}
+
+
+#containerForLogin{
+    padding-left: 60px;
+
+    padding-bottom: 20px;
+
+}
+
+.form-signin {
+
+    width: 400px;
+    display:block;
+    background-color: #f7f7f7;
+    -moz-box-shadow: 0 0 3px 3px #888;
+    -webkit-box-shadow: 0 0 3px 3px #888;
+    box-shadow: 0 0 3px 3px #888;
+    border-radius:2px;
+}
+.main{
+    padding: 38px;
+}
+.social-box{
+    margin: 0 auto;
+    padding: 38px;
+}
+.social-box a{
+    font-weight:bold;
+    font-size:18px;
+    padding:5px;
+}
+.social-box a i{
+    font-weight:bold;
+    font-size:20px;
+}
+.heading-desc{
+    font-size:20px;
+    font-weight:bold;
+    padding:38px 38px 0px 38px;
+
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+.form-signin .checkbox {
+    font-weight: normal;
+}
+.form-signin .form-control {
+    position: relative;
+    font-size: 16px;
+    height: 15px;
+    padding: 15px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form-signin input[type="text"] {
+    margin-bottom: 10px;
+    border-radius: 5px;
+
+}
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+.login-footer{
+    background:#f0f0f0;
+    margin: 0 auto;
+    border-top: 2px solid #dadada;
+    padding:20px;
+}
+.login-footer .left-section a{
+    font-weight:bold;
+    color:#8a8a8a;
+    line-height:15px;
+}
+
+#imageForRestaurantRecommendation{
+    height: 50px;
+    width: 100px;
+}
+.box {
+    cursor: pointer;
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+    width: 350px;
+}
+
+.box img {
+    position: absolute;
+    left: 0;
+    -webkit-transition: all 300ms ease-out;
+    -moz-transition: all 300ms ease-out;
+    -o-transition: all 300ms ease-out;
+    -ms-transition: all 300ms ease-out;
+    transition: all 300ms ease-out;
+}
+
+.box .overbox {
+    background-color: #304562;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    z-index: 100;
+    -webkit-transition: all 300ms ease-out;
+    -moz-transition: all 300ms ease-out;
+    -o-transition: all 300ms ease-out;
+    -ms-transition: all 300ms ease-out;
+    transition: all 300ms ease-out;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    padding: 130px 20px;
+}
+
+.box:hover .overbox { opacity: 1; }
+
+.box .overtext {
+    -webkit-transition: all 300ms ease-out;
+    -moz-transition: all 300ms ease-out;
+    -o-transition: all 300ms ease-out;
+    -ms-transition: all 300ms ease-out;
+    transition: all 300ms ease-out;
+    transform: translateY(40px);
+    -webkit-transform: translateY(40px);
+}
+
+.box .title {
+    font-size: 2.5em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition-delay: 0.1s;
+    transition-duration: 0.2s;
+}
+
+.box:hover .title,
+.box:focus .title {
+    opacity: 1;
+    transform: translateY(0px);
+    -webkit-transform: translateY(0px);
+}
+
+.box .tagline {
+    font-size: 0.8em;
+    opacity: 0;
+    transition-delay: 0.2s;
+    transition-duration: 0.2s;
+}
+
+.box:hover .tagline,
+.box:focus .tagline {
+    opacity: 1;
+    transform: translateX(0px);
+    -webkit-transform: translateX(0px);
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto ;
+    grid-column-gap: 15px;
+    padding: 10px;
+}

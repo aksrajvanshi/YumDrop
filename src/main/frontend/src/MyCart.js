@@ -1,150 +1,199 @@
-import React, { Component } from "react";
-import './MySettingsPage.css';
-import {connect} from "react-redux";
-import './LoginDashBoardCSS.css';
+import React from "react"
+import {Modal} from "react-bootstrap";
+import Calendar from 'react-calendar';
+import TimePicker from 'react-time-picker';
 import StripeCheckout from "react-stripe-checkout";
+import StarRatingComponent from 'react-star-rating-component';
+
+import "react-datepicker/dist/react-datepicker.css";
+import {connect} from "react-redux";
 
 
-const mapStateToProps = (state)=>{
-    return {
-        userEmailId: state.userId
-    }
-}
-
-const mapDispatchToProps = (dispatch)=> {
-    return {
-        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
-        signOut: () => dispatch({type: "signOut"})
-    }
-}
-
-function handleToken(token){
-    console.log(token)
-}
-class MySettingsPage extends Component{
+class MyCart extends React.Component {
     state = {
-        dataReceived: [],
-        userName: "",
-        userEmailId:  "",
-        userPhoneNumber: "",
-        email: "",
-        brand: "",
-        country: "",
-        cvc_check: "",
-        exp_month: "",
-        funding: "",
-        last4: ""
+        totalPrice: 1,
+        restaurantName: "mai",
+        dishesForUserDisplay: [],
+        scheduleDelivery: false,
+        startDate: new Date(),
+        time: '10:00',
+        rating: 0,
+        provideRatings: false,
+        dishQuantity: 0
 
     }
-    returnToLoginDahboard = () => {
-        this.props.history.push('/errorPageForRegistration');
-    }
-    forwardToMyCurrentLocation = () => {
-        this.props.history.push('/MyCurrentLocation');
+
+    onStarClick(nextValue, prevValue, name) {
+        let currentComponent = this;
+        console.log(nextValue)
+        fetch('/rateRestaurant',{
+            method: 'POST',
+            redirect: 'follow',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                userEmail: this.props.userEmailId,
+                restaurantId: "abc12",
+                restaurantRating: nextValue
+            })})
+            .then(res => {
+                console.log(res)
+                if (res.status === 200){
+                    this.forwardToLoginDashboard()
+                }
+
+            })
+
+
     }
 
-    forwardToPaymentPage = () => {
-        this.props.history.push('/paymentSystemForUsers')
-    }
-
-    signOut = () => {
-        this.props.signOut();
-        this.props.history.push('/');
-    }
-
-    forwardToMyCart = () => {
-        this.props.history.push('/MyCart')
-    }
-
-    forwardToSettingsAddresses = () => {
-        this.props.history.push('/UserSettingsPageAddresses')
-    }
-
-    settingsPage = () => {
-        this.props.history.push('/MySettingsPage')
-    }
-
-    goBackToLoginDashboard = () => {
+    forwardToLoginDashboard = () => {
         this.props.history.push('/LoginDashboard')
     }
 
-    componentDidMount() {
-        let currentComponent = this;
-        console.log(currentComponent.state.userEmailId);
-        console.log(this.props.userEmailId);
-        console.log(currentComponent.props.userEmailId)
-        fetch('/getUserDataForMyCart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body:JSON.stringify({
-                userEmail: currentComponent.props.userEmailId
-            }),
-        }).then(function(response) {
-            console.log("returned");
-            console.log(response);
-            return response.json();
-        }).then(function(data) {
-            console.log(data);
-            console.log(data.itemName);
-            const userName = data.userName;
-            console.log("Will mount username", userName);
-            currentComponent.setState({
-                itemName: data.itemName,
-                itemQuantity: data.itemQuantity,
-            });
-            console.log(currentComponent.state.itemQuantity);
-        })
-    }
 
-    forwardToMyOrdersPage = () => {
-        this.props.history.push('/MyOderListSettings')
-    }
-
-    handleTokenAPI = (token) => {
-        console.log("Insdie this");
-        console.log(token.email);
-        console.log("Later");
-        console.log(token.card.brand);
-        console.log(token.card.country);
-        console.log(token.card.cvc_check);
-        console.log(token.card.exp_month);
-        console.log(token.card.exp_year);
-        console.log(token.card.funding);
-        console.log(token.card.last4);
+    onChange = date => this.setState({ date })
+    handleChange = date => {
         this.setState({
-            email: token.email,
-            brand: token.card.brand,
-            country: token.country,
-            cvc_check: token.card.cvc_check,
-            exp_month: token.card.exp_month,
-            funding: token.card.funding,
-            last4: token.card.last4
-        })
-        console.log("End")
-        this.sendCardDetailsForPayment();
+            startDate: date
+        });
+    };
+
+    onChangetime = time => this.setState({ time })
+
+
+
+
+    componentWillMount() {
+
+        let currentComponent = this;
+        fetch('/getUserDataForMyCart',{
+            method: 'POST',
+            redirect: 'follow',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                userEmail: "maithreyi.prabhu95@gmail.com",})})
+            .then(res => {
+                console.log(res)
+                return res.json()
+            }).then(response => {
+            currentComponent.setState({
+                dishesForUserDisplay: response
+            })
+            console.log(response)})
+        console.log(currentComponent.state.data)
+
     }
 
+    handleChangeOfScheduleDelivery  = (
+
+    ) => {
+        this.setState({
+            scheduleDelivery: true,
+        });
+    };
+
+    submitSchedulingOfOrder(){
+        fetch('/scheduleOrderForUser',{
+            method: 'POST',
+            redirect: 'follow',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                userEmail: this.props.userEmailId,
+                time: this.state.time,
+                dateForScheduling: this.state.startDate
+
+            })})
+            .then(res => {
+                console.log(res.status)
+                if (res.status === 200){
+                   this.setState({
+                       scheduleDelivery: false,
+                   })
+                }
+                console.log(this.state.data)
+            })
+    }
+
+
+    handleClick = (e) => {
+        console.log(e);
+        console.log(this.state.dishesForUserDisplay)
+
+        const {dishesForUserDisplay} = this.state.dishesForUserDisplay
+        console.log(dishesForUserDisplay)
+        const { id } = e.target;
+        console.log(id)
+        dishesForUserDisplay[id].dishQuantity = dishesForUserDisplay[id].dishQuantity + 1
+        console.log(dishesForUserDisplay[id].dishQuantity);
+        this.setState({
+            dishesForUserDisplay
+        })
+
+        let currentComponent = this;
+        fetch('/addItemToMyCart ',{
+            method: 'POST',
+            redirect: 'follow',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                userEmail: this.props.userEmailId,
+
+                dishQuantity: this.state.dishesForUserDisplay[id].dishQuantity
+            })})
+            .then(res => {
+                console.log(res.status)
+                if (res.status === 200){
+                    fetch('/getUserDataForMyCart',{
+                        method: 'POST',
+                        redirect: 'follow',
+                        headers: {
+                            "Content-Type": "application/json",
+                            'Access-Control-Allow-Origin': '*'
+                        },
+                        body: JSON.stringify({
+                            userEmail: this.props.userEmailId,})})
+                        .then(res => {
+                            console.log(res)
+                            return res.json()
+                        }).then(response => {
+                        currentComponent.setState({
+                            dishesForUserDisplay: response
+                        })
+                        console.log(response)})
+                }
+                    console.log(this.state.data)
+                })
+            }
     sendCardDetailsForPayment = () => {
-        fetch('/payForUserCart', {
+        console.log("Inside send card details")
+        console.log("RestaurantId", this.props.restaurantId)
+        console.log("email Id", this.props.emailId)
+        fetch('/makeUserOrder', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: this.props.userEmailId,
-                email: this.state.email,
-                brand: this.state.brand,
-                country: this.state.country,
-                cvc_check: this.state.cvc_check,
-                exp_month: this.state.exp_month,
-                funding: this.state.funding,
-                last4: this.state.last4
+                userEmail: this.props.emailId,
+                restaurantId: this.props.restaurantId,
+
             }),
         }).then(res => {
             if (res.status===200){
-                this.forwardToMyOrdersPage();
+                this.setState({
+                    provideRatings: true
+                });
             }
             else{
                 alert("Invalid Card details");
@@ -152,14 +201,51 @@ class MySettingsPage extends Component{
         })
 
     }
+    goBackToLoginDashboard = () => {
+        this.props.history.push('/LoginDashboard')
+    }
+
+    handleTokenAPI = (token) => {
+        console.log("Insdie this");
+
+        console.log("End")
+        console.log("Ending")
+        this.sendCardDetailsForPayment();
+    }
 
 
     render() {
-        let trying = this.state.data;
-        if(this.props.userEmailId === null) {
-            this.props.history.push('/')
-        }
-        return (
+        const { rating } = this.state;
+
+        let mapDishesForUserView = this.state.dishesForUserDisplay.map((d,itemName)=>
+        {
+            return(
+                <tr><td data-th="Product" key={itemName}>
+                    <div className="row">
+                        <div className="col-sm-2 hidden-xs"><img src="https://data.tibettravel.org/assets/images/Tibet-bhutan-tour/indian-food-in-Lhasa.jpg" alt="..."
+                                                                 height="50px" width="50px" className="img-responsive"/></div>
+
+                    </div>
+                </td>
+                    <td><div className="col-sm-10">
+                        <h4 className="nomargin">{d.dishName}</h4>
+
+                    </div></td>
+                    <td data-th="Price">{d.dishPrice}</td>
+
+
+                    <td className="actions" data-th="">
+                        <div className="col-md-8 col-sm-8 col-xs-8">
+                             <a id={itemName} key={itemName} value={d.dishQuantity} onClick={this.handleClick} >{d.dishQuantity}</a>
+                        </div>
+                    </td>
+                </tr>
+
+
+
+            )
+        })
+        return(
             <div>
                 <header>
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
@@ -183,13 +269,8 @@ class MySettingsPage extends Component{
                                         <a className="nav-link"><i
                                             className="fa fa-fw fa-user" onClick={this.goBackToLoginDashboard}/>Home</a>
                                     </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link"><i
-                                            className="fa fa-fw fa-user"/>Cart</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link"   onClick={this.settingsPage} ><span>Settings</span></a>
-                                    </li>
+
+
                                     <li>
                                         <a className="nav-link" onClick={this.signOut}> Sign Out </a>
                                     </li>
@@ -247,60 +328,140 @@ class MySettingsPage extends Component{
 
                         <div className="col-lg-8 pb-5">
                             <form className="row">
-                                <div className="col-md-3">
-                                    <div className="form-group">
-                                        <label htmlFor="account-fn">Item Name</label>
-                                        <input className="form-control" type="text" id="account-fn"
-                                               placeholder={this.state.itemName}/>
-                                    </div>
-                                </div>
+                                <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
+                                <div className="container">
+                    <table id="cart" className="table table-hover table-condensed">
+                        <thead>
+                        <tr>
+                            <th id="dishDisplayTable">Dish Image</th>
+                            <th id="dishDisplayTable" >Dish Name</th>
 
-                                <div className="col-md-2">
-                                    <div className="form-group">
-                                        <label htmlFor="account-email">Quantity</label>
-                                        <input className="form-control" type="email" id="account-email" placeholder={this.state.userEmailId}
-                                               disabled=""/>
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="form-group" id="RemoveButton">
-                                        <button className="delete btn btn-danger" title="Delete" data-toggle="tooltip"><i
-                                            className="material-icons">Remove</i></button>
-                                    </div>
-                                </div>
+                            <th id="dishDisplayTable">Dish Price</th>
+                            <th id="dishDisplayTable">Quantity</th>
+                            <th id="dishDisplayTable"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {mapDishesForUserView}
+                        </tbody>
+                        <tfoot>
 
-                                <div className="col-12">
-                                    <hr className="mt-2 mb-3"/>
-                                    <div className="d-flex flex-wrap justify-content-between align-items-center">
-                                        <div className="custom-control custom-checkbox d-block">
-                                            <input className="custom-control-input" type="checkbox"
-                                                   id="subscribe_me" checked=""/>
+                        <tr>
+                            <tr className="visible-xs">
+                                <td className="text-center"><strong></strong></td>
 
-                                        </div></div>
+                            </tr>
+                        </tr>
+                        <tr>
+                            <td><a href="#" className="btn btn-warning"><i
+                                className="fa fa-angle-left"></i>Home Page</a></td>
+                            <td></td>
 
+                            <td><a
+                                className="btn btn-success btn-block" value = { this.state.scheduleDelivery}onClick={this.handleChangeOfScheduleDelivery} >Schedule This order <i className="fa fa-angle-right"></i></a>
+                            </td>
 
-                                </div>
-                            </form>
-                            <div className="container">
-                                <div className="rounded-circle">
-
-                                    <StripeCheckout stripeKey="pk_live_qksmj6ho2DblvlfR5PNKgzea00zC51Ydfw"
-                                                    amount={this.state.totalPrice}
-                                                    token={this.handleTokenAPI}
-                                                    name={this.state.restaurantName}
+                        </tr>
+                        </tfoot>
+                    </table>
 
 
+                                </div></form>
+                            <td> <StripeCheckout stripeKey="pk_live_qksmj6ho2DblvlfR5PNKgzea00zC51Ydfw"
+                                                 amount={this.state.totalPrice}
+                                                 token={this.handleTokenAPI}
+                                                 name={this.state.restaurantName}
+
+
+                            />
+                            </td>
+                        </div></div></div>
+                <Modal
+                    show={this.state.scheduleDelivery}
+                    onHide={this.closeAllOptionsOfSelectionForm}
+                    animation={false}
+                    centered id="modal"
+                >
+                    <div className="container">
+                        <div className="row">
+                            <div className="main">
+                                <div className="login-form">
+                                    <div>
+
+                                        <Calendar
+                                        onChange={this.onChange}
+                                        value={this.state.date}
                                     />
+
+                                    <br/>
+                                    <br/>
+                                    <br/>
+
+                                        <TimePicker
+                                            onChange={this.onChangetime}
+                                            value={this.state.time}
+                                        />
+                                        <br/>
+                                        <br/>
+                                    </div>
+
                                 </div>
+                                <td><a
+                                    className="btn btn-success btn-block" onClick={this.submitSchedulingOfOrder} >Schedule This order <i className="fa fa-angle-right"></i></a>
+                                </td>
                             </div>
                         </div>
+                    </div>
+
+                </Modal>
+
+                <Modal
+                    show={this.state.provideRatings}
+                    onHide={this.closeAllOptionsOfSelectionForm}
+                    animation={false}
+                    centered id="modal"
+                >
+                    <div className="container">
+                        <div className="row">
+                            <div className="main">
+                                <div className="login-form">
+                                    <div>
+                                        <div>
+                                            <h2>Please provide your ratings</h2>
+                                            <StarRatingComponent
+                                                name="rate your food"
+                                                starCount={5}
+                                                value={rating}
+                                                onStarClick={this.onStarClick.bind(this)}
+                                            />
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                </div>
 
-        );
+                </Modal>
+
+
+            </div>
+        )
     }
-
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (MySettingsPage);
+const mapStateToProps = (state)=> {
+    return {
+        emailId: state.userId,
+        restaurantId: state.userSelectedRestaurant
+    }
+}
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(MyCart);

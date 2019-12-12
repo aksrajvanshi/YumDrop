@@ -57,6 +57,10 @@ class MySettingsPage extends Component{
         this.props.history.push('/MyCart')
     }
 
+    goToActiveOrdersPage = () => {
+        this.props.history.push('/ActiveOrders')
+    }
+
     componentDidMount() {
         let currentComponent = this;
         fetch('/getUserDataForDashboard', {
@@ -79,6 +83,10 @@ class MySettingsPage extends Component{
         })
         }
 
+    goToChatFeature = () => {
+        this.props.history.push('/chatFeature')
+    }
+
 
     render() {
         let trying = this.state.data;
@@ -87,43 +95,43 @@ class MySettingsPage extends Component{
         }
         return (
             <div>
+                <head>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                </head>
                 <header>
-                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-                    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
-                    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-                    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
-                            <a className="navbar-brand " href="#" onClick={this.goBackToLoginDashboard}>YumDrop</a>
+                            <a className="navbar-brand " href="#">YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
 
                                     <li className="nav-item">
-                                        <a className="nav-link"><i
-                                            className="fa fa-fw fa-user" onClick={this.goBackToLoginDashboard}/>Home</a>
+
+                                        <a onClick={this.goBackToLoginDashboard} >
+                                            <span><strong>Home</strong></span>
+                                        </a>
                                     </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" onClick={this.forwardToMyCart}><i
-                                            className="fa fa-fw fa-user"/>Cart</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link"   onClick={this.settingsPage} ><span>Settings</span></a>
-                                    </li>
+
                                     <li>
-                                        <a className="nav-link" onClick={this.signOut}>Sign Out</a>
+                                        <a className="nav-link" onClick={this.signOut}>Logout</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </nav>
-
                 </header>
                 <div className="container mt-5">
                     <div className="row">
@@ -152,7 +160,10 @@ class MySettingsPage extends Component{
 
                                         </div>
                                     </a><a className="list-group-item active" href="#"><i
-                                    className="fe-icon-user text-muted" onClick={this.goBackToProfileSettingsPage}></i>Profile Settings</a><a
+                                    className="fe-icon-user text-muted" onClick={this.goBackToProfileSettingsPage}></i>Profile Settings</a>
+                                    <a className="list-group-item " onClick={this.goToActiveOrdersPage} ><i
+                                        className="fe-icon-user text-muted" onClick={this.goToActiveOrdersPage}></i>Active Orders</a>
+                                    <a
                                     className="list-group-item" href="#" onClick={this.forwardToSettingsAddresses}><i className="fe-icon-map-pin text-muted"></i>Addresses</a>
                                     <a className="list-group-item" href="#" onClick={this.forwardToMyCart}>
                                         <div className="d-flex justify-content-between align-items-center">

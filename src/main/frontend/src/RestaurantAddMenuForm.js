@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./RestaurantAddMenuForm.css";
 import {connect} from "react-redux";
+import ConvertImage from "react-convert-image";
+import imageDataURI from "image-data-uri";
+
 
 
 const mapStateToProps = (state)=>{
@@ -8,6 +11,10 @@ const mapStateToProps = (state)=>{
         restaurantId: state.userId
     }
 };
+
+
+
+
 
 class RestaurantAddMenuForm extends Component{
     state  = {
@@ -19,8 +26,20 @@ class RestaurantAddMenuForm extends Component{
         restaurantPrimaryEmailId: "",
         restaurantId: "",
         errorSelect: false,
-        data: []
+        data: [],
+        restaurantDishImage: ""
 
+
+    }
+
+
+    handleRestautantDishImage = (url) => {
+        let base64Image = '';
+        this.getDataUri(url, (result) => {
+            base64Image = result;
+            console.log(base64Image)
+        })
+        this.setState({restaurantDishImage: base64Image})
 
     }
 
@@ -58,6 +77,19 @@ class RestaurantAddMenuForm extends Component{
     }
 
 
+
+    getDataUri(url, callback) {
+        let reader = new FileReader();
+        reader.readAsDataURL(url.target.files[0]);
+        reader.onload = function () {
+            callback(reader.result)
+        }
+        reader.onerror = function () {
+            console.log("file upload error")
+        }
+    }
+
+
     restaurantAddDish= () => {debugger;
         console.log(this.state.restaurantId);
         console.log(this.props.restaurantId);
@@ -81,6 +113,16 @@ class RestaurantAddMenuForm extends Component{
 
             }
         ).then(res => {
+            if (res.status !== 200) {
+                this.setState({
+                    errorSelect: true,
+                    data: res.data
+                })
+
+            }else {
+                console.log("Inside this")
+                this.goToRestaurantDashboard();
+            }
             return res.json();
         })
             .then(res => {
@@ -137,7 +179,7 @@ class RestaurantAddMenuForm extends Component{
                         </div>
                     </nav>
                 </header>
-                {this.props.restaurantId}
+                <img src={this.state.restaurantDishImage}/>
                 <section class=" py-5">
                     <div className="container">
                         <div className="row ">
@@ -164,6 +206,18 @@ class RestaurantAddMenuForm extends Component{
                                                    value={this.state.restaurantDishPrice} onChange={this.handleRestaurantDishPrice}       placeholder="Dish Price"/>
                                         </div>
                                     </div>
+
+
+
+                                    <div className="form-row">
+                                        <div className="form-group col-md-6">
+                                            <input id="Full Name" name="myImage"  placeholder="Dish URL"
+                                                   value={this.state.restaurantDishImage} onChange={this.handleRestautantDishImage}    className="form-control" type="file"/>
+
+                                        </div>
+                                    </div>
+
+
                                     <div className="form-row">
 
 

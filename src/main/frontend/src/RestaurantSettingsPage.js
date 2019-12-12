@@ -36,6 +36,10 @@ class RestaurantSettingsPage extends Component {
         this.props.history.push('/RestaurantResetpassword');
     }
 
+    forwardToActiveOrders = () => {
+        this.props.history.push('/RestaurantActiveOrders')
+    }
+
     componentDidMount() {
         let currentComponent = this;
         console.log(currentComponent.props.restaurantId);
@@ -134,6 +138,8 @@ class RestaurantSettingsPage extends Component {
                                         className="list-group-item" href="#" onClick={this.forwardToAddressPage}><i className="fe-icon-map-pin text-muted"></i>Address</a>
                                     <a
                                         className="list-group-item" href="#" onClick={this.forwardToResetpassword}><i className="fe-icon-map-pin text-muted"></i>Reset Password</a>
+                                    <a
+                                        className="list-group-item" href="#" onClick={this.forwardToActiveOrders}><i className="fe-icon-map-pin text-muted"></i>Active Orders</a>
 
                                 </nav>
                             </div>
