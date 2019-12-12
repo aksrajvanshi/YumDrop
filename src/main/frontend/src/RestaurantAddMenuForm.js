@@ -33,8 +33,14 @@ class RestaurantAddMenuForm extends Component{
     }
 
 
-    handleRestautantDishImage= (url) => {
-        this.getDataUri(url)
+    handleRestautantDishImage = (url) => {
+        let base64Image = '';
+        this.getDataUri(url, (result) => {
+            base64Image = result;
+            console.log(base64Image)
+        })
+        this.setState({restaurantDishImage: base64Image})
+
     }
 
     handleRestaurantDishAvailability= (event) => {
@@ -73,28 +79,14 @@ class RestaurantAddMenuForm extends Component{
 
 
     getDataUri(url, callback) {
-        let image = new Image();
-
-        image.onload = function () {
-            let canvas = document.createElement('canvas');
-            canvas.width = this.naturalWidth;
-            canvas.height = this.naturalHeight;
-
-            canvas.getContext('2d').drawImage(this, 0, 0);
-
-            let dataForConversion  = callback(canvas.toDataURL(url));
-            console.log("Printing data", dataForConversion)
-            this.setState({
-                restaurantDishImage:  callback(canvas.toDataURL(url))
-            })
-            console.log(this.state.restaurantDishImage)
-        };
-
-        image.src = url;
-        console.log(image.src);
-        console.log(url)
-        let canvas = document.createElement('canvas');
-        console.log(canvas.toDataURL('C:\\Users\\maith\\Pictures\\display3.jpg'));
+        let reader = new FileReader();
+        reader.readAsDataURL(url.target.files[0]);
+        reader.onload = function () {
+            callback(reader.result)
+        }
+        reader.onerror = function () {
+            console.log("file upload error")
+        }
     }
 
 
@@ -188,6 +180,7 @@ class RestaurantAddMenuForm extends Component{
                         </div>
                     </nav>
                 </header>
+                <img src={this.state.restaurantDishImage}/>
                 <section class=" py-5">
                     <div className="container">
                         <div className="row ">
