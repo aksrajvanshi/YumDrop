@@ -1,31 +1,81 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
+import "./restaurantDashboardCSS.css"
 
 const mapStateToProps = (state)=>{
     return {
-        restaurantPrimaryEmailId: state.restaurantPrimaryEmailId
+        restaurantId: state.userId
     }
 };
-class RestaurantDashboard extends Component{
-    state = {
-        Name: "",
-        data: [
-            {itemName: "first dish",itemDescription: "First item ",itemCost: "4$",itemAvailability: "Available"},
-            {itemName: "first dish",itemDescription: "First item ",itemCost: "4$",itemAvailability: "Available"},
-            {itemName: "first dish",itemDescription: "First item ",itemCost: "4$",itemAvailability: "Available"},
-            {itemName: "first dish",itemDescription: "First item ",itemCost: "4$",itemAvailability: "Available"},
-            {itemName: "first dish",itemDescription: "First item ",itemCost: "4$",itemAvailability: "Available"},
-        ]
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
     }
-    componentDidMount () {
-        fetch('/getRestaurantMenuDetails')
-            .then(res => res.json()
-            ).then(res => {
-            this.setState({data: res})
-        })}
+}
+
+class RestaurantDashboard extends Component{
+    constructor(props){
+        super(props)
+        this.deleteItem = this.deleteItem.bind(this);
+    }
+    state = {
+        Name: "Restaurant 1",
+        restaurantPrimaryEmailId: "Restaurant 1",
+        data: [],
+        deleteItemThing: "",
+        deleteItemThing1: []
+    }
+    componentWillMount() {
+        let currentComponent = this;
+        fetch('/getAllRestaurantDishes',{
+            method: 'POST',
+            redirect: 'follow',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                restaurantId: this.props.restaurantId})})
+            .then(res => {
+                console.log(res)
+                return res.json()
+            }).then(response => {
+                currentComponent.setState({
+                    data: response
+                })
+            console.log(response)})
+        console.log(this.state.data)
+        }
+
+
+
+
 
     forwardToAddingAnItem = () => {
         this.props.history.push("/RestaurantAddMenuForm");
+    }
+
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
+    }
+
+    editDishItem = (itemName) => {
+        console.log("Edit this item")
+        console.log(itemName)
+    }
+
+    deleteItem = (event) =>  {
+        console.log("Inside this")
+        console.log(event.target.dataset.value)
+        this.setState({
+            deleteItemThing1: event.target.dataset.value,
+            deleteItemThing: event.target.dataset.value
+        })
+        console.log(this.state.deleteItemThing1)
+        console.log(this.state.deleteItemThing)
     }
 
     forwardToRestaurantSettingsPage = () => {
@@ -35,8 +85,78 @@ class RestaurantDashboard extends Component{
     forwardToLogiDashboard = () => {
         this.props.history.push("/RestaurantDashboard");
     }
-    render() {
 
+    handleClick(item) {
+        console.log(item);
+
+
+
+        let currentComponent = this;
+        fetch('/deleteDish',{
+            method: 'POST',
+            redirect: 'follow',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                restaurantId: this.props.restaurantId,
+                dishName: item.dishName
+            })})
+            .then(res => {
+                console.log(res.status)
+                if (res.status === 200){
+                    fetch('/getAllRestaurantDishes',{
+                        method: 'POST',
+                        redirect: 'follow',
+                        headers: {
+                            "Content-Type": "application/json",
+                            'Access-Control-Allow-Origin': '*'
+                        },
+                        body: JSON.stringify({
+                            restaurantId: this.props.restaurantId,})})
+                        .then(res => {
+                            console.log(res)
+                            return res.json()
+                        }).then(response => {
+                        currentComponent.setState({
+                            data: response
+                        })
+                        console.log(response)})
+                    console.log(this.state.data)
+                }
+            })
+
+    }
+
+    forwardToChatFeature = () => {
+        this.props.history.push('/chatFeature')
+    }
+    render() {
+        if(this.props.restaurantId === null) {
+            this.props.history.push('/')
+        }
+
+        let mapFunction = this.state.data.map((d,itemName) =>{
+                return (
+                    <tr key={itemName}>
+                        <td><img
+                            src="https://assets3.thrillist.com/v1/image/2793388/size/gn-gift_guide_variable_c.jpg" height="50px" width="50px"
+                            alt=""  /></td>
+                        <td>{d.dishName}</td>
+                        <td>{d.dishDescription}
+                        </td>
+                        <td>{d.dishPrice}</td>
+                        <td className="td-actions">
+
+
+                            <a className="btn btn-small">
+                                <i className="btn-icon-only icon-remove" onClick={this.handleClick.bind(this, d)} ></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                )})
         return(
             <div>
                 <header>
@@ -46,7 +166,9 @@ class RestaurantDashboard extends Component{
                     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+                    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css"/>
+                    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+                    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
                     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans"/>
                     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
                     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
@@ -61,89 +183,60 @@ class RestaurantDashboard extends Component{
                                 <ul className="navbar-nav mr-auto">
                                     <li className="nav-item" >
                                         <a className="nav-link" onClick={this.forwardToRestaurantSettingsPage}><i
-                                            className="fa fa-fw fa-user"></i>My Settings</a>
+                                            className="fa fa-fw fa-user"></i>Settings</a>
+                                    </li>
+                                    <li>
+                                        <a className="nav-link" onClick={this.signOut}>Logout</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </nav>
                 </header>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-xs-10 ">
-                            <div className="input-group">
 
-                                <input type="hidden" name="search_param" value="all" id="search_param"/>
-                                <input type="text" className="form-control" name="x" placeholder="Search for an item..."/>
-                                <span className="input-group-btn">
-                    <button className="btn btn-default" type="button"><span
-                        className="glyphicon glyphicon-search"/></button>
-                </span>
-                            </div>
+
+<div className="container" id="Table-For-Restaurant">
+                <div className="span7" id="Table-For-Restaurant">
+                    <div className="widget stacked widget-table action-table" id="tableFprRestaraurant">
+                        <div className="widget-header" >
+                            <i className="icon-th-list"></i>
+                            <h3>Dishes</h3>
                         </div>
-                    </div>
-                </div>
-                <br/><br/><br/>
+                        <div className="widget-content">
 
+                            <table className="table table-striped table-bordered" id="tableFprRestaraurant">
+                                <thead>
+                                <tr>
+                                    <th>Dish Image</th>
+                                    <th>Dish Name</th>
+                                    <th>Dish Description</th>
+                                    <th>Dish Price</th>
 
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-10">
-                            <div className="panel panel-default">
-                                <div className="panel-heading"><strong>Menu</strong></div>
-                                <div className="panel-body">
-                                    <table className="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>Item Name</th>
-                                            <th>Item Description</th>
-                                            <th className="text-center">Cost</th>
-                                            <th className="text-center">Availablity</th>
-                                            <th className="text-center">Edit item</th>
-                                            <th className="text-center">Delete item</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {mapFunction}
+                                </tbody>
+                            <tfoot>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                           <td> <a
+                                className="btn btn-success btn-block" onClick={this.forwardToAddingAnItem}>Add item <i className="fa fa-angle-right"></i></a>
+                           </td>
+                            </tfoot>
+                            </table>
 
-
-                                        {this.state.data.map(function(d,itemName,itemDescription,itemCost,itemAvailability){
-                                            return (
-                                                <tr>
-                                                    <td className="col-md-6">
-                                                        <h4><a href="#" key={itemName}>{d.itemName}</a></h4>
-
-                                                    </td>
-                                                    <td className="col-md-5"><h5>{d.itemDescription}</h5>
-                                                        <span>Vegetarian</span><br/><span><strong>{d.itemCuisine}</strong></span></td>
-                                                    <td className="col-md-4 text-center"><strong>{d.itemCost}</strong></td>
-                                                    <td className="col-md-4 text-center"><strong>{d.itemAvailability}</strong></td>
-                                                    <td className="col-md-8">
-                                                        <button className="edit btn btn-success" title="Edit" data-toggle="tooltip"><i
-                                                            className="material-icons"></i></button>
-                                                    </td>
-                                                    <td className="col-md-8">
-                                                        <button className="delete btn btn-danger" title="Delete" data-toggle="tooltip"><i
-                                                            className="material-icons"></i></button>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })}
-                                        <br/><br/>
-                                        <div className="col-md-12 offset-12">
-                                            <button className="btn btn-success" onClick={this.forwardToAddingAnItem}>Add an item</button>
-
-                                        </div>
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
+            </div>
+
         )
     }
 }
 
-export default (RestaurantDashboard);
+export default connect(mapStateToProps, mapDispatchToProps) (RestaurantDashboard);

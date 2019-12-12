@@ -1,8 +1,9 @@
 package com.app.yumdrop.Controller;
 
-import com.app.yumdrop.Entity.Delivery_Agent;
+import com.app.yumdrop.Entity.DeliveryAgent;
 import com.app.yumdrop.FormEntity.DeliveryAgentLoginDetails;
 import com.app.yumdrop.Repository.DeliveryAgentRepository;
+
 import com.app.yumdrop.Utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,13 +24,13 @@ public class DeliveryAgentLoginController {
     @RequestMapping(value = "/deliveryAgentLoginDataForm", method = RequestMethod.POST)
     public ResponseEntity<?> deliveryAgentLogin(@RequestBody DeliveryAgentLoginDetails deliveryAgentLoginDetails) {
 
-        Delivery_Agent loggedInUser = deliveryAgentRepository.findBydaEmail(deliveryAgentLoginDetails.getdeliveryAgentLoginEmail());
+        DeliveryAgent loggedInUser = deliveryAgentRepository.findByDeliveryAgentEmail(deliveryAgentLoginDetails.getdeliveryAgentLoginEmail());
         if (loggedInUser == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        if (loggedInUser.getDAEmail().equals(deliveryAgentLoginDetails.getdeliveryAgentLoginEmail())
-                && PasswordUtils.checkIfPasswordMatches(deliveryAgentLoginDetails.getdeliveryAgentLoginPassword(), loggedInUser.getDAPassword())) {
+        if (loggedInUser.getDeliveryAgentEmail().equals(deliveryAgentLoginDetails.getdeliveryAgentLoginEmail())
+                && PasswordUtils.checkIfPasswordMatches(deliveryAgentLoginDetails.getdeliveryAgentLoginPassword(), loggedInUser.getDeliveryAgentPassword())) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

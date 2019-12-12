@@ -1,6 +1,4 @@
-body{
-    background:#eee;
-}
+
 .widget-author {
     margin-bottom: 58px;
 }
@@ -17,7 +15,7 @@ body{
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url(https://demo.createx.studio/createx-html/img/widgets/author/cover.jpg)
+
 }
 .author-card .author-card-cover::after {
     display: block;

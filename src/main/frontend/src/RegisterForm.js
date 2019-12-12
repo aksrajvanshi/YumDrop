@@ -1,17 +1,19 @@
 import React, { Component } from "react";
 import "./App.css";
-
+import "./RegisterFormCSS.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 
+import DeliveryAgentOTPpage from "./DeliveryAgentOTPpage";
+import DeliveryAgentRegistration from "./DeliveryAgentRegistration";
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+
+import Recaptcha from 'react-recaptcha';
 
 class App extends Component {
     constructor(props){
         super(props)
     }
-
-
 
     state = {
         closeAllOptionsOfSelectionForm: false,
@@ -43,9 +45,19 @@ class App extends Component {
         facebookUserAccessToken: "",
         facebookUserId: "",
         facebookUserEmail: "",
-        facebookUserName:""
+        facebookUserName:"",
+        isReCaptchaVerified: false
 
     };
+
+    verifyCallback = response => {
+        if(response) {
+            this.setState({
+                isReCaptchaVerified: true
+            })
+        }
+    }
+
     forwardToLoginForm = () => {
         this.props.history.push('/LoginForm');
     }
@@ -78,7 +90,12 @@ class App extends Component {
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
             }else {
-                this.setState({redirect: true, userRegister: false, otpVal:true});
+                if(this.state.isReCaptchaVerified) {
+                    this.setState({redirect: true, userRegister: false, otpVal: true});
+                }
+                else {
+                    this.setState({redirect: true, userRegister: false});
+                }
             }
 
 
@@ -113,13 +130,12 @@ class App extends Component {
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToErrorPage();
-                alert("Hey going to login page");
+                
             }else {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToSuccessPage();
-                alert("Hey going to Success page");
+                
             }
-
 
         })
     }
@@ -172,12 +188,17 @@ class App extends Component {
     }
 
     closeAllOptionsOfSelectionForm = () => {
+        this.goBackToHomePage();
         this.setState({
             userRegister: false,
             restaurantRegister: false,
             registerSelect: false,
             deliveryAgentRegister: false
         });
+    }
+
+    goBackToHomePage = () => {
+        this.props.history.push("/")
     }
 
     userRegister = () => {
@@ -212,21 +233,15 @@ class App extends Component {
     render()
     {
         const responseFacebook = (response) => {
-            console.log(response);
             this.state.facebookUserAccessToken = response.accessToken;
             this.state.facebookUserId = response.userID;
-            console.log("User ID", this.state.facebookUserId);
-            console.log("Access Token ", this.state.facebookUserAccessToken);
             let api = 'https://graph.facebook.com/v2.8/' + this.state.facebookUserId +
                 '?fields=name,email&access_token=' + this.state.facebookUserAccessToken;
             fetch(api)
                 .then((response) => response.json())
                 .then((responseData) => {
-                    console.log(responseData)
                     this.state.facebookUserEmail = responseData.email;
                     this.state.facebookUserName = responseData.name;
-                    console.log("Inside fetch api");
-                    console.log(responseData.email);
                 }).then(response => {
                 fetch('/facebookUserRegistration',
                     {
@@ -373,7 +388,7 @@ class App extends Component {
                                     </div>
                                     <div className="col-md-1" >
                                         <div className="md-form">
-                                            <button className="btn btn-lg btn-danger">Search</button>
+                                            <button className="btn btn-primary btn-md"><span id="SearchBar">Search</span></button>
                                         </div>
                                     </div>
                                 </div>
@@ -386,10 +401,10 @@ class App extends Component {
                     show={this.state.registerSelect}
                     onHide={this.closeAllOptionsOfSelectionForm}
                     animation={false}
-                    centered id="modal"
+                    centered id="modalForRegisterSelect"
                 >
                     <Modal.Header className="modelheader" id="containerModal" center>
-                        <Modal.Title className="modeltitle" id="modeltitle" center>
+                        <Modal.Title className="modeltitle" id="modeltitleForRegister" center>
                             <strong>Select Account</strong>
                         </Modal.Title>
                     </Modal.Header>
@@ -399,22 +414,23 @@ class App extends Component {
                         <div className="row">
                             <div className="main">
                                 <div className="login-form">
-                                    <form>
+                                    <form  id="containerSelectRegisterAccount">
                                         <div className="form-group">
                                             <button  type="submit"
-                                                     onClick={this.userRegister}   className="btn btn-primary btn-lg btn-block login-btn">User Registration
+                                                     onClick={this.userRegister}
+                                                     id="buttonLoginOption" className="btn btn-outline-secondary btn-lg btn-block">I am a new User
                                             </button>
                                         </div>
 
                                         <div className="form-group">
-                                            <button  type="submit" onClick={this.forwardToRestaurantRegistrationForm}
-                                                     className="btn btn-primary btn-lg btn-block login-btn">Restaurant Registration
+                                            <button  onClick={this.forwardToRestaurantRegistrationForm}
+                                                     id="buttonLoginOption" className="btn btn-outline-secondary btn-lg btn-block">I am a new Restaurant
                                             </button>
                                         </div>
 
                                         <div className="form-group">
                                             <button  type="submit" onClick={this.forwardToDeliveryAgentRegistration}
-                                                     className="btn btn-primary btn-lg btn-block login-btn">Delivery Agent Registration
+                                                     id="buttonLoginOption" className="btn btn-outline-secondary btn-lg btn-block">I am a new Delivery Agent
                                             </button>
                                         </div>
                                     </form>
@@ -528,9 +544,17 @@ class App extends Component {
                                                    pattern="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$"
                                                    required="required"/>
                                         </div>
+                                        <Recaptcha
+                                            sitekey="6LfA28AUAAAAAAdm39FjgIVi38BoyQoLDKTM5EJN"
+                                            render="explicit"
+                                            onloadCallback={this.recaptchaLoaded}
+                                            verifyCallback={this.verifyCallback}
+
+                                        />
+                                        <br/>
                                         <div className="form-group">
                                             <button onClick={this.register.bind(this)} type="submit"
-                                                    className="btn btn-primary btn-lg btn-block login-btn">Sign Up
+                                                    className="btn btn-primary btn-lg btn-block">Sign Up
                                             </button>
                                         </div>
                                     </form>
@@ -544,6 +568,7 @@ class App extends Component {
 
 
 
+                <br/><br/><br/><br/>
                 <div className="how-section1">
                     <div className="row">
                         <div className="col-md-6 how-img">

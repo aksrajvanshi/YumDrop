@@ -1,6 +1,5 @@
 package com.app.yumdrop.Repository;
 
-import com.app.yumdrop.Entity.Restaurant;
 import com.app.yumdrop.Entity.RestaurantOtp;
 import org.springframework.data.repository.CrudRepository;
 

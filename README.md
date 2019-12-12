@@ -1,4 +1,5 @@
 # YumDrop - The food delivery app
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/56e5604e125f43729ee930f410b338dc)](https://www.codacy.com/manual/aksrajvanshi/YumDrop?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=aksrajvanshi/YumDrop&amp;utm_campaign=Badge_Grade)
 
 Yumdrop is a web application based on ReactJS and Java, Spring Boot which allows the user to order food online.
 

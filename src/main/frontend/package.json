@@ -5,27 +5,52 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "email-validator": "^2.0.4",
+    "image-data-uri": "^2.0.1",
+    "image-to-base64": "^2.0.1",
+    "json-fetch": "^8.0.0",
+    "material-ui": "latest",
+    "nodemon": "^2.0.1",
+    "randomstring": "^1.1.5",
     "react": "^16.10.1",
     "react-bootstrap": "^1.0.0-beta.14",
+    "react-calendar": "latest",
+    "react-chat-window": "^1.2.1",
+    "react-convert-image": "^0.5.0",
     "react-country-region-selector": "^1.4.5",
+    "react-datepicker": "^2.10.1",
+    "react-datetime": "^2.16.3",
+    "react-datetime-picker": "^2.8.0",
     "react-dom": "^16.10.1",
+    "react-file-base64": "^1.0.3",
     "react-google-login": "^5.0.7",
     "react-google-maps": "^9.4.5",
+    "react-images-upload": "^1.2.7",
     "react-native": "^0.61.2",
+    "react-payment": "^0.1.8",
     "react-places-autocomplete": "^7.2.1",
-    "react-router-dom": "latest",
+    "react-recaptcha": "^2.3.10",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.1.2",
     "react-slideshow-image": "^1.3.0",
+    "react-star-rating-component": "^1.4.1",
+    "react-stomp": "^4.2.0",
     "react-strap": "0.0.1",
+    "react-stripe-checkout": "^2.6.3",
     "react-telephone-input": "^4.73.4",
+    "react-time-picker": "latest",
     "reactstrap": "^8.0.1",
+    "recompose": "latest",
     "redux": "^4.0.4",
+    "socket.io": "^2.3.0",
     "url": "^0.11.0",
-    "validator": "^11.1.0"
+    "validator": "^11.1.0",
+    "socket.io-client": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && nohup run react server &",
+    "react": "react-scripts start",
+    "server": "nodemon src/server/index.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -45,8 +70,11 @@
     ]
   },
   "devDependencies": {
+    "datauri": "^2.0.0",
     "react-facebook-login": "^4.1.1",
     "react-geocode": "^0.2.0",
-    "react-redux": "^7.1.1"
+    "react-redux": "^7.1.1",
+    "react-talk": "^1.0.0",
+    "username-generator": "^1.1.0"
   }
 }

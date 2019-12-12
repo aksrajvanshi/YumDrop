@@ -1,0 +1,20 @@
+#tableForUserView{
+    width: 90%;
+    padding-left: 10px;
+}
+
+#dishImageForUserView{
+    width: 40%;
+}
+
+#dishNameForUserView{
+    width: 20%;
+}
+
+#dishPriceForUserView{
+    width: 10%
+}
+
+#dishDescriptionForUserView{
+    width: 40%;
+}

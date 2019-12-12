@@ -1,46 +1,58 @@
 import React, { Component } from "react";
 import "./App.css";
 import LoginPage from "./LoginPage";
+import DeliveryAgentLoginForm from "./DeliveryAgentLoginForm";
 import {connect} from 'react-redux';
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import { isMobilePhone, isEmail } from "validator";
+import { GoogleLogin } from 'react-google-login';
+import DeliveryAgentOTPpage from "./DeliveryAgentOTPpage";
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import Recaptcha from 'react-recaptcha';
 
-
-
-class DeliveryAgentRegistration extends Component {
+class App extends Component {
     constructor(props){
         super(props)
     }
+
     state = {
+
         closeAllOptionsOfSelectionForm: false,
-        userRegister: false,
-        restaurantRegister: false,
         deliveryAgentRegister: true,
-        otpVal: false,
-        registerSelect: false,
-        deliveryAgentFullName: "",
-        deliveryAgentEmailId: "",
-        deliveryAgentPhoneNumber: "",
-        deliveryAgentPassword: "",
-        deliveryAgentConfirmPassword: "",
-        redirect: false,
-        deliveryAgentOtp: ""
+        deliveryAgentEmail:"",
+        deliveryAgentName:"",
+        deliveryAgentPhonenum:"",
+        deliveryAgentPassword:"",
+        deliveryAgentConfirmPassword:"",
+        deliveryAgentOtp: "",
+        deliveryAgentOtpVal: false,
+        isReCaptchaVerified: false
+
     };
 
+    forwardToDeliveryAgentLoginForm = () => {
+        this.props.history.push('/DeliveryAgentLoginForm');
+    }
 
-    forwardToErrorPage = () => {
+
+    forwardToDeliveryAgentOTPpage = () => {
+        this.props.history.push({
+                pathname : '/DeliveryAgentOTPpage',
+                state :{
+                    name : this.state.userName
+                }
+            }
+        );
+
+    }
+
+    forwardToErrorPageForDeliveryAgentRegistration = () => {
         this.props.history.push('/ErrorPageForDeliveryAgentRegistration');
     }
 
-    forwardToRegisterForm = () => {
-        this.props.history.push("/RegisterForm");
-    }
 
-
-
-
-    register() {
+    registerDeliveryAgent() {
         debugger;
         let obj = {}
         fetch('/deliveryAgentRegistration',
@@ -52,28 +64,43 @@ class DeliveryAgentRegistration extends Component {
                     'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify({
-                        deliveryAgentEmailId: this.state.deliveryAgentEmailId,
-                        deliveryAgentPhoneNumber: this.state.deliveryAgentPhoneNumber
+
+                        deliveryAgent_email: this.state.deliveryAgentEmail,
+                        deliveryAgent_phonenum: this.state.deliveryAgentPhonenum
+
                     }
                 )
 
             }
         ).then(res => {
 
-            alert(res)
-            alert(res.status)
             if (res.status !== 200) {
-                this.setState({redirect: true, deliveryAgentRegister: false});
-                this.forwardToErrorPage();
+                this.setState({redirect: false, deliveryAgentRegister: false});
+                this.forwardToErrorPageforDeliveryAgentRegistration();
+
             }else {
-                this.setState({redirect: true, deliveryAgentRegister: false, otpVal:true});
+                if(this.state.isReCaptchaVerified) {
+                    this.setState({redirect: false, deliveryAgentRegister: false, deliveryAgentOtpVal: true});
+                }
+                else {
+                    this.setState({redirect: false, deliveryAgentRegister: false});
+                    this.forwardToErrorPageforDeliveryAgentRegistration();
+                }
             }
 
-
         })
+
     }
 
-    registerOtp() {
+    verifyCallback = response => {
+        if(response) {
+            this.setState({
+                isReCaptchaVerified: true
+            })
+        }
+    }
+
+    deliveryAgentRegisterOtp() {
         debugger;
         let obj = {}
         fetch('/verifyOTPandRegisterDeliveryAgent',
@@ -85,27 +112,26 @@ class DeliveryAgentRegistration extends Component {
                     'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify({
-                        deliveryAgentName: this.state.deliveryAgentFullName,
-                        deliveryAgentEmailId: this.state.deliveryAgentEmailId,
-                        deliveryAgentPhoneNumber: this.state.deliveryAgentPhoneNumber,
-                        deliveryAgentOtp: this.state.deliveryAgentOtp
+                        deliveryAgent_email: this.state.deliveryAgentEmail,
+                        deliveryAgent_phonenum: this.state.deliveryAgentPhonenum,
+                        deliveryAgent_password: this.state.deliveryAgentPassword,
+                        deliveryAgent_otp: this.state.deliveryAgentOtp,
+                        deliveryAgent_name: this.state.deliveryAgentName
 
                     }
                 )
 
             }
         ).then(res => {
-
-
             if (res.status !== 200) {
-                this.setState({redirect: true, userRegister: false});
-                this.forwardToErrorPage();
+                this.setState({redirect: true, deliveryAgentRegister: false});
+                this.forwardToErrorPageForDeliveryAgentRegistration();
+
             }else {
-                this.setState({redirect: true, userRegister: false});
+                this.setState({redirect: true, deliveryAgentRegister: false});
                 this.forwardToSuccessPage();
+
             }
-
-
         })
     }
 
@@ -113,37 +139,78 @@ class DeliveryAgentRegistration extends Component {
         this.props.history.push('/SuccessfulRegistration');
     }
 
-    forwardToRestaurantRegistrationForm = () => {
-        this.props.history.push('/forwardToRestaurantRegistrationForm')
-    }
 
-
-
-    handleDeliveryAgentFullName = (event) => {
+    registerSelect = () => {
         this.setState({
-            deliveryAgentFullName: event.target.value,
+            userRegister: false,
+            registerSelect: true,
+            restaurantRegister: false,
+            deliveryAgentRegister: false
         });
     };
 
-    deliveryAgentOtp = (event) => {
-        this.setState({
-            deliveryAgentOtp : event.target.value
-        })
 
+    closeAllOptionsOfSelectionForm = () => {
+        this.goBackToHomePage();
+        this.setState({
+            userRegister: false,
+            restaurantRegister: false,
+            registerSelect: false,
+            deliveryAgentRegister: false
+        });
     }
 
+    goBackToHomePage = () => {
+        this.props.history.push("/")
+    }
 
-    handleDeliveryAgentPrimaryEmailId = (event) => {
+    getTitle()
+    {
+        if (this.state.userLoginOption) {
+            return "User Login";
+        } else if (this.state.restaurantLoginOption) {
+            return "Restaurant Login";
+        } else if (this.state.deliveryAgentLoginOption) {
+            return "Delivery Agent Login";
+        }
+    }
+    userRegister = () => {
         this.setState({
-            deliveryAgentEmailId: event.target.value,
+            userRegister: true,
+            registerSelect: false,
+            restaurantRegister: false,
+            deliveryAgentRegister: false
+        });
+    };
+    restaurantRegister = () => {
+        this.setState({
+            userRegister: false,
+            registerSelect: false,
+            restaurantRegister: true,
+            deliveryAgentRegister: false
+        });
+    };
+
+    handleDeliveryAgentOtpChange = (event) => {
+        this.setState({
+            deliveryAgentOtp: event.target.value,
         })
     }
 
-
-
-    handleDeliveryAgentPhoneNumber = (event) => {
+    handleDeliveryAgentEmail = (event) => {
         this.setState({
-            deliveryAgentPhoneNumber: event.target.value,
+            deliveryAgentEmail: event.target.value,
+        })
+    }
+    handleDeliveryAgentName = (event) => {
+        this.setState({
+            deliveryAgentName: event.target.value,
+        })
+    }
+
+    handleDeliveryAgentPhonenum = (event) => {
+        this.setState({
+            deliveryAgentPhonenum: event.target.value,
         })
     }
 
@@ -158,30 +225,57 @@ class DeliveryAgentRegistration extends Component {
         })
     }
 
-    goBackToHomePAge = ()=> {
-        this.props.history.push('/');
-    }
-
-    forwardToLoginForm = () => {
-        this.props.history.push('/LoginForm')
-    }
 
 
-    closeAllOptionsOfSelectionForm = () => {
+    deliveryAgentRegister = () => {
         this.setState({
             userRegister: false,
-            restaurantRegister: false,
             registerSelect: false,
-            deliveryAgentRegister: false
+            restaurantRegister: false,
+            deliveryAgentRegister: true
         });
-    }
-
-
-
-
+    };
 
     render()
     {
+        const responseFacebook = (response) => {
+            this.state.facebookUserAccessToken = response.accessToken;
+            this.state.facebookUserId = response.userID;
+            let api = 'https://graph.facebook.com/v2.8/' + this.state.facebookUserId +
+                '?fields=name,email&access_token=' + this.state.facebookUserAccessToken;
+            fetch(api)
+                .then((responses) => responses.json())
+                .then( (responseData) => {
+                    this.state.facebookUserEmail= responseData.email;
+                    this.state.facebookUserName= responseData.name;
+                }).then( (res) => {
+
+                fetch('/facebookUserRegistration',
+                    {
+                        method: 'POST',
+                        redirect: 'follow',
+                        headers: {
+                            "Content-Type": "application/json",
+                            'Access-Control-Allow-Origin': '*'
+                        },
+                        body: JSON.stringify({
+                            fbUserEmail: this.state.facebookUserEmail,
+                            fbUserID: this.state.facebookUserId,
+                            fbUserAccessToken: this.state.facebookUserAccessToken,
+                            fbUserName: this.state.facebookUserName
+
+                        })
+                    }
+                ).then(res => {
+
+                    if (res.status !== 200) {
+                        this.forwardToErrorPage();
+                    }else {
+                        this.forwardToSuccessPage();
+                    }
+                })
+            });
+        }
 
         return (
             <div className="App">
@@ -207,7 +301,7 @@ class DeliveryAgentRegistration extends Component {
                     <script src="//code.jquery.com/jquery-1.11.1.min.js"/>
                     <nav className=" navbar navbar-expand-lg navbar-dark ">
                         <div className="container">
-                            <a className="navbar-brand "  onClick={this.goBackToHomePAge}>YumDrop</a>
+                            <a className="navbar-brand " href="#" onClick={this.goBackToHomePage}>YumDrop</a>
                             <div className="collapse navbar-collapse" id="navBarLinks">
                                 <ul className="navbar-nav mr-auto">
                                     <li className="nav-item">
@@ -215,7 +309,7 @@ class DeliveryAgentRegistration extends Component {
                                             className="fa fa-fw fa-user"/>Login</a>
                                     </li>
                                     <li className="nav-item" id="SignUpID">
-                                        <a className="nav-link" onClick={this.forwardToRegisterForm}>Sign Up</a>
+                                        <a className="nav-link" onClick={this.registerSelect}>Sign Up</a>
                                     </li>
                                 </ul>
                             </div>
@@ -235,55 +329,8 @@ class DeliveryAgentRegistration extends Component {
                                     <div className="col-md-5" id="firstbar">
                                         <div className="md-form">
                                             <select className="form-control" id="exampleFormControlSelect1">
-                                                <option value="AL">Alabama</option>
-                                                <option value="AK">Alaska</option>
-                                                <option value="AR">Arizona</option>
-                                                <option value="AZ">Arkansas</option>
-                                                <option value="CA">California</option>
-                                                <option value="CO">Colorado</option>
-                                                <option value="CT">Connecticut</option>
-                                                <option value="DC">Delaware</option>
-                                                <option value="FL">Florida</option>
-                                                <option value="GA">Georgia</option>
-                                                <option value="HI">Hawaii</option>
-                                                <option value="IA">Idaho</option>
-                                                <option value="ID">Illinois</option>
-                                                <option value="IN">Indiana</option>
-                                                <option value="KS">Iowa</option>
-                                                <option value="KY">Kansas</option>
-                                                <option value="LA">Kentucky</option>
-                                                <option value="MA">Louisiana</option>
-                                                <option value="MD">Maine</option>
-                                                <option value="ME">Maryland</option>
-                                                <option value="MI">Massachusetts</option>
-                                                <option value="MN">Michigan</option>
-                                                <option value="MO">Minnesota</option>
-                                                <option value="MS">Mississippi</option>
-                                                <option value="MT">Missouri</option>
-                                                <option value="NC">Montana</option>
-                                                <option value="NE">Nebraska</option>
-                                                <option value="NH">Nevada</option>
-                                                <option value="NJ">New Hampshire</option>
-                                                <option value="NM">New Jersey</option>
-                                                <option value="NV">New Mexico</option>
-                                                <option value="NY">New York</option>
-                                                <option value="ND">North Carolina</option>
-                                                <option value="OH">North Dakota</option>
-                                                <option value="OK">Ohio</option>
-                                                <option value="OR">Oregon</option>
-                                                <option value="PA">Pennsylvania</option>
-                                                <option value="RI">Rhode Island</option>
-                                                <option value="SC">South Carolina</option>
-                                                <option value="SD">South Dakota</option>
-                                                <option value="TN">Tennessee</option>
-                                                <option value="TX">Texas</option>
-                                                <option value="UT">Utah</option>
-                                                <option value="VT">Vermont</option>
-                                                <option value="VA">Virginia</option>
-                                                <option value="WA">Washington</option>
-                                                <option value="WI">West Virginia</option>
-                                                <option value="WV">Wisconsin</option>
-                                                <option value="WY">Wyoming</option>
+                                                <option>Bloomington, Indiana</option>
+                                                <option>Indianapolis, Indiana</option>
                                             </select>
                                         </div>
                                     </div>
@@ -297,7 +344,7 @@ class DeliveryAgentRegistration extends Component {
                                     </div>
                                     <div className="col-md-1" id="buttonOrder">
                                         <div className="md-form">
-                                            <button className="btn btn-lg btn-danger">Search</button>
+                                            <button className="btn btn-lg btn-danger">Order</button>
                                         </div>
                                     </div>
                                 </div>
@@ -306,9 +353,8 @@ class DeliveryAgentRegistration extends Component {
                     </div>
                 </div>
 
-
                 <Modal
-                    show={this.state.otpVal}
+                    show={this.state.deliveryAgentOtpVal}
                     onHide={this.closeAllOptionsOfSelectionForm}
                     animation={false}
                     centered id="modal"
@@ -317,19 +363,19 @@ class DeliveryAgentRegistration extends Component {
                         <div className="row">
                             <div className="main">
                                 <div className="login-form">
-                                    <form onSubmit={this.registerOtp.bind(this)}>
+                                    <form onSubmit={this.deliveryAgentRegisterOtp.bind(this)}>
                                         <h2 className="text-center">Please provide 6 digit OTP</h2>
                                         <div className="form-group">
                                             <input value={this.state.deliveryAgentOtp}
-                                                   onChange={this.deliveryAgentOtp} type="text"
+                                                   onChange={this.handleDeliveryAgentOtpChange} type="text"
                                                    className="form-control" placeholder="OTP"
                                                    pattern="[a-z][A-Z]"
                                                    required="required"/>
                                         </div>
 
                                         <div className="form-group">
-                                            <button onClick={this.registerOtp.bind(this)} type="submit"
-                                                    className="btn btn-primary btn-lg btn-block login-btn">Verify
+                                            <button onClick={this.deliveryAgentRegisterOtp.bind(this)} type="submit"
+                                                    className="btn btn-primary btn-lg btn-block login-btn">Sign Up
                                             </button>
                                         </div>
                                     </form>
@@ -338,33 +384,34 @@ class DeliveryAgentRegistration extends Component {
                             </div>
                         </div>
                     </div>
-
                 </Modal>
+
+
                 <Modal
                     show={this.state.deliveryAgentRegister}
                     onHide={this.closeAllOptionsOfSelectionForm}
                     animation={false}
                     id="modal"
                 >
+
                     <div className="container">
                         <div className="row">
                             <div className="main">
                                 <div className="login-form">
-                                    <form onSubmit={this.register.bind(this)}>
+                                    <form onSubmit={this.registerDeliveryAgent.bind(this)}>
                                         <h2 className="text-center">Delivery Agent Sign Up</h2>
 
                                         <div className="form-group">
-                                            <input value={this.state.deliveryAgentFullName}
-                                                   onChange={this.handleDeliveryAgentFullName} type="text"
+                                            <input value={this.state.deliveryAgentName}
+                                                   onChange={this.handleDeliveryAgentName} type="text"
                                                    className="form-control" placeholder="Full Name"
-                                                   title="Please enter Delivery Agent full name"
+                                                   title="Please enter your full name"
                                                    pattern="(?=.*[a-zA-Z]).{1,}"
                                                    required="required"/>
                                         </div>
-
                                         <div className="form-group">
-                                            <input value={this.state.deliveryAgentEmailId}
-                                                   onChange={this.handleDeliveryAgentPrimaryEmailId} type="text"
+                                            <input value={this.state.deliveryAgentEmail}
+                                                   onChange={this.handleDeliveryAgentEmail} type="text"
                                                    className="form-control" placeholder="Email ID"
                                                    title="Please enter a valid email address"
                                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
@@ -372,30 +419,44 @@ class DeliveryAgentRegistration extends Component {
                                         </div>
 
                                         <div className="form-group">
-                                            <input type="text" value={this.state.deliveryAgentPhoneNumber}
-                                                   onChange={this.handleDeliveryAgentPhoneNumber}
-                                                   id="userConfirmPassword"
-                                                   className="form-control" placeholder="Phone Number"
-                                                   title="Primary Phone Number"
-                                                   pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                                   required="required"/>
-                                        </div>
-                                        <div className="form-group">
                                             <input type="password" value={this.state.deliveryAgentPassword}
-                                                   onChange={this.handleDeliveryAgentPassword}
-                                                   id="userConfirmPassword"
-                                                   className="form-control" placeholder="Password"
-                                                   />
+                                                   onChange={this.handleDeliveryAgentPassword} className="form-control"
+                                                   id="deliveryAgentPassword"
+                                                   placeholder="Password"
+                                                   title="Password must be 8 characters or longer and contain a lower case letter, capital letter, and a special character"
+                                                   pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,16}"
+                                                   required="required"/>
                                         </div>
                                         <div className="form-group">
                                             <input type="password" value={this.state.deliveryAgentConfirmPassword}
                                                    onChange={this.handleDeliveryAgentConfirmPassword}
-                                                   id="userConfirmPassword"
-                                                   className="form-control" placeholder="Confirm Password"
-                                            />
+                                                   id="deliveryAgentConfirmPassword"
+                                                   className="form-control" placeholder="Confirm password"
+                                                   checked={this.state.deliveryAgentPassword === this.state.deliveryAgentConfirmPassword}
+                                                   title="Please enter your password again"
+                                                   pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,16}"
+                                                   required="required"/>
                                         </div>
                                         <div className="form-group">
-                                            <button onClick={this.register.bind(this)} type="submit"
+                                            <input type="text" className="form-control"
+                                                   value={this.state.deliveryAgentPhonenum}
+                                                   onChange={this.handleDeliveryAgentPhonenum}
+                                                   placeholder="Phone  Number"
+
+                                                   pattern="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$"
+                                                   required="required"/>
+                                        </div>
+                                        <div className="form-group">
+                                        <Recaptcha
+                                            sitekey="6LfA28AUAAAAAAdm39FjgIVi38BoyQoLDKTM5EJN"
+                                            render="explicit"
+                                            onloadCallback={this.recaptchaLoaded}
+                                            verifyCallback={this.verifyCallback}
+
+                                        />
+                                        </div>
+                                        <div className="form-group">
+                                            <button onClick={this.registerDeliveryAgent.bind(this)} type="submit"
                                                     className="btn btn-primary btn-lg btn-block login-btn">Sign Up
                                             </button>
                                         </div>
@@ -409,7 +470,7 @@ class DeliveryAgentRegistration extends Component {
                 </Modal>
 
 
-
+                <br/><br/><br/><br/>
                 <div className="how-section1">
                     <div className="row">
                         <div className="col-md-6 how-img">
@@ -429,26 +490,26 @@ class DeliveryAgentRegistration extends Component {
 
                         </div>
                         <div className="col-md-6 how-img">
-                            <img src="https://cdn4.vectorstock.com/i/1000x1000/05/13/man-holding-pizza-box-and-courier-bag-vector-17210513.jpg"
+                            <img src="https://cdn.clipart.email/3a7d43627822f0b19af9bd540aebd827_food-delivery-man-clipart-clipartxtras_170-155.jpeg"
                                  className="rounded-circle img-fluid" alt=""/>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-md-6 how-img">
-                            <img src="https://cdn5.vectorstock.com/i/1000x1000/37/04/food-delivery-icon-image-vector-16143704.jpg"
+                            <img src="https://activmeals.com/images/step3.png"
                                  className="rounded-circle img-fluid" alt=""/>
                         </div>
                         <div className="col-md-6">
                             <h4>Pickup or delivery from restaurants near you</h4>
 
-                            <p className="text-muted">Explore restaurants that deliver near you, or try yummy takeout fare. With a place for every taste, it’s easy to find food you crave, and order online or through the YumDrop app. Find great meals fast with lots of local menus. Enjoy eating the convenient way with places that deliver to your door..</p>
+                            <h4 className="subheading">Explore restaurants that deliver near you, or try yummy takeout fare. With a place for every taste, it’s easy to find food you crave, and order online or through the YumDrop app. Find great meals fast with lots of local menus. Enjoy eating the convenient way with places that deliver to your door..</h4>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-md-6">
                             <h4>Easy Pay</h4>
-                            <p className="text-muted">Pay for food with one click of a button.
-                                Multiple payment options. </p>
+                            <h4 className="subheading">Pay for food with one click of a button.
+                                Multiple payment options. </h4>
                         </div>
                         <div className="col-md-6 how-img">
                             <img src="https://www.trzcacak.rs/myfile/full/377-3774169_payment-channel-payment-channel-payment-channel-payment-bank.png"
@@ -461,4 +522,4 @@ class DeliveryAgentRegistration extends Component {
     }
 }
 
-export default  DeliveryAgentRegistration;
+export default App;

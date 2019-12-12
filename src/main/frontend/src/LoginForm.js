@@ -6,6 +6,8 @@ import './LoginFormCSS.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import Recaptcha from 'react-recaptcha';
+
 class App extends Component {
     state = {
         loginSelect: true,
@@ -20,13 +22,23 @@ class App extends Component {
         userTemporaryPassword: "",
         redirect: false,
         forgotPasswordSelect: false,
-        emailSelectForgotPassword: false
+        emailSelectForgotPassword: false,
+        isReCaptchaVerified: false
 
     };
 
     forwardToDeliveryAgentLoginForm = () => {
         this.props.history.push("/DeliveryAgentLoginForm")
     }
+
+    verifyCallback = response => {
+        if(response) {
+            this.setState({
+                isReCaptchaVerified: true
+            })
+        }
+    }
+
 
     login = () => { debugger;
         fetch('/loginDataForm', {
@@ -40,15 +52,20 @@ class App extends Component {
             }),
         }).then(res => {
 
-            alert("Entered");
-            alert(res.status);
+
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
             }else {
-                this.setState({redirect: true, userRegister: false});
-                this.forwardToLoginDashboard();
-                this.props.setUser(this.state.userName);
+                if(this.state.isReCaptchaVerified) {
+                    this.setState({redirect: true, userRegister: false});
+                    this.props.setUser(this.state.userName);
+                    this.forwardToLoginDashboard();
+                }
+                else {
+                    this.setState({redirect: true, userRegister: false});
+                    this.forwardToLoginErrorPage();
+                }
             }
 
 
@@ -69,12 +86,11 @@ class App extends Component {
             }),
         }).then(res => {
 
-            alert("Entered");
-            alert(res.status);
+
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
-                alert("Hey going to Error page");
+
             }else {
                 this.setState({redirect: true, userRegister: false, emailSelectForgotPassword: false, forgotPasswordSelect: true});
                 this.forwardToSuccessfullyChangedPasswordPage();
@@ -96,8 +112,7 @@ class App extends Component {
             }),
         }).then(res => {
 
-            alert("Entered");
-            alert(res.status);
+
             if (res.status !== 200) {
                 this.setState({redirect: true, userRegister: false});
                 this.forwardToLoginErrorPage();
@@ -248,6 +263,9 @@ class App extends Component {
                       id="bootstrap-css"/>
                 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"/>
                 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"/>
+                <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"
                       id="bootstrap-css"/>
                 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"/>
@@ -344,7 +362,7 @@ class App extends Component {
                                 </div>
                                 <div className="col-md-1" >
                                     <div className="md-form">
-                                        <button className="btn btn-lg btn-danger">Search</button>
+                                        <button className="btn btn-primary btn-md"><span id="SearchBar">Search</span></button>
                                     </div>
                                 </div>
                             </div>
@@ -353,25 +371,32 @@ class App extends Component {
                 </div>
             </div>
 
+
+            <br/><br/><br/><br/>
             <Modal
                 show={this.state.userLoginOption}
                 onHide={this.closeAllOptionsOfSelectionForm}
                 animation={false}
-                centered id="modal"
+                centered id="userLoginFormModal"
             >
+                <Modal.Header className="modelheader" id="containerModal" center>
+                    <Modal.Title className="modeltitle" id="modeltitle" center>
+                        <strong>Select Account</strong>
 
-                <div className="container">
+                    </Modal.Title>
+                </Modal.Header>
+
+                <div className="container" id="userLoginFormModalContainer">
                     <div className="row">
                         <div className="main">
                             <div className="login-form">
                                 <form onSubmit={this.login.bind(this)}>
-                                    <h2 className="text-center">User Login</h2>
                                     <div className="social-btn text-center">
                                         <FacebookLogin
                                             appId="1250006828526117"
                                             callback={responseFacebook}
                                             render={renderProps => (
-                                                <button className="btn btn-primary btn-block btn-lg" onClick={renderProps.onClick}><i
+                                                <button id="inputuserLoginFormModalContainer" className="btn btn-primary btn-block btn-lg" onClick={renderProps.onClick}><i
                                                     className="fa fa-facebook"></i> Login with <b>Facebook</b> </button>
                                             )}
                                         />
@@ -381,23 +406,30 @@ class App extends Component {
                                         <input value={this.state.userName}
                                                onChange={this.handleUserNameChange} type="text"
                                                className="form-control" placeholder="Username"
-                                               pattern="[a-z][A-Z]"
+                                               pattern="[a-z][A-Z]" id="inputuserLoginFormModalContainer"
                                                required="required"/>
                                     </div>
                                     <div className="form-group">
                                         <input value={this.state.userPassword}
                                                onChange={this.handleUserPasswordChange} type="password"
-                                               className="form-control" placeholder="Password"
+                                               className="form-control" placeholder="Password" id="inputuserLoginFormModalContainer"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
                                     </div>
                                     <div className="col-md-12 offset-7 form-group">
                                         <a href="#" onClick={this.handleForgotPasswordChange}>Forgot Password?</a>
                                     </div>
+                                    <Recaptcha
+                                        sitekey="6LfA28AUAAAAAAdm39FjgIVi38BoyQoLDKTM5EJN"
+                                        render="explicit"
+                                        onloadCallback={this.recaptchaLoaded}
+                                        verifyCallback={this.verifyCallback}
 
+                                    />
+                                    <br/>
                                     <div className="form-group">
                                         <button onClick={this.login.bind(this)} type="submit"
-                                                className="btn btn-primary btn-lg btn-block login-btn">Login
+                                                className="btn btn-primary btn-lg btn-block">Login
                                         </button>
                                     </div>
 
@@ -413,34 +445,38 @@ class App extends Component {
                 show={this.state.loginSelect}
                 onHide={this.closeAllOptionsOfSelectionForm}
                 animation={false}
-                centered id="modal"
+                centered id="modalLoginSelect"
             >
                 <Modal.Header className="modelheader" id="containerModal" center>
                     <Modal.Title className="modeltitle" id="modeltitle" center>
                         <strong>Select Account</strong>
+
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body id="CheckSelection">
-                    <div className="container" id="containerSelectAccount">
-                        <div className="row">
-                            <div className="main">
-                                <div className="login-form">
+
+                    <div>
+                        <div>
+                            <div>
+
+                                <div id="loginSelectionForm">
                                     <form>
                                         <div className="form-group">
+
                                             <button  type="submit"
-                                                     onClick={this.handelUserLoginOption} className="btn btn-primary btn-lg btn-block login-btn">User Login
+                                                     onClick={this.handelUserLoginOption} id="buttonLoginOption" className="btn btn-outline-info btn-lg btn-block">I am a User
                                             </button>
                                         </div>
 
                                         <div className="form-group">
                                             <button  type="submit" onClick={this.forwardToRestaurantregister}
-                                                     className="btn btn-primary btn-lg btn-block login-btn">Restaurant Login
+                                                     id="buttonLoginOption" className="btn btn-outline-info btn-lg btn-block">I am a Restaurant
                                             </button>
                                         </div>
 
                                         <div className="form-group">
                                             <button  type="submit" onClick={this.forwardToDeliveryAgentLoginForm}
-                                                     className="btn btn-primary btn-lg btn-block login-btn">Delivery Agent Login
+                                                     id="buttonLoginOption" className="btn btn-outline-info btn-lg btn-block">I am a Delivery Agent
                                             </button>
                                         </div>
                                     </form>
@@ -516,7 +552,6 @@ class App extends Component {
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
                                     </div>
-
                                     <div className="form-group">
                                         <button onClick={this.passwordChange.bind(this)} type="submit"
                                                 className="btn btn-primary btn-lg btn-block login-btn">Login
@@ -587,14 +622,14 @@ class App extends Component {
 
 const mapStateToProps = (state)=>{
     return {
-        userEmailId: state.emailId
+        userEmailId: state.userId
     }
 }
 
 const mapDispatchToProps = (dispatch)=> {
     return {
         setUser(evt){
-            dispatch({type: "setEmailId", newEmailId: evt});
+            dispatch({type: "setUserId", userId: evt});
         }
     }
 }

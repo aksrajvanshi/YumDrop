@@ -6,10 +6,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {Modal, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import {connect} from "react-redux";
+import Recaptcha from 'react-recaptcha';
 
 const mapStateToProps = (state)=>{
     return {
-        restaurantPrimaryEmailId: state.restaurantPrimaryEmailId
+        restaurantId: state.userId,
+        accountType: state.accountType,
     }
 }
 
@@ -18,7 +20,7 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch)=> {
     return {
         setRestaurant(evt){
-            dispatch({type: "setRestaurantEmailId", restaurantPrimaryEmailId: evt.restaurantPrimaryEmailId});
+            dispatch({type: "setUserId", userId: evt, accountType: "restaurant"});
         }
     }
 }
@@ -36,8 +38,17 @@ class App extends Component {
         redirect: false,
         forgotPasswordSelect: false,
         emailSelectForgotPassword: false,
-        restaurantTemporaryPassword: ""
+        restaurantTemporaryPassword: "",
+        isReCaptchaVerified: false
     };
+
+    verifyCallback = response => {
+        if(response) {
+            this.setState({
+                isReCaptchaVerified: true
+            })
+        }
+    }
 
 
     login = () => { debugger;
@@ -51,14 +62,23 @@ class App extends Component {
                 restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId
             }),
         }).then(res => {
-            console.log(res)
-            console.long(res.status)
+            this.props.setRestaurant(this.state.restaurantId);
+            this.forwardToLoginDashboard();
             if (res.status !== 200) {
-                this.forwardToLoginErrorPage();
+                if(this.state.isReCaptchaVerified) {
+                    this.props.setRestaurant(this.state.restaurantId);
+                    this.setState({restaurantRegister: false});
+                    this.forwardToLoginDashboard();
+                }
             }else {
-                this.props.setRestaurant({restaurantEmailId: this.state.restaurantPrimaryEmailId})
-                this.setState({restaurantRegister: false});
-                this.forwardToLoginDashboard();
+                if(this.state.isReCaptchaVerified) {
+                    this.props.setRestaurant(this.state.restaurantId);
+                    this.setState({restaurantRegister: false});
+                    this.forwardToLoginDashboard();
+                }
+                else {
+                    this.forwardToLoginErrorPage();
+                }
             }
 
 
@@ -79,9 +99,7 @@ class App extends Component {
             }),
         }).then(res => {
 
-            alert("Entered");
-            alert(res.status);
-            alert(res)
+
             if (res.status !== 200) {
                 this.forwardToLoginErrorPage();
             }else {
@@ -105,8 +123,7 @@ class App extends Component {
             }),
         }).then(res => {
 
-            alert("Entered");
-            alert(res.status);
+
             if (res.status !== 200) {
                 this.forwardToLoginErrorPage();
             }else {
@@ -154,6 +171,7 @@ class App extends Component {
     }
 
     closeAllOptionsOfSelectionForm= () => {
+        this.goBackToHomePage();
         this.setState({ userLoginOption: false, loginSelect:false, restaurantLoginOption: false, deliveryAgentLoginOption: false, forgotPasswordSelect: false, emailSelectForgotPassword: false  });
     }
 
@@ -187,6 +205,12 @@ class App extends Component {
 
 
     render() {
+        if (this.props.accountType === "user") {
+            this.props.history.push("/LoginDashboard");
+        }
+        else if (this.props.accountType === "restaurant") {
+            this.props.history.push("/RestaurantDashboard")
+        }
 
         return( <div className="App">
             <header>
@@ -222,6 +246,7 @@ class App extends Component {
                     </div>
                 </nav>
             </header>
+            <p>{this.props.restaurantId}</p>
             <div className="view rgba-black-light">
                 <br/><br/><br/>
                 <div className="">
@@ -291,13 +316,13 @@ class App extends Component {
                                     <div className="md-form">
                                         <input type="text"
                                                placeholder="Search for food, cuisines, restaurants here.."
-                                               id="form5" className="form-control validate"/>
+                                               className="form-control validate"/>
 
                                     </div>
                                 </div>
-                                <div className="col-md-1" id="buttonOrder">
+                                <div className="col-md-1" >
                                     <div className="md-form">
-                                        <button className="btn btn-lg btn-danger">Search</button>
+                                        <button className="btn btn-primary btn-md"><span id="SearchBar">Search</span></button>
                                     </div>
                                 </div>
                             </div>
@@ -306,23 +331,28 @@ class App extends Component {
                 </div>
             </div>
 
+            <br/>
+            <br/>
+            <br/>
+
             <Modal
                 show={this.state.restaurantLoginOption}
                 onHide={this.closeAllOptionsOfSelectionForm}
                 animation={false}
-                centered id="modal"
+                centered id="restaurantLoginModalForm"
             >
-                <div className="container">
+                 <div className="container">
                     <div className="row">
                         <div className="main">
                             <div className="login-form">
                                 <form onSubmit={this.login.bind(this)}>
-                                    <h2 className="text-center">Restaurant Login</h2>
+                                    <h2 className="text-center"><strong>Restaurant Login</strong></h2>
+                                    <div className="or-seperator"><i><b></b></i></div>
                                     <div className="social-btn text-center">
                                     </div>
                                     <div className="form-group">
                                         <input value={this.state.restaurantPrimaryEmailId}
-                                               onChange={this.handleRestaurantEmailIDChange} type="text"
+                                               onChange={this.handleRestaurantEmailIDChange} id="inputuserLoginFormModalContainer" type="text"
                                                className="form-control" placeholder="Email ID"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
@@ -330,14 +360,14 @@ class App extends Component {
                                     <div className="form-group">
                                         <input value={this.state.restaurantId}
                                                onChange={this.handleRestaurantID} type="text"
-                                               className="form-control" placeholder="Restaurant ID"
+                                               className="form-control" placeholder="Restaurant ID" id="inputuserLoginFormModalContainer"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
                                     </div>
 
                                     <div className="form-group">
                                         <input value={this.state.restaurantPassword}
-                                               onChange={this.handleRestaurantPassword} type="password"
+                                               onChange={this.handleRestaurantPassword} type="password" id="inputuserLoginFormModalContainer"
                                                className="form-control" placeholder="Password"
                                                pattern="[a-z][A-Z]"
                                                required="required"/>
@@ -345,7 +375,14 @@ class App extends Component {
                                     <div className="col-md-12 offset-7 form-group">
                                         <a href="#" onClick={this.handleForgotPasswordChange}>Forgot Password?</a>
                                     </div>
+                                    <Recaptcha
+                                        sitekey="6LfA28AUAAAAAAdm39FjgIVi38BoyQoLDKTM5EJN"
+                                        render="explicit"
+                                        onloadCallback={this.recaptchaLoaded}
+                                        verifyCallback={this.verifyCallback}
 
+                                    />
+                                    <br/>
                                     <div className="form-group">
                                         <button onClick={this.login.bind(this)} type="submit"
                                                 className="btn btn-primary btn-lg btn-block login-btn">Login
@@ -385,7 +422,7 @@ class App extends Component {
 
                                     <div className="form-group">
                                         <button onClick={this.forgotPasswordAPI.bind(this)} type="submit"
-                                                className="btn btn-primary btn-lg btn-block login-btn">Submit
+                                                className="btn btn-primary btn-lg btn-block ">Submit
                                         </button>
                                     </div>
                                 </form>

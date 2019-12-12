@@ -1,58 +1,58 @@
 package com.app.yumdrop.FormEntity;
 
 public class DeliveryAgentRegisterForm {
-    private String da_email;
-    private String da_name;
-    private String da_password;
-    private String da_phonenum;
-    private String da_otp;
+    private String deliveryAgent_email;
+    private String deliveryAgent_name;
+    private String deliveryAgent_password;
+    private String deliveryAgent_phonenum;
+    private String deliveryAgent_otp;
 
 
-    public DeliveryAgentRegisterForm(String da_email, String da_name, String da_password, String da_phonenum, String da_otp) {
-        this.da_email = da_email;
-        this.da_name = da_name;
-        this.da_password = da_password;
-        this.da_phonenum = da_phonenum;
-        this.da_otp = da_otp;
+    public DeliveryAgentRegisterForm(String deliveryAgent_email, String deliveryAgent_name, String deliveryAgent_password, String deliveryAgent_phonenum, String deliveryAgent_otp) {
+        this.deliveryAgent_email = deliveryAgent_email;
+        this.deliveryAgent_name = deliveryAgent_name;
+        this.deliveryAgent_password = deliveryAgent_password;
+        this.deliveryAgent_phonenum = deliveryAgent_phonenum;
+        this.deliveryAgent_otp = deliveryAgent_otp;
     }
 
-    public String getDA_email() {
-        return da_email;
+    public String getDeliveryAgent_email() {
+        return deliveryAgent_email;
     }
 
-    public void setDA_email(String da_email) {
-        this.da_email = da_email;
+    public void setDeliveryAgent_email(String deliveryAgent_email) {
+        this.deliveryAgent_email = deliveryAgent_email;
     }
 
-    public String getDA_name() {
-        return da_name;
+    public String getDeliveryAgent_name() {
+        return deliveryAgent_name;
     }
 
-    public void setDA_name(String da_name) {
-        this.da_name = da_name;
+    public void setDeliveryAgent_name(String da_name) {
+        this.deliveryAgent_name = deliveryAgent_name;
     }
 
-    public String getDA_password() {
-        return da_password;
+    public String getDeliveryAgent_password() {
+        return deliveryAgent_password;
     }
 
-    public void setDA_password(String da_password) {
-        this.da_password = da_password;
+    public void setDeliveryAgent_password(String deliveryAgent_password) {
+        this.deliveryAgent_password = deliveryAgent_password;
     }
 
-    public String getDA_phonenum() {
-        return da_phonenum;
+    public String getDeliveryAgent_phonenum() {
+        return deliveryAgent_phonenum;
     }
 
-    public void setDA_phonenum(String da_phonenum) {
-        this.da_phonenum = da_phonenum;
+    public void setDeliveryAgent_phonenum(String deliveryAgent_phonenum) {
+        this.deliveryAgent_phonenum = deliveryAgent_phonenum;
     }
 
-    public String getDA_otp() {
-        return da_otp;
+    public String getDeliveryAgent_otp() {
+        return deliveryAgent_otp;
     }
 
-    public void setDA_otp(String da_otp) {
-        this.da_otp = da_otp;
+    public void setDeliveryAgent_otp(String deliveryAgent_otp) {
+        this.deliveryAgent_otp = deliveryAgent_otp;
     }
 }

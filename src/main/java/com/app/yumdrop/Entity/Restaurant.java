@@ -4,10 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-
-
 
 @Entity
 @Table(name = "restaurant_main")
@@ -27,65 +24,53 @@ public class Restaurant extends CreateAndUpdateTimeModel {
     private String restaurantPrimaryEmailId;
 
     @NotNull
-    @Column(name = "secondary_email_id", nullable = false)
-    private String restaurantSecondaryEmailID;
-
-    @NotNull
     @Column(name = "primary_phonenum", nullable = false)
     private String primaryPhoneNumber;
-
-    @NotNull
-    @Column(name = "secondary_phonenum", nullable = false)
-    private String secondaryPhoneNumber;
-
-    @Column(name = "restaurant_area", nullable = false)
-    private String restaurantArea;
-
-    @Column(name = "restaurant_city", nullable = false)
-    private String restaurantCity;
 
     @Column(name = "restaurant_address", nullable = false)
     private String restaurantAddress;
 
-    @Column(name = "restaurant_logo", nullable = false)
-    private byte[] restaurantLogo;
-
+    @Column(name = "restaurant_image_url", nullable = false)
+    private String restaurantImageUrl;
 
     public Restaurant() {
     }
 
-    public Restaurant(String restaurantId, @NotNull String restaurantName, @NotNull String restaurantPrimaryEmailId, @NotNull String secondaryEmailID, @NotNull String primaryPhoneNumber, @NotNull String secondaryPhoneNumber) {
+    public Restaurant(String restaurantId) {
         this.restaurantId = restaurantId;
-        this.restaurantName = restaurantName;
-        this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
-        this.restaurantSecondaryEmailID = secondaryEmailID;
-        this.primaryPhoneNumber = primaryPhoneNumber;
-        this.secondaryPhoneNumber = secondaryPhoneNumber;
     }
 
-    public Restaurant(String restaurantId, @NotNull String restaurantName, @NotNull String restaurantPrimaryEmailId, @NotNull String restaurantSecondaryEmailID, @NotNull String primaryPhoneNumber, @NotNull String secondaryPhoneNumber, String restaurantArea, String restaurantCity, String restaurantAddress, byte[] restaurantLogo) {
+    public Restaurant(String restaurantId, String restaurantAddress) {
+        this.restaurantId = restaurantId;
+        this.restaurantAddress = restaurantAddress;
+    }
+
+    public Restaurant(String restaurantId, @NotNull String restaurantName, @NotNull String restaurantPrimaryEmailId, @NotNull String primaryPhoneNumber) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
-        this.restaurantSecondaryEmailID = restaurantSecondaryEmailID;
         this.primaryPhoneNumber = primaryPhoneNumber;
-        this.secondaryPhoneNumber = secondaryPhoneNumber;
-        this.restaurantArea = restaurantArea;
-        this.restaurantCity = restaurantCity;
+    }
+
+    public Restaurant(String restaurantId, @NotNull String restaurantName, @NotNull String restaurantPrimaryEmailId, @NotNull String primaryPhoneNumber, String restaurantAddress, String restaurantImageUrl) {
+        this.restaurantId = restaurantId;
+        this.restaurantName = restaurantName;
+        this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
+        this.primaryPhoneNumber = primaryPhoneNumber;
         this.restaurantAddress = restaurantAddress;
-        this.restaurantLogo = restaurantLogo;
+        this.restaurantImageUrl = restaurantImageUrl;
+    }
+
+    public String getRestaurantImageUrl() {
+        return restaurantImageUrl;
+    }
+
+    public void setRestaurantImageUrl(String restaurantImageUrl) {
+        this.restaurantImageUrl = restaurantImageUrl;
     }
 
     public String getRestaurantId() {
         return restaurantId;
-    }
-
-    public byte[] getRestaurantLogo() {
-        return restaurantLogo;
-    }
-
-    public void setRestaurantLogo(byte[] restaurantLogo) {
-        this.restaurantLogo = restaurantLogo;
     }
 
     public void setRestaurantId(String restaurantId) {
@@ -108,44 +93,12 @@ public class Restaurant extends CreateAndUpdateTimeModel {
         this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
     }
 
-    public String getRestaurantSecondaryEmailID() {
-        return restaurantSecondaryEmailID;
-    }
-
-    public void setRestaurantSecondaryEmailID(String restaurantSecondaryEmailID) {
-        this.restaurantSecondaryEmailID = restaurantSecondaryEmailID;
-    }
-
     public String getPrimaryPhoneNumber() {
         return primaryPhoneNumber;
     }
 
     public void setPrimaryPhoneNumber(String primaryPhoneNumber) {
         this.primaryPhoneNumber = primaryPhoneNumber;
-    }
-
-    public String getSecondaryPhoneNumber() {
-        return secondaryPhoneNumber;
-    }
-
-    public void setSecondaryPhoneNumber(String secondaryPhoneNumber) {
-        this.secondaryPhoneNumber = secondaryPhoneNumber;
-    }
-
-    public String getRestaurantArea() {
-        return restaurantArea;
-    }
-
-    public void setRestaurantArea(String restaurantArea) {
-        this.restaurantArea = restaurantArea;
-    }
-
-    public String getRestaurantCity() {
-        return restaurantCity;
-    }
-
-    public void setRestaurantCity(String restaurantCity) {
-        this.restaurantCity = restaurantCity;
     }
 
     public String getRestaurantAddress() {
@@ -162,14 +115,8 @@ public class Restaurant extends CreateAndUpdateTimeModel {
                 "restaurantId='" + restaurantId + '\'' +
                 ", restaurantName='" + restaurantName + '\'' +
                 ", restaurantPrimaryEmailId='" + restaurantPrimaryEmailId + '\'' +
-                ", secondaryEmailID='" + restaurantSecondaryEmailID + '\'' +
                 ", primaryPhoneNumber='" + primaryPhoneNumber + '\'' +
-                ", secondaryPhoneNumber='" + secondaryPhoneNumber + '\'' +
-                ", restaurantArea='" + restaurantArea + '\'' +
-                ", restaurantCity='" + restaurantCity + '\'' +
                 ", restaurantAddress='" + restaurantAddress + '\'' +
                 '}';
     }
-
-
 }

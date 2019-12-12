@@ -1,13 +1,15 @@
 package com.app.yumdrop.Entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 @Entity
 @Table(name = "users")
-public class Users extends CreateAndUpdateTimeModel{
+public class Users extends CreateAndUpdateTimeModel {
 
     @Id
     @Column(name = "user_email", nullable = false)
@@ -18,7 +20,6 @@ public class Users extends CreateAndUpdateTimeModel{
     @Column(name = "user_name", nullable = false)
     private String userName;
 
-    @NotNull
     @Column(name = "user_phonenum", nullable = false)
     private String userPhoneNumber;
 
@@ -41,32 +42,30 @@ public class Users extends CreateAndUpdateTimeModel{
     @Column(name = "user_address", nullable = false)
     private String userAddress;
 
-    public Users(){
+    public Users() {
     }
 
-    public Users(@Email(message = "user email should be a valid email") String userEmail, @NotNull String userName, @NotNull String userPhoneNumber, @NotNull String userCountryCode, @NotNull String userPassword, String userAddress, @NotNull String lastUpdatedUser, @NotNull String lastCreatedUser) {
+    public Users(@Email(message = "user email should be a valid email") String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public Users(@Email(message = "user email should be a valid email") String userEmail, @NotNull String userPassword) {
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
+    }
+
+    public Users(@Email(message = "user email should be a valid email") String userEmail, @NotNull String userName, @NotNull String userPassword) {
         this.userEmail = userEmail;
         this.userName = userName;
-        this.userPhoneNumber = userPhoneNumber;
-        this.userCountryCode = userCountryCode;
+        this.userPassword = userPassword;
+    }
+
+    public Users(@Email(message = "user email should be a valid email") String userEmail, @NotNull String userName, @NotNull String userPassword, @NotNull String lastUpdatedUser, @NotNull String lastCreatedUser) {
+        this.userEmail = userEmail;
+        this.userName = userName;
         this.userPassword = userPassword;
         this.lastUpdatedUser = lastUpdatedUser;
         this.lastCreatedUser = lastCreatedUser;
-        this.userAddress = userAddress;
-    }
-
-    @Override
-    public String toString() {
-        return "Users{" +
-                "userEmail='" + userEmail + '\'' +
-                ", userName='" + userName + '\'' +
-                ", userPhoneNumber='" + userPhoneNumber + '\'' +
-                ", userCountryCode='" + userCountryCode + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                ", lastUpdatedUser='" + lastUpdatedUser + '\'' +
-                ", lastCreatedUser='" + lastCreatedUser + '\'' +
-                ", userAddress='" + userAddress + '\'' +
-                '}';
     }
 
     public String getUserEmail() {
@@ -131,5 +130,19 @@ public class Users extends CreateAndUpdateTimeModel{
 
     public void setUserAddress(String userAddress) {
         this.userAddress = userAddress;
+    }
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "userEmail='" + userEmail + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userPhoneNumber='" + userPhoneNumber + '\'' +
+                ", userCountryCode='" + userCountryCode + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", lastUpdatedUser='" + lastUpdatedUser + '\'' +
+                ", lastCreatedUser='" + lastCreatedUser + '\'' +
+                ", userAddress='" + userAddress + '\'' +
+                '}';
     }
 }

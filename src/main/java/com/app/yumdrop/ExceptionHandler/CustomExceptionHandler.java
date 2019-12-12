@@ -1,5 +1,6 @@
 package com.app.yumdrop.ExceptionHandler;
 
+import com.app.yumdrop.Messages.ErrorMessage;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,17 +20,17 @@ import java.util.List;
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorDetails> handleAllExceptions(Exception ex, WebRequest request){
+    public ResponseEntity<ErrorMessage> handleAllExceptions(Exception ex, WebRequest request){
         List<String> details = new ArrayList<>();
         details.add(ex.getLocalizedMessage());
-        ErrorDetails error = new ErrorDetails(new Date(), ex.getMessage(),
+        ErrorMessage error = new ErrorMessage(new Date(), ex.getMessage(),
                 request.getDescription(false));
         return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<?> handleConstraintViolationException(Exception ex){
-        return new ResponseEntity<ErrorDetails>(new ErrorDetails(new Date(), ex.getMessage(),
+        return new ResponseEntity<ErrorMessage>(new ErrorMessage(new Date(), ex.getMessage(),
                 ""), HttpStatus.BAD_REQUEST);
     }
 
@@ -39,7 +40,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         for(ObjectError error : ex.getBindingResult().getAllErrors()) {
             details.add(error.getDefaultMessage());
         }
-        ErrorDetails error = new ErrorDetails(new Date(), ex.getMessage(),
+        ErrorMessage error = new ErrorMessage(new Date(), ex.getMessage(),
                 request.getDescription(false));
         return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
     }

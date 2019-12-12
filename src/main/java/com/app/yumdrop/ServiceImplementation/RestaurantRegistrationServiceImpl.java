@@ -1,21 +1,26 @@
 package com.app.yumdrop.ServiceImplementation;
 
 import com.app.yumdrop.Entity.Restaurant;
+import com.app.yumdrop.Entity.RestaurantCountPerRating;
 import com.app.yumdrop.Entity.RestaurantManager;
+import com.app.yumdrop.Entity.RestaurantRatings;
 import com.app.yumdrop.FormEntity.RestaurantRegisterForm;
+import com.app.yumdrop.Messages.ErrorMessage;
+import com.app.yumdrop.Messages.SuccessMessage;
+import com.app.yumdrop.Repository.RestaurantCountPerRatingRepository;
 import com.app.yumdrop.Repository.RestaurantManagerRepository;
+import com.app.yumdrop.Repository.RestaurantRatingsRepository;
 import com.app.yumdrop.Repository.RestaurantRepository;
 import com.app.yumdrop.Service.RestaurantRegistrationService;
 import com.app.yumdrop.Utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Random;
+import java.util.Date;
 
 @Service
 public class RestaurantRegistrationServiceImpl implements RestaurantRegistrationService {
@@ -29,68 +34,45 @@ public class RestaurantRegistrationServiceImpl implements RestaurantRegistration
     @Autowired
     public RestaurantRepository restaurantRepository;
 
+    @Autowired
+    RestaurantRatingsRepository restaurantRatingsRepository;
+
+    @Autowired
+    RestaurantCountPerRatingRepository restaurantCountPerRatingRepository;
+
+    @Value("${sendgrid.api.key}")
+    String sendGridAPIKey;
+
     @Override
     public ResponseEntity<?> registerRestaurant(RestaurantRegisterForm restaurantRegisterForm) {
 
-        boolean primaryManagerEmailSent = sendMailWithTemporaryPasswordToRestaurantManager(restaurantRegisterForm.getRestaurantId(), restaurantRegisterForm.getRestaurantPrimaryEmailId());
-        boolean secondaryManagerEmailSent = sendMailWithTemporaryPasswordToRestaurantManager(restaurantRegisterForm.getRestaurantId(), restaurantRegisterForm.getRestaurantSecondaryEmailId());
+        RestaurantManager restaurantPrimaryManager = new RestaurantManager(restaurantRegisterForm.getRestaurantId(), restaurantRegisterForm.getRestaurantPrimaryEmailId(),
+                PasswordUtils.convertPasswordToHash(restaurantRegisterForm.getRestaurantPrimaryPassword()), false);
+        RestaurantManager newRestaurantManager = restaurantManagerRepository.save(restaurantPrimaryManager);
 
-        if (primaryManagerEmailSent && secondaryManagerEmailSent) {
+        if (newRestaurantManager != null) {
             Restaurant newRestaurantRegister = new Restaurant(restaurantRegisterForm.getRestaurantId(), restaurantRegisterForm.getRestaurantName(), restaurantRegisterForm.getRestaurantPrimaryEmailId(),
-                    restaurantRegisterForm.getRestaurantSecondaryEmailId(), restaurantRegisterForm.getPrimaryPhoneNumber(), restaurantRegisterForm.getSecondaryPhoneNumber());
+                    restaurantRegisterForm.getPrimaryPhoneNumber());
             Restaurant registeredRestaurant = restaurantRepository.save(newRestaurantRegister);
-            if(registeredRestaurant == null){
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
-
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
-
-    public boolean sendMailWithTemporaryPasswordToRestaurantManager(String restaurantId, String restaurantManagerEmail) {
-
-        List<RestaurantManager> managerExistsInDb = restaurantManagerRepository.findByrestaurantId(restaurantId);
-        boolean doesManagerExist = false;
-        if (managerExistsInDb != null) {
-            for (int i = 0; i < managerExistsInDb.size(); i++) {
-                if (managerExistsInDb.get(i).getRestaurantManagerEmailId().equals(restaurantManagerEmail)) {
-                    doesManagerExist = true;
-                    break;
-                }
+            if (registeredRestaurant == null) {
+                ErrorMessage restaurantNotRegistered = new ErrorMessage(new Date(), "Restaurant wasn't registered. Please try again",
+                        "");
+                return new ResponseEntity<>(restaurantNotRegistered, HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                restaurantCountPerRatingRepository.save(new RestaurantCountPerRating(restaurantRegisterForm.getRestaurantId(), 1, 0));
+                restaurantCountPerRatingRepository.save(new RestaurantCountPerRating(restaurantRegisterForm.getRestaurantId(), 2, 0));
+                restaurantCountPerRatingRepository.save(new RestaurantCountPerRating(restaurantRegisterForm.getRestaurantId(), 3, 0));
+                restaurantCountPerRatingRepository.save(new RestaurantCountPerRating(restaurantRegisterForm.getRestaurantId(), 4, 0));
+                restaurantCountPerRatingRepository.save(new RestaurantCountPerRating(restaurantRegisterForm.getRestaurantId(), 5, 0));
+                restaurantRatingsRepository.save(new RestaurantRatings(restaurantRegisterForm.getRestaurantId(), 0, 0));
+                SuccessMessage restaurantRegisteredSuccessfully = new SuccessMessage(new Date(), "Restaurant is registered successfully");
+                return new ResponseEntity<>(restaurantRegisteredSuccessfully, HttpStatus.OK);
             }
         }
-        if (doesManagerExist) {
-            String temporaryPassword = generateRandomPassword();
-            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-            simpleMailMessage.setTo(restaurantManagerEmail);
-            simpleMailMessage.setSubject("Temporary Password from Yumdrop");
-            simpleMailMessage.setText("Hello user! Your temporary password is: " + temporaryPassword +
-                    ". Please use this temporary password to set a new password and login into your account.");
 
-            javaMailSender.send(simpleMailMessage);
-
-            RestaurantManager restaurantManagerTemporaryPassword = new RestaurantManager(restaurantId, restaurantManagerEmail, PasswordUtils.convertPasswordToHash(temporaryPassword));
-            RestaurantManager newRestaurantManager = restaurantManagerRepository.save(restaurantManagerTemporaryPassword);
-            return newRestaurantManager != null;
-        }
-
-        return false;
-    }
-
-    private String generateRandomPassword() {
-        String SALTCHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        StringBuilder salt = new StringBuilder();
-        Random rnd = new Random();
-        while (salt.length() < 10) { // length of the random string.
-            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-            salt.append(SALTCHARS.charAt(index));
-        }
-        String saltStr = salt.toString();
-        return saltStr;
+        ErrorMessage restaurantNotRegistered = new ErrorMessage(new Date(), "Restaurant & Restaurant manager profile wasn't registered. Please try again",
+                "");
+        return new ResponseEntity<>(restaurantNotRegistered, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

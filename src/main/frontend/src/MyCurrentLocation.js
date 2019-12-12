@@ -5,9 +5,10 @@ import {Modal} from "react-bootstrap";
 const mapStateToProps = (state)=>{
     return {
         latitude: state.latitude,
-        longitude: state.longitude
+        longitude: state.longitude,
+        userEmail: state.userId,
     }
-}
+};
 
 
 
@@ -117,33 +118,8 @@ class MyCurrentLocation extends Component {
                         </div>
                     </nav>
                 </header>
-
                 <Modal
                     show={this.state.positionSelect}
-                    animation={false}
-                    id="modal"
-                >
-                    <div className="container">
-                        <div className="row">
-                            <div className="main">
-                                <div className="login-form">
-                                    <form>
-                                        <h2 className="text-center">Allow  Access for Location</h2>
-                                        <div className="form-group">
-                                            <button  onClick={this.position}  className='Filter' type="submit"
-                                                     className="btn btn-primary btn-lg btn-block login-btn">Allow Access
-                                            </button>
-                                        </div>
-                                    </form>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </Modal>
-                <Modal
-                    show={this.state.getLocation}
                     animation={false}
                     id="modal"
                 >

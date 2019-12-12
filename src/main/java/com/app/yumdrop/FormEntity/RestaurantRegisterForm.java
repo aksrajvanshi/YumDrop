@@ -2,13 +2,11 @@ package com.app.yumdrop.FormEntity;
 
 public class RestaurantRegisterForm {
 
-
     public String restaurantId;
     private String restaurantName;
     private String restaurantPrimaryEmailId;
-    private String restaurantSecondaryEmailId;
+    private String restaurantPrimaryPassword;
     private String primaryPhoneNumber;
-    private String secondaryPhoneNumber;
     private String restaurantOtp;
     private String restaurantArea;
     private String restaurantCity;
@@ -24,9 +22,8 @@ public class RestaurantRegisterForm {
                 "restaurantId='" + restaurantId + '\'' +
                 ", restaurantName='" + restaurantName + '\'' +
                 ", restaurantPrimaryEmailId='" + restaurantPrimaryEmailId + '\'' +
-                ", restaurantSecondaryEmailId='" + restaurantSecondaryEmailId + '\'' +
+                ", restaurantPrimaryPassword='" + restaurantPrimaryPassword + '\'' +
                 ", primaryPhoneNumber='" + primaryPhoneNumber + '\'' +
-                ", secondaryPhoneNumber='" + secondaryPhoneNumber + '\'' +
                 ", restaurantOtp='" + restaurantOtp + '\'' +
                 ", restaurantArea='" + restaurantArea + '\'' +
                 ", restaurantCity='" + restaurantCity + '\'' +
@@ -34,32 +31,27 @@ public class RestaurantRegisterForm {
                 '}';
     }
 
-    public RestaurantRegisterForm(String restaurantId, String restaurantName, String restaurantPrimaryEmailId, String restaurantSecondaryEmailId, String primaryPhoneNumber, String secondaryPhoneNumber) {
+    public RestaurantRegisterForm(String restaurantId, String restaurantName, String restaurantPrimaryEmailId, String primaryPhoneNumber, String secondaryPhoneNumber) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
-        this.restaurantSecondaryEmailId = restaurantSecondaryEmailId;
         this.primaryPhoneNumber = primaryPhoneNumber;
-        this.secondaryPhoneNumber = secondaryPhoneNumber;
     }
 
-    public RestaurantRegisterForm(String restaurantId, String restaurantName, String restaurantPrimaryEmailId, String restaurantSecondaryEmailId, String primaryPhoneNumber, String secondaryPhoneNumber, String restaurantOtp) {
+    public RestaurantRegisterForm(String restaurantId, String restaurantName, String restaurantPrimaryEmailId, String restaurantPrimaryPassword, String primaryPhoneNumber, String restaurantOtp) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
-        this.restaurantSecondaryEmailId = restaurantSecondaryEmailId;
+        this.restaurantPrimaryPassword = restaurantPrimaryPassword;
         this.primaryPhoneNumber = primaryPhoneNumber;
-        this.secondaryPhoneNumber = secondaryPhoneNumber;
         this.restaurantOtp = restaurantOtp;
     }
 
-    public RestaurantRegisterForm(String restaurantId, String restaurantName, String restaurantPrimaryEmailId, String restaurantSecondaryEmailId, String primaryPhoneNumber, String secondaryPhoneNumber, String restaurantOtp, String restaurantArea, String restaurantCity, String restaurantAddress) {
+    public RestaurantRegisterForm(String restaurantId, String restaurantName, String restaurantPrimaryEmailId, String primaryPhoneNumber, String restaurantOtp, String restaurantArea, String restaurantCity, String restaurantAddress) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
-        this.restaurantSecondaryEmailId = restaurantSecondaryEmailId;
         this.primaryPhoneNumber = primaryPhoneNumber;
-        this.secondaryPhoneNumber = secondaryPhoneNumber;
         this.restaurantOtp = restaurantOtp;
         this.restaurantArea = restaurantArea;
         this.restaurantCity = restaurantCity;
@@ -90,12 +82,12 @@ public class RestaurantRegisterForm {
         this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
     }
 
-    public String getRestaurantSecondaryEmailId() {
-        return restaurantSecondaryEmailId;
+    public String getRestaurantPrimaryPassword() {
+        return restaurantPrimaryPassword;
     }
 
-    public void setRestaurantSecondaryEmailId(String restaurantSecondaryEmailId) {
-        this.restaurantSecondaryEmailId = restaurantSecondaryEmailId;
+    public void setRestaurantPrimaryPassword(String restaurantPrimaryPassword) {
+        this.restaurantPrimaryPassword = restaurantPrimaryPassword;
     }
 
     public String getPrimaryPhoneNumber() {
@@ -104,14 +96,6 @@ public class RestaurantRegisterForm {
 
     public void setPrimaryPhoneNumber(String primaryPhoneNumber) {
         this.primaryPhoneNumber = primaryPhoneNumber;
-    }
-
-    public String getSecondaryPhoneNumber() {
-        return secondaryPhoneNumber;
-    }
-
-    public void setSecondaryPhoneNumber(String secondaryPhoneNumber) {
-        this.secondaryPhoneNumber = secondaryPhoneNumber;
     }
 
     public String getRestaurantOtp() {

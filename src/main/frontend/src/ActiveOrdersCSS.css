@@ -1,0 +1,24 @@
+
+
+.th {
+    width: 36px;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 15px;
+}
+
+table {
+    border-spacing: 5px;
+}
+
+#tableCaption{
+    align-items: center;
+    font-size: x-large;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding-left: 500px;
+}

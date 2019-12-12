@@ -7,13 +7,16 @@ import LoginPage from "./LoginPage";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import AddItemToMenu from "./AddItemToMenu";
+
 import { Route, BrowserRouter as Router} from 'react-router-dom';
 import LoginDashBoard from "./LoginDashboard";
+import tryingForRoutes from "./tryingForRoutes"
 import OTPpage from "./OTPpage";
 import errorPageForRegistration from "./errorPageForRegistration";
 import MySettingsPage from "./MySettingsPage";
 import OTPResetPassword from "./OTPResetPassword";
 import ResetPassword from "./ResetPassword";
+import chatFeature from "./chatFeature";
 import loginErrorPAge from "./loginErrorPAge";
 import SuccessfulRegistration from './SuccessfulRegistration';
 import Home from './Home';
@@ -28,6 +31,7 @@ import RestaurantLogin from "./RestaurantLogin";
 import successfullyChangedPasswordPage from "./successfullyChangedPasswordPage";
 import UserSettingsPageAddresses from "./UserSettingsPageAddresses";
 import RestaurantDashboard from "./RestaurantDashboard";
+import AppForShoppingCart from "./AppForShoppingCart";
 import RestaurantAddMenuForm from "./RestaurantAddMenuForm";
 import RestaurantSettingsPage from "./RestaurantSettingsPage";
 import restaurantAddressesPage from "./restaurantAddressesPage";
@@ -36,20 +40,43 @@ import RestaurantResetpassword from "./RestaurantResetpassword";
 import DeliveryAgentRegistration from "./DeliveryAgentRegistration";
 import DeliveryAgentLoginForm from "./DeliveryAgentLoginForm";
 import ErrorPageForDeliveryAgentRegistration from "./ErrorPageForDeliveryAgentRegistration";
+import DeliveryAgentLoginErrorPage from "./DeliveryAgentLoginErrorPage";
+import DeliveryAgentOTPResetPassword from "./DeliveryAgentOTPResetPassword";
+import MyCart from "./MyCart";
+import paymentSystemForUsers from "./paymentSystemForUsers";
+import restaurantChatStartButton from "./restaurantChatStartButton";
+import chatFeatureForRestaurant from "./chatFeatureForRestaurant";
+import userChatStartButton from "./userChatStartButton";
+import ActiveOrders from "./ActiveOrders";
+import RestaurantActiveOrders from "./RestaurantActiveOrders";
+import dishesForUserView from "./dishesForUserView";
+import tryStripeCheckout from "./tryStripeCheckout";
+import DeliveryAgentMaps from "./DeliveryAgentMaps";
 
 const initialState = {
     latitude: null,
     longitude: null,
-    emailId: null
+    userId: null, //doubles as a User's Email address or a restaurant's Id
+    accountType: null, //identifies if account is user, restaurant, or delivery
+    userSelectedRestaurant: "", //id of restaurant the user is viewing
 }
 
 const reducer = (state=initialState, action) => {
 
     if(action.type==="setLocation"){
-        return {latitude: action.newLatitude, longitude: action.newLongitude}
+        state.latitude = action.newLatitude;
+        state.longitude = action.newLongitude;
     }
-    else if (action.type === "setEmailId"){
-        return {emailId: action.newEmailId}
+    else if (action.type === "setUserId"){
+        state.userId = action.userId;
+        state.accountType = action.accountType;
+    }
+    else if (action.type === "signOut") {
+        state.userId = null;
+        state.accountType = null;
+    }
+    else if (action.type === "setUserSelectedRestaurant") {
+        state.userSelectedRestaurant = action.newUserSelectedRestaurant;
     }
 
     return state;
@@ -62,14 +89,25 @@ const routing = (
     <Provider store={store}>
         <Router>
             <div>
-                <Route exact path="/App" component={App} />
+                <Route exact path="/" component={App} />
                 <Route exact path="/ErrorPageForRestaurantRegistration" component={ErrorPageForRestaurantRegistration}/>
                 <Route exact path="/Home" component={Home}/>
+                <Route exact path="/tryStripeCheckout" component={tryStripeCheckout}/>
                 <Route exact path="/LoginPage" component={LoginPage} />
                 <Route exact path="/LoginForm" component={LoginForm} />
                 <Route exact path="/RegisterForm" component={RegisterForm}/>
-                <Route exact path="/" component={LoginDashBoard}/>
+                <Route exact path="/tryingForRoutes" component={tryingForRoutes}/>
+                <Route exact path="/LoginDashBoard" component={LoginDashBoard}/>
+                <Route exact path="/chatFeatureForRestaurant" component={chatFeatureForRestaurant}/>
                 <Route exact path="/OTPpage" component={OTPpage}/>
+                <Route exact path="/dishesForUserView" component={dishesForUserView}/>
+                <Route exact path="/ActiveOrders" component={ActiveOrders}/>
+                <Route exact path="/paymentSystemForUsers" component={paymentSystemForUsers}/>
+                <Route exact path="/MyCart" component={MyCart}/>
+                <Route exact path="/chatFeature" component={chatFeature}/>
+                <Route exact path="/userChatStartButton" component={userChatStartButton}/>
+                <Route exact path="/restaurantChatStartButton" component={restaurantChatStartButton}/>
+                <Route exact path="/RestaurantActiveOrders" component={RestaurantActiveOrders}/>
                 <Route exact path="/DeliveryAgentOTPpage" component={DeliveryAgentOTPpage}/>
                 <Route exact path="/errorPageForRegistration" component={errorPageForRegistration} />
                 <Route exact path="/MySettingsPage" component={MySettingsPage}/>
@@ -80,6 +118,8 @@ const routing = (
                 <Route exact path="/MyCurrentLocation" component={MyCurrentLocation}/>
                 <Route exact path="/RestaurantDashboard" component={RestaurantDashboard}/>
                 <Route exact path="/Trying" component={Trying}/>
+                <Route exact path="/chatFeatureForRestaurant" component={chatFeatureForRestaurant}/>
+                <Route exact path="/AppForShoppingCart" component={AppForShoppingCart}/>
                 <Route exact path="/AddItemToMenu" component={AddItemToMenu}/>
                 <Route exact path="/RestaurantRegister" component={RestaurantRegister} />
                 <Route exact path="/DeliveryAgentDashboard" component={DeliveryAgentDashboard}/>
@@ -94,6 +134,10 @@ const routing = (
                 <Route exact path="/MyCurrentRestaurantLocation" component={MyCurrentRestaurantLocation} />
                 <Route exact path="/ErrorPageForDeliveryAgentRegistration" component={ErrorPageForDeliveryAgentRegistration}/>
                 <Route exact path="/DeliveryAgentLoginForm" component={DeliveryAgentLoginForm}/>
+                <Route exact path="/DeliveryAgentLoginErrorPage" component={DeliveryAgentLoginErrorPage}/>
+                <Route exact path="/DeliveryAgentOTPResetPassword" component={DeliveryAgentOTPResetPassword}/>
+                <Route exact path="/DeliveryAgentMaps" component={DeliveryAgentMaps}/>
+
             </div>
         </Router>
     </Provider>

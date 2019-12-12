@@ -1,14 +1,23 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
 
 class RestaurantSettingsPage extends Component {
     state = {
-        data: []
+        data: [],
+        restaurantName: "",
+        restaurantPrimaryEmailId: "",
+        primaryPhoneNumber: ""
     }
     returnToLoginDahboard = () => {
         this.props.history.push('/RestaurantDashboard');
     }
     forwardToMyCurrentLocation = () => {
         this.props.history.push('/MyCurrentLocation');
+    }
+
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
     }
 
     goBackToRestaurantDashboard = () => {
@@ -27,30 +36,44 @@ class RestaurantSettingsPage extends Component {
         this.props.history.push('/RestaurantResetpassword');
     }
 
-    componentDidMount () {
-        fetch('/getUserDetails')
-            .then(response => {
-                if (!response.ok) {
-                    throw Error('Network request failed.')
-                }
-                return response;
-            })
-            .then(data => data.json())
-            .then(data => {
-                console.log("Inside this ", data);
-                this.setState({
-                    data: data
-                });
-                console.log('parsed json', data);
+    forwardToActiveOrders = () => {
+        this.props.history.push('/RestaurantActiveOrders')
+    }
 
-            }, (ex) => {
-                this.setState({
-                    requestError : true
-                });
-                console.log('parsing failed', ex)
-            })
+    componentDidMount() {
+        let currentComponent = this;
+        console.log(currentComponent.props.restaurantId);
+        console.log(this.props.restaurantId);
+        console.log(currentComponent.props.restaurantId)
+        fetch('/getRestaurantDataForDashboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                restaurantId: currentComponent.props.restaurantId
+            }),
+        }).then(function(response) {
+            console.log("returned");
+            console.log(response);
+            return response.json();
+        }).then(function(data) {
+            console.log(data);
+            console.log(data.restaurantId, data.restaurantName);
+            const userName = data.userName;
+            console.log("Will mount username", userName);
+            currentComponent.setState({
+                restaurantName: data.restaurantName,
+                restaurantPrimaryEmailId: data.restaurantPrimaryEmailId,
+                primaryPhoneNumber: data.primaryPhoneNumber
+            });
+            console.log(currentComponent.state.userName);
+        })
     }
     render() {
+        if(this.props.restaurantId === null) {
+            this.props.history.push('/')
+        }
         return(
 
             <div>
@@ -81,14 +104,15 @@ class RestaurantSettingsPage extends Component {
                                     >My Settings</a>
 
                                     </li>
-
+                                    <li>
+                                        <a className="nav-link" onClick={this.signOut}>Sign Out</a>
+                                    </li>
 
                                 </ul>
                             </div>
                         </div>
                     </nav>
                 </header>
-
                 <div className="container mt-5">
                     <div className="row">
                         <div className="col-lg-4 pb-5">
@@ -114,6 +138,8 @@ class RestaurantSettingsPage extends Component {
                                         className="list-group-item" href="#" onClick={this.forwardToAddressPage}><i className="fe-icon-map-pin text-muted"></i>Address</a>
                                     <a
                                         className="list-group-item" href="#" onClick={this.forwardToResetpassword}><i className="fe-icon-map-pin text-muted"></i>Reset Password</a>
+                                    <a
+                                        className="list-group-item" href="#" onClick={this.forwardToActiveOrders}><i className="fe-icon-map-pin text-muted"></i>Active Orders</a>
 
                                 </nav>
                             </div>
@@ -124,7 +150,7 @@ class RestaurantSettingsPage extends Component {
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="account-fn">Restaurant Name</label>
-                                        <input className="form-control" type="text" id="account-fn"
+                                        <input className="form-control" type="text" id="account-fn" placeholder={this.state.restaurantName}
                                                required=""/>
                                     </div>
                                 </div>
@@ -138,14 +164,14 @@ class RestaurantSettingsPage extends Component {
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="account-email">E-mail Address</label>
-                                        <input className="form-control" type="email" id="account-email"
+                                        <input className="form-control" type="email" id="account-email" placeholder={this.state.restaurantPrimaryEmailId}
                                                disabled=""/>
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="account-phone">Phone Number</label>
-                                        <input className="form-control" type="text" id="account-phone"
+                                        <input className="form-control" type="text" id="account-phone" placeholder={this.state.primaryPhoneNumber}
                                                required=""/>
                                     </div>
                                 </div>
@@ -176,4 +202,17 @@ class RestaurantSettingsPage extends Component {
 
 
 }
-export default RestaurantSettingsPage;
+const mapStateToProps = (state) => {
+    return {
+        restaurantId: state.userId,
+    }
+};
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
+        signOut: () => dispatch({type: "signOut"})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (RestaurantSettingsPage);
