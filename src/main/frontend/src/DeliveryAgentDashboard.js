@@ -23,6 +23,15 @@ class DeliveryAgentDashboard extends Component{
         ActiveOrder: false
     }
 
+    closeAllOptionsOfSelectionForm = () => {
+        this.setState({
+            chatRequest: false,
+            ActiveOrder: false,
+            noOrders: false
+        })
+    }
+
+
     fetchAddresses = () => { debugger;
         fetch('/getActiveDeliveryOrderForDeliveryAgent', {
             method: 'POST',
@@ -272,6 +281,7 @@ class DeliveryAgentDashboard extends Component{
                     show={this.state.noOrders}
                     animation={false}
                     id="modal"
+                    onHide={this.closeAllOptionsOfSelectionForm}
                 >
                     <div className="container">
                         <div className="row">
@@ -297,6 +307,7 @@ class DeliveryAgentDashboard extends Component{
                     show={this.state.chatRequest}
                     animation={false}
                     id="modal"
+                    onHide={this.closeAllOptionsOfSelectionForm}
                 >
                     <div className="container">
                         <div className="row">
