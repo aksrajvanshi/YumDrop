@@ -280,6 +280,15 @@ class MySettingsPage extends Component{
                                             </div>
                                         </div>
                                     </a>
+                                    <a className="list-group-item active" href="#" onClick={this.chatWithRestaurant}>
+                                        <i className="fe-icon-map-pin text-muted"></i>chat with restaurant
+                                    </a>
+                                    <a className="list-group-item active" href="#" onClick={this.chatWithDeliveryAgent}>
+                                        <i className="fe-icon-map-pin text-muted"></i>chat with delivery agent
+                                    </a>
+                                    <a className="list-group-item active" href="#" onClick={this.chatWithRestaurantAndDeliveryAgent}>
+                                        <i className="fe-icon-map-pin text-muted"></i>Group chat
+                                    </a>
                                 </nav>
                             </div>
                         </div>
@@ -309,15 +318,7 @@ class MySettingsPage extends Component{
                                 <tfoot>
                                 <tr>
 
-                                        <td><a
-                                            className="btn btn-success btn-block" onClick={this.chatWithRestaurant}>chat With Restaurant <i className="fa fa-angle-right"></i></a>
-                                        </td>
-                                    <td><a
-                                        className="btn btn-success btn-block" onClick={this.chatWithDeliveryAgent}>chat With Delivery Agent <i className="fa fa-angle-right"></i></a>
-                                    </td>
-                                    <td><a
-                                        className="btn btn-success btn-block" onClick={this.chatWithRestaurantAndDeliveryAgent}>chat With Restaurant And Delivery Agent<i className="fa fa-angle-right"></i></a>
-                                    </td>
+
 
                                 </tr>
 

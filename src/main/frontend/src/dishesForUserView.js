@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import StarRatingComponent from "react-star-rating-component";
+import StripeCheckout from "react-stripe-checkout";
 
 
 class dishesForUserView extends React.Component{
@@ -98,7 +99,7 @@ class dishesForUserView extends React.Component{
             body: JSON.stringify({
                 userEmail: this.props.emailId,
                 dishName: item.dishName,
-                restaurantId: "abc12",
+                restaurantId: this.props.restaurantId,
                 dishPrice : item.dishPrice,
                 dishQuantity : 1
             })})
@@ -118,21 +119,34 @@ class dishesForUserView extends React.Component{
         {
             return(
 
-                <tr key={itemName}>
-                    <td><img src="http://placehold.it/100x100" alt="..."
-                             className="img-responsive"/></td>
-                    <td>{d.dishName}</td>
-                    <td>{d.dishDescription}
-                    </td>
-                    <td>{d.dishPrice}</td>
-                    <td className="td-actions">
+                <tr>
+                    <td data-th="Product" key={itemName}>
+                        <div className="row">
+                            <div className="col-sm-2 hidden-xs"><img src="https://data.tibettravel.org/assets/images/Tibet-bhutan-tour/indian-food-in-Lhasa.jpg" alt="..."
+                                                                    height="50px" width="50px" className="img-responsive"/></div>
 
+                        </div>
+                    </td>
+                    <td><div className="col-sm-10">
+                        <h4 className="nomargin">{d.dishName}</h4>
+
+                    </div></td>
+                    <td><div className="col-sm-10">
+                        <h4 className="nomargin">{d.dishDescription}</h4>
+
+                    </div></td>
+                    <td data-th="Price">{d.dishPrice}</td>
+
+
+                    <td className="actions" data-th="">
                         <div className="col-md-8 col-sm-8 col-xs-8">
                             <a href="#" className="btn btn-success btn-product" onClick={this.handleClick.bind(this, d)}><span
-                                className="glyphicon glyphicon-shopping-cart" > Add to Cart</span></a>
+                                className="glyphicon glyphicon-shopping-cart" > Add Cart</span></a>
                         </div>
                     </td>
                 </tr>
+
+
 
 
 
@@ -167,7 +181,7 @@ class dishesForUserView extends React.Component{
 
 
                                     <li className="nav-item">
-                                        <a className="nav-link"  onClick={this.goBackToLoginDashboard} ><span>home</span></a>
+                                        <a className="nav-link"  onClick={this.goBackToLoginDashboard} ><span>Home</span></a>
                                     </li>
                                     <li>
                                         <a className="nav-link" onClick={this.signOut}>Logout</a>
@@ -187,7 +201,7 @@ class dishesForUserView extends React.Component{
                                 </div>
                                 <div className="author-card-profile">
                                     <div className="author-card-avatar"><img
-                                        src="https://www.caretechfoundation.org.uk/wp-content/uploads/anonymous-person-221117.jpg" />
+                                        src="https://www.esamskriti.com/essays/docfile/848.jpg" />
                                     </div>
 
                                 </div>
@@ -204,16 +218,16 @@ class dishesForUserView extends React.Component{
                                         </div>
                                     </a>
                                     <a className="list-group-item" href="#" onClick={this.settingsPage}>
-                                        <i className="fe-icon-user text-muted"></i>{this.state.restaurantPrimaryEmailId}
+                                        <i className="fe-icon-user text-muted"></i>{this.props.restaurantId}
                                     </a>
                                     <a className="list-group-item" href="#" onClick={this.forwardToSettingsAddresses}>
-                                        <i className="fe-icon-map-pin text-muted"></i><StarRatingComponent
+                                        <i className="fe-icon-map-pin text-muted"></i>Ratings: <StarRatingComponent
                                         name="rate your food"
                                         starCount={5}
                                         value={this.state.rating}
                                     />
                                     </a>
-                                    <a className="list-group-item active" href="#" onClick={this.forwardToMyCart}>
+                                    <a className="list-group-item" href="#" onClick={this.forwardToMyCart}>
                                         <div className="d-flex justify-content-between align-items-center">
                                             <div><i className="fe-icon-heart mr-1 text-muted"></i>
                                                 <div className="d-inline-block font-weight-medium text-uppercase">No. of ratings: {this.state.numberOfUsers}
@@ -225,50 +239,58 @@ class dishesForUserView extends React.Component{
                             </div>
                         </div>
 
+
+
+
+
                         <div className="col-lg-8 pb-5">
                             <form className="row">
                                 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
                                 <div className="container">
+                                    <table id="cart" className="table table-hover table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th id="dishDisplayTable">Dish Image</th>
+                                            <th id="dishDisplayTable" >Dish Name</th>
+                                            <th id="dishDisplayTable"> Dish description</th>
+                                            <th id="dishDisplayTable">Dish Price</th>
+                                            <th id="dishDisplayTable">Add to cart</th>
+                                            <th id="dishDisplayTable"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {mapDishesForUserView}
+                                        </tbody>
+                                        <tfoot>
 
-                        <div className="widget-content">
+                                        <tr>
+                                            <tr className="visible-xs">
+                                                <td className="text-center"><strong></strong></td>
 
-                            <table className="table table-striped table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Dish Image</th>
-                                    <th>Dish Name</th>
-                                    <th>Dish Description</th>
-                                    <th>Dish Price</th>
-                                    <th id="dishDisplayTable">Add to Cart</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {mapDishesForUserView}
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <tr className="visible-xs">
-                                        <td className="text-center"><strong></strong></td>
+                                            </tr>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="#" className="btn btn-warning"><i
+                                                className="fa fa-angle-left"></i>Home Page</a></td>
+                                            <td></td>
+                                            <td></td><td></td>
 
-                                    </tr>
-                                </tr>
-                                <tr>
-                                    <td><a href="#" className="btn btn-warning"><i
-                                        className="fa fa-angle-left" onClick={this.goBackToLoginDashboard}></i>Home Page</a></td>
+                                            <td><a
+                                                className="btn btn-success btn-block" onClick={this.forwardToMyCart}>My Cart <i className="fa fa-angle-right"></i></a>
+                                            </td>
 
-                                    <td colSpan="2" className="hidden-xs"></td>
-                                    <td></td><td></td>
-                                    <td><a
-                                        className="btn btn-success btn-block" onClick={this.forwardToMyCart}>My Cart <i className="fa fa-angle-right"></i></a>
-                                    </td>
-                                </tr>
-                                </tfoot>
-                            </table>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
 
-                        </div>
 
-                                </div></form></div></div></div>
-                </div>
+                                </div></form>
+
+                        </div></div></div>
+
+
+
+            </div>
 
 
 

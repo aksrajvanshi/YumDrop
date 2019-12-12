@@ -78,7 +78,7 @@ img.rounded {
 }
 
 #headline{
-    padding-left: 450px;
+    padding-left: 400px;
 }
 .section-title h4 {
     font-size: 40px;
@@ -87,7 +87,7 @@ img.rounded {
     position: relative;
     display: inline-block;
     padding-bottom: 25px;
-    padding-left: 250px;
+    padding-left: 60px;
 }
 .section-title h4::before {
     width: 80px;

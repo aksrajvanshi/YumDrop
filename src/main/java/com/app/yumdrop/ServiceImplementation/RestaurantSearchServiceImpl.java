@@ -1,9 +1,11 @@
 package com.app.yumdrop.ServiceImplementation;
 
 import com.app.yumdrop.Entity.Restaurant;
+import com.app.yumdrop.Entity.RestaurantCountPerRating;
 import com.app.yumdrop.Entity.RestaurantRatings;
 import com.app.yumdrop.FormEntity.RestaurantSearchResults;
 import com.app.yumdrop.Messages.SuccessMessage;
+import com.app.yumdrop.Repository.RestaurantCountPerRatingRepository;
 import com.app.yumdrop.Repository.RestaurantRatingsRepository;
 import com.app.yumdrop.Repository.RestaurantRepository;
 import com.app.yumdrop.Service.DistanceBetweenAddressesCalculatorService;
@@ -27,8 +29,11 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
     @Autowired
     DistanceBetweenAddressesCalculatorService distanceBetweenAddressesCalculatorService;
 
+    @Autowired
+    RestaurantCountPerRatingRepository restaurantCountPerRatingRepository;
+
     @Override
-    public ResponseEntity<?> getRestaurantResultsByLocationFromPublicPage(String userAddress, String restaurantSearchKeyword) {
+    public ResponseEntity<?> getRestaurantResultsByLocationFromPublicPage(String userAddress, String restaurantSearchKeyword, Double minimumRating, int maximumDistance) {
 
         List<Restaurant> searchedRestaurant = restaurantRepository.findByrestaurantName(restaurantSearchKeyword);
         List<RestaurantSearchResults> restaurantResultsWithDetails = new ArrayList<>(searchedRestaurant.size());
@@ -45,17 +50,28 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
             res.setRestaurantDetails(currentRestaurant);
             RestaurantRatings currentRestaurantRatings = restaurantRatingsRepository.findByrestaurantId(currentRestaurant.getRestaurantId());
             res.setRestaurantRatings(currentRestaurantRatings);
+            List<RestaurantCountPerRating> restaurantCountPerRatings = restaurantCountPerRatingRepository.findByrestaurantId(currentRestaurant.getRestaurantId());
+            res.setRestaurantCountPerRatingList(restaurantCountPerRatings);
             distanceBetweenAddressesCalculatorService.calculateDistance(userAddress, res);
             restaurantResultsWithDetails.add(res);
         }
 
-
         restaurantResultsWithDetails.sort(Comparator.comparing(RestaurantSearchResults::getDistanceFromUserInMeters));
-        return new ResponseEntity<>(restaurantResultsWithDetails, HttpStatus.OK);
+        List<RestaurantSearchResults> finalSearchResults = new ArrayList<>();
+        for(int i=0; i < restaurantResultsWithDetails.size(); i++){
+            RestaurantSearchResults restaurantDetail = restaurantResultsWithDetails.get(i);
+            Double restaurantRating = (1.0) * restaurantDetail.getRestaurantRatings().getOverallRating()/restaurantDetail.getRestaurantRatings().getNumberOfUsers();
+            if(restaurantDetail.getDistanceFromUserInMeters() < (maximumDistance * 1600) && restaurantRating > minimumRating){
+                finalSearchResults.add(restaurantDetail);
+            }
+
+        }
+
+        return new ResponseEntity<>(finalSearchResults, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<?> getRestaurantResultsByLocationFromDashboard(String userAddress, String userEmail, String restaurantSearchKeyword) {
+    public ResponseEntity<?> getRestaurantResultsByLocationFromDashboard(String userAddress, String userEmail, String restaurantSearchKeyword, Double minimumRating, int maximumDistance) {
         List<Restaurant> searchedRestaurant = restaurantRepository.findByrestaurantName(restaurantSearchKeyword);
         List<RestaurantSearchResults> restaurantResultsWithDetails = new ArrayList<>(searchedRestaurant.size());
         if (searchedRestaurant.size() == 0) {
@@ -71,12 +87,23 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
             res.setRestaurantDetails(currentRestaurant);
             RestaurantRatings currentRestaurantRatings = restaurantRatingsRepository.findByrestaurantId(currentRestaurant.getRestaurantId());
             res.setRestaurantRatings(currentRestaurantRatings);
-
+            List<RestaurantCountPerRating> restaurantCountPerRatings = restaurantCountPerRatingRepository.findByrestaurantId(currentRestaurant.getRestaurantId());
+            res.setRestaurantCountPerRatingList(restaurantCountPerRatings);
             distanceBetweenAddressesCalculatorService.calculateDistance(userAddress, res);
             restaurantResultsWithDetails.add(res);
         }
         restaurantResultsWithDetails.sort(Comparator.comparing(RestaurantSearchResults::getDistanceFromUserInMeters));
-        return new ResponseEntity<>(restaurantResultsWithDetails, HttpStatus.OK);
+        List<RestaurantSearchResults> finalSearchResults = new ArrayList<>();
+        for(int i=0; i < restaurantResultsWithDetails.size(); i++){
+            RestaurantSearchResults restaurantDetail = restaurantResultsWithDetails.get(i);
+            Double restaurantRating = (1.0) * restaurantDetail.getRestaurantRatings().getOverallRating()/restaurantDetail.getRestaurantRatings().getNumberOfUsers();
+            if(restaurantDetail.getDistanceFromUserInMeters() < (maximumDistance * 1600) && restaurantRating > minimumRating){
+                finalSearchResults.add(restaurantDetail);
+            }
+
+        }
+
+        return new ResponseEntity<>(finalSearchResults, HttpStatus.OK);
     }
 
     @Override
@@ -96,6 +123,8 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
             res.setRestaurantDetails(currentRestaurant);
             RestaurantRatings currentRestaurantRatings = restaurantRatingsRepository.findByrestaurantId(currentRestaurant.getRestaurantId());
             res.setRestaurantRatings(currentRestaurantRatings);
+            List<RestaurantCountPerRating> restaurantCountPerRatings = restaurantCountPerRatingRepository.findByrestaurantId(currentRestaurant.getRestaurantId());
+            res.setRestaurantCountPerRatingList(restaurantCountPerRatings);
             distanceBetweenAddressesCalculatorService.calculateDistance(userAddress, res);
             restaurantResultsWithDetails.add(res);
         }
@@ -122,6 +151,8 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
             res.setRestaurantDetails(currentRestaurant);
             RestaurantRatings currentRestaurantRatings = restaurantRatingsRepository.findByrestaurantId(currentRestaurant.getRestaurantId());
             res.setRestaurantRatings(currentRestaurantRatings);
+            List<RestaurantCountPerRating> restaurantCountPerRatings = restaurantCountPerRatingRepository.findByrestaurantId(currentRestaurant.getRestaurantId());
+            res.setRestaurantCountPerRatingList(restaurantCountPerRatings);
             distanceBetweenAddressesCalculatorService.calculateDistance(userAddress, res);
             restaurantResultsWithDetails.add(res);
         }
@@ -138,6 +169,19 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
         });
 
         return new ResponseEntity<>(restaurantResultsWithDetails, HttpStatus.OK);
+    }
 
+    @Override
+    public ResponseEntity<?> getSingleRestaurantDetail(String restaurantId) {
+        Restaurant restaurantDetail = restaurantRepository.findByrestaurantId(restaurantId);
+        RestaurantSearchResults restaurantSearchResults = new RestaurantSearchResults();
+
+        restaurantSearchResults.setRestaurantDetails(restaurantDetail);
+        RestaurantRatings currentRestaurantRatings = restaurantRatingsRepository.findByrestaurantId(restaurantDetail.getRestaurantId());
+        restaurantSearchResults.setRestaurantRatings(currentRestaurantRatings);
+        List<RestaurantCountPerRating> restaurantCountPerRatings = restaurantCountPerRatingRepository.findByrestaurantId(restaurantDetail.getRestaurantId());
+        restaurantSearchResults.setRestaurantCountPerRatingList(restaurantCountPerRatings);
+
+        return new ResponseEntity<>(restaurantSearchResults, HttpStatus.OK);
     }
 }

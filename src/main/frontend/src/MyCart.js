@@ -201,6 +201,9 @@ class MyCart extends React.Component {
         })
 
     }
+    goBackToLoginDashboard = () => {
+        this.props.history.push('/LoginDashboard')
+    }
 
     handleTokenAPI = (token) => {
         console.log("Insdie this");
@@ -217,14 +220,13 @@ class MyCart extends React.Component {
         let mapDishesForUserView = this.state.dishesForUserDisplay.map((d,itemName)=>
         {
             return(
-                <tr>
-                    <td data-th="Product" key={itemName}>
-                        <div className="row">
-                            <div className="col-sm-2 hidden-xs"><img src="https://cdn1.iconfinder.com/data/icons/dishes-glyph/128/yumminky-yumminky-cooking-dishes-44-512.png" alt="..."
-                                                                     className="img-responsive"/></div>
+                <tr><td data-th="Product" key={itemName}>
+                    <div className="row">
+                        <div className="col-sm-2 hidden-xs"><img src="https://data.tibettravel.org/assets/images/Tibet-bhutan-tour/indian-food-in-Lhasa.jpg" alt="..."
+                                                                 height="50px" width="50px" className="img-responsive"/></div>
 
-                        </div>
-                    </td>
+                    </div>
+                </td>
                     <td><div className="col-sm-10">
                         <h4 className="nomargin">{d.dishName}</h4>
 
@@ -234,7 +236,7 @@ class MyCart extends React.Component {
 
                     <td className="actions" data-th="">
                         <div className="col-md-8 col-sm-8 col-xs-8">
-                             <button id={itemName} key={itemName} value={d.dishQuantity} onClick={this.handleClick} >Add item</button>
+                             <a id={itemName} key={itemName} value={d.dishQuantity} onClick={this.handleClick} >{d.dishQuantity}</a>
                         </div>
                     </td>
                 </tr>
@@ -267,13 +269,8 @@ class MyCart extends React.Component {
                                         <a className="nav-link"><i
                                             className="fa fa-fw fa-user" onClick={this.goBackToLoginDashboard}/>Home</a>
                                     </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link"><i
-                                            className="fa fa-fw fa-user"/>Cart</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link"   onClick={this.settingsPage} ><span>Settings</span></a>
-                                    </li>
+
+
                                     <li>
                                         <a className="nav-link" onClick={this.signOut}> Sign Out </a>
                                     </li>

@@ -74,7 +74,7 @@ public class ResetPasswordController {
         return new ResponseEntity<>(successfulResetPassword, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/resetDeliveryAgentPassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/deliveryAgentResetPassword", method = RequestMethod.POST)
     public ResponseEntity<?> resetDeliveryAgentPassword(@RequestBody DeliveryAgent deliveryAgentData) {
         DeliveryAgent deliveryAgentExistingRecord = deliveryAgentRepository.findByDeliveryAgentEmail(deliveryAgentData.getDeliveryAgentEmail());
 

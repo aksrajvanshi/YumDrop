@@ -122,6 +122,10 @@ class RestaurantActiveOrders extends React.Component{
             }
             )}
 
+    goBackToRestaurantDashboard = () => {
+        this.props.history.push('/RestaurantDashboard')
+    }
+
     render(){
 
         let mapactiveOrdersForRestaurantDisplay = this.state.activeOrdersForRestaurantDisplay.map((d,itemName)=>
@@ -146,8 +150,14 @@ class RestaurantActiveOrders extends React.Component{
     return (
         <div>
             <header>
-                <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
-                      id="bootstrap-css"/>
+                <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+                <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+                <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
+                <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+                <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+                <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
                 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
                 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -156,22 +166,32 @@ class RestaurantActiveOrders extends React.Component{
                         <a className="navbar-brand " href="#" onClick={this.goBackToRestaurantDashboard}>YumDrop</a>
                         <div className="collapse navbar-collapse" id="navBarLinks">
                             <ul className="navbar-nav mr-auto">
-                                <li className="upper-links"><a className="links text-white" onClick={this.returnToLoginDahboard}
-                                >Home</a>
 
+                                <li className="nav-item">
+                                    <a className="nav-link"><i
+                                        className="fa fa-fw fa-user" onClick={this.goBackToRestaurantDashboard}/>Home</a>
                                 </li>
-
-                                <li className="upper-links"><a className="links text-white" onClick={this.goToRestaurantSettingsPage}
-                                >My Settings</a>
-
+                                <li className="nav-item">
+                                    <a className="nav-link"><i
+                                        className="fa fa-fw fa-user"/>Cart</a>
                                 </li>
-
+                                <li className="nav-item">
+                                    <a className="nav-link"   onClick={this.goToRestaurantSettingsPage} ><span>Settings</span></a>
+                                </li>
 
                             </ul>
                         </div>
                     </div>
                 </nav>
+
             </header>
+
+
+
+
+
+
+
 
             <Modal
                 show={this.state.errorSelect}
@@ -185,7 +205,7 @@ class RestaurantActiveOrders extends React.Component{
                                 <form>
                                     <h2 className="text-center">There are no Active Orders</h2>
                                     <div className="form-group">
-                                        <button onClick={this.goBackToLoginDashboard} type="submit"
+                                        <button onClick={this.goBackToRestaurantDashboard} type="submit"
                                                 className="btn btn-primary btn-lg btn-block login-btn">Go to Home
                                         </button>
                                     </div>
