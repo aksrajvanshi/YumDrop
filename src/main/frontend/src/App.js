@@ -217,6 +217,8 @@ class App extends Component {
                                             <AutoComplete
                                                 freeSolo
                                                 autoSelect="true"
+                                                color="primary"
+                                                size="medium"
                                                 onChange={evt => this.handleSearchSelect(evt)}
                                                 options={this.state.autocompleteOptions.map(option => option.restaurantDetails.restaurantName)}
                                                 disableClearable
@@ -229,7 +231,7 @@ class App extends Component {
                                     </div>
                                     <div className="col-md-1" >
                                         <div className="md-form">
-                                            <button id="SearchButton" className="btn btn-primary btn-md" onClick={this.goToSearchPage}><span id="SearchBar">Search</span></button>
+                                            <button id="SearchButton" className="btn btn-primary btn-md" onClick={this.goToSearchPage} id="SearchBarButtonHomePage"><span id="SearchBar">Search</span></button>
                                         </div>
                                     </div>
                                 </div>

@@ -222,8 +222,10 @@ input,textarea{
     text-align: center;
 }
 
-#SearchBar{
-    padding-bottom: 50px;
+#SearchBarButtonHomePage{
+    padding-bottom: 5px;
+    height: 48px;
+    width: 88px;
 }
 
 #SignUpID{
@@ -327,3 +329,9 @@ h3 {
     width: 40%;
 }
 
+#exampleFormControlSelect2{
+    height: 48px;
+}
+#searchBoxButtonHomePage{
+    width: 70px;
+}

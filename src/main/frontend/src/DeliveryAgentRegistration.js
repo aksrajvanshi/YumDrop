@@ -357,7 +357,7 @@ class App extends Component {
                     show={this.state.deliveryAgentOtpVal}
                     onHide={this.closeAllOptionsOfSelectionForm}
                     animation={false}
-                    centered id="modal"
+                    centered id="restaurantRegister"
                 >
                     <div className="container">
                         <div className="row">
@@ -370,6 +370,7 @@ class App extends Component {
                                                    onChange={this.handleDeliveryAgentOtpChange} type="text"
                                                    className="form-control" placeholder="OTP"
                                                    pattern="[a-z][A-Z]"
+                                                   id="textBoxRegisterRestaurant"
                                                    required="required"/>
                                         </div>
 
@@ -391,7 +392,7 @@ class App extends Component {
                     show={this.state.deliveryAgentRegister}
                     onHide={this.closeAllOptionsOfSelectionForm}
                     animation={false}
-                    id="modal"
+                    centered id="restaurantRegister"
                 >
 
                     <div className="container">
@@ -406,6 +407,7 @@ class App extends Component {
                                                    onChange={this.handleDeliveryAgentName} type="text"
                                                    className="form-control" placeholder="Full Name"
                                                    title="Please enter your full name"
+                                                   id="textBoxRegisterRestaurant"
                                                    pattern="(?=.*[a-zA-Z]).{1,}"
                                                    required="required"/>
                                         </div>
@@ -414,6 +416,7 @@ class App extends Component {
                                                    onChange={this.handleDeliveryAgentEmail} type="text"
                                                    className="form-control" placeholder="Email ID"
                                                    title="Please enter a valid email address"
+                                                   id="textBoxRegisterRestaurant"
                                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                                    required="required"/>
                                         </div>
@@ -421,7 +424,7 @@ class App extends Component {
                                         <div className="form-group">
                                             <input type="password" value={this.state.deliveryAgentPassword}
                                                    onChange={this.handleDeliveryAgentPassword} className="form-control"
-                                                   id="deliveryAgentPassword"
+                                                   id="textBoxRegisterRestaurant"
                                                    placeholder="Password"
                                                    title="Password must be 8 characters or longer and contain a lower case letter, capital letter, and a special character"
                                                    pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,16}"
@@ -430,7 +433,7 @@ class App extends Component {
                                         <div className="form-group">
                                             <input type="password" value={this.state.deliveryAgentConfirmPassword}
                                                    onChange={this.handleDeliveryAgentConfirmPassword}
-                                                   id="deliveryAgentConfirmPassword"
+                                                   id="textBoxRegisterRestaurant"
                                                    className="form-control" placeholder="Confirm password"
                                                    checked={this.state.deliveryAgentPassword === this.state.deliveryAgentConfirmPassword}
                                                    title="Please enter your password again"
@@ -441,6 +444,7 @@ class App extends Component {
                                             <input type="text" className="form-control"
                                                    value={this.state.deliveryAgentPhonenum}
                                                    onChange={this.handleDeliveryAgentPhonenum}
+                                                   id="textBoxRegisterRestaurant"
                                                    placeholder="Phone  Number"
 
                                                    pattern="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$"
