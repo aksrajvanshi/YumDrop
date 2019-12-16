@@ -43,17 +43,17 @@ class RestaurantSettingsPage extends Component {
             })
             .then(data => data.json())
             .then(data => {
-                console.log("Inside this ", data);
+
                 this.setState({
                     data: data
                 });
-                console.log('parsed json', data);
+
 
             }, (ex) => {
                 this.setState({
                     requestError : true
                 });
-                console.log('parsing failed', ex)
+
             })
     }
     render() {

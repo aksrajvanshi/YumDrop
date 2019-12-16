@@ -59,7 +59,8 @@ class App extends Component {
             },
             body:JSON.stringify({
                 restaurantId: this.state.restaurantId,
-                restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId
+                restaurantPrimaryEmailId: this.state.restaurantPrimaryEmailId,
+                restaurantPrimaryPassword: this.state.restaurantPassword
             }),
         }).then(res => {
             this.props.setRestaurant(this.state.restaurantId);
