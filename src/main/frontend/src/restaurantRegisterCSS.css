@@ -1,0 +1,11 @@
+#restaurantRegister{
+
+    position: fixed;
+    left: 35%;
+    width: 440px;
+    height: 400px;
+}
+
+#textBoxRegisterRestaurant{
+    height: 35px;
+}

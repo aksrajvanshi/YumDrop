@@ -464,19 +464,19 @@ class App extends Component {
                                         <div className="form-group">
 
                                             <button  type="submit"
-                                                     onClick={this.handelUserLoginOption} id="buttonLoginOption" className="btn btn-outline-info btn-lg btn-block">I am a User
+                                                     onClick={this.handelUserLoginOption} id="buttonLoginOption" className="btn btn-outline-secondary btn-lg btn-block">I am a User
                                             </button>
                                         </div>
 
                                         <div className="form-group">
                                             <button  type="submit" onClick={this.forwardToRestaurantregister}
-                                                     id="buttonLoginOption" className="btn btn-outline-info btn-lg btn-block">I am a Restaurant
+                                                     id="buttonLoginOption" className="btn-outline-secondary btn-lg btn-block">I am a Restaurant
                                             </button>
                                         </div>
 
                                         <div className="form-group">
                                             <button  type="submit" onClick={this.forwardToDeliveryAgentLoginForm}
-                                                     id="buttonLoginOption" className="btn btn-outline-info btn-lg btn-block">I am a Delivery Agent
+                                                     id="buttonLoginOption" className="btn btn-outline-secondary btn-lg btn-block">I am a Delivery Agent
                                             </button>
                                         </div>
                                     </form>

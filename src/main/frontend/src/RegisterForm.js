@@ -479,14 +479,15 @@ class App extends Component {
                     show={this.state.userRegister}
                     onHide={this.closeAllOptionsOfSelectionForm}
                     animation={false}
-                    id="modal"
+                    id="restaurantRegister"
+                    centered
                 >
                     <div className="container">
                         <div className="row">
                             <div className="main">
                                 <div className="login-form">
                                     <form onSubmit={this.register.bind(this)}>
-                                        <h2 className="text-center">User Sign Up</h2>
+                                        <h2 className="text-center"><strong>User Sign Up</strong></h2>
                                         <div className="social-btn text-center">
 
                                             <FacebookLogin
@@ -505,6 +506,7 @@ class App extends Component {
                                                    onChange={this.handleUserNameChange} type="text"
                                                    className="form-control" placeholder="Full Name"
                                                    title="Please enter your full name"
+                                                   id="textBoxRegisterRestaurant"
                                                    pattern="(?=.*[a-zA-Z]).{1,}"
                                                    required="required"/>
                                         </div>
@@ -513,14 +515,16 @@ class App extends Component {
                                                    onChange={this.handleUserEmailIdChange} type="text"
                                                    className="form-control" placeholder="Email ID"
                                                    title="Please enter a valid email address"
+                                                   id="textBoxRegisterRestaurant"
                                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                                    required="required"/>
                                         </div>
                                         <div className="form-group">
                                             <input type="password" value={this.state.userPassword}
                                                    onChange={this.handleUserPasswordChange} className="form-control"
-                                                   id="userPassword"
+                                                   id="textBoxRegisterRestaurant"
                                                    placeholder="Password"
+
                                                    title="Password must be 8 characters or longer and contain a lower case letter, capital letter, and a special character"
                                                    pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                                    required="required"/>
@@ -528,7 +532,7 @@ class App extends Component {
                                         <div className="form-group">
                                             <input type="password" value={this.state.userConfirmPassword}
                                                    onChange={this.handleUserConfirmPasswordChange}
-                                                   id="userConfirmPassword"
+                                                   id="textBoxRegisterRestaurant"
                                                    className="form-control" placeholder="Confirm password"
                                                    checked={this.state.userPassword === this.state.userConfirmPassword}
                                                    title="Please enter your password again"
@@ -540,6 +544,7 @@ class App extends Component {
                                                    value={this.state.userPhoneNumber}
                                                    onChange={this.handleUserPhoneNumberChange}
                                                    placeholder="Phone  Number"
+                                                   id="textBoxRegisterRestaurant"
                                                    title="Please enter a valid phone number Ex: +X XXX-XXX-XXXX"
                                                    pattern="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$"
                                                    required="required"/>

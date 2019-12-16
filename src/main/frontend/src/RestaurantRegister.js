@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import "./restaurantRegisterCSS.css"
 import LoginPage from "./LoginPage";
 import {connect} from 'react-redux';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -106,7 +107,8 @@ class App extends Component {
                     restaurantSecondaryEmailId: this.state.restaurantSecondaryEmailID,
                     primaryPhoneNumber: this.state.restaurantPrimaryPhoneNumber,
                     secondaryPhoneNumber: this.state.restaurantSecondaryPhoneNumber,
-                    restaurantOtp: this.state.restaurantOtp
+                    restaurantOtp: this.state.restaurantOtp,
+                    restaurantPrimaryPassword: this.state.restaurantPassword
 
                     }
                 )
@@ -174,6 +176,12 @@ class App extends Component {
     handlerestaurantSecondaryPhoneNumber = (event) => {
         this.setState({
             restaurantSecondaryPhoneNumber: event.target.value,
+        })
+    }
+
+    handleRestaurantPasswordChange = (event) =>{
+        this.setState({
+            restaurantPassword: event.target.value
         })
     }
 
@@ -363,18 +371,19 @@ class App extends Component {
                     show={this.state.restaurantRegister}
                     onHide={this.closeAllOptionsOfSelectionForm}
                     animation={false}
-                    id="modal"
+                    id="restaurantRegister"
+                    centered
                 >
                     <div className="container">
                         <div className="row">
                             <div className="main">
                                 <div className="login-form">
                                     <form onSubmit={this.register.bind(this)}>
-                                        <h2 className="text-center">Restaurant Sign Up</h2>
+                                        <h2 className="text-center"><strong>Restaurant Sign Up</strong></h2>
 
                                         <div className="form-group">
                                             <input value={this.state.restaurantFullName}
-                                                   onChange={this.handleRestaurantFullName} type="text"
+                                                   onChange={this.handleRestaurantFullName} type="text" id="textBoxRegisterRestaurant"
                                                    className="form-control" placeholder="Full Name"
                                                    title="Please enter restaurant full name"
                                                    pattern="(?=.*[a-zA-Z]).{1,}"
@@ -382,7 +391,7 @@ class App extends Component {
                                         </div>
                                         <div className="form-group">
                                             <input value={this.state.restaurantId}
-                                                   onChange={this.handleRestaurantId} type="text"
+                                                   onChange={this.handleRestaurantId} type="text" id="textBoxRegisterRestaurant"
                                                    className="form-control" placeholder="Restaurant ID"
                                                    title="Please enter a valid Restaurant ID"
                                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
@@ -390,16 +399,24 @@ class App extends Component {
                                         </div>
                                         <div className="form-group">
                                             <input value={this.state.restaurantPrimaryEmailId}
-                                                   onChange={this.handleRestaurantPrimaryEmailId} type="text"
+                                                   onChange={this.handleRestaurantPrimaryEmailId} type="text" id="textBoxRegisterRestaurant"
                                                    className="form-control" placeholder="Email ID"
                                                    title="Please enter a valid email address"
                                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                                    required="required"/>
                                         </div>
                                         <div className="form-group">
-                                            <input type="text" value={this.state.restaurantPrimaryPhoneNumber}
+                                            <input value={this.state.restaurantPassword}
+                                                   onChange={this.handleRestaurantPasswordChange} type="password" id="textBoxRegisterRestaurant"
+                                                   className="form-control" placeholder="Email ID"
+                                                   title="Please enter a valid email address"
+                                                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                                   required="required"/>
+                                        </div>
+                                        <div className="form-group">
+                                            <input type="text" value={this.state.restaurantPrimaryPhoneNumber} id="textBoxRegisterRestaurant"
                                                    onChange={this.handleRestaurantPrimaryPhoneNumber}
-                                                   id="userConfirmPassword"
+
                                                    className="form-control" placeholder="Phone Number"
                                                    title="Primary Phone Number"
                                                    pattern="(?=.*[^A-Za-z0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
