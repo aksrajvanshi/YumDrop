@@ -61,7 +61,7 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
     }
 
     @Override
-    public ResponseEntity<?> getRestaurantResultsByLocationFromDashboard(String userAddress, String userEmail, String restaurantSearchKeyword, Double minimumRating, int maximumDistance) {
+    public ResponseEntity<?> getRestaurantResultsWithFiltersFromDashboard(String userAddress, String userEmail, String restaurantSearchKeyword, Double minimumRating, int maximumDistance) {
         List<Restaurant> searchedRestaurant = restaurantRepository.findByrestaurantName(restaurantSearchKeyword);
         List<RestaurantSearchResults> restaurantResultsWithDetails = new ArrayList<>(searchedRestaurant.size());
         if (searchedRestaurant.size() == 0) {

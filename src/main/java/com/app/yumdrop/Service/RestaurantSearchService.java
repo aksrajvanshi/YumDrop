@@ -6,7 +6,7 @@ public interface RestaurantSearchService {
 
     ResponseEntity<?> getRestaurantResultsByLocationFromPublicPage(String userAddress, String restaurantSearchKeyword);
 
-    ResponseEntity<?> getRestaurantResultsByLocationFromDashboard(String userAddress, String userEmail, String restaurantSearchKeyword, Double minimumRating, int maximumDistance);
+    ResponseEntity<?> getRestaurantResultsWithFiltersFromDashboard(String userAddress, String userEmail, String restaurantSearchKeyword, Double minimumRating, int maximumDistance);
 
     ResponseEntity<?> getAllRestaurantDetails(String userAddress);
 
