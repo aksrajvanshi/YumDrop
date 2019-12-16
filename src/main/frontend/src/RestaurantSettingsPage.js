@@ -54,20 +54,17 @@ class RestaurantSettingsPage extends Component {
                 restaurantId: currentComponent.props.restaurantId
             }),
         }).then(function(response) {
-            console.log("returned");
-            console.log(response);
+
             return response.json();
         }).then(function(data) {
-            console.log(data);
-            console.log(data.restaurantId, data.restaurantName);
             const userName = data.userName;
-            console.log("Will mount username", userName);
+
             currentComponent.setState({
                 restaurantName: data.restaurantName,
                 restaurantPrimaryEmailId: data.restaurantPrimaryEmailId,
                 primaryPhoneNumber: data.primaryPhoneNumber
             });
-            console.log(currentComponent.state.userName);
+
         })
     }
     render() {

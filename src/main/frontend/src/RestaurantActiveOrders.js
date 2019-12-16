@@ -40,7 +40,6 @@ class RestaurantActiveOrders extends React.Component{
                 restaurantId: this.props.restaurantId,
             }),
         }).then(res => {
-            console.log("First response")
             if (res.status !== 200){
                 this.setState({
                     errorSelect: true

@@ -49,7 +49,8 @@ const initialState = {
     longitude: null,
     userId: null, //doubles as a User's Email address or a restaurant's Id
     accountType: null, //identifies if account is user, restaurant, or delivery
-    searchQuery: "", //last user inputted search string
+    searchQuery: "", //last user inputted search string,
+    restaurantSelected: ""
 }
 
 const reducer = (state=initialState, action) => {
@@ -57,6 +58,9 @@ const reducer = (state=initialState, action) => {
     if(action.type==="setLocation"){
         state.latitude = action.newLatitude;
         state.longitude = action.newLongitude;
+    }
+    else if(action.type === "setUserSelectedRestaurant"){
+        state.restaurantSelected = action.newUserSelectedRestaurant
     }
     else if (action.type === "setUserId"){
         state.userId = action.userId;

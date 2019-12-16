@@ -22,7 +22,7 @@ class LoginDashBoard extends Component{
     }
     componentDidMount () {
         let currentComponent = this
-        console.log()
+
         fetch('/getAllReccommendedRestaurants',{
             method: 'POST',
             headers: {
@@ -37,7 +37,7 @@ class LoginDashBoard extends Component{
             currentComponent.setState({
                 recommendedRestaurants: res
             })
-            console.log(this.state.recommendedRestaurants)
+
             if (res.status !== 200) {
             }else {
             }
@@ -48,7 +48,7 @@ class LoginDashBoard extends Component{
     }
 
     handleClick(item) {
-        console.log(item);
+
         this.props.setUserSelectedRestaurant(item.restaurantId)
         this.forwardToMyCart();
     }

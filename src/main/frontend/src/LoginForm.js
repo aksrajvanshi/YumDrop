@@ -201,21 +201,16 @@ class App extends Component {
 
     render() {
         const responseFacebook = (response) => {
-            console.log(response);
+
             this.state.facebookUserAccessToken = response.accessToken;
             this.state.facebookUserId = response.userID;
-            console.log("User ID", this.state.facebookUserId);
-            console.log("Access Token ",this.state.facebookUserAccessToken);
             let api = 'https://graph.facebook.com/v2.8/' + this.state.facebookUserId +
                 '?fields=name,email&access_token=' + this.state.facebookUserAccessToken;
             fetch(api)
                 .then((response) => response.json())
                 .then( (responseData) => {
-                    console.log(responseData)
                     this.state.facebookUserEmail = responseData.email;
                     this.state.facebookUserName  = responseData.name;
-                    console.log("Inside fetch api");
-                    console.log(responseData.email);
                 }).then(res => {
                 fetch('/facebookUserLogin',
                     {

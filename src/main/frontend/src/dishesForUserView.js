@@ -17,8 +17,8 @@ class dishesForUserView extends React.Component{
 
     componentWillMount() {
         let currentComponent = this;
-        console.log(this.props.restaurantId);
-        console.log(this.props.emailId);
+        console.log(currentComponent.props.restaurantId);
+        console.log(currentComponent.props.emailId);
         fetch('/getAllRestaurantDishes',{
             method: 'POST',
             redirect: 'follow',
@@ -27,15 +27,14 @@ class dishesForUserView extends React.Component{
                 'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({
-                restaurantId: this.props.restaurantId,})})
+                restaurantId: currentComponent.props.restaurantId,})})
             .then(res => {
-                console.log(res)
                 return res.json()
             }).then(response => {
             currentComponent.setState({
                 dishesForUserDisplay: response
             })
-            console.log(response)}).then(res => {
+         }).then(res => {
             fetch('/getRestaurantDataForUserView',{
                 method: 'POST',
                 redirect: 'follow',
@@ -46,23 +45,33 @@ class dishesForUserView extends React.Component{
                 body: JSON.stringify({
                     restaurantId: this.props.restaurantId,})})
                 .then(res => {
-                    console.log(res)
                     return res.json()
                 }).then(response => {
                 currentComponent.setState({
                     restaurantDetails: response
                 })
-                console.log(currentComponent.state.restaurantDetails)
-                console.log(currentComponent.state.restaurantDetails.restaurantRatings)
-                console.log(currentComponent.state.restaurantDetails.restaurantDetails)
-                console.log(currentComponent.state.restaurantDetails.restaurantName)
-                console.log();
+                if (currentComponent.state.restaurantDetails.restaurantRatings.overallRating === 0){
+                    this.setState({
+                        rating: 0,
+                        restaurantTotalNumberOfRatings: 0
+                    })
+                }else{
+                    this.setState({
+                        rating: Math.round((currentComponent.state.restaurantDetails.restaurantRatings.overallRating / currentComponent.state.restaurantDetails.restaurantRatings.numberOfUsers) ),
+                            restaurantTotalNumberOfRatings: currentComponent.state.restaurantDetails.restaurantRatings.numberOfUsers
+
+                    }
+
+                    )
+                }
+                currentComponent.setState({
+                    restaurantName: currentComponent.state.restaurantDetails.restaurantDetails.restaurantName,
+                    restaurantImageURL: currentComponent.state.restaurantDetails.restaurantDetails.restaurantImageUrl,
+                })
+
                 currentComponent.setState({
                     numberOfUsers: currentComponent.state.restaurantDetails.restaurantRatings.numberOfUsers
                 })
-                console.log(currentComponent.state.numberOfUsers)
-                console.log(currentComponent.state.restaurantDetails.restaurantRatings.overallRating)
-                console.log(currentComponent.state.restaurantDetails.restaurantRatings.numberOfUsers)
         })
     })}
 
@@ -85,10 +94,6 @@ class dishesForUserView extends React.Component{
     }
 
     handleClick(item) {
-        console.log(item);
-        console.log(this.props.emailId)
-
-        console.log(item.dishPrice)
         fetch('/addItemToMyCart',{
             method: 'POST',
             redirect: 'follow',
@@ -104,7 +109,7 @@ class dishesForUserView extends React.Component{
                 dishQuantity : 1
             })})
             .then(res => {
-                console.log(res)
+
                 return res.json()
             })
     }
@@ -196,8 +201,7 @@ class dishesForUserView extends React.Component{
                         <div className="col-lg-4 pb-5">
 
                             <div className="author-card pb-3">
-                                <div className="author-card-cover"
-                                >
+                                <div className="author-card-cover">
                                 </div>
                                 <div className="author-card-profile">
                                     <div className="author-card-avatar"><img
@@ -292,7 +296,7 @@ class dishesForUserView extends React.Component{
 const mapStateToProps = (state)=> {
     return {
         emailId: state.userId,
-        restaurantId: state.userSelectedRestaurant
+        restaurantId: state.restaurantSelected
     }
 }
 
