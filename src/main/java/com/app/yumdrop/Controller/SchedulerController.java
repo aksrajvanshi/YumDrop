@@ -20,7 +20,7 @@ public class SchedulerController {
         this.userFutureOrdersController = userFutureOrdersController;
     }
 
-    @Scheduled(fixedRate = 180000)
+    @Scheduled(fixedRate = 60000)
     public void reportCurrentTime() {
         System.out.println("Time : " + dateFormat.format(new Date()));
         userFutureOrdersController.runScheduler();

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -38,6 +39,7 @@ public class UsersFutureOrderController {
         return scheduleOrderService.scheduleOrder(userFutureOrdersForm);
     }
 
+    @Transactional
     public void runScheduler() {
 
         Timestamp start = Timestamp.from(Instant.now().minus(5, ChronoUnit.MINUTES));
@@ -46,7 +48,6 @@ public class UsersFutureOrderController {
         List<UserFutureOrders> scheduledOrdersList = userFutureOrdersRepository.findByfutureOrderTimeBetween(start, end);
 
         for(int i=0; i < scheduledOrdersList.size(); i++){
-
             UserFutureOrders currentScheduledOrder = scheduledOrdersList.get(i);
             UserOrderId userOrderId = new UserOrderId(currentScheduledOrder.getUserEmail(), currentScheduledOrder.getRestaurantId());
             Long userOrderSequenceId = userOrderRepository.getNextSeriesId();

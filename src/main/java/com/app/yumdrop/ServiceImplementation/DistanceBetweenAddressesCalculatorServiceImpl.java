@@ -23,6 +23,11 @@ public class DistanceBetweenAddressesCalculatorServiceImpl implements DistanceBe
     @Override
     public void calculateDistance(String userAddress, RestaurantSearchResults restaurantSearchResults) {
 
+        if(restaurantSearchResults.getRestaurantDetails().getRestaurantAddress() == null || restaurantSearchResults.getRestaurantDetails().getRestaurantAddress().isEmpty()){
+            restaurantSearchResults.setDistanceFromUserInMeters(0);
+            restaurantSearchResults.setDistanceFromUserWithMetrics("");
+        }
+
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey(googleMapsAPIKey)
                 .build();

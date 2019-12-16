@@ -1,15 +1,13 @@
 package com.app.yumdrop.Entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "future_user_orders")
+@IdClass(UserOrderId.class)
 public class UserFutureOrders extends CreateAndUpdateTimeModel {
 
     @Id
