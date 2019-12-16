@@ -33,7 +33,7 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
     RestaurantCountPerRatingRepository restaurantCountPerRatingRepository;
 
     @Override
-    public ResponseEntity<?> getRestaurantResultsByLocationFromPublicPage(String userAddress, String restaurantSearchKeyword, Double minimumRating, int maximumDistance) {
+    public ResponseEntity<?> getRestaurantResultsByLocationFromPublicPage(String userAddress, String restaurantSearchKeyword) {
 
         List<Restaurant> searchedRestaurant = restaurantRepository.findByrestaurantName(restaurantSearchKeyword);
         List<RestaurantSearchResults> restaurantResultsWithDetails = new ArrayList<>(searchedRestaurant.size());
@@ -57,17 +57,7 @@ public class RestaurantSearchServiceImpl implements RestaurantSearchService {
         }
 
         restaurantResultsWithDetails.sort(Comparator.comparing(RestaurantSearchResults::getDistanceFromUserInMeters));
-        List<RestaurantSearchResults> finalSearchResults = new ArrayList<>();
-        for(int i=0; i < restaurantResultsWithDetails.size(); i++){
-            RestaurantSearchResults restaurantDetail = restaurantResultsWithDetails.get(i);
-            Double restaurantRating = (1.0) * restaurantDetail.getRestaurantRatings().getOverallRating()/restaurantDetail.getRestaurantRatings().getNumberOfUsers();
-            if(restaurantDetail.getDistanceFromUserInMeters() < (maximumDistance * 1600) && restaurantRating > minimumRating){
-                finalSearchResults.add(restaurantDetail);
-            }
-
-        }
-
-        return new ResponseEntity<>(finalSearchResults, HttpStatus.OK);
+        return new ResponseEntity<>(restaurantResultsWithDetails, HttpStatus.OK);
     }
 
     @Override

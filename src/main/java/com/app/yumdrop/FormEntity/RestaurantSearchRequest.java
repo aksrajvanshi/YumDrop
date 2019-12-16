@@ -30,6 +30,13 @@ public class RestaurantSearchRequest {
         this.restaurantSearchKeyword = restaurantSearchKeyword;
     }
 
+    public RestaurantSearchRequest(String userAddress, String restaurantSearchKeyword, Double minimumRating, int maximumDistance) {
+        this.userAddress = userAddress;
+        this.restaurantSearchKeyword = restaurantSearchKeyword;
+        this.minimumRating = minimumRating;
+        this.maximumDistance = maximumDistance;
+    }
+
     public RestaurantSearchRequest(String userAddress, String restaurantSearchKeyword, String userEmail, Double minimumRating, int maximumDistance) {
         this.userAddress = userAddress;
         this.restaurantSearchKeyword = restaurantSearchKeyword;

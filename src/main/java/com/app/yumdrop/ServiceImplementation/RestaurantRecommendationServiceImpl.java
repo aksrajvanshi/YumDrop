@@ -90,10 +90,14 @@ public class RestaurantRecommendationServiceImpl implements RestaurantRecommenda
         Collections.sort(restaurantResultsWithDetails, new Comparator<RestaurantSearchResults>() {
             @Override
             public int compare(RestaurantSearchResults u1, RestaurantSearchResults u2) {
-
-                double rating1 = u1.getRestaurantRatings().getOverallRating() / u1.getRestaurantRatings().getNumberOfUsers();
-                double rating2 = u2.getRestaurantRatings().getOverallRating() / u2.getRestaurantRatings().getNumberOfUsers();
-
+                double rating1;
+                double rating2;
+                try {
+                    rating1 = u1.getRestaurantRatings().getOverallRating() / u1.getRestaurantRatings().getNumberOfUsers();
+                    rating2 = u2.getRestaurantRatings().getOverallRating() / u2.getRestaurantRatings().getNumberOfUsers();
+                }catch (ArithmeticException e){
+                    return 0;
+                }
                 return Double.compare(rating1, rating2);
             }
         });
