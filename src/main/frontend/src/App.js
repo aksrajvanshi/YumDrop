@@ -79,6 +79,8 @@ class App extends Component {
                 }),
             err => console.log(err)
         );
+        console.log("Address at my location is")
+        console.log(this.state.address)
     }
 
     getAutocompleteOptions() {

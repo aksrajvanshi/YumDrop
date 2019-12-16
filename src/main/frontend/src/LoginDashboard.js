@@ -22,28 +22,25 @@ class LoginDashBoard extends Component{
     }
     componentDidMount () {
         let currentComponent = this
-
+        console.log(currentComponent.props.emailId);
         fetch('/getAllReccommendedRestaurants',{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmailId: this.props.userEmailId
+                userEmail: this.props.emailId
             }),
         }).then(res => {
             return res.json();
         }).then(res=>{
-            currentComponent.setState({
-                recommendedRestaurants: res
-            })
-
-            if (res.status !== 200) {
-            }else {
+            let x = [];
+            for (let i=0; i<res.length;i++){
+                x[i] = res[i].restaurantDetails;
             }
-
-
-        })
+            currentComponent.setState({
+                recommendedRestaurants: x
+            })})
 
     }
 
@@ -152,50 +149,6 @@ class LoginDashBoard extends Component{
                 </header>
                 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css"/>
 
-
-                <div className="container mt-5">
-
-                    <div className="row">
-                        <div className="col-sm-2">
-                            <h6>Indian</h6>
-                            <img
-                                src="https://st2.depositphotos.com/2885805/10593/v/450/depositphotos_105938884-stock-illustration-indian-food-composition.jpg"
-                                alt="Rounded Image" height="30%" width="30%" className="rounded img-fluid"/>
-                        </div>
-                        <div className="col-sm-2">
-                            <h6>Mexican</h6>
-                            <img
-                                src="https://cdn4.iconfinder.com/data/icons/mexican-icons-2/206/Tacos-512.png"
-                                alt="Rounded Image" height="25%" width="25%" className="rounded img-fluid"/>
-                        </div>
-                        <div className="col-sm-2">
-                            <h6>Italian</h6>
-                            <img
-                                src="https://icons-for-free.com/iconfiles/png/512/food+food+italian+food+junk+food+pizza+icon-1320168016349880751.png"
-                                alt="Rounded Image" height="25%" width="25%" className="rounded img-fluid"/>
-                        </div>
-                        <div className="col-sm-2">
-                            <h6>American</h6>
-                            <img
-                                src="https://c8.alamy.com/comp/H797BY/hamburger-traditional-american-fast-food-icon-over-white-background-H797BY.jpg"
-                                alt="Rounded Image" height="25%" width="25%" className="rounded img-fluid"/>
-                        </div>
-                        <div className="col-sm-2">
-                            <h6>Thai</h6>
-                            <img
-                                src="https://image.flaticon.com/icons/png/512/644/644758.png"
-                                alt="Rounded Image" height="25%" width="25%" className="rounded img-fluid"/>
-                        </div>
-                        <div className="col-sm-2" >
-                            <h6>Barbecue</h6>
-                            <img
-                                src="https://cdn3.iconfinder.com/data/icons/food-3-11/128/food_Barbecue-Bbq-Skewer-Kabob-Hot-512.png"
-                                height="25%" width="25%" className="rounded img-fluid"/>
-                        </div>
-
-                    </div>
-
-                </div>
 
                 <br/>
 
