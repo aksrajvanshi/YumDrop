@@ -166,18 +166,21 @@ class MySettingsPage extends Component{
                 for(let i=0;i<response.length;i++){
                     let beforeSplit = response[i].ordercontents
                     let afterSplit = "";
-                    for(let j=0;i<beforeSplit;j++){
-                        if (beforeSplit[j] != ';'){
-                            afterSplit = afterSplit + beforeSplit[j];
+                    beforeSplit.split("").forEach(character => {
+                        if (character != ';'){
+                            afterSplit = afterSplit + character
                         }else{
-                            afterSplit = afterSplit + " ";
+                            afterSplit = afterSplit + " "
                         }
-                    }
-                    response[i].ordercontents = afterSplit;
+                    })
+
+                    response[i].ordercontents1 = afterSplit;
+                    console.log(afterSplit)
                 }
                 currentComponent.setState({
                     activeOrderForUserDisplay: response
                 })
+            console.log(this.state.activeOrderForUserDisplay)
                 console.log(response)}).then(res => {
 
         })
@@ -198,8 +201,8 @@ class MySettingsPage extends Component{
                 <tr key={itemName}>
                     <td>{d.orderId}</td>
 
-                    <td>{d.orderContents.split(',')}</td>
-                    <td>{d.orderPrice}
+                    <td>{d.ordercontents1}</td>
+                    <td>{d.orderPrice} $
                     </td>
                     <td>{d.createdAt}</td>
 

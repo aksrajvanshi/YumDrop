@@ -47,6 +47,28 @@ class RestaurantActiveOrders extends React.Component{
             }
             return res.json();
         }).then(response => {
+            console.log("Entereed")
+            for(let i=0; i<response.length;i++){
+                let beforeSplitting = response[i].orderContents.split(',');
+                console.log(beforeSplitting)
+                response[i].ordercontents = beforeSplitting.join(' ');
+                console.log("after", response[i].ordercontents);
+                console.log(response[i])
+            }
+            for(let i=0;i<response.length;i++){
+                let beforeSplit = response[i].ordercontents
+                let afterSplit = "";
+                beforeSplit.split("").forEach(character => {
+                    if (character != ';'){
+                        afterSplit = afterSplit + character
+                    }else{
+                        afterSplit = afterSplit + " "
+                    }
+                })
+
+                response[i].ordercontents1 = afterSplit;
+                console.log(afterSplit)
+            }
             currentComponent.setState({
                 activeOrdersForRestaurantDisplay: response
             })
@@ -75,6 +97,8 @@ class RestaurantActiveOrders extends React.Component{
 
     handleClick(item){
         console.log("Inside handle click")
+        console.log(this.props.restaurantId)
+        let currentComponent = this;
         fetch('/changeOrderStatusFromRestaurant', {
             method: 'POST',
             headers: {
@@ -95,7 +119,6 @@ class RestaurantActiveOrders extends React.Component{
                         restaurantId: this.props.restaurantId,
                     }),
                 }).then(res => {
-                    console.log("First response")
                     if (res.status !== 200){
                         this.setState({
                             errorSelect: true
@@ -103,7 +126,29 @@ class RestaurantActiveOrders extends React.Component{
                     }
                     return res.json();
                 }).then(response => {
-                    this.setState({
+                    console.log("Entereed")
+                    for(let i=0; i<response.length;i++){
+                        let beforeSplitting = response[i].orderContents.split(',');
+                        console.log(beforeSplitting)
+                        response[i].ordercontents = beforeSplitting.join(' ');
+                        console.log("after", response[i].ordercontents);
+                        console.log(response[i])
+                    }
+                    for(let i=0;i<response.length;i++){
+                        let beforeSplit = response[i].ordercontents
+                        let afterSplit = "";
+                        beforeSplit.split("").forEach(character => {
+                            if (character != ';'){
+                                afterSplit = afterSplit + character
+                            }else{
+                                afterSplit = afterSplit + " "
+                            }
+                        })
+
+                        response[i].ordercontents1 = afterSplit;
+                        console.log(afterSplit)
+                    }
+                    currentComponent.setState({
                         activeOrdersForRestaurantDisplay: response
                     })
                     console.log(response)})
@@ -150,11 +195,11 @@ class RestaurantActiveOrders extends React.Component{
 
                     <td>{d.userEmail}</td>
                     <td>{d.orderId}</td>
-                    <td>{d.orderContents}</td>
-                    <td>{d.orderPrice}</td>
+                    <td>{d.ordercontents1}</td>
+                    <td>{d.orderPrice} $</td>
                     <td className="actions" data-th="">
                         <div className="col-md-8 col-sm-8 col-xs-8">
-                            <button id={itemName} key={itemName} onClick={this.handleClick.bind(this,d)} >Order Processed</button>
+                            <button  className="btn btn-outline-success"  onClick={this.handleClick.bind(this,d)} >Order Processed</button>
                         </div>
                     </td>
 

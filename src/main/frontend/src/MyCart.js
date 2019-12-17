@@ -39,7 +39,7 @@ class MyCart extends React.Component {
             },
             body: JSON.stringify({
                 userEmail: this.props.userEmailId,
-                restaurantId: "abc12",
+                restaurantId: this.props.restaurantId,
                 restaurantRating: nextValue
             })})
             .then(res => {
@@ -81,7 +81,7 @@ class MyCart extends React.Component {
                 'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({
-                userEmail: "maithreyi.prabhu95@gmail.com",})})
+                userEmail: this.props.emailId,})})
             .then(res => {
                 console.log(res)
                 return res.json()
@@ -125,7 +125,7 @@ class MyCart extends React.Component {
                 'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({
-                userEmail: this.props.userEmailId,
+                userEmail: this.props.emailId,
                 time: this.state.time,
                 futureOrderTime: this.state.startDate + " "+this.state.time,
                 orderContents: orderContents,
@@ -167,7 +167,7 @@ class MyCart extends React.Component {
                 'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({
-                userEmail: this.props.userEmailId,
+                userEmail: this.props.emailId,
 
                 dishQuantity: this.state.dishesForUserDisplay[id].dishQuantity
             })})
@@ -182,7 +182,7 @@ class MyCart extends React.Component {
                             'Access-Control-Allow-Origin': '*'
                         },
                         body: JSON.stringify({
-                            userEmail: this.props.userEmailId,})})
+                            userEmail: this.props.emailId,})})
                         .then(res => {
                             console.log(res)
                             return res.json()
