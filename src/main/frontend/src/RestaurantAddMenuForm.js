@@ -108,6 +108,7 @@ class RestaurantAddMenuForm extends Component{
                         dishDescription: this.state.restaurantDishDescription,
                         dishName: this.state.restaurantDishName,
                         dishPrice: this.state.restaurantDishPrice,
+                    dishPhotoUrl: "https://wine4food.com/wp-content/uploads/2019/01/bigstock-Selection-of-Indian-food-inclu-12014759.jpg"
                     }
                 )
 

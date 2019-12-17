@@ -66,13 +66,9 @@ class Map extends React.Component{
                 restaurantAddress: this.state.address
             }),
         }).then(res => {
-            if (res.status !== 200) {
-                alert("Hey going to Error page");
-            }else {
-                alert("Successfully added address");
                 this.goBackToLoginDashboard();
             }
-        })
+        )
     }
     }
 

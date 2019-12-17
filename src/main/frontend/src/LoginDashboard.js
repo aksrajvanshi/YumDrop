@@ -1,9 +1,111 @@
 import React, { Component } from "react";
 import './LoginDashBoardCSS.css';
 import {connect} from "react-redux";
+import AutoComplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 
 
 class LoginDashBoard extends Component{
+
+
+    getUserAddress = async () => {
+        let currentComponent = this;
+        await fetch('/getUserDataForDashboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userEmail: currentComponent.state.userEmailId
+            }),
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            currentComponent.setState({userAddress: data.userAddress}, currentComponent.getAutocompleteOptions);
+        })
+    }
+
+    getAutocompleteOptions() {
+        fetch('/getAllRestaurants', {
+            method: 'POST',
+            redirect: 'follow',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                userAddress: this.state.address,
+            })
+        })
+            .then(res => {
+                return res.json()
+            }).then(data => {
+            this.setState({autocompleteOptions: data})
+        });
+    }
+
+
+
+    getSearchResults = () => {
+        let currentComponent = this;
+        fetch('/searchRestaurantByLocationFromUserDashboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userAddress: this.state.userAddress,
+                restaurantSearchKeyword: this.state.searchQuery,
+                userEmail: this.state.userEmailId
+            }),
+        }).then(res=>{
+            let x = [];
+            for (let i=0; i<res.length;i++){
+                x[i] = res[i].restaurantDetails;
+            }
+            currentComponent.setState({
+                searchResults: x
+            })
+            console.log(this.state.searchResults)
+        })
+    }
+
+    handleSearchChange = (event) => {
+        this.setState({searchQuery: event.target.value})
+    }
+
+    forwardToSettingsPage = () => {
+        this.props.history.push('/MySettingsPage');
+    }
+
+    forwardToMyCart = () => {
+        this.props.history.push('/MyCart')
+    }
+
+    onClick= (event) => {
+        this.forwardToSettingsPage();
+    }
+
+    handleSearchSelect = (event) => {
+        this.setState({searchQuery: event.target.textContent})
+    }
+
+    signOut = () => {
+        this.props.signOut();
+        this.props.history.push('/');
+    }
+
+    goToUserSearchPage = () => {
+        this.props.setSearchQuery(this.state.searchQuery);
+        this.props.history.push('/userSearchPage');
+    }
+
+
+
+
+
+
+
     constructor(props) {
         super(props);
 
@@ -14,7 +116,8 @@ class LoginDashBoard extends Component{
         searchResults: [{"restaurantAddress": "restaurantAddress"}],
         userAddress: "800 N Union St, Bloomington, IN 47408, USA",
         searchQuery: "",
-        recommendedRestaurants: []
+        recommendedRestaurants: [],
+        autocompleteOptions: []
     }
 
     forwardToChatFeature = () => {
@@ -43,37 +146,23 @@ class LoginDashBoard extends Component{
                 recommendedRestaurants: x
             })})
         console.log(this.state.recommendedRestaurants)
+        this.getUserAddress()
 
     }
+
 
     handleClick(item) {
 
         this.props.setUserSelectedRestaurant(item.restaurantId)
-        this.forwardToMyCart();
+        this.forwardTodishesPage();
     }
 
-
-
-    handleSearchChange = (event) => {
-        this.setState({searchQuery: event.target.value})
-    }
-
-    forwardToSettingsPage = () => {
-        this.props.history.push('/MySettingsPage');
-    }
-
-    forwardToMyCart = () => {
+    forwardTodishesPage = () => {
         this.props.history.push('/dishesForUserView')
     }
 
-    onClick= (event) => {
-        this.forwardToSettingsPage();
-    }
 
-    signOut = () => {
-        this.props.signOut();
-        this.props.history.push('/');
-    }
+
 
     render() {
 
@@ -154,6 +243,23 @@ class LoginDashBoard extends Component{
 
 
                 <br/>
+                <div id="searchContainer">
+                    <div id="autocompleteContainer">
+                        <AutoComplete
+                            freeSolo
+                            onChange={evt => this.handleSearchSelect(evt)}
+                            options={this.state.autocompleteOptions.map(option => option.restaurantDetails.restaurantName)}
+                            disableClearable
+                            renderInput={params => (
+                                <TextField {...params} variant="filled" label="Search for food, cuisines, restaurants here.." style={{backgroundColor:"white", width: '100%'}} onChange={evt => this.handleSearchChange(evt)}/>
+                            )}
+                        />
+                    </div>
+                    <div id="searchButton2Container">
+                        <button className="btn btn-primary btn-md" id="searchButton2" onClick={this.goToUserSearchPage}><span id="SearchBar">Search</span></button>
+                    </div>
+                </div>
+                <br/>
 
 
 
@@ -200,12 +306,23 @@ class LoginDashBoard extends Component{
 }
 const mapStateToProps = (state)=> {
     return {
-        emailId: state.userId
+        emailId: state.userId,
+        searchQuery: state.searchQuery,
+        searchResults: state.searchResults
     }
 }
 
 const mapDispatchToProps = (dispatch)=> {
     return {
+        setSearchQuery: (evt) => dispatch({
+            type: "setSearchQuery",
+            newSearchQuery: evt
+        }),
+        setSearchResults: (evt) =>
+            dispatch({
+                type: "setSearchResults",
+                newSearchResults: evt
+            }),
         setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
         signOut: () => dispatch({type: "signOut"}),
         setUserSelectedRestaurant: (evt) => dispatch({type: "setUserSelectedRestaurant", newUserSelectedRestaurant: evt}),
