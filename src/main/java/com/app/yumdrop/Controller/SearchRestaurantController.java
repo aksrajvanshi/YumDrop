@@ -23,6 +23,12 @@ public class SearchRestaurantController {
         return restaurantSearchService.getRestaurantResultsByLocationFromPublicPage(restaurantSearchRequest.getUserAddress(), restaurantSearchRequest.getRestaurantSearchKeyword());
     }
 
+    @RequestMapping(value = "/searchRestaurantFromSearchPage", method = RequestMethod.POST)
+    public ResponseEntity<?> searchRestaurantFromSearchPage(@RequestBody RestaurantSearchRequest restaurantSearchRequest) {
+        return restaurantSearchService.getRestaurantResultsWithFiltersFromDashboard(restaurantSearchRequest.getUserAddress(), restaurantSearchRequest.getUserEmail(), restaurantSearchRequest.getRestaurantSearchKeyword(),
+                restaurantSearchRequest.getMinimumRating(), restaurantSearchRequest.getMaximumDistance());
+    }
+
     @RequestMapping(value = "/searchRestaurantByLocationFromUserDashboard", method = RequestMethod.POST)
     public ResponseEntity<?> searchRestaurantWithFiltersFromUserDashboard(@RequestBody RestaurantSearchRequest restaurantSearchRequest) {
         return restaurantSearchService.getRestaurantResultsWithFiltersFromDashboard(restaurantSearchRequest.getUserAddress(), restaurantSearchRequest.getUserEmail(), restaurantSearchRequest.getRestaurantSearchKeyword(),
