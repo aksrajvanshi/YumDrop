@@ -40,7 +40,7 @@ class DeliveryAgentDashboard extends Component{
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                deliveryAgentEmail : "mkammili@iu.edu"
+                deliveryAgentEmail : "maithreyi.prabhu95@gmail.com"
             }),
         }).then(res => {
             console.log(res)

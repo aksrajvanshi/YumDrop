@@ -29,6 +29,10 @@ class RestaurantActiveOrders extends React.Component{
         this.props.history.push('/chatFeatureForRestaurant')
     }
 
+    fowardToDashboard = () => {
+        this.props.history.push('/RestaurantDashboard')
+    }
+
     componentWillMount() {
         let currentComponent = this;
         fetch('/getCurrentActiveOrderForRestaurant', {
@@ -98,6 +102,7 @@ class RestaurantActiveOrders extends React.Component{
     handleClick(item){
         console.log("Inside handle click")
         console.log(this.props.restaurantId)
+        console.log(item.orderId)
         let currentComponent = this;
         fetch('/changeOrderStatusFromRestaurant', {
             method: 'POST',
@@ -109,71 +114,11 @@ class RestaurantActiveOrders extends React.Component{
                 orderId: item.orderId,
                 orderStatus: 2
             }),
-        }).then(res =>{
-                fetch('/getCurrentActiveOrderForRestaurant', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body:JSON.stringify({
-                        restaurantId: this.props.restaurantId,
-                    }),
-                }).then(res => {
-                    if (res.status !== 200){
-                        this.setState({
-                            errorSelect: true
-                        })
-                    }
-                    return res.json();
-                }).then(response => {
-                    console.log("Entereed")
-                    for(let i=0; i<response.length;i++){
-                        let beforeSplitting = response[i].orderContents.split(',');
-                        console.log(beforeSplitting)
-                        response[i].ordercontents = beforeSplitting.join(' ');
-                        console.log("after", response[i].ordercontents);
-                        console.log(response[i])
-                    }
-                    for(let i=0;i<response.length;i++){
-                        let beforeSplit = response[i].ordercontents
-                        let afterSplit = "";
-                        beforeSplit.split("").forEach(character => {
-                            if (character != ';'){
-                                afterSplit = afterSplit + character
-                            }else{
-                                afterSplit = afterSplit + " "
-                            }
-                        })
-
-                        response[i].ordercontents1 = afterSplit;
-                        console.log(afterSplit)
-                    }
-                    currentComponent.setState({
-                        activeOrdersForRestaurantDisplay: response
-                    })
-                    console.log(response)})
-                    .then(res => {
-                        console.log("fourth one")
-                        fetch('/checkForUserChatRequest', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body:JSON.stringify({
-                                restaurantId: this.props.restaurantId,
-                            }),
-                        }).then(res => {
-                            if (res.status === 200){
-                                this.setState({
-                                    chatReqest: false
-                                })
-
-                            }
-
-                        })
-                    })
-            }
-            )}
+        }).then(response => {
+            this.fowardToDashboard();
+        console.log("End");
+        }
+        )}
 
     goBackToRestaurantDashboard = () => {
         this.props.history.push('/RestaurantDashboard')

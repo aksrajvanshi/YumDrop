@@ -42,6 +42,9 @@ import DeliveryAgentLoginErrorPage from "./DeliveryAgentLoginErrorPage";
 import DeliveryAgentOTPResetPassword from "./DeliveryAgentOTPResetPassword";
 import MyCart from "./MyCart";
 import paymentSystemForUsers from "./paymentSystemForUsers";
+import chatFeatureForRestaurant from "./chatFeatureForRestaurant";
+import chatFeature from "./chatFeature";
+import chatFeatureForDeliveryAgent from "./chatFeatureForDeliveryAgent";
 import SearchPage from "./SearchPage";
 import userSearchPage from "./userSearchPage";
 import dishesForUserView from "./dishesForUserView";
@@ -101,6 +104,9 @@ const routing = (
                 <Route exact path="/errorPageForRegistration" component={errorPageForRegistration} />
                 <Route exact path="/MySettingsPage" component={MySettingsPage}/>
                 <Route exact path="/OTPResetPassword" component={OTPResetPassword}/>
+                <Route exact path="/chatFeature" component={chatFeature}/>
+                <Route exact path="/chatFeatureForRestaurant" component={chatFeatureForRestaurant}/>
+                <Route exact path="/chatFeatureForDeliveryAgent" component={chatFeatureForDeliveryAgent}/>
                 <Route exact path="/ResetPassword" component={ResetPassword}/>
                 <Route exact path="/loginErrorPAge" component={loginErrorPAge} />
                 <Route exact path="/SuccessfulRegistration" component={SuccessfulRegistration} />
