@@ -109,6 +109,14 @@ class MyCart extends React.Component {
         console.log(this.state.time)
         console.log(this.state.startDate)
         console.log(this.state.startDate+this.state.time)
+        let totalPrice = 0;
+        let orderContents = "";
+        for(let i=0; i<this.state.dishesForUserDisplay.length;i++){
+            orderContents = orderContents + this.state.dishesForUserDisplay[i].dishName+","+this.state.dishesForUserDisplay[i].dishQuantity+",";
+            totalPrice = totalPrice + parseInt(this.state.dishesForUserDisplay[i].dishPrice)
+        }
+        console.log(orderContents)
+        console.log(totalPrice)
         fetch('/scheduleOrderForUser',{
             method: 'POST',
             redirect: 'follow',
@@ -119,7 +127,9 @@ class MyCart extends React.Component {
             body: JSON.stringify({
                 userEmail: this.props.userEmailId,
                 time: this.state.time,
-                dateForScheduling: this.state.startDate
+                futureOrderTime: this.state.startDate + " "+this.state.time,
+                orderContents: orderContents,
+                orderPrice: totalPrice
 
             })})
             .then(res => {
@@ -375,7 +385,7 @@ class MyCart extends React.Component {
                                             <td></td>
 
                                             <td><a
-                                                className="btn btn-success btn-block" onClick={this.submitSchedulingOfOrder.bind(this)} >Schedule This order <i className="fa fa-angle-right"></i></a>
+                                                className="btn btn-success btn-block" value = { this.state.scheduleDelivery} onClick={this.handleChangeOfScheduleDelivery} >Schedule This order <i className="fa fa-angle-right"></i></a>
                                             </td>
 
                                         </tr>
@@ -427,7 +437,7 @@ class MyCart extends React.Component {
 
                                 </div>
                                 <td><a
-                                    className="btn btn-success btn-block" onClick={this.submitSchedulingOfOrder} >Schedule This order <i className="fa fa-angle-right"></i></a>
+                                    className="btn btn-success btn-block" onClick={this.submitSchedulingOfOrder.bind(this)} >Schedule This order <i className="fa fa-angle-right"></i></a>
                                 </td>
                             </div>
                         </div>
