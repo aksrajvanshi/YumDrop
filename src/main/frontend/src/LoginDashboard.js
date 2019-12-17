@@ -37,10 +37,12 @@ class LoginDashBoard extends Component{
             let x = [];
             for (let i=0; i<res.length;i++){
                 x[i] = res[i].restaurantDetails;
+                console.log()
             }
             currentComponent.setState({
                 recommendedRestaurants: x
             })})
+        console.log(this.state.recommendedRestaurants)
 
     }
 
@@ -83,8 +85,9 @@ class LoginDashBoard extends Component{
             return(
                 <div className="col-md-4">
                     <div className="single_menu_list">
+                        {console.log(d.restaurantImageUrl)}
                         <img onClick={this.handleClick.bind(this, d)}
-                            src={d.restaurantImageURL}
+                            src={d.restaurantImageUrl}
                             alt=""/>
                             <br/>
                             <br/>

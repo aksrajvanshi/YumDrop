@@ -256,7 +256,7 @@ class MyCart extends React.Component {
                 <tr>
                     <td data-th="Product" key={itemName}>
                         <div className="row">
-                            <div className="col-sm-2 hidden-xs"><img src="https://data.tibettravel.org/assets/images/Tibet-bhutan-tour/indian-food-in-Lhasa.jpg" alt="..."
+                            <div className="col-sm-2 hidden-xs"><img src={d.dishPhotoUrl} alt="..."
                                                                      height="50px" width="50px" className="img-responsive"/></div>
 
                         </div>

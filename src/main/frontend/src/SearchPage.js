@@ -6,7 +6,7 @@ import Geocode from "react-geocode";
 import "bootstrap/dist/css/bootstrap.min.css";
 import './LoginDashBoardCSS.css';
 import StarRatingComponent from 'react-star-rating-component';
-import './searchPageCSS.css';
+
 import SliderReact from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css'
 import ReactHover from "react-hover";
