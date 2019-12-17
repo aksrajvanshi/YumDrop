@@ -10,6 +10,10 @@ import {connect} from "react-redux";
 
 
 class MyCart extends React.Component {
+    constructor(props) {
+        super(props);
+        this.submitSchedulingOfOrder = this.submitSchedulingOfOrder.bind(this);
+    }
     state = {
         totalPrice: 1,
         restaurantName: "mai",
@@ -54,7 +58,7 @@ class MyCart extends React.Component {
     }
 
 
-    onChange = date => this.setState({ date })
+    onChange = date => this.setState({ startDate: date })
     handleChange = date => {
         this.setState({
             startDate: date
@@ -82,6 +86,9 @@ class MyCart extends React.Component {
                 console.log(res)
                 return res.json()
             }).then(response => {
+                currentComponent.setState({
+                    restaurantId: response[0].restaurantId
+                })
             currentComponent.setState({
                 dishesForUserDisplay: response
             })
@@ -99,6 +106,9 @@ class MyCart extends React.Component {
     };
 
     submitSchedulingOfOrder(){
+        console.log(this.state.time)
+        console.log(this.state.startDate)
+        console.log(this.state.startDate+this.state.time)
         fetch('/scheduleOrderForUser',{
             method: 'POST',
             redirect: 'follow',
@@ -365,7 +375,7 @@ class MyCart extends React.Component {
                                             <td></td>
 
                                             <td><a
-                                                className="btn btn-success btn-block" value = { this.state.scheduleDelivery}onClick={this.handleChangeOfScheduleDelivery} >Schedule This order <i className="fa fa-angle-right"></i></a>
+                                                className="btn btn-success btn-block" onClick={this.submitSchedulingOfOrder.bind(this)} >Schedule This order <i className="fa fa-angle-right"></i></a>
                                             </td>
 
                                         </tr>
@@ -390,7 +400,7 @@ class MyCart extends React.Component {
                     show={this.state.scheduleDelivery}
                     onHide={this.closeAllOptionsOfSelectionForm}
                     animation={false}
-                    centered id="modal"
+                    centered id="scehdulerDelivery"
                 >
                     <div className="container">
                         <div className="row">
@@ -400,7 +410,7 @@ class MyCart extends React.Component {
 
                                         <Calendar
                                         onChange={this.onChange}
-                                        value={this.state.date}
+                                        value={this.state.startDate}
                                     />
 
                                     <br/>
