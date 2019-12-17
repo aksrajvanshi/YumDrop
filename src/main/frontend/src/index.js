@@ -14,6 +14,7 @@ import OTPpage from "./OTPpage";
 import errorPageForRegistration from "./errorPageForRegistration";
 import MySettingsPage from "./MySettingsPage";
 import OTPResetPassword from "./OTPResetPassword";
+import DeliveryAgentSettingsPage from "./DeliveryAgentSettingsPage";
 import ResetPassword from "./ResetPassword";
 import loginErrorPAge from "./loginErrorPAge";
 import SuccessfulRegistration from './SuccessfulRegistration';
@@ -133,6 +134,7 @@ const routing = (
                 <Route exact path="/DeliveryAgentLoginErrorPage" component={DeliveryAgentLoginErrorPage}/>
                 <Route exact path="/DeliveryAgentOTPResetPassword" component={DeliveryAgentOTPResetPassword}/>
                 <Route exact path="/userSearchPage" component={userSearchPage} />
+                <Route exact path="/DeliveryAgentSettingsPage" component={DeliveryAgentSettingsPage} />
                 <Route exact path="/dishesForUserView" component={dishesForUserView} />
                 <Route exact path="/ActiveOrders" component={ActiveOrders} />
             </div>

@@ -32,6 +32,9 @@ public class UserCart {
     @Column(name = "restaurant_id", nullable = false)
     private String restaurantId;
 
+    @Column(name = "dish_photo_url", nullable = false)
+    private String dishPhotoUrl;
+
     public UserCart() {
     }
 
@@ -58,6 +61,14 @@ public class UserCart {
         this.dishQuantity = dishQuantity;
         this.dishPrice = dishPrice;
         this.restaurantId = restaurantId;
+    }
+
+    public UserCart(@NotNull String dishName, @NotNull int dishQuantity, @NotNull Double dishPrice, @NotNull String restaurantId, String dishPhotoUrl) {
+        this.dishName = dishName;
+        this.dishQuantity = dishQuantity;
+        this.dishPrice = dishPrice;
+        this.restaurantId = restaurantId;
+        this.dishPhotoUrl = dishPhotoUrl;
     }
 
     @Override
@@ -109,5 +120,13 @@ public class UserCart {
 
     public void setRestaurantId(String restaurantId) {
         this.restaurantId = restaurantId;
+    }
+
+    public String getDishPhotoUrl() {
+        return dishPhotoUrl;
+    }
+
+    public void setDishPhotoUrl(String dishPhotoUrl) {
+        this.dishPhotoUrl = dishPhotoUrl;
     }
 }

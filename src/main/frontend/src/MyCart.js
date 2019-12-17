@@ -110,20 +110,53 @@ class MyCart extends React.Component {
         console.log(this.state.startDate)
         console.log(this.state.startDate+this.state.time)
         let dateSend = "" ;
-        dateSend = toString(this.state.startDate+this.state.time)
+        dateSend = toString(this.state.time)
         let i=0
-        let finalDate = "2019-12-"
+        this.state.startDate.toUTCString()
+        let utcStirng = this.state.startDate.toUTCString()
+        console.log(this.state.startDate)
+        console.log(utcStirng)
         let x = this.state.startDate.getDate().toString();
         console.log(x)
-        finalDate = finalDate + x
-        console.log(finalDate)
-        finalDate = finalDate + " "+this.state.time+":00.000+00";
+        let k=0
+        let hours = ""
+        let minutes = ""
+        let formattedTimeStamp = new Date('2019-12-20T12:00:00Z')
+        console.log(formattedTimeStamp)
+        dateSend.split("").forEach(character => {
+            if (k==0){
+                hours =  character
+            }else if (k==1){
+                hours  = hours + character
+            }
+            else if(k==2){
+                minutes = character
+            }else{
+                minutes = minutes + character
+            }
+        })
+        let Totalhours = parseInt(hours)
+        let TotalMinutes = parseInt(minutes)
+        this.state.startDate.setHours(Totalhours, TotalMinutes, 0,0)
+        console.log(Totalhours)
+        console.log(TotalMinutes)
+        console.log(this.state.startDate)
+        const dateNew  = new Date(new Intl.DateTimeFormat('en-US', {
+            year: '2-digit',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZone: 'short'
+        }))
+        console.log(dateNew)
 
 
 
 
 
-        console.log(finalDate)
+
         let totalPrice = 0;
         let orderContents = "";
         for(let i=0; i<this.state.dishesForUserDisplay.length;i++){
@@ -142,7 +175,7 @@ class MyCart extends React.Component {
             body: JSON.stringify({
                 userEmail: this.props.emailId,
                 time: this.state.time,
-                futureOrderTime: finalDate,
+                futureOrderTime: new Date(),
                 orderContents: orderContents,
                 orderPrice: totalPrice
 
@@ -260,12 +293,6 @@ class MyCart extends React.Component {
 
         let mapDishesForUserView = this.state.dishesForUserDisplay.map((d,itemName)=>
         {
-
-
-
-
-
-
             return(
 
                 <tr>

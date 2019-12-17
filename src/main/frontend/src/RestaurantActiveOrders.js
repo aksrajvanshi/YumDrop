@@ -22,7 +22,8 @@ class RestaurantActiveOrders extends React.Component{
         restaurantDishResults: [],
         chatReqest: false,
         activeOrdersForRestaurantDisplay: [],
-        errorSelect: false
+        errorSelect: false,
+        orderId: "",
     }
 
     goToChatFeature = () => {
@@ -74,6 +75,9 @@ class RestaurantActiveOrders extends React.Component{
                 console.log(afterSplit)
             }
             currentComponent.setState({
+                orderId: response[0].orderId
+            })
+            currentComponent.setState({
                 activeOrdersForRestaurantDisplay: response
             })
             console.log(response)})
@@ -99,10 +103,9 @@ class RestaurantActiveOrders extends React.Component{
         })
     }
 
-    handleClick(item){
+    handleClick(){
         console.log("Inside handle click")
         console.log(this.props.restaurantId)
-        console.log(item.orderId)
         let currentComponent = this;
         fetch('/changeOrderStatusFromRestaurant', {
             method: 'POST',
@@ -111,12 +114,11 @@ class RestaurantActiveOrders extends React.Component{
             },
             body:JSON.stringify({
                 restaurantId: this.props.restaurantId,
-                orderId: item.orderId,
+                orderId: this.state.orderId,
                 orderStatus: 2
             }),
         }).then(response => {
             this.fowardToDashboard();
-        console.log("End");
         }
         )}
 
@@ -142,11 +144,7 @@ class RestaurantActiveOrders extends React.Component{
                     <td>{d.orderId}</td>
                     <td>{d.ordercontents1}</td>
                     <td>{d.orderPrice} $</td>
-                    <td className="actions" data-th="">
-                        <div className="col-md-8 col-sm-8 col-xs-8">
-                            <button  className="btn btn-outline-success"  onClick={this.handleClick.bind(this,d)} >Order Processed</button>
-                        </div>
-                    </td>
+
 
                 </tr>
             )
@@ -238,7 +236,6 @@ class RestaurantActiveOrders extends React.Component{
                                             <th id="dishNameForActiveOrderUserView">Order Id</th>
                                             <th id="dishPriceForActiveOrderUserView">Order Content</th>
                                             <th id="dishDescriptionForUserView">Total price</th>
-                                            <th id="dishDescriptionForUserView">Order status</th>
 
 
 
@@ -250,6 +247,11 @@ class RestaurantActiveOrders extends React.Component{
                             <tfoot>
                             <td></td>
                             <td></td>
+                            <td className="actions" data-th="">
+                                <div className="col-md-8 col-sm-8 col-xs-8">
+                                    <button  className="btn btn-outline-success"  onClick={this.handleClick.bind(this)} >Order Processed</button>
+                                </div>
+                            </td>
 
                             </tfoot>
                         </table>

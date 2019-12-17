@@ -112,7 +112,7 @@ class DeliveryAgentDashboard extends Component{
 
 
     forwardToChatFeature = () => {
-        this.props.history.push('/chatFeature')
+        this.props.history.push('/chatFeatureForDeliveryAgent')
  }
 
     forwardToDeliveryAgentSettingsPage = () => {
@@ -206,7 +206,7 @@ class DeliveryAgentDashboard extends Component{
                                             <th>Restaurant Name</th>
                                             <th className="text-center">Restaurant Address</th>
                                             <th className="text-center">User Address</th>
-                                            <th className="text-center">Navigate</th>
+
 
                                         </tr>
                                         </thead>
@@ -221,13 +221,14 @@ class DeliveryAgentDashboard extends Component{
 
 
                                             <td>{this.state.userAddress}</td>
-                                            <td><button className="btn btn-outline-success" onClick={this.handleForwardChat}>Chat with customer</button></td>
+
 
                                         </tr>
 
                                         <br/><br/>
 
                                         <button className="btn btn-outline-success" onClick={this.forwardToChatFeature}>Chat with customer</button>
+                                        <br/>
                                         <div className="col-md-12 offset-12">
                                             <button className="btn btn-success" onClick={this.forwardToDeliveryAgentMaps}>Start Navigation</button>
 

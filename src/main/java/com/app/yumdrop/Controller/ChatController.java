@@ -22,6 +22,9 @@ public class ChatController {
     public ResponseEntity<?> userChatRequest(@RequestBody ChatRequestForUser chatRequestForUser){
         System.out.println("In check for user chat");
         ChatRequestForUser userChatReq = chatRequestForUserRepository.findByrestaurantId(chatRequestForUser.getRestaurantId());
+        if(userChatReq == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -36,8 +39,6 @@ public class ChatController {
     }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-
-
 
     @RequestMapping(value = "/chatWithDeliveryAgentOnly", method = RequestMethod.POST)
     public ResponseEntity<?> chatWithDeliveryAgentOnly(@RequestBody ChatRequestForUser chatRequestForUser){
