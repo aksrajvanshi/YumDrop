@@ -1,13 +1,11 @@
 package com.app.yumdrop.Controller;
 
-import com.app.yumdrop.Entity.DeliveryAgent;
-import com.app.yumdrop.Entity.UserCart;
-import com.app.yumdrop.Entity.UserOrder;
-import com.app.yumdrop.Entity.Users;
+import com.app.yumdrop.Entity.*;
 import com.app.yumdrop.FormEntity.DeliveryAgentActiveOrders;
 import com.app.yumdrop.FormEntity.RestaurantDetails;
 import com.app.yumdrop.Messages.ErrorMessage;
 import com.app.yumdrop.Messages.SuccessMessage;
+import com.app.yumdrop.Repository.RestaurantMenuItemRepository;
 import com.app.yumdrop.Repository.UserCartRepository;
 import com.app.yumdrop.Repository.UserOrderRepository;
 import com.app.yumdrop.Repository.UsersRepository;
@@ -25,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @ComponentScan
 @Controller
@@ -45,14 +44,8 @@ public class FoodCartAndOrderController {
     @Autowired
     UsersRepository usersRepository;
 
-    /**
-     * Adding an item to user cart table
-     * @param userCartItem
-     * @return
-     */
-
-
-
+    @Autowired
+    RestaurantMenuItemRepository restaurantMenuItemRepository;
 
     /**
      * load user cart data for user.
@@ -62,8 +55,16 @@ public class FoodCartAndOrderController {
 
     @RequestMapping(value = "/addItemToMyCart", method = RequestMethod.POST)
     public ResponseEntity<?> addDishToUserCart(@RequestBody UserCart userCartItem) {
-        System.out.println("Inside the user cart");
-        System.out.println(userCartItem.getDishName()+" "+userCartItem.getRestaurantId());
+
+        Optional<RestaurantMenuItem> menuItem = restaurantMenuItemRepository.findById(
+                new RestaurantMenuItemId(userCartItem.getRestaurantId(), userCartItem.getDishName())
+        );
+        String dishPhotoUrl="";
+        if(menuItem.isPresent()){
+            dishPhotoUrl = menuItem.get().getDishPhotoUrl();
+            userCartItem.setDishPhotoUrl(dishPhotoUrl);
+        }
+
         UserCart cartItemSaved = userCartRepository.save(userCartItem);
         if (cartItemSaved != null) {
             SuccessMessage itemAddedToCart = new SuccessMessage(new Date(), "Item is added to your cart");
