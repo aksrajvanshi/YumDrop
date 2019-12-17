@@ -35,7 +35,7 @@ public class UsersFutureOrderController {
 
     @RequestMapping(value="/scheduleOrderForUser", method= RequestMethod.POST)
     public ResponseEntity<?> scheduleOrderForUser(@RequestBody UserFutureOrders userFutureOrdersForm) {
-
+        System.out.println(userFutureOrdersForm.getFutureOrderTime());
         return scheduleOrderService.scheduleOrder(userFutureOrdersForm);
     }
 

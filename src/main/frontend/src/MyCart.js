@@ -113,13 +113,10 @@ class MyCart extends React.Component {
         dateSend = toString(this.state.startDate+this.state.time)
         let i=0
         let finalDate = "2019-12-"
-        dateSend.split("").forEach(character => {
-            if (i>=8){
-                if (i<=9) {
-                    finalDate = finalDate + character;
-                }
-            }
-        })
+        let x = this.state.startDate.getDate().toString();
+        console.log(x)
+        finalDate = finalDate + x
+        console.log(finalDate)
         finalDate = finalDate + " "+this.state.time+":00.000+00";
 
 
