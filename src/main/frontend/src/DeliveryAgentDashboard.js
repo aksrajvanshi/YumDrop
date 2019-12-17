@@ -14,14 +14,15 @@ class DeliveryAgentDashboard extends Component{
         Name: "",
         deliveryAgentEmailId: "",
         data: [],
-        restaurantName: "",
-        restaurantAddress: "",
         userName: "",
         userAddress: "",
         noOrders: false,
         chatRequest: false,
         ActiveOrder: false,
-        activeOrdersForRestaurantDisplay: []
+        activeOrdersForRestaurantDisplay: [],
+        orderId: "",
+        restaurantName: "",
+        restaurantAddress: ""
     }
 
     closeAllOptionsOfSelectionForm = () => {
@@ -78,7 +79,7 @@ class DeliveryAgentDashboard extends Component{
                 'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({
-                deliveryAgentEmailId: "mkammili@iu.edu"
+                deliveryAgentEmail: "maithreyi.prabhu95@gmail.com"
             })})
             .then(res => {
                 if (res.status !== 200){
@@ -89,7 +90,16 @@ class DeliveryAgentDashboard extends Component{
                 return res.json();
             }).then(response => {
             console.log("Entereed")
+            console.log(response)
+            currentComponent.setState({
+                orderId: response[0].orderId,
+                restaurantName: response[0].restaurantName,
+                restaurantAddress: response[0].restaurantAddress,
+                userAddress: response[0].userAddress
+            })
+            console.log(response[0].orderId)
 
+            console.log(currentComponent.state.orderId)
             currentComponent.setState({
                 activeOrderForUserDisplay: response,
                 ActiveOrder: true
@@ -126,23 +136,6 @@ class DeliveryAgentDashboard extends Component{
             this.props.history.push('/')
         }
 
-        let mapactiveOrdersForRestaurantDisplay = this.state.activeOrdersForRestaurantDisplay.map((d,itemName)=>
-        {
-            return(
-
-                <tr key={itemName}>
-
-
-                    <td>{d.orderId}</td>
-                    <td>{d.restaurantName}</td>
-                    <td>{d.userName}</td>
-                    <td>{d.restaurantAddress}</td>
-                    <td>{d.userAddress}</td>
-                    <td><button className="btn btn-outline-success" onClick={this.handleForwardChat(this,d)}>Chat with customer</button></td>
-
-                </tr>
-            )
-        })
 
 
 
@@ -219,7 +212,18 @@ class DeliveryAgentDashboard extends Component{
                                         </thead>
                                         <tbody>
 
-                                        {mapactiveOrdersForRestaurantDisplay}
+                                        <tr>
+
+
+                                            <td>{this.state.orderId}</td>
+                                            <td>{this.state.restaurantName}</td>
+                                            <td>{this.state.restaurantAddress}</td>
+
+
+                                            <td>{this.state.userAddress}</td>
+                                            <td><button className="btn btn-outline-success" onClick={this.handleForwardChat}>Chat with customer</button></td>
+
+                                        </tr>
 
                                         <br/><br/>
 

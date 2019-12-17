@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import Trying from "./Trying";
+import DeliveryAgentMaps from './DeliveryAgentMaps';
 import LoginPage from "./LoginPage";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
@@ -100,6 +101,7 @@ const routing = (
                 <Route exact path="/OTPpage" component={OTPpage}/>
                 <Route exact path="/paymentSystemForUsers" component={paymentSystemForUsers}/>
                 <Route exact path="/MyCart" component={MyCart}/>
+                <Route exact path="/DeliveryAgentMaps" component={DeliveryAgentMaps} />
                 <Route exact path="/DeliveryAgentOTPpage" component={DeliveryAgentOTPpage}/>
                 <Route exact path="/errorPageForRegistration" component={errorPageForRegistration} />
                 <Route exact path="/MySettingsPage" component={MySettingsPage}/>

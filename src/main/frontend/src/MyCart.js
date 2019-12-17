@@ -109,6 +109,24 @@ class MyCart extends React.Component {
         console.log(this.state.time)
         console.log(this.state.startDate)
         console.log(this.state.startDate+this.state.time)
+        let dateSend = "" ;
+        dateSend = toString(this.state.startDate+this.state.time)
+        let i=0
+        let finalDate = "2019-12-"
+        dateSend.split("").forEach(character => {
+            if (i>=8){
+                if (i<=9) {
+                    finalDate = finalDate + character;
+                }
+            }
+        })
+        finalDate = finalDate + " "+this.state.time+":00.000+00";
+
+
+
+
+
+        console.log(finalDate)
         let totalPrice = 0;
         let orderContents = "";
         for(let i=0; i<this.state.dishesForUserDisplay.length;i++){
@@ -127,7 +145,7 @@ class MyCart extends React.Component {
             body: JSON.stringify({
                 userEmail: this.props.emailId,
                 time: this.state.time,
-                futureOrderTime: this.state.startDate + " "+this.state.time,
+                futureOrderTime: finalDate,
                 orderContents: orderContents,
                 orderPrice: totalPrice
 
