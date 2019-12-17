@@ -248,9 +248,7 @@ class RestaurantActiveOrders extends React.Component{
                             <td></td>
                             <td></td>
                             <td className="actions" data-th="">
-                                <div className="col-md-8 col-sm-8 col-xs-8">
-                                    <button  className="btn btn-outline-success"  onClick={this.handleClick.bind(this)} >Order Processed</button>
-                                </div>
+
                             </td>
 
                             </tfoot>
@@ -259,6 +257,9 @@ class RestaurantActiveOrders extends React.Component{
                     </div>
 
                             </div></form>
+                        <div className="col-md-8 col-sm-8 col-xs-8">
+                            <button  className="btn btn-outline-success"  onClick={this.handleClick.bind(this)} >Order Processed</button>
+                        </div>
             </div>
                 </div>
             </div>
