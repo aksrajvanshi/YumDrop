@@ -97,10 +97,6 @@ class RestaurantSettingsPage extends Component {
 
                                     </li>
 
-                                    <li className="upper-links"><a className="links text-white" onClick={this.goToRestaurantSettingsPage}
-                                    >My Settings</a>
-
-                                    </li>
                                     <li>
                                         <a className="nav-link" onClick={this.signOut}>Sign Out</a>
                                     </li>

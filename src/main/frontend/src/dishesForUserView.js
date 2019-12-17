@@ -205,7 +205,7 @@ class dishesForUserView extends React.Component{
                                 </div>
                                 <div className="author-card-profile">
                                     <div className="author-card-avatar"><img
-                                        src="https://www.esamskriti.com/essays/docfile/848.jpg" />
+                                        src={this.state.restaurantImageURL}/>
                                     </div>
 
                                 </div>

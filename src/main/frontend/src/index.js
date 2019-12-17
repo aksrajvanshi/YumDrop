@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import Trying from "./Trying";
+import DeliveryAgentMaps from './DeliveryAgentMaps';
 import LoginPage from "./LoginPage";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
@@ -13,10 +14,13 @@ import OTPpage from "./OTPpage";
 import errorPageForRegistration from "./errorPageForRegistration";
 import MySettingsPage from "./MySettingsPage";
 import OTPResetPassword from "./OTPResetPassword";
+import DeliveryAgentSettingsPage from "./DeliveryAgentSettingsPage";
 import ResetPassword from "./ResetPassword";
 import loginErrorPAge from "./loginErrorPAge";
 import SuccessfulRegistration from './SuccessfulRegistration';
+import RestaurantActiveOrders from './RestaurantActiveOrders';
 import Home from './Home';
+import ActiveOrders from './ActiveOrders';
 import MyCurrentLocation from "./MyCurrentLocation";
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
@@ -40,6 +44,9 @@ import DeliveryAgentLoginErrorPage from "./DeliveryAgentLoginErrorPage";
 import DeliveryAgentOTPResetPassword from "./DeliveryAgentOTPResetPassword";
 import MyCart from "./MyCart";
 import paymentSystemForUsers from "./paymentSystemForUsers";
+import chatFeatureForRestaurant from "./chatFeatureForRestaurant";
+import chatFeature from "./chatFeature";
+import chatFeatureForDeliveryAgent from "./chatFeatureForDeliveryAgent";
 import SearchPage from "./SearchPage";
 import userSearchPage from "./userSearchPage";
 import dishesForUserView from "./dishesForUserView";
@@ -88,16 +95,21 @@ const routing = (
                 <Route exact path="/ErrorPageForRestaurantRegistration" component={ErrorPageForRestaurantRegistration}/>
                 <Route exact path="/Home" component={Home}/>
                 <Route exact path="/LoginPage" component={LoginPage} />
+                <Route exact path="/RestaurantActiveOrders" component={RestaurantActiveOrders}/>
                 <Route exact path="/LoginForm" component={LoginForm} />
                 <Route exact path="/RegisterForm" component={RegisterForm}/>
                 <Route exact path="/LoginDashBoard" component={LoginDashBoard}/>
                 <Route exact path="/OTPpage" component={OTPpage}/>
                 <Route exact path="/paymentSystemForUsers" component={paymentSystemForUsers}/>
                 <Route exact path="/MyCart" component={MyCart}/>
+                <Route exact path="/DeliveryAgentMaps" component={DeliveryAgentMaps} />
                 <Route exact path="/DeliveryAgentOTPpage" component={DeliveryAgentOTPpage}/>
                 <Route exact path="/errorPageForRegistration" component={errorPageForRegistration} />
                 <Route exact path="/MySettingsPage" component={MySettingsPage}/>
                 <Route exact path="/OTPResetPassword" component={OTPResetPassword}/>
+                <Route exact path="/chatFeature" component={chatFeature}/>
+                <Route exact path="/chatFeatureForRestaurant" component={chatFeatureForRestaurant}/>
+                <Route exact path="/chatFeatureForDeliveryAgent" component={chatFeatureForDeliveryAgent}/>
                 <Route exact path="/ResetPassword" component={ResetPassword}/>
                 <Route exact path="/loginErrorPAge" component={loginErrorPAge} />
                 <Route exact path="/SuccessfulRegistration" component={SuccessfulRegistration} />
@@ -122,7 +134,9 @@ const routing = (
                 <Route exact path="/DeliveryAgentLoginErrorPage" component={DeliveryAgentLoginErrorPage}/>
                 <Route exact path="/DeliveryAgentOTPResetPassword" component={DeliveryAgentOTPResetPassword}/>
                 <Route exact path="/userSearchPage" component={userSearchPage} />
+                <Route exact path="/DeliveryAgentSettingsPage" component={DeliveryAgentSettingsPage} />
                 <Route exact path="/dishesForUserView" component={dishesForUserView} />
+                <Route exact path="/ActiveOrders" component={ActiveOrders} />
             </div>
         </Router>
     </Provider>

@@ -38,6 +38,9 @@ class Map extends React.Component{
     submitAddress = () => { debugger;
     let currentComponent = this;
     if (this.props.accountType === "user"){
+        console.log("inside")
+        console.log(this.props.userEmail)
+        console.log(this.state.userAddress)
         fetch('/saveUserAddress', {
             method: 'POST',
             headers: {
@@ -48,15 +51,11 @@ class Map extends React.Component{
                 userEmail: this.state.userEmailId
             }),
         }).then(res => {
-            if (res.status !== 200) {
-                alert("Hey going to Error page");
-            }else {
-                alert("Successfully added address");
                 this.goBackToLoginDashboard();
             }
-        })
+        )}
 
-    }else{
+    else{
         fetch('/saveRestaurantAddress', {
             method: 'POST',
             headers: {
@@ -67,17 +66,14 @@ class Map extends React.Component{
                 restaurantAddress: this.state.address
             }),
         }).then(res => {
-            if (res.status !== 200) {
-                alert("Hey going to Error page");
-            }else {
-                alert("Successfully added address");
                 this.goBackToLoginDashboard();
             }
-        })
+        )
     }
     }
 
     componentDidMount() {
+        console.log(this.props.userEmail)
         Geocode.fromLatLng( this.state.mapPosition.lat , this.state.mapPosition.lng ).then(
             response => {
                 const address = response.results[0].formatted_address,

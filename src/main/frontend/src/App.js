@@ -19,7 +19,8 @@ class App extends Component {
         longitude: "",
         searchResults: [],
         searchQuery: "",
-        autocompleteOptions: []
+        autocompleteOptions: [],
+        displayAddress: ""
     };
 
     forwardToLoginForm = () => {
@@ -102,7 +103,24 @@ class App extends Component {
 
     componentWillMount() {
        this.getAddress();
+       this.getAddressForDisplay()
     }
+
+    async getAddressForDisplay(){
+        await navigator.geolocation.getCurrentPosition(
+            position => Geocode.fromLatLng( position.coords.latitude , position.coords.longitude ).then(
+                res => {
+                    this.setState({displayAddress: res.results[3].formatted_address}, this.setMyAddress)
+                }),
+            err => console.log(err)
+        );
+        console.log("Address at my location is")
+        console.log(this.state.displayAddress)
+    }
+
+  setMyAddress = () => {
+    console.log(this.state.displayAddress)
+}
 
 
     render() {
@@ -159,6 +177,7 @@ class App extends Component {
                                     <div className="col-md-5"  id="firstbar">
                                         <div className="md-form">
                                             <select className="form-control" id="exampleFormControlSelect2">
+                                                <option>{this.state.displayAddress}</option>
                                                 <option value="AL">Alabama</option>
                                                 <option value="AK">Alaska</option>
                                                 <option value="AR">Arizona</option>

@@ -1,59 +1,74 @@
 import React, { Component } from "react";
 import './LoginDashBoardCSS.css';
 import {connect} from "react-redux";
+import AutoComplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 
 
 class LoginDashBoard extends Component{
-    constructor(props) {
-        super(props);
 
-    }
 
-    state = {
-        userEmailId : this.props.emailId,
-        searchResults: [{"restaurantAddress": "restaurantAddress"}],
-        userAddress: "800 N Union St, Bloomington, IN 47408, USA",
-        searchQuery: "",
-        recommendedRestaurants: []
-    }
-
-    forwardToChatFeature = () => {
-        this.props.history.push('/chatFeature')
-    }
-    componentDidMount () {
-        let currentComponent = this
-
-        fetch('/getAllReccommendedRestaurants',{
+    getUserAddress = async () => {
+        let currentComponent = this;
+        await fetch('/getUserDataForDashboard', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmailId: this.props.userEmailId
+                userEmail: currentComponent.state.userEmailId
             }),
-        }).then(res => {
-            return res.json();
-        }).then(res=>{
-            currentComponent.setState({
-                recommendedRestaurants: res
-            })
-
-            if (res.status !== 200) {
-            }else {
-            }
-
-
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            currentComponent.setState({userAddress: data.userAddress}, currentComponent.getAutocompleteOptions);
         })
-
     }
 
-    handleClick(item) {
-
-        this.props.setUserSelectedRestaurant(item.restaurantId)
-        this.forwardToMyCart();
+    getAutocompleteOptions() {
+        fetch('/getAllRestaurants', {
+            method: 'POST',
+            redirect: 'follow',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                userAddress: this.state.address,
+            })
+        })
+            .then(res => {
+                return res.json()
+            }).then(data => {
+            this.setState({autocompleteOptions: data})
+        });
     }
 
 
+
+    getSearchResults = () => {
+        let currentComponent = this;
+        fetch('/searchRestaurantByLocationFromUserDashboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userAddress: this.state.userAddress,
+                restaurantSearchKeyword: this.state.searchQuery,
+                userEmail: this.state.userEmailId
+            }),
+        }).then(res=>{
+            let x = [];
+            for (let i=0; i<res.length;i++){
+                x[i] = res[i].restaurantDetails;
+            }
+            currentComponent.setState({
+                searchResults: x
+            })
+            console.log(this.state.searchResults)
+        })
+    }
 
     handleSearchChange = (event) => {
         this.setState({searchQuery: event.target.value})
@@ -64,17 +79,90 @@ class LoginDashBoard extends Component{
     }
 
     forwardToMyCart = () => {
-        this.props.history.push('/dishesForUserView')
+        this.props.history.push('/MyCart')
     }
 
     onClick= (event) => {
         this.forwardToSettingsPage();
     }
 
+    handleSearchSelect = (event) => {
+        this.setState({searchQuery: event.target.textContent})
+    }
+
     signOut = () => {
         this.props.signOut();
         this.props.history.push('/');
     }
+
+    goToUserSearchPage = () => {
+        this.props.setSearchQuery(this.state.searchQuery);
+        this.props.history.push('/userSearchPage');
+    }
+
+
+
+
+
+
+
+    constructor(props) {
+        super(props);
+
+    }
+
+    state = {
+        userEmailId : this.props.emailId,
+        searchResults: [{"restaurantAddress": "restaurantAddress"}],
+        userAddress: "800 N Union St, Bloomington, IN 47408, USA",
+        searchQuery: "",
+        recommendedRestaurants: [],
+        autocompleteOptions: []
+    }
+
+    forwardToChatFeature = () => {
+        this.props.history.push('/chatFeature')
+    }
+    componentDidMount () {
+        let currentComponent = this
+        console.log(currentComponent.props.emailId);
+        fetch('/getAllReccommendedRestaurants',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+                userEmail: this.props.emailId
+            }),
+        }).then(res => {
+            return res.json();
+        }).then(res=>{
+            let x = [];
+            for (let i=0; i<res.length;i++){
+                x[i] = res[i].restaurantDetails;
+                console.log()
+            }
+            currentComponent.setState({
+                recommendedRestaurants: x
+            })})
+        console.log(this.state.recommendedRestaurants)
+        this.getUserAddress()
+
+    }
+
+
+    handleClick(item) {
+
+        this.props.setUserSelectedRestaurant(item.restaurantId)
+        this.forwardTodishesPage();
+    }
+
+    forwardTodishesPage = () => {
+        this.props.history.push('/dishesForUserView')
+    }
+
+
+
 
     render() {
 
@@ -86,8 +174,9 @@ class LoginDashBoard extends Component{
             return(
                 <div className="col-md-4">
                     <div className="single_menu_list">
+                        {console.log(d.restaurantImageUrl)}
                         <img onClick={this.handleClick.bind(this, d)}
-                            src={d.restaurantImageURL}
+                            src={d.restaurantImageUrl}
                             alt=""/>
                             <br/>
                             <br/>
@@ -153,50 +242,23 @@ class LoginDashBoard extends Component{
                 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css"/>
 
 
-                <div className="container mt-5">
-
-                    <div className="row">
-                        <div className="col-sm-2">
-                            <h6>Indian</h6>
-                            <img
-                                src="https://st2.depositphotos.com/2885805/10593/v/450/depositphotos_105938884-stock-illustration-indian-food-composition.jpg"
-                                alt="Rounded Image" height="30%" width="30%" className="rounded img-fluid"/>
-                        </div>
-                        <div className="col-sm-2">
-                            <h6>Mexican</h6>
-                            <img
-                                src="https://cdn4.iconfinder.com/data/icons/mexican-icons-2/206/Tacos-512.png"
-                                alt="Rounded Image" height="25%" width="25%" className="rounded img-fluid"/>
-                        </div>
-                        <div className="col-sm-2">
-                            <h6>Italian</h6>
-                            <img
-                                src="https://icons-for-free.com/iconfiles/png/512/food+food+italian+food+junk+food+pizza+icon-1320168016349880751.png"
-                                alt="Rounded Image" height="25%" width="25%" className="rounded img-fluid"/>
-                        </div>
-                        <div className="col-sm-2">
-                            <h6>American</h6>
-                            <img
-                                src="https://c8.alamy.com/comp/H797BY/hamburger-traditional-american-fast-food-icon-over-white-background-H797BY.jpg"
-                                alt="Rounded Image" height="25%" width="25%" className="rounded img-fluid"/>
-                        </div>
-                        <div className="col-sm-2">
-                            <h6>Thai</h6>
-                            <img
-                                src="https://image.flaticon.com/icons/png/512/644/644758.png"
-                                alt="Rounded Image" height="25%" width="25%" className="rounded img-fluid"/>
-                        </div>
-                        <div className="col-sm-2" >
-                            <h6>Barbecue</h6>
-                            <img
-                                src="https://cdn3.iconfinder.com/data/icons/food-3-11/128/food_Barbecue-Bbq-Skewer-Kabob-Hot-512.png"
-                                height="25%" width="25%" className="rounded img-fluid"/>
-                        </div>
-
+                <br/>
+                <div id="searchContainer">
+                    <div id="autocompleteContainer">
+                        <AutoComplete
+                            freeSolo
+                            onChange={evt => this.handleSearchSelect(evt)}
+                            options={this.state.autocompleteOptions.map(option => option.restaurantDetails.restaurantName)}
+                            disableClearable
+                            renderInput={params => (
+                                <TextField {...params} variant="filled" label="Search for food, cuisines, restaurants here.." style={{backgroundColor:"white", width: '100%'}} onChange={evt => this.handleSearchChange(evt)}/>
+                            )}
+                        />
                     </div>
-
+                    <div id="searchButton2Container">
+                        <button className="btn btn-primary btn-md" id="searchButton2" onClick={this.goToUserSearchPage}><span id="SearchBar">Search</span></button>
+                    </div>
                 </div>
-
                 <br/>
 
 
@@ -244,12 +306,23 @@ class LoginDashBoard extends Component{
 }
 const mapStateToProps = (state)=> {
     return {
-        emailId: state.userId
+        emailId: state.userId,
+        searchQuery: state.searchQuery,
+        searchResults: state.searchResults
     }
 }
 
 const mapDispatchToProps = (dispatch)=> {
     return {
+        setSearchQuery: (evt) => dispatch({
+            type: "setSearchQuery",
+            newSearchQuery: evt
+        }),
+        setSearchResults: (evt) =>
+            dispatch({
+                type: "setSearchResults",
+                newSearchResults: evt
+            }),
         setUserEmail: (evt) => dispatch({type: "setUserId", emailId: evt}),
         signOut: () => dispatch({type: "signOut"}),
         setUserSelectedRestaurant: (evt) => dispatch({type: "setUserSelectedRestaurant", newUserSelectedRestaurant: evt}),

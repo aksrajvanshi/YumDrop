@@ -22,11 +22,16 @@ class RestaurantActiveOrders extends React.Component{
         restaurantDishResults: [],
         chatReqest: false,
         activeOrdersForRestaurantDisplay: [],
-        errorSelect: false
+        errorSelect: false,
+        orderId: "",
     }
 
     goToChatFeature = () => {
         this.props.history.push('/chatFeatureForRestaurant')
+    }
+
+    fowardToDashboard = () => {
+        this.props.history.push('/RestaurantDashboard')
     }
 
     componentWillMount() {
@@ -47,6 +52,31 @@ class RestaurantActiveOrders extends React.Component{
             }
             return res.json();
         }).then(response => {
+            console.log("Entereed")
+            for(let i=0; i<response.length;i++){
+                let beforeSplitting = response[i].orderContents.split(',');
+                console.log(beforeSplitting)
+                response[i].ordercontents = beforeSplitting.join(' ');
+                console.log("after", response[i].ordercontents);
+                console.log(response[i])
+            }
+            for(let i=0;i<response.length;i++){
+                let beforeSplit = response[i].ordercontents
+                let afterSplit = "";
+                beforeSplit.split("").forEach(character => {
+                    if (character != ';'){
+                        afterSplit = afterSplit + character
+                    }else{
+                        afterSplit = afterSplit + " "
+                    }
+                })
+
+                response[i].ordercontents1 = afterSplit;
+                console.log(afterSplit)
+            }
+            currentComponent.setState({
+                orderId: response[0].orderId
+            })
             currentComponent.setState({
                 activeOrdersForRestaurantDisplay: response
             })
@@ -73,8 +103,10 @@ class RestaurantActiveOrders extends React.Component{
         })
     }
 
-    handleClick(item){
+    handleClick(){
         console.log("Inside handle click")
+        console.log(this.props.restaurantId)
+        let currentComponent = this;
         fetch('/changeOrderStatusFromRestaurant', {
             method: 'POST',
             headers: {
@@ -82,53 +114,13 @@ class RestaurantActiveOrders extends React.Component{
             },
             body:JSON.stringify({
                 restaurantId: this.props.restaurantId,
-                orderId: item.orderId,
+                orderId: this.state.orderId,
                 orderStatus: 2
             }),
-        }).then(res =>{
-                fetch('/getCurrentActiveOrderForRestaurant', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body:JSON.stringify({
-                        restaurantId: this.props.restaurantId,
-                    }),
-                }).then(res => {
-                    console.log("First response")
-                    if (res.status !== 200){
-                        this.setState({
-                            errorSelect: true
-                        })
-                    }
-                    return res.json();
-                }).then(response => {
-                    this.setState({
-                        activeOrdersForRestaurantDisplay: response
-                    })
-                    console.log(response)})
-                    .then(res => {
-                        console.log("fourth one")
-                        fetch('/checkForUserChatRequest', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body:JSON.stringify({
-                                restaurantId: this.props.restaurantId,
-                            }),
-                        }).then(res => {
-                            if (res.status === 200){
-                                this.setState({
-                                    chatReqest: false
-                                })
-
-                            }
-
-                        })
-                    })
-            }
-            )}
+        }).then(response => {
+            this.fowardToDashboard();
+        }
+        )}
 
     goBackToRestaurantDashboard = () => {
         this.props.history.push('/RestaurantDashboard')
@@ -150,13 +142,9 @@ class RestaurantActiveOrders extends React.Component{
 
                     <td>{d.userEmail}</td>
                     <td>{d.orderId}</td>
-                    <td>{d.orderContents}</td>
-                    <td>{d.orderPrice}</td>
-                    <td className="actions" data-th="">
-                        <div className="col-md-8 col-sm-8 col-xs-8">
-                            <button id={itemName} key={itemName} onClick={this.handleClick.bind(this,d)} >Order Processed</button>
-                        </div>
-                    </td>
+                    <td>{d.ordercontents1}</td>
+                    <td>{d.orderPrice} $</td>
+
 
                 </tr>
             )
@@ -248,7 +236,6 @@ class RestaurantActiveOrders extends React.Component{
                                             <th id="dishNameForActiveOrderUserView">Order Id</th>
                                             <th id="dishPriceForActiveOrderUserView">Order Content</th>
                                             <th id="dishDescriptionForUserView">Total price</th>
-                                            <th id="dishDescriptionForUserView">Order status</th>
 
 
 
@@ -260,6 +247,9 @@ class RestaurantActiveOrders extends React.Component{
                             <tfoot>
                             <td></td>
                             <td></td>
+                            <td className="actions" data-th="">
+
+                            </td>
 
                             </tfoot>
                         </table>
@@ -267,6 +257,9 @@ class RestaurantActiveOrders extends React.Component{
                     </div>
 
                             </div></form>
+                        <div className="col-md-8 col-sm-8 col-xs-8">
+                            <button  className="btn btn-outline-success"  onClick={this.handleClick.bind(this)} >Order Processed</button>
+                        </div>
             </div>
                 </div>
             </div>

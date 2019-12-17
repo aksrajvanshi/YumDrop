@@ -29,6 +29,7 @@
     "react-native": "^0.61.2",
     "react-payment": "^0.1.8",
     "react-places-autocomplete": "^7.2.1",
+    "react-rangeslider": "^2.2.0",
     "react-recaptcha": "^2.3.10",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.1.2",
@@ -45,7 +46,9 @@
     "socket.io": "^2.3.0",
     "socket.io-client": "latest",
     "url": "^0.11.0",
-    "validator": "^11.1.0"
+    "validator": "^11.1.0",
+    "react-hover": "latest",
+    "react-hover": "latest"
   },
   "scripts": {
     "build": "react-scripts build",

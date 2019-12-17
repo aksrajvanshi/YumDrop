@@ -10,6 +10,10 @@ import {connect} from "react-redux";
 
 
 class MyCart extends React.Component {
+    constructor(props) {
+        super(props);
+        this.submitSchedulingOfOrder = this.submitSchedulingOfOrder.bind(this);
+    }
     state = {
         totalPrice: 1,
         restaurantName: "mai",
@@ -35,7 +39,7 @@ class MyCart extends React.Component {
             },
             body: JSON.stringify({
                 userEmail: this.props.userEmailId,
-                restaurantId: "abc12",
+                restaurantId: this.props.restaurantId,
                 restaurantRating: nextValue
             })})
             .then(res => {
@@ -54,7 +58,7 @@ class MyCart extends React.Component {
     }
 
 
-    onChange = date => this.setState({ date })
+    onChange = date => this.setState({ startDate: date })
     handleChange = date => {
         this.setState({
             startDate: date
@@ -77,11 +81,14 @@ class MyCart extends React.Component {
                 'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({
-                userEmail: "maithreyi.prabhu95@gmail.com",})})
+                userEmail: this.props.emailId,})})
             .then(res => {
                 console.log(res)
                 return res.json()
             }).then(response => {
+                currentComponent.setState({
+                    restaurantId: response[0].restaurantId
+                })
             currentComponent.setState({
                 dishesForUserDisplay: response
             })
@@ -99,6 +106,65 @@ class MyCart extends React.Component {
     };
 
     submitSchedulingOfOrder(){
+        console.log(this.state.time)
+        console.log(this.state.startDate)
+        console.log(this.state.startDate+this.state.time)
+        let dateSend = "" ;
+        dateSend = toString(this.state.time)
+        let i=0
+        this.state.startDate.toUTCString()
+        let utcStirng = this.state.startDate.toUTCString()
+        console.log(this.state.startDate)
+        console.log(utcStirng)
+        let x = this.state.startDate.getDate().toString();
+        console.log(x)
+        let k=0
+        let hours = ""
+        let minutes = ""
+        let formattedTimeStamp = new Date('2019-12-20T12:00:00Z')
+        console.log(formattedTimeStamp)
+        dateSend.split("").forEach(character => {
+            if (k==0){
+                hours =  character
+            }else if (k==1){
+                hours  = hours + character
+            }
+            else if(k==2){
+                minutes = character
+            }else{
+                minutes = minutes + character
+            }
+        })
+        let Totalhours = parseInt(hours)
+        let TotalMinutes = parseInt(minutes)
+        this.state.startDate.setHours(Totalhours, TotalMinutes, 0,0)
+        console.log(Totalhours)
+        console.log(TotalMinutes)
+        console.log(this.state.startDate)
+        const dateNew  = new Date(new Intl.DateTimeFormat('en-US', {
+            year: '2-digit',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZone: 'short'
+        }))
+        console.log(dateNew)
+
+
+
+
+
+
+        let totalPrice = 0;
+        let orderContents = "";
+        for(let i=0; i<this.state.dishesForUserDisplay.length;i++){
+            orderContents = orderContents + this.state.dishesForUserDisplay[i].dishName+","+this.state.dishesForUserDisplay[i].dishQuantity+",";
+            totalPrice = totalPrice + parseInt(this.state.dishesForUserDisplay[i].dishPrice)
+        }
+        console.log(orderContents)
+        console.log(totalPrice)
         fetch('/scheduleOrderForUser',{
             method: 'POST',
             redirect: 'follow',
@@ -107,9 +173,11 @@ class MyCart extends React.Component {
                 'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({
-                userEmail: this.props.userEmailId,
+                userEmail: this.props.emailId,
                 time: this.state.time,
-                dateForScheduling: this.state.startDate
+                futureOrderTime: new Date(),
+                orderContents: orderContents,
+                orderPrice: totalPrice
 
             })})
             .then(res => {
@@ -147,7 +215,7 @@ class MyCart extends React.Component {
                 'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({
-                userEmail: this.props.userEmailId,
+                userEmail: this.props.emailId,
 
                 dishQuantity: this.state.dishesForUserDisplay[id].dishQuantity
             })})
@@ -162,7 +230,7 @@ class MyCart extends React.Component {
                             'Access-Control-Allow-Origin': '*'
                         },
                         body: JSON.stringify({
-                            userEmail: this.props.userEmailId,})})
+                            userEmail: this.props.emailId,})})
                         .then(res => {
                             console.log(res)
                             return res.json()
@@ -225,18 +293,12 @@ class MyCart extends React.Component {
 
         let mapDishesForUserView = this.state.dishesForUserDisplay.map((d,itemName)=>
         {
-
-
-
-
-
-
             return(
 
                 <tr>
                     <td data-th="Product" key={itemName}>
                         <div className="row">
-                            <div className="col-sm-2 hidden-xs"><img src="https://data.tibettravel.org/assets/images/Tibet-bhutan-tour/indian-food-in-Lhasa.jpg" alt="..."
+                            <div className="col-sm-2 hidden-xs"><img src={d.dishPhotoUrl} alt="..."
                                                                      height="50px" width="50px" className="img-responsive"/></div>
 
                         </div>
@@ -361,11 +423,11 @@ class MyCart extends React.Component {
                                         </tr>
                                         <tr>
                                             <td><a href="#" className="btn btn-warning"><i
-                                                className="fa fa-angle-left"></i>Home Page</a></td>
+                                                className="fa fa-angle-left" onClick={this.goBackToLoginDashboard}></i>Home Page</a></td>
                                             <td></td>
 
                                             <td><a
-                                                className="btn btn-success btn-block" value = { this.state.scheduleDelivery}onClick={this.handleChangeOfScheduleDelivery} >Schedule This order <i className="fa fa-angle-right"></i></a>
+                                                className="btn btn-success btn-block" value = { this.state.scheduleDelivery} onClick={this.handleChangeOfScheduleDelivery} >Schedule This order <i className="fa fa-angle-right"></i></a>
                                             </td>
 
                                         </tr>
@@ -390,7 +452,7 @@ class MyCart extends React.Component {
                     show={this.state.scheduleDelivery}
                     onHide={this.closeAllOptionsOfSelectionForm}
                     animation={false}
-                    centered id="modal"
+                    centered id="scehdulerDelivery"
                 >
                     <div className="container">
                         <div className="row">
@@ -400,7 +462,7 @@ class MyCart extends React.Component {
 
                                         <Calendar
                                         onChange={this.onChange}
-                                        value={this.state.date}
+                                        value={this.state.startDate}
                                     />
 
                                     <br/>
@@ -417,7 +479,7 @@ class MyCart extends React.Component {
 
                                 </div>
                                 <td><a
-                                    className="btn btn-success btn-block" onClick={this.submitSchedulingOfOrder} >Schedule This order <i className="fa fa-angle-right"></i></a>
+                                    className="btn btn-success btn-block" onClick={this.submitSchedulingOfOrder.bind(this)} >Schedule This order <i className="fa fa-angle-right"></i></a>
                                 </td>
                             </div>
                         </div>
@@ -464,7 +526,7 @@ class MyCart extends React.Component {
 const mapStateToProps = (state)=> {
     return {
         emailId: state.userId,
-        restaurantId: state.userSelectedRestaurant
+        restaurantId: state.restaurantSelected
     }
 }
 

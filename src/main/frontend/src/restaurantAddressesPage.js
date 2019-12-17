@@ -60,6 +60,9 @@ class UserSettingsPageAddresses extends Component{
     });
 })
 }
+    forwardToActiveOrders = () => {
+        this.props.history.push('/RestaurantActiveOrders')
+    }
 
 
     render() {
@@ -89,11 +92,7 @@ class UserSettingsPageAddresses extends Component{
                                 <ul className="navbar-nav mr-auto">
                                     <li className="upper-links dropdown"><a className="links" onClick={this.returnToLoginDahboard}
                                     >Home</a>
-                                        <ul className="dropdown-menu">
-                                            <li><a className="profile-links"
-                                            >My Account</a></li>
-                                            <li className="profile-li"><a>My Orders</a></li>
-                                        </ul>
+
                                     </li>
                                     <li>
                                         <a className="nav-link" onClick={this.signOut}>Sign Out</a>
@@ -126,13 +125,9 @@ class UserSettingsPageAddresses extends Component{
                         </div>
                         <div className="wizard">
                             <nav className="list-group list-group-flush">
-                                <a className="list-group-item" href="#">
-                                    <div className="d-flex justify-content-between align-items-center">
-
-                                    </div>
-                                </a><a className="list-group-item " href="#" onClick={this.goBacktToMyRestaurantSettings}><i
-                                className="fe-icon-user text-muted" ></i>Profile Settings</a><a
-                                className="list-group-item active" href="#"><i className="fe-icon-map-pin text-muted"></i>Addresses</a>
+                               <a className="list-group-item " href="#" onClick={this.goBacktToMyRestaurantSettings}><i
+                                className="fe-icon-user text-muted" ></i> Restaurant Profile Settings</a><a
+                                className="list-group-item active" href="#"><i className="fe-icon-map-pin text-muted"></i>Address</a>
                                 <a className="list-group-item" href="#" onClick={this.forwardToResetPassword}>
                                     <div className="d-flex justify-content-between align-items-center">
                                         <div><i className="fe-icon-heart mr-1 text-muted"></i>
@@ -142,6 +137,16 @@ class UserSettingsPageAddresses extends Component{
 
                                     </div>
                                 </a>
+                                <a className="list-group-item" href="#" onClick={this.forwardToResetPassword}>
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <div><i className="fe-icon-heart mr-1 text-muted"></i>
+                                            <div className="d-inline-block font-weight-medium text-uppercase" onClick={this.forwardToActiveOrders}>Active Orders
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </a>
+
                             </nav>
                         </div>
                     </div>
