@@ -141,12 +141,12 @@ class RestaurantDashboard extends Component{
                 return (
                     <tr key={itemName}>
                         <td><img
-                            src="https://assets3.thrillist.com/v1/image/2793388/size/gn-gift_guide_variable_c.jpg" height="50px" width="50px"
+                            src={d.dishPhotoUrl} height="50px" width="50px"
                             alt=""  /></td>
                         <td>{d.dishName}</td>
                         <td>{d.dishDescription}
                         </td>
-                        <td>{d.dishPrice}</td>
+                        <td>{d.dishPrice} $</td>
                         <td className="td-actions">
 
 

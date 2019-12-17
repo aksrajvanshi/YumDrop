@@ -381,7 +381,7 @@ class MyCart extends React.Component {
                                         </tr>
                                         <tr>
                                             <td><a href="#" className="btn btn-warning"><i
-                                                className="fa fa-angle-left"></i>Home Page</a></td>
+                                                className="fa fa-angle-left" onClick={this.goBackToLoginDashboard}></i>Home Page</a></td>
                                             <td></td>
 
                                             <td><a
@@ -484,7 +484,7 @@ class MyCart extends React.Component {
 const mapStateToProps = (state)=> {
     return {
         emailId: state.userId,
-        restaurantId: state.userSelectedRestaurant
+        restaurantId: state.restaurantSelected
     }
 }
 

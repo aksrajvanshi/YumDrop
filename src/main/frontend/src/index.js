@@ -16,7 +16,9 @@ import OTPResetPassword from "./OTPResetPassword";
 import ResetPassword from "./ResetPassword";
 import loginErrorPAge from "./loginErrorPAge";
 import SuccessfulRegistration from './SuccessfulRegistration';
+import RestaurantActiveOrders from './RestaurantActiveOrders';
 import Home from './Home';
+import ActiveOrders from './ActiveOrders';
 import MyCurrentLocation from "./MyCurrentLocation";
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
@@ -88,6 +90,7 @@ const routing = (
                 <Route exact path="/ErrorPageForRestaurantRegistration" component={ErrorPageForRestaurantRegistration}/>
                 <Route exact path="/Home" component={Home}/>
                 <Route exact path="/LoginPage" component={LoginPage} />
+                <Route exact path="/RestaurantActiveOrders" component={RestaurantActiveOrders}/>
                 <Route exact path="/LoginForm" component={LoginForm} />
                 <Route exact path="/RegisterForm" component={RegisterForm}/>
                 <Route exact path="/LoginDashBoard" component={LoginDashBoard}/>
@@ -123,6 +126,7 @@ const routing = (
                 <Route exact path="/DeliveryAgentOTPResetPassword" component={DeliveryAgentOTPResetPassword}/>
                 <Route exact path="/userSearchPage" component={userSearchPage} />
                 <Route exact path="/dishesForUserView" component={dishesForUserView} />
+                <Route exact path="/ActiveOrders" component={ActiveOrders} />
             </div>
         </Router>
     </Provider>

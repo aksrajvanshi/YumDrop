@@ -145,7 +145,7 @@ class MySettingsPage extends Component{
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                userEmail: "maithreyi.prabhu95@gmail.com"
+                userEmail: currentComponent.props.userEmailId
             }),
         }).then(res => {
             if (res.status !== 200){
@@ -162,7 +162,18 @@ class MySettingsPage extends Component{
                     response[i].ordercontents = beforeSplitting.join(' ');
                     console.log("after", response[i].ordercontents);
                     console.log(response[i])
-                    console.log(response[i].createdAt)
+                }
+                for(let i=0;i<response.length;i++){
+                    let beforeSplit = response[i].ordercontents
+                    let afterSplit = "";
+                    for(let j=0;i<beforeSplit;j++){
+                        if (beforeSplit[j] != ';'){
+                            afterSplit = afterSplit + beforeSplit[j];
+                        }else{
+                            afterSplit = afterSplit + " ";
+                        }
+                    }
+                    response[i].ordercontents = afterSplit;
                 }
                 currentComponent.setState({
                     activeOrderForUserDisplay: response
