@@ -1,5 +1,7 @@
 package com.app.yumdrop.Entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,7 +9,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "restaurant_rating_main")
+@Document(collection = "restaurant_rating_main")
 public class RestaurantRatings {
 
     @Id

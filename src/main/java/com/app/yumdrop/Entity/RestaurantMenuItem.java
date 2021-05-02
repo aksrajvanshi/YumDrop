@@ -1,10 +1,12 @@
 package com.app.yumdrop.Entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "restaurant_menu_item")
+@Document(collection = "restaurant_menu_item")
 @IdClass(RestaurantMenuItemId.class)
 public class RestaurantMenuItem {
 

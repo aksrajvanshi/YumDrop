@@ -1,5 +1,7 @@
 package com.app.yumdrop.Entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -7,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "restaurant_main")
+@Document(collection = "restaurant_main")
 public class Restaurant extends CreateAndUpdateTimeModel {
 
 

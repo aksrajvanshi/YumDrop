@@ -1,5 +1,7 @@
 package com.app.yumdrop.Entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,7 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "delivery_agent_otp")
+@Document(collection = "delivery_agent_otp")
 public class DeliveryAgentOtp extends CreateAndUpdateTimeModel {
 
     @Id

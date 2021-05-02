@@ -1,12 +1,14 @@
 package com.app.yumdrop.Entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table(name = "users")
+@Document(collection = "users")
 public class Users extends CreateAndUpdateTimeModel{
 
     @Id

@@ -1,5 +1,7 @@
 package com.app.yumdrop.Entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,7 +9,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 
 @Entity
-@Table(name = "delivery_agent_temporary_password")
+@Document(collection = "delivery_agent_temporary_password")
 public class DeliveryAgentTemporaryPassword {
 
     @Id

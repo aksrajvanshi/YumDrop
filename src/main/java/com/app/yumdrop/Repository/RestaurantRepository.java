@@ -2,11 +2,11 @@ package com.app.yumdrop.Repository;
 
 import com.app.yumdrop.Entity.Restaurant;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface RestaurantRepository extends CrudRepository<Restaurant, String> {
+public interface RestaurantRepository extends MongoRepository<Restaurant, String> {
 
     Restaurant findByrestaurantId(String restaurantId);
 

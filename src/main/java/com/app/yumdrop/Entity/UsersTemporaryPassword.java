@@ -1,12 +1,14 @@
 package com.app.yumdrop.Entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "users_temporary_password")
+@Document(collection = "users_temporary_password")
 public class UsersTemporaryPassword {
 
     @Id
