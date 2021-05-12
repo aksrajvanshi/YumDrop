@@ -2,35 +2,27 @@ package com.app.yumdrop.Entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 
-@Document(collection = "restaurant_manager")
+@Document("restaurantManager")
 @IdClass(RestaurantManagerId.class)
 public class RestaurantManager extends CreateAndUpdateTimeModel {
 
     @Id
-    @NotNull
-    @Column(name = "restaurant_id", nullable = false)
     private String restaurantId;
 
     @Id
-    @NotNull
-    @Column(name = "restaurant_manager_email", nullable = false)
     private String restaurantManagerEmailId;
 
-    @NotNull
-    @Column(name = "password", nullable = false)
     private String restaurantManagerPassword;
 
-    @NotNull
-    @Column(name = "manager_first_login", nullable = false)
     private boolean managerFirstLogin;
 
     public RestaurantManager() {
     }
 
-    public RestaurantManager(@NotNull String restaurantId, @NotNull String restaurantManagerEmailId, @NotNull String restaurantManagerPassword, @NotNull boolean managerFirstLogin) {
+    public RestaurantManager(String restaurantId, String restaurantManagerEmailId, String restaurantManagerPassword, boolean managerFirstLogin) {
         this.restaurantId = restaurantId;
         this.restaurantManagerEmailId = restaurantManagerEmailId;
         this.restaurantManagerPassword = restaurantManagerPassword;

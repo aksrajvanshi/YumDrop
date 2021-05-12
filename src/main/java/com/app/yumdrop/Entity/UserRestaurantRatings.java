@@ -2,38 +2,32 @@ package com.app.yumdrop.Entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.validation.constraints.NotNull;
 
-@Entity
-@Document(collection = "user_restaurant_ratings")
+@Document("userRestaurantRatings")
 @IdClass(UserRestaurantRatingsId.class)
 public class UserRestaurantRatings {
 
     @Id
-    @NotNull
-    @Column(name = "user_email", nullable = false)
     private String userEmail;
 
     @Id
-    @NotNull
-    @Column(name = "restaurant_id", nullable = false)
     private String restaurantId;
 
-    @NotNull
-    @Column(name = "restaurant_rating", nullable = false)
     private double restaurantRating;
 
     public UserRestaurantRatings() {
     }
 
 
-    public UserRestaurantRatings(@NotNull String userEmail, @NotNull String restaurantId) {
+    public UserRestaurantRatings(String userEmail, String restaurantId) {
         this.userEmail = userEmail;
         this.restaurantId = restaurantId;
     }
 
-    public UserRestaurantRatings(@NotNull String userEmail, @NotNull String restaurantId, @NotNull double restaurantRating) {
+    public UserRestaurantRatings(String userEmail, String restaurantId, double restaurantRating) {
         this.userEmail = userEmail;
         this.restaurantId = restaurantId;
         this.restaurantRating = restaurantRating;

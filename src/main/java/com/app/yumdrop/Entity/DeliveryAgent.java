@@ -10,42 +10,28 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 
-@Document(collection = "delivery_agent")
+@Document("deliveryAgent")
 public class DeliveryAgent extends CreateAndUpdateTimeModel{
 
     @Id
-    @Column(name = "da_email", nullable = false)
-    @Email(message = "delivery agent email should be a valid email")
     public String deliveryAgentEmail;
 
-    @NotNull
-    @Column(name = "da_name", nullable = false)
     private String deliveryAgentName;
 
-    @NotNull
-    @Column(name = "da_phonenum", nullable = false)
     private String deliveryAgentPhoneNumber;
 
-
-    @NotNull
-    @Column(name = "da_password", nullable = false)
     private String deliveryAgentPassword;
 
-    @NotNull
-    @Column(name = "last_updated_user", nullable = false)
     private String lastUpdatedUser;
 
-    @NotNull
-    @Column(name = "last_created_user", nullable = false)
     private String lastCreatedUser;
 
-    @Column(name = "da_address", nullable = false)
     private String deliveryAgentAddress;
 
     public DeliveryAgent(){
     }
 
-    public DeliveryAgent(@Email(message = "delivery agent email should be a valid email") String deliveryAgentEmail, @NotNull String deliveryAgentName, @NotNull String deliveryAgentPhoneNumber, @NotNull String deliveryAgentPassword, String deliveryAgentAddress, @NotNull String lastUpdatedUser, @NotNull String lastCreatedUser) {
+    public DeliveryAgent(String deliveryAgentEmail, String deliveryAgentName, String deliveryAgentPhoneNumber, String deliveryAgentPassword, String lastUpdatedUser, String lastCreatedUser, String deliveryAgentAddress) {
         this.deliveryAgentEmail = deliveryAgentEmail;
         this.deliveryAgentName = deliveryAgentName;
         this.deliveryAgentPhoneNumber = deliveryAgentPhoneNumber;

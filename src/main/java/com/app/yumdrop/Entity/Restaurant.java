@@ -2,34 +2,20 @@ package com.app.yumdrop.Entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Id;
 
-
-
-@Entity
-@Document(collection = "restaurant_main")
+@Document("restaurantMain")
 public class Restaurant extends CreateAndUpdateTimeModel {
 
-
     @Id
-    @Column(name = "restaurant_id", nullable = false)
     public String restaurantId;
 
-    @NotNull
-    @Column(name = "restaurant_name", nullable = false)
     private String restaurantName;
 
-    @NotNull
-    @Column(name = "primary_email_id", nullable = false)
     private String restaurantPrimaryEmailId;
 
-    @NotNull
-    @Column(name = "primary_phonenum", nullable = false)
     private String primaryPhoneNumber;
 
-    @Column(name = "restaurant_address", nullable = false)
     private String restaurantAddress;
 
     public Restaurant() {
@@ -44,7 +30,7 @@ public class Restaurant extends CreateAndUpdateTimeModel {
         this.restaurantAddress = restaurantAddress;
     }
 
-    public Restaurant(String restaurantId, @NotNull String restaurantName, @NotNull String restaurantPrimaryEmailId, @NotNull String primaryPhoneNumber) {
+    public Restaurant(String restaurantId, String restaurantName, String restaurantPrimaryEmailId, String primaryPhoneNumber) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;

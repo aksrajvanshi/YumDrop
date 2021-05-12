@@ -88,11 +88,11 @@ public class RegistrationController {
     public ResponseEntity<?> verifyOTPandRegisterRestaurant(@RequestBody RestaurantRegisterForm restaurantRegisterForm) {
 
 
-        RestaurantOtp restaurantOtpRecord = restaurantOtpRepository.findByrestaurantID(restaurantRegisterForm.getRestaurantId());
+        RestaurantOtp restaurantOtpRecord = restaurantOtpRepository.findByrestaurantId(restaurantRegisterForm.getRestaurantId());
         boolean checkOtpMatch = OtpUtils.checkIfOtpMatches(restaurantRegisterForm.getRestaurantOtp().trim(), restaurantOtpRecord.getRestaurantOtp());
 
         if (checkOtpMatch) {
-            restaurantOtpRepository.deleteById(restaurantOtpRecord.getRestaurantID());
+            restaurantOtpRepository.deleteById(restaurantOtpRecord.getRestaurantId());
             return restaurantRegistrationService.registerRestaurant(restaurantRegisterForm);
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

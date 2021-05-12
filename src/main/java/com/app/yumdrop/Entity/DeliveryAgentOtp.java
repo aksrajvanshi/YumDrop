@@ -2,30 +2,20 @@ package com.app.yumdrop.Entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 
-@Entity
-@Document(collection = "delivery_agent_otp")
+@Document(collection = "deliveryAgentOtp")
 public class DeliveryAgentOtp extends CreateAndUpdateTimeModel {
 
     @Id
-    @Column(name = "da_email", nullable = false)
-    @Email(message = "Delivery agent email should be a valid email")
     public String deliveryAgentEmail;
 
-    @NotNull
-    @Column(name = "da_otp", nullable = false)
     public String deliveryAgentOtp;
 
     public DeliveryAgentOtp() {
     }
 
-    public DeliveryAgentOtp(@Email(message = "Delivery agent email should be a valid email") String deliveryAgentEmail, @NotNull String deliveryAgentOtp) {
+    public DeliveryAgentOtp(String deliveryAgentEmail, String deliveryAgentOtp) {
         this.deliveryAgentEmail = deliveryAgentEmail;
         this.deliveryAgentOtp = deliveryAgentOtp;
     }

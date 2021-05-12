@@ -2,65 +2,81 @@ package com.app.yumdrop.Entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 @Entity
-@Document(collection = "users")
-public class Users extends CreateAndUpdateTimeModel{
+@Document("users")
+public class Users extends CreateAndUpdateTimeModel {
 
     @Id
-    @Column(name = "user_email", nullable = false)
-    @Email(message = "user email should be a valid email")
     public String userEmail;
 
-    @NotNull
-    @Column(name = "user_name", nullable = false)
+    private String userAccountType; // Email, OAUTH
+
+    private String accessToken;
+
     private String userName;
 
-    @Column(name = "user_phonenum", nullable = false)
     private String userPhoneNumber;
 
-    @NotNull
-    @Column(name = "user_countrycode", nullable = false)
     private String userCountryCode;
 
-    @NotNull
-    @Column(name = "user_password", nullable = false)
     private String userPassword;
 
-    @NotNull
-    @Column(name = "last_updated_user", nullable = false)
     private String lastUpdatedUser;
 
-    @NotNull
-    @Column(name = "last_created_user", nullable = false)
     private String lastCreatedUser;
 
-    @Column(name = "user_address", nullable = false)
     private String userAddress;
 
     public Users() {
     }
 
-    public Users(@Email(message = "user email should be a valid email") String userEmail) {
+    public Users(String userEmail) {
         this.userEmail = userEmail;
     }
 
-    public Users(@Email(message = "user email should be a valid email") String userEmail, @NotNull String userName, @NotNull String userPassword) {
+    public Users(String userEmail, String userName, String userPassword) {
         this.userEmail = userEmail;
         this.userName = userName;
         this.userPassword = userPassword;
     }
 
-    public Users(@Email(message = "user email should be a valid email") String userEmail, @NotNull String userName, @NotNull String userPassword, @NotNull String lastUpdatedUser, @NotNull String lastCreatedUser) {
+    public Users(String userEmail, String userName, String userPassword, String lastUpdatedUser, String lastCreatedUser) {
         this.userEmail = userEmail;
         this.userName = userName;
         this.userPassword = userPassword;
         this.lastUpdatedUser = lastUpdatedUser;
         this.lastCreatedUser = lastCreatedUser;
+    }
+
+    public Users(String userEmail, String userName, String userAccountType, String userPassword, String lastUpdatedUser, String lastCreatedUser) {
+        this.userEmail = userEmail;
+        this.userName = userName;
+        this.userAccountType = userAccountType;
+        this.userPassword = userPassword;
+        this.lastUpdatedUser = lastUpdatedUser;
+        this.lastCreatedUser = lastCreatedUser;
+    }
+
+
+    public String getUserAccountType() {
+        return userAccountType;
+    }
+
+    public void setUserAccountType(String userAccountType) {
+        this.userAccountType = userAccountType;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     public String getUserEmail() {

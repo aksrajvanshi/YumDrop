@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Document(collection = "users_temporary_password")
+@Document("userTemporaryPassword")
 public class UsersTemporaryPassword {
 
     @Id

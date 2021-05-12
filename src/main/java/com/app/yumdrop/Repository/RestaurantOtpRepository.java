@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface RestaurantOtpRepository extends MongoRepository<RestaurantOtp, String> {
 
-    RestaurantOtp findByrestaurantID(String restaurantId);
+    RestaurantOtp findByrestaurantId(String restaurantId);
 }

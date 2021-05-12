@@ -22,6 +22,8 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     @Autowired
     private UsersRepository userRepository;
 
+    final String EMAIL_ACCOUNT = "EMAIL_ACCOUNT";
+
     @Override
     public ResponseEntity<?> registerUser(UserRegisterForm userDataForm) {
         boolean userExistsBool = userRepository.existsById(userDataForm.getUser_email());
@@ -32,7 +34,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
             return new ResponseEntity<>(userAlreadyExists, HttpStatus.BAD_REQUEST);
         }
 
-        Users userToRegister = new Users(userDataForm.getUser_email(), userDataForm.getUser_name(),
+        Users userToRegister = new Users(userDataForm.getUser_email(), userDataForm.getUser_name(), EMAIL_ACCOUNT,
                 PasswordUtils.convertPasswordToHash(userDataForm.getUser_password()), "SYSTEM", "SYSTEM");
 
         Users registeredUser = userRepository.save(userToRegister);

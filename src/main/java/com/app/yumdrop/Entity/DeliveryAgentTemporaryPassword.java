@@ -2,22 +2,14 @@ package com.app.yumdrop.Entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.Email;
 
-@Entity
-@Document(collection = "delivery_agent_temporary_password")
+@Document(collection = "deliveryAgentTemporaryPassword")
 public class DeliveryAgentTemporaryPassword {
 
     @Id
-    @Column(name = "da_email", nullable = false)
-    @Email(message = "delivery agent email should be a valid email")
     private String deliveryAgentEmail;
 
-    @Column(name = "da_temp_password", nullable = false)
     private String temporaryPassword;
 
     public DeliveryAgentTemporaryPassword() {

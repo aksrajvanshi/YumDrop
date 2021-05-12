@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Document(collection = "users_address")
+@Document("userAddress")
 public class UsersAddress {
 
     @Id

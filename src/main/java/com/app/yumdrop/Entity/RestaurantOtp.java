@@ -10,29 +10,21 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 
-@Entity
-@Document(collection = "restaurant_manager_otp")
+@Document("restaurantManagerOtp")
 public class RestaurantOtp extends CreateAndUpdateTimeModel {
 
     @Id
-    @NotNull
-    @Column(name = "restaurant_id", nullable = false)
-    private String restaurantID;
+    private String restaurantId;
 
-    @Column(name = "restaurant_primary_email", nullable = false)
-    @Email(message = "Restaurant primary email should be a valid email")
     private String restaurantPrimaryEmail;
 
-    @NotNull
-    @Column(name = "restaurant_otp", nullable = false)
     private String restaurantOtp;
 
     public RestaurantOtp() {
     }
 
-
-    public RestaurantOtp(@NotNull String restaurantID, @Email(message = "Restaurant primary email should be a valid email") String restaurantPrimaryEmail, @NotNull String restaurantOtp) {
-        this.restaurantID = restaurantID;
+    public RestaurantOtp(String restaurantId, String restaurantPrimaryEmail, String restaurantOtp) {
+        this.restaurantId = restaurantId;
         this.restaurantPrimaryEmail = restaurantPrimaryEmail;
         this.restaurantOtp = restaurantOtp;
     }
@@ -40,18 +32,18 @@ public class RestaurantOtp extends CreateAndUpdateTimeModel {
     @Override
     public String toString() {
         return "RestaurantOtp{" +
-                "restaurantID='" + restaurantID + '\'' +
+                "restaurantID='" + restaurantId + '\'' +
                 ", restaurantPrimaryEmail='" + restaurantPrimaryEmail + '\'' +
                 ", restaurantOtp='" + restaurantOtp + '\'' +
                 '}';
     }
 
-    public String getRestaurantID() {
-        return restaurantID;
+    public String getRestaurantId() {
+        return restaurantId;
     }
 
-    public void setRestaurantID(String restaurantID) {
-        this.restaurantID = restaurantID;
+    public void setRestaurantId(String restaurantID) {
+        this.restaurantId = restaurantId;
     }
 
     public String getRestaurantPrimaryEmail() {
