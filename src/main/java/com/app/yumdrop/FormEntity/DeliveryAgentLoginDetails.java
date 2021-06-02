@@ -17,10 +17,8 @@ public class DeliveryAgentLoginDetails {
 
     @Override
     public String toString() {
-        return "DeliveryAgentLoginDetails{" +
-                "deliveryAgentEmail='" + deliveryAgentEmail + '\'' +
-                ", deliveryAgentPassword='" + deliveryAgentPassword + '\'' +
-                '}';
+        return "DeliveryAgentLoginDetails{" + "deliveryAgentEmail='" + deliveryAgentEmail + '\''
+                + ", deliveryAgentPassword='" + deliveryAgentPassword + '\'' + '}';
     }
 
     public String getdeliveryAgentLoginEmail() {

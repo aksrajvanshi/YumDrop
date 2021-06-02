@@ -20,28 +20,27 @@ import java.util.List;
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorMessage> handleAllExceptions(Exception ex, WebRequest request){
+    public ResponseEntity<ErrorMessage> handleAllExceptions(Exception ex, WebRequest request) {
         List<String> details = new ArrayList<>();
         details.add(ex.getLocalizedMessage());
-        ErrorMessage error = new ErrorMessage(new Date(), ex.getMessage(),
-                request.getDescription(false));
+        ErrorMessage error = new ErrorMessage(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<?> handleConstraintViolationException(Exception ex){
-        return new ResponseEntity<ErrorMessage>(new ErrorMessage(new Date(), ex.getMessage(),
-                ""), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> handleConstraintViolationException(Exception ex) {
+        return new ResponseEntity<ErrorMessage>(new ErrorMessage(new Date(), ex.getMessage(), ""),
+                HttpStatus.BAD_REQUEST);
     }
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+            HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<String> details = new ArrayList<>();
-        for(ObjectError error : ex.getBindingResult().getAllErrors()) {
+        for (ObjectError error : ex.getBindingResult().getAllErrors()) {
             details.add(error.getDefaultMessage());
         }
-        ErrorMessage error = new ErrorMessage(new Date(), ex.getMessage(),
-                request.getDescription(false));
+        ErrorMessage error = new ErrorMessage(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
     }
 

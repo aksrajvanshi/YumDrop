@@ -11,10 +11,7 @@ import java.util.Date;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(
-        value = {"createdTime", "updatedTime"},
-        allowGetters = true
-)
+@JsonIgnoreProperties(value = { "createdTime", "updatedTime" }, allowGetters = true)
 public class CreateAndUpdateTimeModel implements Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -29,10 +26,7 @@ public class CreateAndUpdateTimeModel implements Serializable {
 
     @Override
     public String toString() {
-        return "CreateAndUpdateTimeModel{" +
-                "createdAt=" + createdTime +
-                ", updatedAt=" + updatedTime +
-                '}';
+        return "CreateAndUpdateTimeModel{" + "createdAt=" + createdTime + ", updatedAt=" + updatedTime + '}';
     }
 
     public Date getCreatedAt() {

@@ -37,32 +37,35 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
             simpleMailMessage.setTo(userEmail);
             simpleMailMessage.setSubject("Temporary Password from Yumdrop");
-            simpleMailMessage.setText("Hello user! Your temporary password is: " + temporaryPassword +
-                    ". Please use this temporary password to set a new password and login into your account.");
+            simpleMailMessage.setText("Hello user! Your temporary password is: " + temporaryPassword
+                    + ". Please use this temporary password to set a new password and login into your account.");
 
             javaMailSender.send(simpleMailMessage);
 
-            UsersTemporaryPassword usersTemporaryPassword = new UsersTemporaryPassword(userEmail, PasswordUtils.convertPasswordToHash(temporaryPassword));
+            UsersTemporaryPassword usersTemporaryPassword = new UsersTemporaryPassword(userEmail,
+                    PasswordUtils.convertPasswordToHash(temporaryPassword));
             UsersTemporaryPassword newPasswordUser = usersTemporaryPasswordRepository.save(usersTemporaryPassword);
             if (newPasswordUser != null) {
-                SuccessMessage temporaryPasswordSucessfullySent = new SuccessMessage(new Date(), "Temporary password sent to the user");
+                SuccessMessage temporaryPasswordSucessfullySent = new SuccessMessage(new Date(),
+                        "Temporary password sent to the user");
                 return new ResponseEntity<>(temporaryPasswordSucessfullySent, HttpStatus.OK);
             }
 
-            ErrorMessage mailNotSent = new ErrorMessage(new Date(), "Internal System error.",
-                    "");
+            ErrorMessage mailNotSent = new ErrorMessage(new Date(), "Internal System error.", "");
             return new ResponseEntity<>(mailNotSent, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        ErrorMessage mailNotSent = new ErrorMessage(new Date(), "Our records indicate that this email doesn't exist in the system",
-                "");
+        ErrorMessage mailNotSent = new ErrorMessage(new Date(),
+                "Our records indicate that this email doesn't exist in the system", "");
         return new ResponseEntity<>(mailNotSent, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
-    public ResponseEntity<?> verifyTemporaryPasswordAndSetNewPassword(String userEmail, String temporaryPassword, String newPassword) {
+    public ResponseEntity<?> verifyTemporaryPasswordAndSetNewPassword(String userEmail, String temporaryPassword,
+            String newPassword) {
         UsersTemporaryPassword user = usersTemporaryPasswordRepository.findByuserEmail(userEmail);
-        boolean isTempPasswordMatching = PasswordUtils.checkIfPasswordMatches(temporaryPassword, user.getTemporaryPassword());
+        boolean isTempPasswordMatching = PasswordUtils.checkIfPasswordMatches(temporaryPassword,
+                user.getTemporaryPassword());
         if (isTempPasswordMatching) {
             Users userInDb = usersRepository.findByuserEmail(userEmail);
             userInDb.setUserPassword(newPassword);
@@ -72,9 +75,10 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
             return new ResponseEntity<>(newPasswordSet, HttpStatus.OK);
         }
 
-        ErrorMessage problemWithVerifyTemporaryPasswordAndSetNewPassword = new ErrorMessage(new Date(), "Internal System error.",
-                "");
-        return new ResponseEntity<>(problemWithVerifyTemporaryPasswordAndSetNewPassword, HttpStatus.INTERNAL_SERVER_ERROR);
+        ErrorMessage problemWithVerifyTemporaryPasswordAndSetNewPassword = new ErrorMessage(new Date(),
+                "Internal System error.", "");
+        return new ResponseEntity<>(problemWithVerifyTemporaryPasswordAndSetNewPassword,
+                HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private String generateRandomPassword() {

@@ -33,7 +33,8 @@ public class LoadDashboardDataController {
     @RequestMapping(value = "/getRestaurantDataForDashboard", method = RequestMethod.GET)
     public ResponseEntity<?> loadRestaurantDataForDashboard(@RequestBody Restaurant restaurantData) {
 
-        Restaurant restaurantDataForDashboard = restaurantRepository.findByrestaurantId(restaurantData.getRestaurantId());
+        Restaurant restaurantDataForDashboard = restaurantRepository
+                .findByrestaurantId(restaurantData.getRestaurantId());
         return new ResponseEntity<>(restaurantDataForDashboard, HttpStatus.OK);
     }
 

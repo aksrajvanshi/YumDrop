@@ -22,10 +22,8 @@ public class DeliveryAgentOtp extends CreateAndUpdateTimeModel {
 
     @Override
     public String toString() {
-        return "Delivery_Agent_Otp{" +
-                "deliveryAgentEmail='" + deliveryAgentEmail + '\'' +
-                ", deliveryAgentOtp='" + deliveryAgentOtp + '\'' +
-                '}';
+        return "Delivery_Agent_Otp{" + "deliveryAgentEmail='" + deliveryAgentEmail + '\'' + ", deliveryAgentOtp='"
+                + deliveryAgentOtp + '\'' + '}';
     }
 
     public String getDeliveryAgentEmail() {

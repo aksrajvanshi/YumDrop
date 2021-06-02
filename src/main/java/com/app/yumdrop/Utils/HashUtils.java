@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class HashUtils {
 
-    public static String convertToHashString(String stringtoHash){
+    public static String convertToHashString(String stringtoHash) {
         MessageDigest md = null;
 
         if (stringtoHash == null) {
@@ -20,8 +20,7 @@ public class HashUtils {
         }
         md.update(stringtoHash.getBytes());
         byte[] digest = md.digest();
-        String hashedString = DatatypeConverter
-                .printHexBinary(digest).toUpperCase();
+        String hashedString = DatatypeConverter.printHexBinary(digest).toUpperCase();
 
         return hashedString;
     }

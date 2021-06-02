@@ -1,11 +1,9 @@
 package com.app.yumdrop.Entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Entity
 @Document("users")
@@ -45,7 +43,8 @@ public class Users extends CreateAndUpdateTimeModel {
         this.userPassword = userPassword;
     }
 
-    public Users(String userEmail, String userName, String userPassword, String lastUpdatedUser, String lastCreatedUser) {
+    public Users(String userEmail, String userName, String userPassword, String lastUpdatedUser,
+            String lastCreatedUser) {
         this.userEmail = userEmail;
         this.userName = userName;
         this.userPassword = userPassword;
@@ -53,7 +52,8 @@ public class Users extends CreateAndUpdateTimeModel {
         this.lastCreatedUser = lastCreatedUser;
     }
 
-    public Users(String userEmail, String userName, String userAccountType, String userPassword, String lastUpdatedUser, String lastCreatedUser) {
+    public Users(String userEmail, String userName, String userAccountType, String userPassword, String lastUpdatedUser,
+            String lastCreatedUser) {
         this.userEmail = userEmail;
         this.userName = userName;
         this.userAccountType = userAccountType;
@@ -61,7 +61,6 @@ public class Users extends CreateAndUpdateTimeModel {
         this.lastUpdatedUser = lastUpdatedUser;
         this.lastCreatedUser = lastCreatedUser;
     }
-
 
     public String getUserAccountType() {
         return userAccountType;
@@ -145,15 +144,9 @@ public class Users extends CreateAndUpdateTimeModel {
 
     @Override
     public String toString() {
-        return "Users{" +
-                "userEmail='" + userEmail + '\'' +
-                ", userName='" + userName + '\'' +
-                ", userPhoneNumber='" + userPhoneNumber + '\'' +
-                ", userCountryCode='" + userCountryCode + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                ", lastUpdatedUser='" + lastUpdatedUser + '\'' +
-                ", lastCreatedUser='" + lastCreatedUser + '\'' +
-                ", userAddress='" + userAddress + '\'' +
-                '}';
+        return "Users{" + "userEmail='" + userEmail + '\'' + ", userName='" + userName + '\'' + ", userPhoneNumber='"
+                + userPhoneNumber + '\'' + ", userCountryCode='" + userCountryCode + '\'' + ", userPassword='"
+                + userPassword + '\'' + ", lastUpdatedUser='" + lastUpdatedUser + '\'' + ", lastCreatedUser='"
+                + lastCreatedUser + '\'' + ", userAddress='" + userAddress + '\'' + '}';
     }
 }

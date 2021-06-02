@@ -1,11 +1,10 @@
 package com.app.yumdrop.Entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
+
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Entity
 @Document("userTemporaryPassword")
@@ -28,10 +27,8 @@ public class UsersTemporaryPassword {
 
     @Override
     public String toString() {
-        return "UsersTemporaryPassword{" +
-                "userEmail='" + userEmail + '\'' +
-                ", temporaryPassword='" + temporaryPassword + '\'' +
-                '}';
+        return "UsersTemporaryPassword{" + "userEmail='" + userEmail + '\'' + ", temporaryPassword='"
+                + temporaryPassword + '\'' + '}';
     }
 
     public String getUserEmail() {

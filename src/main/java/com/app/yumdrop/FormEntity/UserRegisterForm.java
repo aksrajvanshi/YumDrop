@@ -9,7 +9,8 @@ public class UserRegisterForm {
     private String user_otp;
     private String user_countrycode;
 
-    public UserRegisterForm(String user_email, String user_name, String user_password, String user_phonenum, String user_otp, String user_countrycode) {
+    public UserRegisterForm(String user_email, String user_name, String user_password, String user_phonenum,
+            String user_otp, String user_countrycode) {
         this.user_email = user_email;
         this.user_name = user_name;
         this.user_password = user_password;

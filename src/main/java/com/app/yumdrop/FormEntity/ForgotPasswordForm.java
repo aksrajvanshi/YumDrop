@@ -19,14 +19,10 @@ public class ForgotPasswordForm {
         this.newPassword = newPassword;
     }
 
-
     @Override
     public String toString() {
-        return "ForgotPasswordForm{" +
-                "userEmail='" + userEmail + '\'' +
-                ", temporaryPassword='" + temporaryPassword + '\'' +
-                ", newPassword='" + newPassword + '\'' +
-                '}';
+        return "ForgotPasswordForm{" + "userEmail='" + userEmail + '\'' + ", temporaryPassword='" + temporaryPassword
+                + '\'' + ", newPassword='" + newPassword + '\'' + '}';
     }
 
     public String getUserEmail() {

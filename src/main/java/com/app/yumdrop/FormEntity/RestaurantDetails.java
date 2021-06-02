@@ -4,14 +4,13 @@ import javax.persistence.Id;
 
 public class RestaurantDetails {
 
+    @Id
+    public String restaurantId;
+    public String restaurantPrimaryEmailId;
 
-        @Id
-        public String restaurantId;
-        public String restaurantPrimaryEmailId;
+    public RestaurantDetails() {
 
-        public RestaurantDetails(){
-
-        }
+    }
 
     public RestaurantDetails(String restaurantId, String restaurantPrimaryEmailId) {
         this.restaurantId = restaurantId;

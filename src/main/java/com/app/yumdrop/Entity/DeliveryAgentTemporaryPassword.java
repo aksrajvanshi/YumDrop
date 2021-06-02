@@ -22,10 +22,8 @@ public class DeliveryAgentTemporaryPassword {
 
     @Override
     public String toString() {
-        return "Delivery_Agent_Temporary_Password{" +
-                "deliveryAgentEmail='" + deliveryAgentEmail + '\'' +
-                ", temporaryPassword='" + temporaryPassword + '\'' +
-                '}';
+        return "Delivery_Agent_Temporary_Password{" + "deliveryAgentEmail='" + deliveryAgentEmail + '\''
+                + ", temporaryPassword='" + temporaryPassword + '\'' + '}';
     }
 
     public String getDeliveryAgentEmail() {

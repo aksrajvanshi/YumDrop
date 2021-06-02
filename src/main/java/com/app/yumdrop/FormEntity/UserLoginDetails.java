@@ -1,6 +1,5 @@
 package com.app.yumdrop.FormEntity;
 
-
 public class UserLoginDetails {
 
     public String user_name;
@@ -16,10 +15,7 @@ public class UserLoginDetails {
 
     @Override
     public String toString() {
-        return "UserLoginDetails{" +
-                "user_name='" + user_name + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                '}';
+        return "UserLoginDetails{" + "user_name='" + user_name + '\'' + ", userPassword='" + userPassword + '\'' + '}';
     }
 
     public String getUser_name() {

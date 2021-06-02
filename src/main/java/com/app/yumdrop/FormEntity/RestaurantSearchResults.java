@@ -16,11 +16,12 @@ public class RestaurantSearchResults {
 
     String distanceFromUserWithMetrics;
 
-
     public RestaurantSearchResults() {
     }
 
-    public RestaurantSearchResults(Restaurant restaurantDetails, RestaurantRatings restaurantRatings, UserRestaurantRatings userRestaurantRatings, long distanceFromUserInMeters, String distanceFromUserWithMetrics) {
+    public RestaurantSearchResults(Restaurant restaurantDetails, RestaurantRatings restaurantRatings,
+            UserRestaurantRatings userRestaurantRatings, long distanceFromUserInMeters,
+            String distanceFromUserWithMetrics) {
         this.restaurantDetails = restaurantDetails;
         this.restaurantRatings = restaurantRatings;
         this.userRestaurantRatings = userRestaurantRatings;

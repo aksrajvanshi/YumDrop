@@ -31,19 +31,18 @@ public class AddDishToRestaurantController {
                 new RestaurantMenuItemId(restaurantMenuItem.getRestaurantId(), restaurantMenuItem.getDishName()));
 
         if (menuItem.isPresent()) {
-            ErrorMessage dishNotAddedToDb = new ErrorMessage(new Date(), "This menu item already exists",
-                    "");
+            ErrorMessage dishNotAddedToDb = new ErrorMessage(new Date(), "This menu item already exists", "");
             return new ResponseEntity<>(dishNotAddedToDb, HttpStatus.BAD_REQUEST);
         }
 
         RestaurantMenuItem addedDishToRestaurant = restaurantMenuItemRepository.save(restaurantMenuItem);
         if (addedDishToRestaurant != null) {
-            SuccessMessage successfulDishAddition = new SuccessMessage(new Date(), "Dish was added successfully to Restaurant Menu");
+            SuccessMessage successfulDishAddition = new SuccessMessage(new Date(),
+                    "Dish was added successfully to Restaurant Menu");
             return new ResponseEntity<>(successfulDishAddition, HttpStatus.OK);
         }
 
-        ErrorMessage dishNotAddedToDb = new ErrorMessage(new Date(), "Could not add dish, please try again",
-                "");
+        ErrorMessage dishNotAddedToDb = new ErrorMessage(new Date(), "Could not add dish, please try again", "");
         return new ResponseEntity<>(dishNotAddedToDb, HttpStatus.BAD_REQUEST);
 
     }

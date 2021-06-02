@@ -22,7 +22,8 @@ public class RestaurantManager extends CreateAndUpdateTimeModel {
     public RestaurantManager() {
     }
 
-    public RestaurantManager(String restaurantId, String restaurantManagerEmailId, String restaurantManagerPassword, boolean managerFirstLogin) {
+    public RestaurantManager(String restaurantId, String restaurantManagerEmailId, String restaurantManagerPassword,
+            boolean managerFirstLogin) {
         this.restaurantId = restaurantId;
         this.restaurantManagerEmailId = restaurantManagerEmailId;
         this.restaurantManagerPassword = restaurantManagerPassword;

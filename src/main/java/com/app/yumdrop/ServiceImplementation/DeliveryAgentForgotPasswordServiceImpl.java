@@ -34,13 +34,15 @@ public class DeliveryAgentForgotPasswordServiceImpl implements DeliveryAgentForg
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
             simpleMailMessage.setTo(deliveryAgentEmail);
             simpleMailMessage.setSubject("Temporary Password from Yumdrop");
-            simpleMailMessage.setText("Hello delivery agent! Your temporary password is: " + temporaryPassword +
-                    ". Please use this temporary password to set a new password and login into your account.");
+            simpleMailMessage.setText("Hello delivery agent! Your temporary password is: " + temporaryPassword
+                    + ". Please use this temporary password to set a new password and login into your account.");
 
             javaMailSender.send(simpleMailMessage);
 
-            DeliveryAgentTemporaryPassword daTemporaryPassword = new DeliveryAgentTemporaryPassword(deliveryAgentEmail, PasswordUtils.convertPasswordToHash(temporaryPassword));
-            DeliveryAgentTemporaryPassword newPasswordDA = deliveryAgentTemporaryPasswordRepository.save(daTemporaryPassword);
+            DeliveryAgentTemporaryPassword daTemporaryPassword = new DeliveryAgentTemporaryPassword(deliveryAgentEmail,
+                    PasswordUtils.convertPasswordToHash(temporaryPassword));
+            DeliveryAgentTemporaryPassword newPasswordDA = deliveryAgentTemporaryPasswordRepository
+                    .save(daTemporaryPassword);
             if (newPasswordDA != null)
                 return ResponseEntity.status(HttpStatus.OK).build();
 
@@ -51,9 +53,11 @@ public class DeliveryAgentForgotPasswordServiceImpl implements DeliveryAgentForg
     }
 
     @Override
-    public ResponseEntity<?> verifyTemporaryPasswordAndSetNewPassword(String daEmail, String temporaryPassword, String newPassword) {
+    public ResponseEntity<?> verifyTemporaryPasswordAndSetNewPassword(String daEmail, String temporaryPassword,
+            String newPassword) {
         DeliveryAgentTemporaryPassword da = deliveryAgentTemporaryPasswordRepository.findByDeliveryAgentEmail(daEmail);
-        boolean isTempPasswordMatching = PasswordUtils.checkIfPasswordMatches(temporaryPassword, da.getTemporaryPassword());
+        boolean isTempPasswordMatching = PasswordUtils.checkIfPasswordMatches(temporaryPassword,
+                da.getTemporaryPassword());
         if (isTempPasswordMatching) {
             DeliveryAgent deliveryAgentInDb = deliveryAgentRepository.findByDeliveryAgentEmail(daEmail);
             deliveryAgentInDb.setDeliveryAgentPassword(PasswordUtils.convertPasswordToHash(newPassword));

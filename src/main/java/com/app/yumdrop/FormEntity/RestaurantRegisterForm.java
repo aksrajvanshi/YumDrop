@@ -12,33 +12,20 @@ public class RestaurantRegisterForm {
     private String restaurantCity;
     private String restaurantAddress;
 
-    public RestaurantRegisterForm(){
+    public RestaurantRegisterForm() {
 
     }
 
-    @Override
-    public String toString() {
-        return "RestaurantRegisterForm{" +
-                "restaurantId='" + restaurantId + '\'' +
-                ", restaurantName='" + restaurantName + '\'' +
-                ", restaurantPrimaryEmailId='" + restaurantPrimaryEmailId + '\'' +
-                ", restaurantPrimaryPassword='" + restaurantPrimaryPassword + '\'' +
-                ", primaryPhoneNumber='" + primaryPhoneNumber + '\'' +
-                ", restaurantOtp='" + restaurantOtp + '\'' +
-                ", restaurantArea='" + restaurantArea + '\'' +
-                ", restaurantCity='" + restaurantCity + '\'' +
-                ", restaurantAddress='" + restaurantAddress + '\'' +
-                '}';
-    }
-
-    public RestaurantRegisterForm(String restaurantId, String restaurantName, String restaurantPrimaryEmailId, String primaryPhoneNumber, String secondaryPhoneNumber) {
+    public RestaurantRegisterForm(String restaurantId, String restaurantName, String restaurantPrimaryEmailId,
+            String primaryPhoneNumber) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
         this.primaryPhoneNumber = primaryPhoneNumber;
     }
 
-    public RestaurantRegisterForm(String restaurantId, String restaurantName, String restaurantPrimaryEmailId, String restaurantPrimaryPassword, String primaryPhoneNumber, String restaurantOtp) {
+    public RestaurantRegisterForm(String restaurantId, String restaurantName, String restaurantPrimaryEmailId,
+            String restaurantPrimaryPassword, String primaryPhoneNumber, String restaurantOtp) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
@@ -47,7 +34,9 @@ public class RestaurantRegisterForm {
         this.restaurantOtp = restaurantOtp;
     }
 
-    public RestaurantRegisterForm(String restaurantId, String restaurantName, String restaurantPrimaryEmailId, String primaryPhoneNumber, String restaurantOtp, String restaurantArea, String restaurantCity, String restaurantAddress) {
+    public RestaurantRegisterForm(String restaurantId, String restaurantName, String restaurantPrimaryEmailId,
+            String primaryPhoneNumber, String restaurantOtp, String restaurantArea, String restaurantCity,
+            String restaurantAddress) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
@@ -56,6 +45,16 @@ public class RestaurantRegisterForm {
         this.restaurantArea = restaurantArea;
         this.restaurantCity = restaurantCity;
         this.restaurantAddress = restaurantAddress;
+    }
+
+    @Override
+    public String toString() {
+        return "RestaurantRegisterForm{" + "restaurantId='" + restaurantId + '\'' + ", restaurantName='"
+                + restaurantName + '\'' + ", restaurantPrimaryEmailId='" + restaurantPrimaryEmailId + '\''
+                + ", restaurantPrimaryPassword='" + restaurantPrimaryPassword + '\'' + ", primaryPhoneNumber='"
+                + primaryPhoneNumber + '\'' + ", restaurantOtp='" + restaurantOtp + '\'' + ", restaurantArea='"
+                + restaurantArea + '\'' + ", restaurantCity='" + restaurantCity + '\'' + ", restaurantAddress='"
+                + restaurantAddress + '\'' + '}';
     }
 
     public String getRestaurantId() {

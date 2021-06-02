@@ -18,10 +18,8 @@ public class RestaurantMenuItemId implements Serializable {
 
     @Override
     public String toString() {
-        return "RestaurantMenuItemId{" +
-                "restaurantId='" + restaurantId + '\'' +
-                ", dishName='" + dishName + '\'' +
-                '}';
+        return "RestaurantMenuItemId{" + "restaurantId='" + restaurantId + '\'' + ", dishName='" + dishName + '\''
+                + '}';
     }
 
     public String getRestaurantId() {

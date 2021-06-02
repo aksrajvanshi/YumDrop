@@ -41,28 +41,32 @@ public class RestaurantRegistrationServiceImpl implements RestaurantRegistration
     @Override
     public ResponseEntity<?> registerRestaurant(RestaurantRegisterForm restaurantRegisterForm) {
 
-        RestaurantManager restaurantPrimaryManager = new RestaurantManager(restaurantRegisterForm.getRestaurantId(), restaurantRegisterForm.getRestaurantPrimaryEmailId(),
+        RestaurantManager restaurantPrimaryManager = new RestaurantManager(restaurantRegisterForm.getRestaurantId(),
+                restaurantRegisterForm.getRestaurantPrimaryEmailId(),
                 PasswordUtils.convertPasswordToHash(restaurantRegisterForm.getRestaurantPrimaryPassword()), false);
         RestaurantManager newRestaurantManager = restaurantManagerRepository.save(restaurantPrimaryManager);
 
         if (newRestaurantManager != null) {
-            Restaurant newRestaurantRegister = new Restaurant(restaurantRegisterForm.getRestaurantId(), restaurantRegisterForm.getRestaurantName(), restaurantRegisterForm.getRestaurantPrimaryEmailId(),
+            Restaurant newRestaurantRegister = new Restaurant(restaurantRegisterForm.getRestaurantId(),
+                    restaurantRegisterForm.getRestaurantName(), restaurantRegisterForm.getRestaurantPrimaryEmailId(),
                     restaurantRegisterForm.getPrimaryPhoneNumber());
             Restaurant registeredRestaurant = restaurantRepository.save(newRestaurantRegister);
             if (registeredRestaurant == null) {
-                ErrorMessage restaurantNotRegistered = new ErrorMessage(new Date(), "Restaurant wasn't registered. Please try again",
-                        "");
+                ErrorMessage restaurantNotRegistered = new ErrorMessage(new Date(),
+                        "Restaurant wasn't registered. Please try again", "");
                 return new ResponseEntity<>(restaurantNotRegistered, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 // create restaurant ratings record for new restaurants.
-                restaurantRatingsRepository.save(new RestaurantRatings(restaurantRegisterForm.getRestaurantId(), 0.0, 0));
-                SuccessMessage restaurantRegisteredSuccessfully = new SuccessMessage(new Date(), "Restaurant is registered successfully");
+                restaurantRatingsRepository
+                        .save(new RestaurantRatings(restaurantRegisterForm.getRestaurantId(), 0.0, 0));
+                SuccessMessage restaurantRegisteredSuccessfully = new SuccessMessage(new Date(),
+                        "Restaurant is registered successfully");
                 return new ResponseEntity<>(restaurantRegisteredSuccessfully, HttpStatus.OK);
             }
         }
 
-        ErrorMessage restaurantNotRegistered = new ErrorMessage(new Date(), "Restaurant & Restaurant manager profile wasn't registered. Please try again",
-                "");
+        ErrorMessage restaurantNotRegistered = new ErrorMessage(new Date(),
+                "Restaurant & Restaurant manager profile wasn't registered. Please try again", "");
         return new ResponseEntity<>(restaurantNotRegistered, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

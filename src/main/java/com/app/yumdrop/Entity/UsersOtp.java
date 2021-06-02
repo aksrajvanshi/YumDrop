@@ -22,10 +22,7 @@ public class UsersOtp extends CreateAndUpdateTimeModel {
 
     @Override
     public String toString() {
-        return "UsersOtp{" +
-                "userEmail='" + userEmail + '\'' +
-                ", userOtp='" + userOtp + '\'' +
-                '}';
+        return "UsersOtp{" + "userEmail='" + userEmail + '\'' + ", userOtp='" + userOtp + '\'' + '}';
     }
 
     public String getUserEmail() {

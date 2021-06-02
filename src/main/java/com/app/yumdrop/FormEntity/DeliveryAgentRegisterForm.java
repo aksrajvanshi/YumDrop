@@ -7,8 +7,8 @@ public class DeliveryAgentRegisterForm {
     private String deliveryAgent_phonenum;
     private String deliveryAgent_otp;
 
-
-    public DeliveryAgentRegisterForm(String deliveryAgent_email, String deliveryAgent_name, String deliveryAgent_password, String deliveryAgent_phonenum, String deliveryAgent_otp) {
+    public DeliveryAgentRegisterForm(String deliveryAgent_email, String deliveryAgent_name,
+            String deliveryAgent_password, String deliveryAgent_phonenum, String deliveryAgent_otp) {
         this.deliveryAgent_email = deliveryAgent_email;
         this.deliveryAgent_name = deliveryAgent_name;
         this.deliveryAgent_password = deliveryAgent_password;

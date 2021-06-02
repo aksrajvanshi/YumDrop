@@ -6,5 +6,6 @@ public interface ForgotPasswordService {
 
     ResponseEntity<?> sendMailWithTemporaryPassword(String userEmail);
 
-    ResponseEntity<?> verifyTemporaryPasswordAndSetNewPassword(String userEmail, String temporaryPassword, String newPassword);
+    ResponseEntity<?> verifyTemporaryPasswordAndSetNewPassword(String userEmail, String temporaryPassword,
+            String newPassword);
 }

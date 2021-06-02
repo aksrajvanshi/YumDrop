@@ -1,9 +1,8 @@
 package com.app.yumdrop.Entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
+
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("restaurantRatingMain")
 public class RestaurantRatings {
@@ -18,7 +17,6 @@ public class RestaurantRatings {
     public RestaurantRatings() {
     }
 
-
     public RestaurantRatings(String restaurantId, double overallRating, int numberOfUsers) {
         this.restaurantId = restaurantId;
         this.overallRating = overallRating;
@@ -27,11 +25,8 @@ public class RestaurantRatings {
 
     @Override
     public String toString() {
-        return "RestaurantRatings{" +
-                "restaurantId='" + restaurantId + '\'' +
-                ", overallRating=" + overallRating +
-                ", numberOfUsers=" + numberOfUsers +
-                '}';
+        return "RestaurantRatings{" + "restaurantId='" + restaurantId + '\'' + ", overallRating=" + overallRating
+                + ", numberOfUsers=" + numberOfUsers + '}';
     }
 
     public String getRestaurantId() {

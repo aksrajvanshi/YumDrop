@@ -1,7 +1,5 @@
 package com.app.yumdrop.FormEntity;
 
-import javax.persistence.Id;
-
 public class RestaurantManagerLogin {
 
     public String restaurantId;
@@ -21,11 +19,8 @@ public class RestaurantManagerLogin {
 
     @Override
     public String toString() {
-        return "RestaurantManagerLogin{" +
-                "restaurantId='" + restaurantId + '\'' +
-                ", restaurantPrimaryEmailId='" + restaurantPrimaryEmailId + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return "RestaurantManagerLogin{" + "restaurantId='" + restaurantId + '\'' + ", restaurantPrimaryEmailId='"
+                + restaurantPrimaryEmailId + '\'' + ", password='" + password + '\'' + '}';
     }
 
     public String getRestaurantId() {

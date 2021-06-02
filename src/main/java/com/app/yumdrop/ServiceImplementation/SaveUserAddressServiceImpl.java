@@ -21,21 +21,19 @@ public class SaveUserAddressServiceImpl implements SaveUserAddressService {
     @Override
     public ResponseEntity<?> saveUserAddress(UsersAddress usersAddress) {
 
-        if(usersAddress.getUserAddress().length() == 0){
-            ErrorMessage emptyAddress = new ErrorMessage(new Date(), "User address cannot be empty",
-                    "");
+        if (usersAddress.getUserAddress().length() == 0) {
+            ErrorMessage emptyAddress = new ErrorMessage(new Date(), "User address cannot be empty", "");
             return new ResponseEntity<>(emptyAddress, HttpStatus.BAD_REQUEST);
         }
 
         UsersAddress isUserAddressSaved = usersAddressRepository.save(usersAddress);
 
-        if(isUserAddressSaved != null){
+        if (isUserAddressSaved != null) {
             SuccessMessage successfulLoginMessage = new SuccessMessage(new Date(), "Address successfully saved!");
             return new ResponseEntity<>(successfulLoginMessage, HttpStatus.OK);
         }
 
-        ErrorMessage saveAddressUnsuccessful = new ErrorMessage(new Date(), "User address could not be saved",
-                "");
+        ErrorMessage saveAddressUnsuccessful = new ErrorMessage(new Date(), "User address could not be saved", "");
         return new ResponseEntity<>(saveAddressUnsuccessful, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -23,18 +23,13 @@ public class DistanceBetweenAddressesCalculatorServiceImpl implements DistanceBe
     @Override
     public void calculateDistance(String userAddress, RestaurantSearchResults restaurantSearchResults) {
 
-        GeoApiContext context = new GeoApiContext.Builder()
-                .apiKey(googleMapsAPIKey)
-                .build();
+        GeoApiContext context = new GeoApiContext.Builder().apiKey(googleMapsAPIKey).build();
         DistanceMatrixApiRequest req = DistanceMatrixApi.newRequest(context);
         DistanceMatrix result = null;
         try {
             result = req.origins(userAddress)
                     .destinations(restaurantSearchResults.getRestaurantDetails().getRestaurantAddress())
-                    .mode(TravelMode.DRIVING)
-                    .avoid(DirectionsApi.RouteRestriction.TOLLS)
-                    .language("en-US")
-                    .await();
+                    .mode(TravelMode.DRIVING).avoid(DirectionsApi.RouteRestriction.TOLLS).language("en-US").await();
         } catch (ApiException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

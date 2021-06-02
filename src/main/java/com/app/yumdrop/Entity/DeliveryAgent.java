@@ -1,17 +1,11 @@
 package com.app.yumdrop.Entity;
 
+import javax.persistence.Id;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-
-
 @Document("deliveryAgent")
-public class DeliveryAgent extends CreateAndUpdateTimeModel{
+public class DeliveryAgent extends CreateAndUpdateTimeModel {
 
     @Id
     public String deliveryAgentEmail;
@@ -28,10 +22,11 @@ public class DeliveryAgent extends CreateAndUpdateTimeModel{
 
     private String deliveryAgentAddress;
 
-    public DeliveryAgent(){
+    public DeliveryAgent() {
     }
 
-    public DeliveryAgent(String deliveryAgentEmail, String deliveryAgentName, String deliveryAgentPhoneNumber, String deliveryAgentPassword, String lastUpdatedUser, String lastCreatedUser, String deliveryAgentAddress) {
+    public DeliveryAgent(String deliveryAgentEmail, String deliveryAgentName, String deliveryAgentPhoneNumber,
+            String deliveryAgentPassword, String lastUpdatedUser, String lastCreatedUser, String deliveryAgentAddress) {
         this.deliveryAgentEmail = deliveryAgentEmail;
         this.deliveryAgentName = deliveryAgentName;
         this.deliveryAgentPhoneNumber = deliveryAgentPhoneNumber;
@@ -43,15 +38,11 @@ public class DeliveryAgent extends CreateAndUpdateTimeModel{
 
     @Override
     public String toString() {
-        return "Delivery_Agent{" +
-                "deliveryAgentEmail='" + deliveryAgentEmail + '\'' +
-                ", deliveryAgentName='" + deliveryAgentName + '\'' +
-                ", deliveryAgentPhoneNumber='" + deliveryAgentPhoneNumber + '\'' +
-                ", deliveryAgentPassword='" + deliveryAgentPassword + '\'' +
-                ", lastUpdatedUser='" + lastUpdatedUser + '\'' +
-                ", lastCreatedUser='" + lastCreatedUser + '\'' +
-                ", deliveryAgentAddress='" + deliveryAgentAddress + '\'' +
-                '}';
+        return "Delivery_Agent{" + "deliveryAgentEmail='" + deliveryAgentEmail + '\'' + ", deliveryAgentName='"
+                + deliveryAgentName + '\'' + ", deliveryAgentPhoneNumber='" + deliveryAgentPhoneNumber + '\''
+                + ", deliveryAgentPassword='" + deliveryAgentPassword + '\'' + ", lastUpdatedUser='" + lastUpdatedUser
+                + '\'' + ", lastCreatedUser='" + lastCreatedUser + '\'' + ", deliveryAgentAddress='"
+                + deliveryAgentAddress + '\'' + '}';
     }
 
     public String getDeliveryAgentEmail() {
@@ -77,7 +68,6 @@ public class DeliveryAgent extends CreateAndUpdateTimeModel{
     public void setDeliveryAgentPhoneNumber(String deliveryAgentPhoneNumber) {
         this.deliveryAgentPhoneNumber = deliveryAgentPhoneNumber;
     }
-
 
     public String getDeliveryAgentPassword() {
         return deliveryAgentPassword;
@@ -111,4 +101,3 @@ public class DeliveryAgent extends CreateAndUpdateTimeModel{
         this.deliveryAgentAddress = deliveryAgentAddress;
     }
 }
-

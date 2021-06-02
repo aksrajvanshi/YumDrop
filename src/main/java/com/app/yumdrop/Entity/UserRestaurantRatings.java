@@ -1,10 +1,9 @@
 package com.app.yumdrop.Entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import javax.persistence.Id;
 import javax.persistence.IdClass;
-import javax.validation.constraints.NotNull;
+
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("userRestaurantRatings")
 @IdClass(UserRestaurantRatingsId.class)
@@ -21,7 +20,6 @@ public class UserRestaurantRatings {
     public UserRestaurantRatings() {
     }
 
-
     public UserRestaurantRatings(String userEmail, String restaurantId) {
         this.userEmail = userEmail;
         this.restaurantId = restaurantId;
@@ -35,11 +33,8 @@ public class UserRestaurantRatings {
 
     @Override
     public String toString() {
-        return "UserRestaurantRatings{" +
-                "userEmail='" + userEmail + '\'' +
-                ", restaurantId='" + restaurantId + '\'' +
-                ", restaurantRating=" + restaurantRating +
-                '}';
+        return "UserRestaurantRatings{" + "userEmail='" + userEmail + '\'' + ", restaurantId='" + restaurantId + '\''
+                + ", restaurantRating=" + restaurantRating + '}';
     }
 
     public String getUserEmail() {

@@ -11,8 +11,7 @@ public class DeliveryAgentDetails {
     public String deliveryAgent_email;
     public String deliveryAgent_phonenum;
 
-
-    DeliveryAgentDetails(){
+    DeliveryAgentDetails() {
 
     }
 
@@ -21,7 +20,8 @@ public class DeliveryAgentDetails {
         this.deliveryAgent_password = deliveryAgent_password;
     }
 
-    public DeliveryAgentDetails(String deliveryAgent_name, String deliveryAgent_password, String deliveryAgent_email, String deliveryAgent_phonenum) {
+    public DeliveryAgentDetails(String deliveryAgent_name, String deliveryAgent_password, String deliveryAgent_email,
+            String deliveryAgent_phonenum) {
         this.deliveryAgent_name = deliveryAgent_name;
         this.deliveryAgent_password = deliveryAgent_password;
         this.deliveryAgent_email = deliveryAgent_email;
@@ -61,4 +61,3 @@ public class DeliveryAgentDetails {
     }
 
 }
-

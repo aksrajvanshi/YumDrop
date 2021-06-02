@@ -18,10 +18,8 @@ public class UserRestaurantRatingsId implements Serializable {
 
     @Override
     public String toString() {
-        return "UserRestaurantRatingsId{" +
-                "userEmail='" + userEmail + '\'' +
-                ", restaurantId='" + restaurantId + '\'' +
-                '}';
+        return "UserRestaurantRatingsId{" + "userEmail='" + userEmail + '\'' + ", restaurantId='" + restaurantId + '\''
+                + '}';
     }
 
     public String getUserEmail() {

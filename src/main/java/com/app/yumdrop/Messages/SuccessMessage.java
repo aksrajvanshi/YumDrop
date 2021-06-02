@@ -10,10 +10,7 @@ public class SuccessMessage {
 
     @Override
     public String toString() {
-        return "SuccessMessage{" +
-                "timestamp=" + timestamp +
-                ", message='" + message + '\'' +
-                '}';
+        return "SuccessMessage{" + "timestamp=" + timestamp + ", message='" + message + '\'' + '}';
     }
 
     public SuccessMessage() {

@@ -1,12 +1,11 @@
 package com.app.yumdrop.Entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Entity
 @Document("userAddress")
@@ -21,20 +20,17 @@ public class UsersAddress {
     @Column(name = "user_address", nullable = false)
     private String userAddress;
 
-    @Override
-    public String toString() {
-        return "UsersAddress{" +
-                "userEmail='" + userEmail + '\'' +
-                ", userAddress='" + userAddress + '\'' +
-                '}';
-    }
-
     public UsersAddress() {
     }
 
     public UsersAddress(@NotNull String userEmail, @NotNull String userAddress) {
         this.userEmail = userEmail;
         this.userAddress = userAddress;
+    }
+
+    @Override
+    public String toString() {
+        return "UsersAddress{" + "userEmail='" + userEmail + '\'' + ", userAddress='" + userAddress + '\'' + '}';
     }
 
     public String getUserEmail() {

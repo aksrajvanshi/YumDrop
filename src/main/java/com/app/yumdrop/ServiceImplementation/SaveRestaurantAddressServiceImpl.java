@@ -22,18 +22,16 @@ public class SaveRestaurantAddressServiceImpl implements SaveRestaurantAddressSe
     public ResponseEntity<?> saveRestaurantAddress(Restaurant restaurantDetailsWithAddress) {
 
         if (restaurantDetailsWithAddress.getRestaurantAddress().length() == 0) {
-            ErrorMessage emptyAddress = new ErrorMessage(new Date(), "Restaurant address cannot be empty",
-                    "");
+            ErrorMessage emptyAddress = new ErrorMessage(new Date(), "Restaurant address cannot be empty", "");
             return new ResponseEntity<>(emptyAddress, HttpStatus.BAD_REQUEST);
         }
 
-        Restaurant restaurantDetails = restaurantRepository.findByrestaurantId(restaurantDetailsWithAddress.getRestaurantId());
+        Restaurant restaurantDetails = restaurantRepository
+                .findByrestaurantId(restaurantDetailsWithAddress.getRestaurantId());
         if (restaurantDetails == null) {
-            ErrorMessage emptyAddress = new ErrorMessage(new Date(), "Restaurant doesn't exist in the database",
-                    "");
+            ErrorMessage emptyAddress = new ErrorMessage(new Date(), "Restaurant doesn't exist in the database", "");
             return new ResponseEntity<>(emptyAddress, HttpStatus.BAD_REQUEST);
         }
-
 
         restaurantDetails.setRestaurantAddress(restaurantDetailsWithAddress.getRestaurantAddress());
         Restaurant restaurantAddressSaved = restaurantRepository.save(restaurantDetails);

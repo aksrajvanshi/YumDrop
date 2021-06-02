@@ -19,14 +19,10 @@ public class DeliveryAgentForgotPasswordForm {
         this.newPassword = newPassword;
     }
 
-
     @Override
     public String toString() {
-        return "DeliveryAgentForgotPasswordForm{" +
-                "daEmail='" + deliveryAgentEmail + '\'' +
-                ", temporaryPassword='" + temporaryPassword + '\'' +
-                ", newPassword='" + newPassword + '\'' +
-                '}';
+        return "DeliveryAgentForgotPasswordForm{" + "daEmail='" + deliveryAgentEmail + '\'' + ", temporaryPassword='"
+                + temporaryPassword + '\'' + ", newPassword='" + newPassword + '\'' + '}';
     }
 
     public String getDeliveryAgentEmail() {

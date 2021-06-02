@@ -10,8 +10,7 @@ public class UsersDetails {
     public String user_email;
     public String user_phonenum;
 
-
-    UsersDetails(){
+    UsersDetails() {
 
     }
 
@@ -59,6 +58,4 @@ public class UsersDetails {
         this.user_phonenum = user_phonenum;
     }
 
-
 }
-

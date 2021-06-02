@@ -31,7 +31,8 @@ public class RestaurantMenuItem {
         this.dishPrice = dishPrice;
     }
 
-    public RestaurantMenuItem(String restaurantId, String dishName, String dishDescription, double dishPrice, boolean dishAvailable) {
+    public RestaurantMenuItem(String restaurantId, String dishName, String dishDescription, double dishPrice,
+            boolean dishAvailable) {
         this.restaurantId = restaurantId;
         this.dishName = dishName;
         this.dishDescription = dishDescription;
@@ -41,13 +42,9 @@ public class RestaurantMenuItem {
 
     @Override
     public String toString() {
-        return "RestaurantMenuItem{" +
-                "restaurantId='" + restaurantId + '\'' +
-                ", dishName='" + dishName + '\'' +
-                ", dishDescription='" + dishDescription + '\'' +
-                ", dishPrice=" + dishPrice +
-                ", dishAvailable=" + dishAvailable +
-                '}';
+        return "RestaurantMenuItem{" + "restaurantId='" + restaurantId + '\'' + ", dishName='" + dishName + '\''
+                + ", dishDescription='" + dishDescription + '\'' + ", dishPrice=" + dishPrice + ", dishAvailable="
+                + dishAvailable + '}';
     }
 
     public String getRestaurantId() {

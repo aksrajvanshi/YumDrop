@@ -21,14 +21,18 @@ public class DeliveryAgentRegistrationServiceImpl implements DeliveryAgentRegist
     @Override
     public ResponseEntity<?> registerDeliveryAgent(DeliveryAgentRegisterForm deliveryAgentDataForm) {
 
-        DeliveryAgent deliveryAgentExistsInDb = deliveryAgentRepository.findByDeliveryAgentEmail(deliveryAgentDataForm.getDeliveryAgent_email());
+        DeliveryAgent deliveryAgentExistsInDb = deliveryAgentRepository
+                .findByDeliveryAgentEmail(deliveryAgentDataForm.getDeliveryAgent_email());
 
-        if (deliveryAgentExistsInDb!=null) {
-            throw new ConstraintViolationException("Delivery Agent already exists", new SQLException(" Insert query"), "deliveryAgent_email");
+        if (deliveryAgentExistsInDb != null) {
+            throw new ConstraintViolationException("Delivery Agent already exists", new SQLException(" Insert query"),
+                    "deliveryAgent_email");
         }
 
-        DeliveryAgent daToRegister = new DeliveryAgent(deliveryAgentDataForm.getDeliveryAgent_email(), deliveryAgentDataForm.getDeliveryAgent_name(),
-                deliveryAgentDataForm.getDeliveryAgent_phonenum(), PasswordUtils.convertPasswordToHash(deliveryAgentDataForm.getDeliveryAgent_password()), null, "SYSTEM", "SYSTEM");
+        DeliveryAgent daToRegister = new DeliveryAgent(deliveryAgentDataForm.getDeliveryAgent_email(),
+                deliveryAgentDataForm.getDeliveryAgent_name(), deliveryAgentDataForm.getDeliveryAgent_phonenum(),
+                PasswordUtils.convertPasswordToHash(deliveryAgentDataForm.getDeliveryAgent_password()), null, "SYSTEM",
+                "SYSTEM");
 
         DeliveryAgent registeredDeliveryAgent = deliveryAgentRepository.save(daToRegister);
         return ResponseEntity.ok().body(registeredDeliveryAgent);

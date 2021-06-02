@@ -1,14 +1,8 @@
 package com.app.yumdrop.Entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("restaurantManagerOtp")
 public class RestaurantOtp extends CreateAndUpdateTimeModel {
@@ -31,11 +25,8 @@ public class RestaurantOtp extends CreateAndUpdateTimeModel {
 
     @Override
     public String toString() {
-        return "RestaurantOtp{" +
-                "restaurantID='" + restaurantId + '\'' +
-                ", restaurantPrimaryEmail='" + restaurantPrimaryEmail + '\'' +
-                ", restaurantOtp='" + restaurantOtp + '\'' +
-                '}';
+        return "RestaurantOtp{" + "restaurantID='" + restaurantId + '\'' + ", restaurantPrimaryEmail='"
+                + restaurantPrimaryEmail + '\'' + ", restaurantOtp='" + restaurantOtp + '\'' + '}';
     }
 
     public String getRestaurantId() {

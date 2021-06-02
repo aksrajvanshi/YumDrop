@@ -30,7 +30,8 @@ public class Restaurant extends CreateAndUpdateTimeModel {
         this.restaurantAddress = restaurantAddress;
     }
 
-    public Restaurant(String restaurantId, String restaurantName, String restaurantPrimaryEmailId, String primaryPhoneNumber) {
+    public Restaurant(String restaurantId, String restaurantName, String restaurantPrimaryEmailId,
+            String primaryPhoneNumber) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.restaurantPrimaryEmailId = restaurantPrimaryEmailId;
@@ -79,12 +80,8 @@ public class Restaurant extends CreateAndUpdateTimeModel {
 
     @Override
     public String toString() {
-        return "Restaurant{" +
-                "restaurantId='" + restaurantId + '\'' +
-                ", restaurantName='" + restaurantName + '\'' +
-                ", restaurantPrimaryEmailId='" + restaurantPrimaryEmailId + '\'' +
-                ", primaryPhoneNumber='" + primaryPhoneNumber + '\'' +
-                ", restaurantAddress='" + restaurantAddress + '\'' +
-                '}';
+        return "Restaurant{" + "restaurantId='" + restaurantId + '\'' + ", restaurantName='" + restaurantName + '\''
+                + ", restaurantPrimaryEmailId='" + restaurantPrimaryEmailId + '\'' + ", primaryPhoneNumber='"
+                + primaryPhoneNumber + '\'' + ", restaurantAddress='" + restaurantAddress + '\'' + '}';
     }
 }
