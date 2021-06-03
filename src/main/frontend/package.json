@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/cli": "^7.0.0-beta.40",
+    "@babel/core": "^7.0.0-beta.40",
+    "@babel/preset-react": "^7.0.0-beta.40",
+    "babel-loader": "^8.0.0-beta.0",
+    "babel-plugin-lodash": "^3.3.2",
+    "babel-plugin-react-transform": "^3.0.0",
     "bootstrap": "^4.3.1",
     "email-validator": "^2.0.4",
     "react": "^16.10.1",
@@ -48,5 +54,14 @@
     "react-facebook-login": "^4.1.1",
     "react-geocode": "^0.2.0",
     "react-redux": "^7.1.1"
+  },
+  "query": {
+    "presets": [
+      "@babel/react",
+      "@babel/es2015"
+    ],
+    "plugins": [
+      "@babel/proposal-class-properties"
+    ]
   }
 }
