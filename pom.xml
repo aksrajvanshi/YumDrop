@@ -197,16 +197,11 @@
 							<npmVersion>3.10.8</npmVersion>
 						</configuration>
 					</execution>
+
 					<execution>
-						<id>install-frontend-tools</id>
+						<id>npm-install</id>
 						<goals>
-							<goal>install-node-and-yarn</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>yarn-install</id>
-						<goals>
-							<goal>yarn</goal>
+							<goal>npm</goal>
 						</goals>
 						<configuration>
 							<arguments>install</arguments>
@@ -216,11 +211,11 @@
 					<execution>
 						<id>build-frontend</id>
 						<goals>
-							<goal>yarn</goal>
+							<goal>npm</goal>
 						</goals>
 						<phase>prepare-package</phase>
 						<configuration>
-							<arguments>build</arguments>
+							<arguments>run build</arguments>
 						</configuration>
 					</execution>
 				</executions>
