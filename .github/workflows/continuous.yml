@@ -1,0 +1,34 @@
+name: Continuous
+on:
+  push:
+    paths-ignore:
+      - "**.md"
+      - "**.ipynb"
+      - "**.json"
+      - "**.html"
+      - "**.js"
+      - "**.css"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: check disk space
+        run: df -h
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Create maven package
+        run: mvn clean install
+      - name: Generate JaCoCo Badge
+        uses: cicirello/jacoco-badge-generator@v2
+        with:
+          generate-branches-badge: true
