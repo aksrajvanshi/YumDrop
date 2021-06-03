@@ -181,7 +181,7 @@
 				<version>${frontend-maven-plugin.version}</version>
 
 				<configuration>
-					<nodeVersion>${node.version}</nodeVersion>
+					<nodeVersion>${nodeVersion}</nodeVersion>
 					<yarnVersion>${yarn.version}</yarnVersion>
 					<workingDirectory>${frontend-src-dir}</workingDirectory>
 					<installDirectory>${project.build.directory}</installDirectory>
