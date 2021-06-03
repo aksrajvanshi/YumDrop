@@ -19,12 +19,6 @@ jobs:
         with:
           java-version: 1.8
       - uses: actions/checkout@v2
-      - name: Setup node 12
-        uses: actions/setup-node@v2
-        with:
-            node-version: 12.x
-      - name: Install dependencies
-        run: cd src/main/frontend && yarn upgrade
       - name: check disk space
         run: df -h
       - uses: actions/cache@v1
