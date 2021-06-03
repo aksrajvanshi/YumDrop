@@ -24,8 +24,7 @@ jobs:
         with:
             node-version: 12.x
       - name: Install dependencies
-        run: |
-          - cd src/main/frontend && yarn upgrade
+        run: cd src/main/frontend && yarn upgrade
       - name: check disk space
         run: df -h
       - uses: actions/cache@v1
