@@ -17,8 +17,8 @@
 		<java.version>1.8</java.version>
 		<frontend-src-dir>${project.basedir}/src/main/frontend</frontend-src-dir>
 		<nodeVersion>v12.12.0</nodeVersion>
-		<yarn.version>v1.22.10</yarn.version>
-		<frontend-maven-plugin.version>1.7.6</frontend-maven-plugin.version>
+		<npmVersion>7.15.1</npmVersion>
+		<frontend-maven-plugin.version>1.12.0</frontend-maven-plugin.version>
 		<downloadSources>true</downloadSources>
 		<downloadJavadocs>true</downloadJavadocs>
 	</properties>
@@ -181,7 +181,7 @@
 
 				<configuration>
 					<nodeVersion>${nodeVersion}</nodeVersion>
-					<yarnVersion>${yarn.version}</yarnVersion>
+					<npmVersion>${npmVersion}</npmVersion>
 					<workingDirectory>${frontend-src-dir}</workingDirectory>
 					<installDirectory>${project.build.directory}</installDirectory>
 				</configuration>
@@ -189,12 +189,13 @@
 
 				<executions>
 					<execution>
-						<id>install npm</id>
+						<id>install node</id>
 						<goals>
 							<goal>install-node-and-npm</goal>
 						</goals>
 						<configuration>
-							<npmVersion>3.10.8</npmVersion>
+							<nodeVersion>${nodeVersion}</nodeVersion>
+							<npmVersion>${npmVersion}</npmVersion>
 						</configuration>
 					</execution>
 
