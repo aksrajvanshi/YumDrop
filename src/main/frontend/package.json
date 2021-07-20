@@ -11,7 +11,7 @@
     "react-dom": "^16.10.1",
     "react-google-login": "^5.0.7",
     "react-google-maps": "^9.4.5",
-    "react-native": "^0.61.2",
+    "react-native": "^0.62.3",
     "react-places-autocomplete": "^7.2.1",
     "react-router-dom": "latest",
     "react-scripts": "3.1.2",
